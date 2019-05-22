@@ -13,10 +13,7 @@ interface Props<FormFields> {
     onCancel: () => void
     loading: boolean;
     validator: (item: FormFields) => FormikErrors<FormFields>
-    // createOrUpdateConnection: (item: Connection) => any
     onSubmit: (item: FormFields) => void // TODO
-    // selectedItem?: Connection
-    // onChange?: OnChangeHandler<FormFields>
     title: string
 }
 
@@ -30,7 +27,6 @@ type OnChangeHandler<FormFields> = <K extends keyof FormFields>(
 ) => void;
 
 interface Handlers<FormFields> {
-    // onChange: OnChangeHandler<FormFields>;
     onSubmit: (e?: React.FormEvent<HTMLFormElement> | undefined) => void
 }
 
@@ -65,7 +61,7 @@ class GenericModal<FormFields> extends React.Component<Props<FormFields>, State<
             <Modal
                 width={500}
                 visible={visible}
-                title={title} // change title if it is edit or creation mode
+                title={title} // TODO change title if it is edit or creation mode
                 okText="Save"
                 onCancel={onCancel}
                 footer={[<Button key="cancel" onClick={onCancel}>Cancel</Button>,
