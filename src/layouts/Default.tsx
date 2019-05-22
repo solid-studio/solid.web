@@ -1,16 +1,15 @@
 import React from 'react';
-import styled, { css } from 'styled-components';
-import { Button, Menu, Dropdown, Icon, Tree, Tabs } from 'antd';
-
 import { bindActionCreators, Dispatch, ActionCreator, Action } from "redux";
 import { connect } from "react-redux";
 
-import { ConnectionModal, TransactionDrawer, ContractModal } from "../components";
-
+import styled, { css } from 'styled-components';
+import { Button, Menu, Dropdown, Icon, Tree } from 'antd';
 
 import { createConnectionStarted, getConnections, createContractStarted, getContractInstances, contractSelected } from "../redux/actions"
 import { Connection, Contract } from "../redux/types";
 import { ApplicationState } from "../redux/reducers";
+
+import { ConnectionModal, ContractModal } from "../components";
 
 const ButtonGroup = Button.Group;
 const DirectoryTree = Tree.DirectoryTree;
@@ -52,11 +51,6 @@ const Sidebar = styled.div`
 const Content = styled.section`
   grid-area: content;
   background-color: #2A2929;
-`
-
-const RightSideBar = styled.div`
-    grid-area: rightsidebar;
-    background: #323436;
 `
 
 const ButtonRightArea = styled.div`
@@ -105,13 +99,6 @@ const SidebarTitle = styled.h3`
     font-size: 1em;
 `
 
-const DrawerButton = styled(Button)`
-    transform: rotate(90deg);
-    position: absolute;
-    top: 7em;
-    right: -3em;
-`
-
 const SidebarHeaderButtons = styled.div`
 
 `
@@ -133,49 +120,15 @@ interface Props {
     contractSelected: ActionCreator<Action>
 }
 
-interface State {
-    activeKey: string;
-    showDrawer: boolean;
-}
-
-// eslint-disable-next-line
-const TabPane = Tabs.TabPane;
-
-export class DefaultLayout extends React.Component<Props, State> {
-
-    constructor(props: Props) {
-        super(props)
-        this.state = { activeKey: '1', showDrawer: false }
-    }
+export class DefaultLayout extends React.Component<Props> {
 
     componentDidMount() {
         this.props.getConnections();
         this.props.getContractInstances(); // TODO, need to be filtered by connection
     }
-    // drawer
-    showDrawer = () => {
-        this.setState({
-            showDrawer: true,
-        });
-    };
 
-    closeDrawer = () => {
-        this.setState({
-            showDrawer: false,
-        });
-    };
-
-    // modal
     openConnectionModal = () => {
         this.props.createConnectionStarted();
-    }
-
-    onChange = (activeKey: any) => {
-        this.setState({ activeKey });
-    }
-
-    callback = (key: any) => {
-        console.log(key);
     }
 
     onDropDownClickk = ({ key }: any) => {
@@ -197,14 +150,10 @@ export class DefaultLayout extends React.Component<Props, State> {
             <Menu.Item key="tag">Tag</Menu.Item>
         </Menu>
     }
-    // showCode = (contract: Contract) => {
-    //     debugger;
-    //     const contract
-    //     console.log("Contract code", contract.sourceCode)
-    // }
+
     onSelect = (selectedKeys: any, info: any) => {
-        const contractToShow = this.props.contracts.find((item) =>{
-            return item._id == selectedKeys[0];
+        const contractToShow = this.props.contracts.find((item) => {
+            return item._id === selectedKeys[0];
         })
         console.log('selected', selectedKeys, contractToShow);
         this.props.contractSelected(contractToShow);
@@ -245,7 +194,7 @@ export class DefaultLayout extends React.Component<Props, State> {
                         </SidebarHeaderButtons>
                     </SidebarHeader>
                     {connections && connections.length > 0 && <DirectoryTree
-                        onSelect={this.onSelect} 
+                        onSelect={this.onSelect}
                         multiple
                         defaultExpandAll style={{ color: "white" }}>
                         {connections.map((item) => {
@@ -260,16 +209,10 @@ export class DefaultLayout extends React.Component<Props, State> {
                     </DirectoryTree>}
                 </Sidebar>
                 <Content>
-                    {/* <RightSideBar>
-                        <DrawerButton onClick={this.showDrawer}>Transactions</DrawerButton>
-                    </RightSideBar> */}
                     {this.props.children}
                 </Content>
                 <ConnectionModal />
                 <ContractModal />
-                {connections && connections.length > 0 &&
-                    <TransactionDrawer transactionReceipts={connections[0].transactionReceipts} onClose={this.closeDrawer} visible={this.state.showDrawer} />
-                }
             </Wrapper >
         )
     }

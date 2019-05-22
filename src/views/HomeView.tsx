@@ -2,46 +2,14 @@ import React from "react";
 import MonacoEditor from 'react-monaco-editor';
 import styled from 'styled-components';
 import copy from 'copy-to-clipboard';
-import { bindActionCreators, Dispatch, ActionCreator, Action } from "redux";
 import { connect } from "react-redux";
 import { ApplicationState } from "../redux/reducers";
-import { solc } from "../utils/compiler";
-import { Tabs, Icon, Collapse, Input } from 'antd';
+import { Tabs, Icon, Collapse } from 'antd';
 import { Contract } from "../redux/types";
 import Terminal from 'react-console-emulator'
 
 const TabPane = Tabs.TabPane;
 const Panel = Collapse.Panel;
-const { TextArea } = Input;
-
-// var input = {
-//     language: 'Solidity',
-//     sources: {
-//         'test.sol': {
-//             content: 'import "lib.sol"; contract C { function f() public { L.f(); } }'
-//         }
-//     },
-//     settings: {
-//         outputSelection: {
-//             '*': {
-//                 '*': ['*']
-//             }
-//         }
-//     }
-// }
-
-// function findImports(path: string) {
-//     if (path === 'lib.sol')
-//         return { contents: 'library L { function f() internal returns (uint) { return 7; } }' }
-//     else
-//         return { error: 'File not found' }
-// }
-
-// var output = JSON.parse(solc.compile(JSON.stringify(input), findImports))
-
-// for (var contractName in output.contracts['test.sol']) {
-//     console.log(contractName + ': ' + output.contracts['test.sol'][contractName].evm.bytecode.object)
-// }
 
 const Wrapper = styled.div`
   height: 100%;
@@ -53,6 +21,7 @@ const Wrapper = styled.div`
     "editor details"
     "results details"
 `
+
 const Editor = styled.div`
     background-color: #303030;
     grid-area: editor;
@@ -62,12 +31,14 @@ const Editor = styled.div`
     height: 100%;
     width: 100%
 `
+
 const Details = styled.div`
     background-color: #303030;
     grid-area: details;
     color: white;
     padding: 0.5em 1em;
 `
+
 const Results = styled.div`
     background-color: #303030;
     grid-area: results;
@@ -108,6 +79,7 @@ const TableDetails = styled.table`
       line-height: 2em;
   }
 `
+
 const commands = {
     echo: {
         description: 'Echo a passed string.',
@@ -118,12 +90,12 @@ const commands = {
     }
 }
 
-
 const CollapseStyled = styled(Collapse)`
   margin-top:1em;
 `
 
 export class HomeView extends React.Component<Props, State> {
+    private editor = null;
 
     constructor(props: Props) {
         super(props)
@@ -145,8 +117,6 @@ uint256 value;
 }`,
         }
     }
-    private editor = null;
-    // handleEditorDidMount = (editor: any) => this.editor = editor;
 
     editorDidMount = (editor: any, monaco: any) => {
         console.log('editorDidMount', editor);
@@ -272,7 +242,3 @@ export default connect(
     mapStateToProps,
     null
 )(HomeView);
-
-        // connect
-        // show current contract
-// 

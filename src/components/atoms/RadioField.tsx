@@ -19,13 +19,9 @@ interface RadioProps {
     defaultValue: string
 }
 
-type FormValues = Connection;
+type FormValues = Connection; // TODO, make this generic
 
 type InputOwnProps = FieldProps<FormValues> & RadioProps;
-
-const onChange = (e: any) => {
-    console.log(e);
-};
 
 export const RadioField: React.FC<InputOwnProps> = ({
     label,
@@ -47,7 +43,6 @@ export const RadioField: React.FC<InputOwnProps> = ({
                     return <Radio disabled={item.key !== defaultValue} value={item.key}>{item.value}</Radio>
                 })}
             </RadioGroup>
-            {/* <Input onChange={onChange} size="large" type="text" {...field} placeholder={placeHolder} /> */}
         </FormItem>
     );
 };

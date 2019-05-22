@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Drawer, List, Collapse } from 'antd';
+import { Drawer, Collapse } from 'antd';
 import { Transaction } from "../redux/types";
 
 interface Props {
@@ -12,6 +12,7 @@ interface Props {
 const callback = (key: any) => {
     console.log(key);
 }
+
 const Panel = Collapse.Panel;
 
 export const TransactionDrawer: React.FC<Props> = (props: Props) => (
@@ -33,17 +34,3 @@ export const TransactionDrawer: React.FC<Props> = (props: Props) => (
         </Collapse>
     </Drawer>
 )
-
-
-{/* <List
-itemLayout="horizontal"
-dataSource={props.transactionReceipts}
-renderItem={(item: Transaction) => (
-    <List.Item>
-        <List.Item.Meta
-            title="Transaction Hash"
-            description={item.transactionHash}
-        />
-    </List.Item>
-)}
-/> */}
