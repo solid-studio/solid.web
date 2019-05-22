@@ -30,6 +30,10 @@ html, body {
     line-height: 32px;
 }
 
+.ant-tabs .ant-tabs-top-content, .ant-tabs .ant-tabs-bottom-content {
+    height: 100%;
+    width: 100%;   
+}
 /* For Collapse */
 .ant-collapse > .ant-collapse-item > .ant-collapse-header {
     position: relative;
@@ -49,3 +53,9 @@ html, body {
 .ant-collapse-borderless > .ant-collapse-item {
     border-bottom: 0.018px solid white;
 }
+
+/* monaco editor */
+/* .monaco-editor {
+    height: 100% !important;
+    width: 100% !important;
+} */

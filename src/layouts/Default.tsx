@@ -53,10 +53,6 @@ const Content = styled.section`
   grid-area: content;
   background-color: #2A2929;
 `
-//   display: grid;
-//   grid-template-columns: 2em auto 2.6em;
-//   grid-template-areas: 
-//   "padding mainarea rightsidebar"
 
 const RightSideBar = styled.div`
     grid-area: rightsidebar;

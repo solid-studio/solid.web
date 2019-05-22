@@ -6,11 +6,13 @@ import { bindActionCreators, Dispatch, ActionCreator, Action } from "redux";
 import { connect } from "react-redux";
 import { ApplicationState } from "../redux/reducers";
 import { solc } from "../utils/compiler";
-import { Tabs, Icon, Collapse } from 'antd';
+import { Tabs, Icon, Collapse, Input } from 'antd';
 import { Contract } from "../redux/types";
+import Terminal from 'react-console-emulator'
 
 const TabPane = Tabs.TabPane;
 const Panel = Collapse.Panel;
+const { TextArea } = Input;
 
 // var input = {
 //     language: 'Solidity',
@@ -54,6 +56,11 @@ const Wrapper = styled.div`
 const Editor = styled.div`
     background-color: #303030;
     grid-area: editor;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    height: 100%;
+    width: 100%
 `
 const Details = styled.div`
     background-color: #303030;
@@ -72,6 +79,7 @@ interface Props {
 
 interface State {
     code: string;
+    editor: any;
 }
 
 const options = {
@@ -81,7 +89,11 @@ const options = {
     },
     scrollbar: {
         vertical: 'hidden' as any
-    }
+    },
+    fixedOverflowWidgets: false,
+    scrollBeyondLastLine: false,
+    height: "100%",
+    width: "100%"
 };
 
 
@@ -96,6 +108,16 @@ const TableDetails = styled.table`
       line-height: 2em;
   }
 `
+const commands = {
+    echo: {
+        description: 'Echo a passed string.',
+        usage: 'echo <string>',
+        fn: function () {
+            return `${Array.from(arguments).join(' ')}`
+        }
+    }
+}
+
 
 const CollapseStyled = styled(Collapse)`
   margin-top:1em;
@@ -106,6 +128,7 @@ export class HomeView extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props)
         this.state = {
+            editor: undefined,
             code: `pragma solidity ^0.5.3;
 
 contract SimpleStorage {
@@ -122,10 +145,23 @@ uint256 value;
 }`,
         }
     }
+    private editor = null;
+    // handleEditorDidMount = (editor: any) => this.editor = editor;
 
-    editorDidMount(editor: any, monaco: any) {
+    editorDidMount = (editor: any, monaco: any) => {
         console.log('editorDidMount', editor);
+        this.editor = editor;
         editor.focus();
+    }
+
+    handleResize = () => {
+        if (this.editor) {
+            (this.editor as any).layout();
+        }
+    }
+
+    componentDidMount() {
+        window.addEventListener('resize', this.handleResize);
     }
 
     onChange(newValue: any, e: any) {
@@ -144,26 +180,42 @@ uint256 value;
         console.log("copyABI clicked")
         copy(JSON.stringify(abi))
     }
-
+    child: {
+        console?: Console,
+    } = {};
+    echo = (text: string) => {
+        (this.child as any).console.log(text);
+    }
+    promptLabel = () => {
+        return "> ";
+    }
     render() {
         const { selectedContract } = this.props;
         return (
-
-            <Tabs type="card" style={{ paddingLeft: "1em", paddingRight: "1em", height: '100%' }} >
-                <TabPane tab={selectedContract && selectedContract.name} key="1" style={{ height: '100%' }}>
                     <Wrapper>
                         <Editor>
-                            <MonacoEditor
-                                height="500"
-                                language="solidity"
-                                theme="vs-dark"
-                                value={selectedContract && selectedContract.sourceCode}
-                                options={options}
-                                onChange={this.onChange}
-                                editorDidMount={this.editorDidMount}
-                            />
+                            <Tabs type="card" style={{ paddingLeft: "1em", paddingRight: "1em", height: '100%' }} >
+                                <TabPane tab={selectedContract && selectedContract.name} key="1" style={{ height: '100%' }}>
+                                    <MonacoEditor
+                                    language="solidity"
+                                    theme="vs-dark"
+                                    value={selectedContract && selectedContract.sourceCode}
+                                    options={options}
+                                    onChange={this.onChange}
+                                    editorDidMount={this.editorDidMount}
+                                    />
+                                </TabPane>
+                            </Tabs>
                         </Editor>
-                        <Results>Results</Results>
+                       
+                        <Results>
+                            <Terminal
+                                commands={commands}
+                                welcomeMessage={'Welcome to the Solid Studio Console!'}
+                                promptLabel={'$'}
+                                promptTextColor={'bliue'}
+                            />
+                        </Results>
                         <Details>
                             {selectedContract &&
                                 <TableDetails>
@@ -201,8 +253,7 @@ uint256 value;
                             </CollapseStyled>
                         </Details>
                     </Wrapper>
-                </TabPane>
-            </Tabs>
+                
 
 
 
@@ -222,6 +273,6 @@ export default connect(
     null
 )(HomeView);
 
-// connect
-// show current contract
+        // connect
+        // show current contract
 // 
