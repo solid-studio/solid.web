@@ -16,7 +16,7 @@ interface Props<FormFields> {
     // createOrUpdateConnection: (item: Connection) => any
     onSubmit: (item: FormFields) => void // TODO
     // selectedItem?: Connection
-    onChange?: OnChangeHandler<FormFields>
+    // onChange?: OnChangeHandler<FormFields>
     title: string
 }
 
@@ -30,7 +30,7 @@ type OnChangeHandler<FormFields> = <K extends keyof FormFields>(
 ) => void;
 
 interface Handlers<FormFields> {
-    onChange: OnChangeHandler<FormFields>;
+    // onChange: OnChangeHandler<FormFields>;
     onSubmit: (e?: React.FormEvent<HTMLFormElement> | undefined) => void
 }
 
@@ -50,10 +50,6 @@ class GenericModal<FormFields> extends React.Component<Props<FormFields>, State<
         this.setState({
             fields: result
         });
-        debugger;
-        if (this.props.onChange) {
-            this.props.onChange(field, value)
-        }
     };
 
     submit = (values: FormFields) => {
@@ -88,7 +84,7 @@ class GenericModal<FormFields> extends React.Component<Props<FormFields>, State<
                         render={({
                             handleSubmit
                         }: FormikProps<FormFields>) => (
-                                <FormComponent onSubmit={handleSubmit} onChange={this.onChange} fields={fields} />
+                                <FormComponent onSubmit={handleSubmit} fields={fields} />
                             )}
                     />
                 </div>

@@ -8,11 +8,28 @@ import { FormikErrors, Field } from "formik";
 import { Contract, Status } from "../redux/types";
 import { ApplicationState } from "../redux/reducers";
 import { createOrUpdateContract, createContractCancelled } from "../redux/actions";
-import { GenericModal, TextField, TextAreaField } from "./atoms";
+import { GenericModal, TextField, TextAreaField, RadioField } from "./atoms";
 import { ABI, Bytecode } from "./contract-sample-data";
 
 const FORM_TITLE = "ItemForm"; // TODO change to dinamic 
-
+const radioFromOptions = [
+    {
+        "key": "abi",
+        "value": "ABI"
+    },
+    {
+        "key": "sourcecode",
+        "value": "Source Code",
+    },
+    {
+        "key": "bytecode",
+        "value": "Bytecode"
+    },
+    {
+        "key": "contract",
+        "value": "Contract"
+    },
+]
 interface Props {
     visible: boolean;
     loading: boolean;
@@ -22,24 +39,15 @@ interface Props {
 }
 
 export class ContractModalComponent extends GenericModal<Contract> {
-    onChange: OnChangeHandler<Contract> = (field, value) => {
-        debugger;
-        console.log("From contract modal", field, value)
-        // OnChangeHandler<FormFields>;
-    }
+
 };
 
-type OnChangeHandler<Contract> = <K extends keyof Contract>(
-    s: K,
-    a: Contract[K]
-) => void;
+// type OnChangeHandler<Contract> = <K extends keyof Contract>(
+//     s: K,
+//     a: Contract[K]
+// ) => void;
 
 export class ContractModal extends React.Component<Props> {
-    onChange = (field: any, value: any) => {
-        debugger;
-        console.log("From contract modal", field, value)
-        // OnChangeHandler<FormFields>;
-    }
     saveContract = (item: Contract) => {
         // if (this.state.itemToEdit) { // TODO
         //     // update values
@@ -57,13 +65,13 @@ export class ContractModal extends React.Component<Props> {
         return (
             <ContractModalComponent
                 title="Add Contract Instance"
-                onChange={this.onChange}
                 onSubmit={this.saveContract}
                 visible={this.props.visible}
                 loading={this.props.loading}
                 onCancel={this.props.createContractCancelled}
                 initialValues={{ name: "ERC20.sol", sourceCode: "", abi: [], bytecode: "" }}
                 validator={(items: Contract) => {
+                    console.log("Validator called")
                     const errors: FormikErrors<Contract> = {};
                     if (!items.name) {
                         errors.name = "Required";
@@ -71,10 +79,9 @@ export class ContractModal extends React.Component<Props> {
                     if (!items.sourceCode) {
                         errors.sourceCode = "Required";
                     }
-                    if (compileFunction)
-                        return errors;
+                    return errors;
                 }}
-                FormComponent={({ fields: { name, sourceCode }, onChange, onSubmit }) => (
+                FormComponent={({ fields: { name, sourceCode }, onSubmit }) => (
                     <Form id={FORM_TITLE} onSubmit={onSubmit}>
                         <Field
                             name="name"
@@ -82,18 +89,35 @@ export class ContractModal extends React.Component<Props> {
                                 <TextField
                                     {...innerProps}
                                     label="Name"
-                                    placeHolder="http://" />
+                                    placeHolder="Contract.Sol" />
                             )}
                         />
                         <Field
-                            name="sourceCode"
-                            onChange={onChange}
+                            name="address"
+                            render={(innerProps: any) => (
+                                <TextField
+                                    {...innerProps}
+                                    label="Address"
+                                    placeHolder="0xAC716460A84B85d774bEa75666ddf0088b024741" />
+                            )}
+                        />
+                        <Field
+                            name="type"
+                            render={(innerProps: any) => (
+                                <RadioField
+                                    options={radioFromOptions}
+                                    {...innerProps}
+                                    defaultValue="abi"
+                                    label="From" />
+                            )}
+                        />
+                        <Field
+                            name="abi"
                             render={(innerProps: any) => (
                                 <TextAreaField
                                     {...innerProps}
-                                    label="Source code"
-                                    onChange={this.onChange}
-                                    placeHolder="pragma solidity ^0.5.3" />
+                                    label="ABI"
+                                    placeHolder="Inser a valid ABI" />
                             )}
                         />
                     </Form>
