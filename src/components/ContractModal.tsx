@@ -1,25 +1,23 @@
-import React from "react";
-import { bindActionCreators, Dispatch, ActionCreator, Action } from "redux";
-import { connect } from "react-redux";
-
 import { Form } from "antd";
-import { FormikErrors, Field } from "formik";
-
-import { Contract, Status } from "../redux/types";
+import { Field, FormikErrors } from "formik";
+import React from "react";
+import { connect } from "react-redux";
+import { Action, ActionCreator, bindActionCreators, Dispatch } from "redux";
+import { createContractCancelled, createOrUpdateContract } from "../redux/actions";
 import { ApplicationState } from "../redux/reducers";
-import { createOrUpdateContract, createContractCancelled } from "../redux/actions";
-import { GenericModal, TextField, TextAreaField, RadioField } from "./atoms";
+import { Contract, Status } from "../redux/types";
+import { GenericModal, RadioField, TextAreaField, TextField } from "./atoms";
 import { ABI, Bytecode } from "./contract-sample-data";
 
 const FORM_TITLE = "ItemForm"; // TODO change to dinamic 
 const radioFromOptions = [
     {
-        "key": "abi",
-        "value": "ABI"
-    },
-    {
         "key": "sourcecode",
         "value": "Source Code",
+    },
+    {
+        "key": "abi",
+        "value": "ABI"
     },
     {
         "key": "bytecode",
@@ -38,14 +36,67 @@ interface Props {
     createContractCancelled: ActionCreator<Action>
 }
 
+// {
+//     'test.sol': {
+//         content: 'contract C { function f() public { } }'
+//     }
+// },
+
+
+
+const sourceCodeIsValid = (sourceCode: string, name: string) => {
+    console.log("sourceCodes", sourceCode, name);
+    //const appWorker = new CompilerWorker();
+    // let appWorker;
+    // appWorker = new Worker('./compiler.worker.js')
+
+    // // const { result, error } = useWorker('./slow_fib.js', 10);
+    // if ((window as any).Worker) {
+    //     console.log("worker supported");
+    //     appWorker.onmessage = function (e) {
+    //         console.log("Message received", e)
+    //         switch (e.data.event) {
+    //             case '1':
+    //                 return "1";
+    //             case '2':
+    //                 return "2";
+    //             case '3':
+    //                 return "3";
+    //             default:
+    //                 console.warn('WORKER', 'No appropriate handler was found')
+    //         }
+    //     }
+    //     appWorker.postMessage("Hello World");
+    // }
+
+    // console.log("here")
+    // const inputObject: any = {};
+    // inputObject[`${name}`] = {
+    //     content: sourceCode
+    // }
+    // const input = simpleCompilerInput(inputObject, { optimize: true });
+    // const result = JSON.parse(solc.compile(input))
+    // console.log("RESULT", result)
+
+    // const worker = new Worker();
+
+    // worker.postMessage({ a: 1 });
+    // worker.onmessage = (event) => { };
+
+    // worker.addEventListener("message", (event) => { });
+    return true;
+}
+
 export class ContractModalComponent extends GenericModal<Contract> {
 
 };
 
-// type OnChangeHandler<Contract> = <K extends keyof Contract>(
-//     s: K,
-//     a: Contract[K]
-// ) => void;
+// let appWorker
+
+//     appWorker = new Worker('../utils/compiler.js')
+
+
+// }
 
 export class ContractModal extends React.Component<Props> {
     saveContract = (item: Contract) => {
@@ -62,6 +113,7 @@ export class ContractModal extends React.Component<Props> {
     }
 
     render() {
+
         return (
             <ContractModalComponent
                 title="Add Contract Instance"
@@ -78,6 +130,13 @@ export class ContractModal extends React.Component<Props> {
                     }
                     if (!items.sourceCode) {
                         errors.sourceCode = "Required";
+                    }
+
+                    if (items.name && items.sourceCode && !sourceCodeIsValid(items.sourceCode, items.name)) {
+                        // const { result, error } = useWorker('./slow_fib.js', 10);
+                        // console.log("Result", result, error);
+                        // //&& !sourceCodeIsValid(items.sourceCode, items.name)
+                        errors.sourceCode = "Invalid solidity code";
                     }
                     return errors;
                 }}
@@ -107,17 +166,17 @@ export class ContractModal extends React.Component<Props> {
                                 <RadioField
                                     options={radioFromOptions}
                                     {...innerProps}
-                                    defaultValue="abi"
+                                    defaultValue="sourcecode"
                                     label="From" />
                             )}
                         />
                         <Field
-                            name="abi"
+                            name="sourceCode"
                             render={(innerProps: any) => (
                                 <TextAreaField
                                     {...innerProps}
-                                    label="ABI"
-                                    placeHolder="Inser a valid ABI" />
+                                    label="Source code"
+                                    placeHolder="pragma solidity ^0.5.8" />
                             )}
                         />
                     </Form>

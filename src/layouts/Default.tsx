@@ -1,15 +1,16 @@
+import { Button, Dropdown, Icon, Menu, Tree } from 'antd';
 import React from 'react';
-import { bindActionCreators, Dispatch, ActionCreator, Action } from "redux";
 import { connect } from "react-redux";
-
+import { Action, ActionCreator, bindActionCreators, Dispatch } from "redux";
 import styled, { css } from 'styled-components';
-import { Button, Menu, Dropdown, Icon, Tree } from 'antd';
-
-import { createConnectionStarted, getConnections, createContractStarted, getContractInstances, contractSelected } from "../redux/actions"
-import { Connection, Contract } from "../redux/types";
-import { ApplicationState } from "../redux/reducers";
-
 import { ConnectionModal, ContractModal } from "../components";
+import { contractSelected, createConnectionStarted, createContractStarted, getConnections, getContractInstances } from "../redux/actions";
+import { ApplicationState } from "../redux/reducers";
+import { Connection, Contract } from "../redux/types";
+import CompilerWorker from '../workers/compiler-worker';
+
+
+
 
 const ButtonGroup = Button.Group;
 const DirectoryTree = Tree.DirectoryTree;
@@ -120,9 +121,13 @@ interface Props {
     contractSelected: ActionCreator<Action>
 }
 
+let compilerWorker: Worker;
+
 export class DefaultLayout extends React.Component<Props> {
 
     componentDidMount() {
+        // start worker for compiler
+        compilerWorker = new CompilerWorker();
         this.props.getConnections();
         this.props.getContractInstances(); // TODO, need to be filtered by connection
     }
@@ -139,7 +144,9 @@ export class DefaultLayout extends React.Component<Props> {
             this.props.createConnectionStarted();
         }
         else if (key === 'connection') {
-            this.props.createConnectionStarted();
+            compilerWorker.postMessage({ solc: "123" });
+            compilerWorker.onmessage = (event) => { };
+            // this.props.createConnectionStarted();
         }
     }
 
