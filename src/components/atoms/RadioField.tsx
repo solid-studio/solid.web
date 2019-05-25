@@ -1,8 +1,8 @@
-import React from "react";
 import { Form, Radio } from "antd";
 import { FieldProps } from "formik";
-
+import React from "react";
 import { Connection } from "../../redux/types";
+
 
 const RadioGroup = Radio.Group;
 
@@ -40,7 +40,7 @@ export const RadioField: React.FC<InputOwnProps> = ({
         >
             <RadioGroup {...field} value={defaultValue}>
                 {options && options.map((item: RadioOption) => {
-                    return <Radio disabled={item.key !== defaultValue} value={item.key}>{item.value}</Radio>
+                    return <Radio key={item.key} disabled={item.key !== defaultValue} value={item.key}>{item.value}</Radio>
                 })}
             </RadioGroup>
         </FormItem>
