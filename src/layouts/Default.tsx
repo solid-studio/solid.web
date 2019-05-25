@@ -16,10 +16,10 @@ const DirectoryTree = Tree.DirectoryTree;
 const { TreeNode } = Tree;
 
 const Wrapper = styled.div`
-  height: 100%;
+  height: 100vh;
   display: grid;
   grid-template-columns: 20em auto 20em;
-  grid-template-rows: 5em auto;
+  grid-template-rows: 5em 1fr;
   grid-row-gap: 0.4px;
   grid-template-areas: 
     "header header header"
