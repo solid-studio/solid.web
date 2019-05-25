@@ -1,5 +1,4 @@
-import { ActionCreator } from "redux";
-import { Action } from "redux";
+import { Action, ActionCreator } from "redux";
 import { ThunkAction } from "redux-thunk";
 import { ApplicationState } from "../redux/reducers";
 

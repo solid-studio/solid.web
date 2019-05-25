@@ -1,12 +1,12 @@
-import React from "react";
-import MonacoEditor from 'react-monaco-editor';
-import styled from 'styled-components';
+import { Collapse, Icon, Tabs } from 'antd';
 import copy from 'copy-to-clipboard';
+import React from "react";
+import Terminal from 'react-console-emulator';
+import MonacoEditor from 'react-monaco-editor';
 import { connect } from "react-redux";
+import styled from 'styled-components';
 import { ApplicationState } from "../redux/reducers";
-import { Tabs, Icon, Collapse } from 'antd';
 import { Contract } from "../redux/types";
-import Terminal from 'react-console-emulator'
 
 const TabPane = Tabs.TabPane;
 const Panel = Collapse.Panel;
@@ -80,6 +80,8 @@ const TableDetails = styled.table`
   }
 `
 
+
+
 const commands = {
     echo: {
         description: 'Echo a passed string.',
@@ -96,6 +98,9 @@ const CollapseStyled = styled(Collapse)`
 
 export class HomeView extends React.Component<Props, State> {
     private editor = null;
+    private child: {
+        console?: Console,
+    } = {};
 
     constructor(props: Props) {
         super(props)
@@ -150,9 +155,7 @@ uint256 value;
         console.log("copyABI clicked")
         copy(JSON.stringify(abi))
     }
-    child: {
-        console?: Console,
-    } = {};
+
     echo = (text: string) => {
         (this.child as any).console.log(text);
     }
@@ -162,71 +165,70 @@ uint256 value;
     render() {
         const { selectedContract } = this.props;
         return (
-                    <Wrapper>
-                        <Editor>
-                            <Tabs type="card" style={{ paddingLeft: "1em", paddingRight: "1em", height: '100%' }} >
-                                <TabPane tab={selectedContract && selectedContract.name} key="1" style={{ height: '100%' }}>
-                                    <MonacoEditor
-                                    language="solidity"
-                                    theme="vs-dark"
-                                    value={selectedContract && selectedContract.sourceCode}
-                                    options={options}
-                                    onChange={this.onChange}
-                                    editorDidMount={this.editorDidMount}
-                                    />
-                                </TabPane>
-                            </Tabs>
-                        </Editor>
-                       
-                        <Results>
-                            <Terminal
-                                commands={commands}
-                                welcomeMessage={'Welcome to the Solid Studio Console!'}
-                                promptLabel={'$'}
-                                promptTextColor={'bliue'}
+            <Wrapper>
+                <Editor>
+                    <Tabs type="card" style={{ paddingLeft: "1em", paddingRight: "1em", height: '100%' }} >
+                        <TabPane tab={selectedContract && selectedContract.name} key="1" style={{ height: '100%' }}>
+                            <MonacoEditor
+                                language="solidity"
+                                theme="vs-dark"
+                                value={selectedContract && selectedContract.sourceCode}
+                                options={options}
+                                onChange={this.onChange}
+                                editorDidMount={this.editorDidMount}
                             />
-                        </Results>
-                        <Details>
-                            {selectedContract &&
-                                <TableDetails>
-                                    <thead>
-                                        <tr>
-                                            <th>Details</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>Address</td>
-                                            <td>0x692a70d2e424a56d2c6c27aa97d1a86395877b3a</td>
-                                        </tr>
-                                        <tr>
-                                            <td>ABI</td>
-                                            <td><Icon onClick={() => this.copyABI(selectedContract.abi)} type="copy" /></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Bytecode</td>
-                                            <td><Icon onClick={() => this.copyByteCode(selectedContract.bytecode)} type="copy" /></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Size</td>
-                                            <td>12 KB</td>
-                                        </tr>
-                                    </tbody>
-                                </TableDetails>}
-                            <CollapseStyled defaultActiveKey={['0']} onChange={this.callback} bordered={false}>
-                                <Panel header="Methods" key="2">
-                                    <p>text</p>
-                                </Panel>
-                                <Panel header="Storage" key="3">
-                                    <p>text</p>
-                                </Panel>
-                            </CollapseStyled>
-                        </Details>
-                    </Wrapper>
-                
-
-
-
+                        </TabPane>
+                    </Tabs>
+                </Editor>
+                <Results>
+                    <Terminal
+                        className="solid-terminal"
+                        promptLabelColor="#DF1A7A"
+                        promptTextColor="#DF1A7A"
+                        textColor="#25b864"
+                        commands={commands}
+                        welcomeMessage={'Welcome to the Solid Studio Console!'}
+                        promptLabel={'$'}
+                    />
+                </Results>
+                <Details>
+                    {selectedContract &&
+                        <TableDetails>
+                            <thead>
+                                <tr>
+                                    <th>Details</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Address</td>
+                                    <td>0x692a70d2e424a56d2c6c27aa97d1a86395877b3a</td>
+                                </tr>
+                                <tr>
+                                    <td>ABI</td>
+                                    <td><Icon onClick={() => this.copyABI(selectedContract.abi)} type="copy" /></td>
+                                </tr>
+                                <tr>
+                                    <td>Bytecode</td>
+                                    <td><Icon onClick={() => this.copyByteCode(selectedContract.bytecode)} type="copy" /></td>
+                                </tr>
+                                <tr>
+                                    <td>Size </td>
+                                    <td>12 KB</td>
+                                </tr>
+                            </tbody>
+                        </TableDetails>}
+                    <CollapseStyled defaultActiveKey={['0']} onChange={this.callback} bordered={false}>
+                        <Panel header="Methods" key="2">
+                            <p>
+                                Text</p>
+                        </Panel>
+                        <Panel header="Storage" key="3">
+                            <p>text</p>
+                        </Panel>
+                    </CollapseStyled>
+                </Details>
+            </Wrapper>
         )
     }
 }

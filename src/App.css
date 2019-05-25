@@ -34,6 +34,9 @@ html, body {
     height: 100%;
     width: 100%;   
 }
+.ant-tabs.ant-tabs-top.ant-tabs-card.ant-tabs-no-animation{
+    padding: 0 !important;
+}
 /* For Collapse */
 .ant-collapse > .ant-collapse-item > .ant-collapse-header {
     position: relative;
@@ -54,8 +57,9 @@ html, body {
     border-bottom: 0.018px solid white;
 }
 
-/* monaco editor */
-/* .monaco-editor {
-    height: 100% !important;
-    width: 100% !important;
-} */
+
+/* solid-terminal */
+
+.solid-terminal {
+    min-height: 100% !important;
+}
