@@ -9,6 +9,8 @@ import { Contract, Status } from "../redux/types";
 import { GenericModal, RadioField, TextAreaField, TextField } from "./atoms";
 import { ABI, Bytecode } from "./contract-sample-data";
 import { validateSourceCode } from "../worker-redux/actions";
+import { simpleCompilerInput } from "../workers/compiler-worker/compiler-input";
+import { solc } from "../utils/compiler";
 
 const FORM_TITLE = "ItemForm"; // TODO change to dinamic 
 const radioFromOptions = [
@@ -43,7 +45,55 @@ export class ContractModalComponent extends GenericModal<Contract> {
 
 };
 
+// const sourceCodeIsValid = (sourceCode: string, name: string) => {
+//     const inputObject: any = {};
+//     inputObject[`${name}`] = {
+//         content: sourceCode
+//     }
+//     const input = simpleCompilerInput(inputObject, { optimize: true });
+//     const result = JSON.parse(solc.compile(input));
+//     console.log("RESULT", result)
+//     return result.errors == undefined;
+// }
 export class ContractModal extends React.Component<Props> {
+    compiler: any;
+
+    componentDidMount() {
+        this.compiler = solc.compile;
+        const sourceCode = `
+        pragma solidity ^0.5.8;
+
+contract SimpleStorage {
+    
+    uint256 value;
+    
+    constructor() public {
+        value = 1000;
+    }
+    
+    function getValue(uint256 newValue) public view returns(uint256){
+        if(newValue > 100){
+            return newValue;
+        }
+        return value;
+    }
+}`
+        this.sourceCodeIsValid(sourceCode, "SimpleStorage.sol")
+        // TODO.. I'm not sure how this part works, is like I need to cache the usage
+        // of my module. Not sure if webpack is doing code splitting.
+    }
+
+    sourceCodeIsValid = (sourceCode: string, name: string) => {
+        const inputObject: any = {};
+        inputObject[`${name}`] = {
+            content: sourceCode
+        }
+        const input = simpleCompilerInput(inputObject, { optimize: true });
+        const result = JSON.parse(this.compiler(input));
+        console.log("RESULT", result)
+        return result.errors == undefined;
+    }
+
     saveContract = (item: Contract) => {
         // if (this.state.itemToEdit) { // TODO
         //     // update values
@@ -81,13 +131,13 @@ export class ContractModal extends React.Component<Props> {
                         errors.sourceCode = "Required";
                     }
 
-                    if (items.name && items.sourceCode) {
+                    if (items.name && items.sourceCode && !this.sourceCodeIsValid(items.sourceCode, items.name)) {
                         //&& !sourceCodeIsValid(items.sourceCode, items.name)
                         // const { result, error } = useWorker('./slow_fib.js', 10);
                         // console.log("Result", result, error);
                         // //&& !sourceCodeIsValid(items.sourceCode, items.name)
-                        this.props.validateSourceCode(items.sourceCode);
-                        // errors.sourceCode = "Invalid solidity code";
+                        // this.props.validateSourceCode(items.sourceCode);
+                        errors.sourceCode = "Invalid solidity code";
                     }
                     return errors;
                 }}
