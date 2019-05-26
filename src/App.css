@@ -54,7 +54,7 @@ html, body {
 }
 
 .ant-collapse-borderless > .ant-collapse-item {
-    border-bottom: 0.018px solid white;
+    border-bottom: none;
 }
 
 

@@ -38,7 +38,7 @@ const Details = styled.div`
     background-color: #303030;
     grid-area: details;
     color: white;
-    padding: 0.5em 1em;
+    padding: 2em 1em;
 `
 
 const Results = styled.div`
@@ -73,7 +73,7 @@ const options = {
 const TableDetails = styled.table`
   th { 
     color: white;
-    font-size: 1em;
+    font-size: 1.2em;
     font-weight: 100;
     font-family: 'Helvetica'
   }
