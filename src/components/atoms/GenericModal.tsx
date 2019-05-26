@@ -15,6 +15,8 @@ interface Props<FormFields> {
     validator: (item: FormFields) => FormikErrors<FormFields>
     onSubmit: (item: FormFields) => void // TODO
     title: string
+    disableSubmitButton?: boolean
+    buttonText?: string
 }
 
 type FormComponentProps<FormFields> = { fields: FormFields } & Handlers<
@@ -54,7 +56,7 @@ class GenericModal<FormFields> extends React.Component<Props<FormFields>, State<
     }
 
     public render() {
-        const { FormComponent, visible, onCancel, loading, validator, title } = this.props;
+        const { FormComponent, visible, onCancel, loading, validator, title, disableSubmitButton } = this.props;
         const { fields } = this.state;
         return (
 
@@ -62,7 +64,6 @@ class GenericModal<FormFields> extends React.Component<Props<FormFields>, State<
                 width={500}
                 visible={visible}
                 title={title} // TODO change title if it is edit or creation mode
-                okText="Save"
                 onCancel={onCancel}
                 footer={[<Button key="cancel" onClick={onCancel}>Cancel</Button>,
                 <Button
@@ -70,7 +71,8 @@ class GenericModal<FormFields> extends React.Component<Props<FormFields>, State<
                     key="submit"
                     htmlType="submit"
                     type="primary"
-                    loading={loading}>Save</Button>]}>
+                    disabled={disableSubmitButton || false}
+                    loading={loading}>{this.props.buttonText || "Save"}</Button>]}>
                 <div>
                     <Formik
                         initialValues={fields}

@@ -7,10 +7,7 @@ import { ConnectionModal, ContractModal } from "../components";
 import { contractSelected, createConnectionStarted, createContractStarted, getConnections, getContractInstances } from "../redux/actions";
 import { ApplicationState } from "../redux/reducers";
 import { Connection, Contract } from "../redux/types";
-import CompilerWorker from '../workers/compiler-worker';
-
-
-
+import { loadCompilerWorker } from "../worker-redux/actions"
 
 const ButtonGroup = Button.Group;
 const DirectoryTree = Tree.DirectoryTree;
@@ -119,15 +116,15 @@ interface Props {
     getConnections: ActionCreator<any> // TODO fix this
     getContractInstances: ActionCreator<any>
     contractSelected: ActionCreator<Action>
+    loadCompilerWorker: ActionCreator<any>
 }
-
-let compilerWorker: Worker;
 
 export class DefaultLayout extends React.Component<Props> {
 
     componentDidMount() {
         // start worker for compiler
-        compilerWorker = new CompilerWorker();
+        // load default version for MVP
+        this.props.loadCompilerWorker();
         this.props.getConnections();
         this.props.getContractInstances(); // TODO, need to be filtered by connection
     }
@@ -144,9 +141,7 @@ export class DefaultLayout extends React.Component<Props> {
             this.props.createConnectionStarted();
         }
         else if (key === 'connection') {
-            compilerWorker.postMessage({ solc: "123" });
-            compilerWorker.onmessage = (event) => { };
-            // this.props.createConnectionStarted();
+            this.props.createConnectionStarted();
         }
     }
 
@@ -235,6 +230,7 @@ const mapStateToProps = (state: ApplicationState) => {
 const mapDispatchToProps = (dispatch: Dispatch) => {
     return bindActionCreators(
         {
+            loadCompilerWorker,
             createConnectionStarted,
             getConnections,
             createContractStarted,

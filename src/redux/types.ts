@@ -17,6 +17,7 @@ export interface Connection {
 
 export interface Contract {
     _id?: string;
+    address?: string;
     connectionId?: string
     name: string
     sourceCode: string
@@ -32,6 +33,17 @@ export interface CreateContract {
 export interface CreateConnection {
     status: Status
     result?: Connection
+}
+
+export interface ValidateSourceCode {
+    status: Status
+    compilerVersion: string
+    sourceCode: string
+}
+
+export interface LoadCompilerRequest {
+    version: string;
+    status: Status
 }
 
 export interface Transaction {

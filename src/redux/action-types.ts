@@ -11,7 +11,8 @@ export enum ActionType {
     CONTRACT_CREATED = "CONTRACT_CREATED",
     CONNECTION_CREATED = "CONNECTION_CREATED",
     TRANSACTIONS_RECEIVED = "TRANSACTIONS_RECEIVED",
-    CONTRACT_SELECTED = "CONTRACT_SELECTED"
+    CONTRACT_SELECTED = "CONTRACT_SELECTED",
+    LOAD_COMPILER = "LOAD_COMPILER"
 }
 
 // connection
@@ -56,5 +57,15 @@ export interface TransactionsReceivedAction extends Action {
     payload: Transaction[];
 }
 
+// compiler
+export interface LoadCompilerWorkerAction extends Action {
+    type: ActionType.LOAD_COMPILER;
+    payload: Worker | undefined
+}
 
-export type Actions = ContractSelectedAction | ContractsReceivedAction | ContractCreatedAction | CreateContractAction | CreateConnectionAction | ConnectionsReceivedAction | ConnectionCreatedAction | TransactionsReceivedAction;
+export type Actions = LoadCompilerWorkerAction |
+    ContractSelectedAction |
+    ContractsReceivedAction | ContractCreatedAction |
+    CreateContractAction | CreateConnectionAction |
+    ConnectionsReceivedAction | ConnectionCreatedAction |
+    TransactionsReceivedAction;

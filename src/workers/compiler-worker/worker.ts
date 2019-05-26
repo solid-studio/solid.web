@@ -1,44 +1,62 @@
-import axios from "axios";
+import { IMessageEvent, MessageType, IValidateSourceCodeResultMessage } from "../../worker-redux/types";
+import { solidityCompilerVersionsMap, solidityCompilerInstanceMap } from "./compiler-versions";
+import { simpleCompilerInput } from "./compiler-input";
+import { Status } from "../../redux/types";
 
 const ctx: Worker = self as any
 const wrapper = require('solc/wrapper');
+const BASE_URL = "https://solc-bin.ethereum.org/bin/";
 
-(ctx as any).importScripts("https://solc-bin.ethereum.org/bin/soljson-v0.5.8+commit.23d335f2.js");
-
-ctx.onmessage = event => {
-    console.log("wrapper", wrapper)
-    console.log("wrapper", (ctx as any))
-    console.log("event", event);
-    const compiler = wrapper((ctx as any).Module)
-    console.log("compiler", compiler)
-    ctx.postMessage("whatever");
-
-    // load('https://solc-bin.ethereum.org/bin/soljson-v0.5.8+commit.23d335f2.js')
-    //     .then((result) => {
-    //         // console.log("solc", solc)
-    //         console.log("Resultado", (ctx as any).importScripts)
-    //         console.log("event", event.data, "result", result);
-    //         (ctx as any).importScripts("https://solc-bin.ethereum.org/bin/soljson-v0.5.8+commit.23d335f2.js");
-    //         const compiler = wrapper((ctx as any).Module)
-    //         console.log("compiler", compiler)
-    //         ctx.postMessage("whatever");
-    //     })
-    //     .catch((error) => {
-    //         console.log("Error", error)
-    //     })
-    // importScripts('https://solc-bin.ethereum.org/bin/soljson-v0.5.8+commit.23d335f2.js');
-    // const solc = wrapper("soljson-v0.5.8+commit.23d335f2.js")
-    // console.log("solc", solc)
-    // console.log("SOLC", (window as any).Module)
+ctx.onmessage = (event: IMessageEvent) => {
+    const msg = event.data;
+    console.log("Event msg", msg)
+    switch (msg.type) {
+        case MessageType.LOAD_COMPILER_VERSION:
+            const version = solidityCompilerVersionsMap.get(msg.payload.version);
+            console.log("Version", version, msg.payload.version)
+            const url = `${BASE_URL}${version}`;
+            (ctx as any).importScripts(url);
+            const compiler = wrapper((ctx as any).Module)
+            solidityCompilerInstanceMap.set(version, compiler);
+            const compilerInstance = solidityCompilerInstanceMap.get(version);
+            console.log("Compiler Instance", compilerInstance)
+            // TODO, if it is already cached, then no need to re load..
+            ctx.postMessage({
+                type: MessageType.LOAD_COMPILER_VERSION_RESULT,
+                payload: {
+                    version: 1,
+                    status: Status.Completed
+                }
+            })
+            break;
+        case MessageType.VALIDATE_SOURCE_CODE:
+            const { sourceCode, compilerVersion } = msg.payload;
+            const inputObject: any = {};
+            inputObject[`${name}`] = {
+                content: sourceCode
+            }
+            try {
+                const input = simpleCompilerInput(inputObject, { optimize: true });
+                const version = solidityCompilerVersionsMap.get(compilerVersion);
+                const compilerInstance = solidityCompilerInstanceMap.get(version);
+                const result = JSON.parse(compilerInstance.compile(input))
+                console.log("Result", result)
+                const validateSourceCodeResult: IValidateSourceCodeResultMessage = {
+                    type: MessageType.VALIDATE_SOURCE_CODE_RESULT,
+                    payload: {
+                        compilerVersion,
+                        sourceCode,
+                        status: Status.Completed,
+                        isValid: result.errors == undefined // result..?
+                    }
+                }
+                ctx.postMessage(validateSourceCodeResult)
+            } catch (e) {
+                ctx.postMessage({
+                    type: MessageType.ERROR,
+                    error: e.message
+                });
+            }
+            break;
+    }
 };
-
-// ctx.postMessage("whatever");
-
-// ctx.addEventListener('message', (e) => {
-//     console.log("message", "asdasd")
-// })
-//simple XHR request in pure JavaScript
-const load = async (url: string) => {
-    const result = await axios.get(url);
-    return result;
-}

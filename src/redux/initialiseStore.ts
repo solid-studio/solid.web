@@ -5,6 +5,8 @@ import reduxThunk from "redux-thunk";
 import http from "../utils/http";
 
 import apiMiddleware from "./middlewares/api";
+import workerMessengerMiddleware from "./middlewares/worker-messenger"
+
 import rootReducer, { ApplicationState } from "./reducers";
 
 const initialiseStore = (history: History) => {
@@ -20,7 +22,8 @@ const initialiseStore = (history: History) => {
 
     const middlewares = applyMiddleware(
         reduxThunk.withExtraArgument(http),
-        apiMiddleware
+        apiMiddleware,
+        workerMessengerMiddleware
     );
 
     const store: Store<ApplicationState> = createStore(

@@ -8,6 +8,7 @@ import { ApplicationState } from "../redux/reducers";
 import { Contract, Status } from "../redux/types";
 import { GenericModal, RadioField, TextAreaField, TextField } from "./atoms";
 import { ABI, Bytecode } from "./contract-sample-data";
+import { validateSourceCode } from "../worker-redux/actions";
 
 const FORM_TITLE = "ItemForm"; // TODO change to dinamic 
 const radioFromOptions = [
@@ -34,69 +35,13 @@ interface Props {
     itemToEdit?: Contract
     createOrUpdateContract: (item: Contract) => void
     createContractCancelled: ActionCreator<Action>
-}
-
-// {
-//     'test.sol': {
-//         content: 'contract C { function f() public { } }'
-//     }
-// },
-
-
-
-const sourceCodeIsValid = (sourceCode: string, name: string) => {
-    console.log("sourceCodes", sourceCode, name);
-    //const appWorker = new CompilerWorker();
-    // let appWorker;
-    // appWorker = new Worker('./compiler.worker.js')
-
-    // // const { result, error } = useWorker('./slow_fib.js', 10);
-    // if ((window as any).Worker) {
-    //     console.log("worker supported");
-    //     appWorker.onmessage = function (e) {
-    //         console.log("Message received", e)
-    //         switch (e.data.event) {
-    //             case '1':
-    //                 return "1";
-    //             case '2':
-    //                 return "2";
-    //             case '3':
-    //                 return "3";
-    //             default:
-    //                 console.warn('WORKER', 'No appropriate handler was found')
-    //         }
-    //     }
-    //     appWorker.postMessage("Hello World");
-    // }
-
-    // console.log("here")
-    // const inputObject: any = {};
-    // inputObject[`${name}`] = {
-    //     content: sourceCode
-    // }
-    // const input = simpleCompilerInput(inputObject, { optimize: true });
-    // const result = JSON.parse(solc.compile(input))
-    // console.log("RESULT", result)
-
-    // const worker = new Worker();
-
-    // worker.postMessage({ a: 1 });
-    // worker.onmessage = (event) => { };
-
-    // worker.addEventListener("message", (event) => { });
-    return true;
+    validateSourceCode: ActionCreator<Action>
+    validatingSourceCode: boolean
 }
 
 export class ContractModalComponent extends GenericModal<Contract> {
 
 };
-
-// let appWorker
-
-//     appWorker = new Worker('../utils/compiler.js')
-
-
-// }
 
 export class ContractModal extends React.Component<Props> {
     saveContract = (item: Contract) => {
@@ -121,6 +66,7 @@ export class ContractModal extends React.Component<Props> {
                 visible={this.props.visible}
                 loading={this.props.loading}
                 onCancel={this.props.createContractCancelled}
+                disableSubmitButton={this.props.validatingSourceCode}
                 initialValues={{ name: "ERC20.sol", sourceCode: "", abi: [], bytecode: "" }}
                 validator={(items: Contract) => {
                     console.log("Validator called")
@@ -128,15 +74,20 @@ export class ContractModal extends React.Component<Props> {
                     if (!items.name) {
                         errors.name = "Required";
                     }
+                    if (!items.address) {
+                        errors.address = "Required";
+                    }
                     if (!items.sourceCode) {
                         errors.sourceCode = "Required";
                     }
 
-                    if (items.name && items.sourceCode && !sourceCodeIsValid(items.sourceCode, items.name)) {
+                    if (items.name && items.sourceCode) {
+                        //&& !sourceCodeIsValid(items.sourceCode, items.name)
                         // const { result, error } = useWorker('./slow_fib.js', 10);
                         // console.log("Result", result, error);
                         // //&& !sourceCodeIsValid(items.sourceCode, items.name)
-                        errors.sourceCode = "Invalid solidity code";
+                        this.props.validateSourceCode(items.sourceCode);
+                        // errors.sourceCode = "Invalid solidity code";
                     }
                     return errors;
                 }}
@@ -192,7 +143,8 @@ const mapStateToProps = (state: ApplicationState) => {
         createContract: state.appState.createContract,
         visible: state.appState.createContract.status === Status.Started,
         submitted: state.appState.createContract.status === Status.Completed,
-        loading: state.appState.createContract.status === Status.InProgress
+        loading: state.appState.createContract.status === Status.InProgress,
+        validatingSourceCode: state.appState.validateSourceCode.status === Status.Started
     };
 };
 
@@ -200,7 +152,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
     return bindActionCreators(
         {
             createOrUpdateContract,
-            createContractCancelled
+            createContractCancelled,
+            validateSourceCode
         },
         dispatch
     );
