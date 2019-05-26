@@ -98,65 +98,6 @@ const CollapseStyled = styled(Collapse)`
   margin-top:1em;
 `
 
-const sampleABI: AbiItem[] = [
-    {
-        "constant": true,
-        "inputs": [
-            {
-                "name": "",
-                "type": "bytes32"
-            }
-        ],
-        "name": "cars",
-        "outputs": [
-            {
-                "name": "",
-                "type": "address"
-            }
-        ],
-        "payable": false,
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "constant": false,
-        "inputs": [
-            {
-                "name": "_uuid",
-                "type": "string"
-            },
-            {
-                "name": "_address",
-                "type": "address"
-            }
-        ],
-        "name": "registryCar",
-        "outputs": [
-            {
-                "name": "",
-                "type": "bool"
-            }
-        ],
-        "payable": false,
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "constant": true,
-        "inputs": [],
-        "name": "test",
-        "outputs": [
-            {
-                "name": "",
-                "type": "address"
-            }
-        ],
-        "payable": false,
-        "stateMutability": "pure",
-        "type": "function"
-    }
-]
-
 export class HomeView extends React.Component<Props, State> {
     private editor = null;
     private child: {
@@ -262,8 +203,11 @@ uint256 value;
                             </thead>
                             <tbody>
                                 <tr>
+                                    <td>{selectedContract.name}</td>
+                                </tr>
+                                <tr>
                                     <td>Address</td>
-                                    <td>0x692a70d2e424a56d2c6c27aa97d1a86395877b3a</td>
+                                    <td>{selectedContract.address}</td>
                                 </tr>
                                 <tr>
                                     <td>ABI</td>
@@ -280,12 +224,11 @@ uint256 value;
                             </tbody>
                         </TableDetails>}
                     <CollapseStyled defaultActiveKey={['0']} onChange={this.callback} bordered={false}>
-                        <Panel header="Methods" key="2">
-                            <ContractActions abi={sampleABI} />
-                        </Panel>
-                        <Panel header="Storage" key="3">
-                            <p>text</p>
-                        </Panel>
+                        {selectedContract &&
+                            <Panel header="Methods" key="2">
+                                <ContractActions abi={selectedContract.abi} />
+                            </Panel>
+                        }
                     </CollapseStyled>
                 </Details>
             </Wrapper>
