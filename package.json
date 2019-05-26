@@ -74,6 +74,8 @@
     "ts-pnp": "1.1.2",
     "typescript": "3.4.5",
     "url-loader": "1.1.2",
+    "web3-eth-abi": "^1.0.0-beta.55",
+    "web3-utils": "^1.0.0-beta.55",
     "webpack": "4.29.6",
     "webpack-dev-server": "3.2.1",
     "webpack-manifest-plugin": "2.0.4",
