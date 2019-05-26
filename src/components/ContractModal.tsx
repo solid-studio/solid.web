@@ -91,7 +91,7 @@ contract SimpleStorage {
         const input = simpleCompilerInput(inputObject, { optimize: true });
         const result = JSON.parse(this.compiler(input));
         console.log("RESULT", result)
-        return result.errors == undefined;
+        return result.errors === undefined;
     }
 
     saveContract = (item: Contract) => {
