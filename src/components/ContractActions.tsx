@@ -114,10 +114,3 @@ const ContractView: React.FC<ContractViewProps> = (props: ContractViewProps) => 
         </Wrapper>
     )
 }
-// place holder,
-// TODO:
-
-// placeholder: input -> type + name
-// 
-// if stateMutability == view | pure | constant, then it is a call.. no inputs..
-// add icon next to the component
