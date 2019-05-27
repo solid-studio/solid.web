@@ -203,7 +203,7 @@ export class DefaultLayout extends React.Component<Props, State> {
         });
     }
 
-    onSideBackClick = () => {
+    onIDEClick = () => {
         this.setState({
             rightClickNodeTreeItem: {}
         });
@@ -224,7 +224,7 @@ export class DefaultLayout extends React.Component<Props, State> {
     render() {
         const { connections, contracts } = this.props;
         return (
-            <Wrapper {...this.props} onClick={this.onSideBackClick}>
+            <Wrapper {...this.props} onClick={this.onIDEClick}>
                 {this.getNodeTreeRightClickMenu()}
                 <Navbar>
                     <ButtonRightArea>
