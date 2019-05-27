@@ -1,10 +1,12 @@
 import React from 'react';
-import { Router } from "react-router-dom";
 import { Provider } from "react-redux";
-import { store, history } from "./redux";
-import Routes from "./routes";
+import { Router } from "react-router-dom";
 
+import './App.less';
 import './App.css';
+
+import { history, store } from "./redux";
+import Routes from "./routes";
 
 const App: React.FC = () => {
   return (
@@ -15,6 +17,5 @@ const App: React.FC = () => {
     </Provider>
   );
 }
-
 
 export default App;

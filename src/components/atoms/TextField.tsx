@@ -14,7 +14,9 @@ interface InputProps {
 type FormValues = Connection;
 
 type InputOwnProps = FieldProps<FormValues> & InputProps;
-
+const onChange = (e: any) => {
+    console.log(e);
+};
 export const TextField: React.FC<InputOwnProps> = ({
     label,
     field,
@@ -29,7 +31,7 @@ export const TextField: React.FC<InputOwnProps> = ({
             validateStatus={form.errors[field.name] && "error"}
             help={form.errors[field.name]}
         >
-            <Input size="large" type="text" {...field} placeholder={placeHolder} />
+            <Input onChange={onChange} size="large" type="text" {...field} placeholder={placeHolder} />
         </FormItem>
     );
 };

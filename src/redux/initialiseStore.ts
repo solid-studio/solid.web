@@ -2,9 +2,13 @@ import { History } from "history";
 import { createStore, applyMiddleware, compose, Store } from "redux";
 import reduxThunk from "redux-thunk";
 
-import http from "../utils/http";
+import api from "../utils/http";
+import web3 from "../utils/web3-helper";
 
 import apiMiddleware from "./middlewares/api";
+import workerMessengerMiddleware from "./middlewares/worker-messenger"
+import web3Middleware from "./middlewares/web3";
+
 import rootReducer, { ApplicationState } from "./reducers";
 
 const initialiseStore = (history: History) => {
@@ -19,8 +23,10 @@ const initialiseStore = (history: History) => {
         compose;
 
     const middlewares = applyMiddleware(
-        reduxThunk.withExtraArgument(http),
-        apiMiddleware
+        reduxThunk.withExtraArgument({ api, web3 }),
+        apiMiddleware,
+        workerMessengerMiddleware,
+        web3Middleware
     );
 
     const store: Store<ApplicationState> = createStore(

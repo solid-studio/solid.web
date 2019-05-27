@@ -1,7 +1,9 @@
 import { Reducer } from "redux";
 
-import { Connection, CreateConnection, Status, CreateContract, Contract } from "./types";
+import { Connection, CreateConnection, Status, CreateContract, Contract, ValidateSourceCode, LoadCompilerRequest } from "./types";
 import { ActionType, Actions } from "./action-types";
+import { MessageType, MyWorkerMessage } from "../worker-redux/types";
+import CompilerWorker from '../workers/compiler-worker';
 
 export interface AppState {
     connections: Connection[]
@@ -9,7 +11,10 @@ export interface AppState {
     currentContract?: Contract
     createConnection: CreateConnection
     createContract: CreateContract
-    contracts: Contract[]
+    contracts: Contract[],
+    loadCompilerRequest: LoadCompilerRequest
+    validateSourceCode: ValidateSourceCode,
+    compilerWorker: Worker | undefined
 }
 
 const defaultCreateConnection: CreateConnection = {
@@ -22,6 +27,16 @@ const defaultCreateContract: CreateContract = {
     result: undefined
 }
 
+const defaultValidateSourceCode: ValidateSourceCode = {
+    status: Status.NotStarted,
+    compilerVersion: "0.5.8",
+    sourceCode: ""
+}
+
+const defaultLoadCompilerRequest: LoadCompilerRequest = {
+    status: Status.NotStarted,
+    version: "0.5.8"
+}
 
 const initialState: AppState = {
     connections: [],
@@ -29,12 +44,15 @@ const initialState: AppState = {
     createConnection: defaultCreateConnection,
     createContract: defaultCreateContract,
     currentConnection: undefined,
-    currentContract: undefined
+    currentContract: undefined,
+    compilerWorker: new CompilerWorker(),
+    loadCompilerRequest: defaultLoadCompilerRequest,
+    validateSourceCode: defaultValidateSourceCode
 };
 
 export const appReducer: Reducer<AppState, Actions> = (
     state: AppState = initialState,
-    action: Actions
+    action: Actions | MyWorkerMessage
 ): AppState => {
     switch (action.type) {
         case ActionType.CONNECTION_CREATED:
@@ -49,7 +67,12 @@ export const appReducer: Reducer<AppState, Actions> = (
         case ActionType.CONTRACTS_RECEIVED:
             return { ...state, contracts: action.payload, currentContract: action.payload[0] };
         case ActionType.CONTRACT_SELECTED:
-            return  { ...state, currentContract: action.payload };
+            return { ...state, currentContract: action.payload };
+        // compiler cases
+        case MessageType.VALIDATE_SOURCE_CODE:
+            return { ...state, validateSourceCode: action.payload }
+        case MessageType.LOAD_COMPILER_VERSION_RESULT:
+            return { ...state, loadCompilerRequest: action.payload };
         default:
             return state;
     }

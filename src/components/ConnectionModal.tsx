@@ -58,7 +58,7 @@ export class ConnectionModal extends React.Component<Props, State> {
                     }
                     return errors;
                 }}
-                FormComponent={({ fields: { name, url }, onChange, onSubmit }) => (
+                FormComponent={({ fields: { name, url }, onSubmit }) => (
                     <Form id={FORM_TITLE} onSubmit={onSubmit}>
                         <Field
                             name="name"

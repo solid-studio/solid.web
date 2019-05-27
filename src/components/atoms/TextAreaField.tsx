@@ -29,7 +29,7 @@ export const TextAreaField: React.FC<InputOwnProps> = (props: InputOwnProps) => 
             hasFeedback={!!errors[nameKey]}
             validateStatus={errors[nameKey] && "error"}
             help={errors[nameKey]}>
-            <TextArea onChange={props.onChange} rows={15} {...field} placeholder={placeHolder} />
+            <TextArea onChange={field.onChange} rows={15} {...field} placeholder={placeHolder} />
         </Form.Item>
     );
 };

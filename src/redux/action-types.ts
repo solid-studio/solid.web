@@ -4,6 +4,7 @@ import { Connection, CreateConnection, CreateContract, Contract, Transaction } f
 
 export enum ActionType {
     ERROR_WHEN_GETTING_DATA = "ERROR_WHEN_GETTING_DATA",
+    ERROR_WHEN_EXECUTING_TRANSACTION = "ERROR_WHEN_EXECUTING_TRANSACTION",
     CONNECTIONS_RECEIVED = "CONNECTIONS_RECEIVED",
     CONTRACTS_RECEIVED = "CONTRACTS_RECEIVED",
     CREATE_CONNECTION = "CREATE_CONNECTION",
@@ -11,7 +12,8 @@ export enum ActionType {
     CONTRACT_CREATED = "CONTRACT_CREATED",
     CONNECTION_CREATED = "CONNECTION_CREATED",
     TRANSACTIONS_RECEIVED = "TRANSACTIONS_RECEIVED",
-    CONTRACT_SELECTED = "CONTRACT_SELECTED"
+    CONTRACT_SELECTED = "CONTRACT_SELECTED",
+    LOAD_COMPILER = "LOAD_COMPILER"
 }
 
 // connection
@@ -56,5 +58,15 @@ export interface TransactionsReceivedAction extends Action {
     payload: Transaction[];
 }
 
+// compiler
+export interface LoadCompilerWorkerAction extends Action {
+    type: ActionType.LOAD_COMPILER;
+    payload: Worker | undefined
+}
 
-export type Actions = ContractSelectedAction | ContractsReceivedAction | ContractCreatedAction | CreateContractAction | CreateConnectionAction | ConnectionsReceivedAction | ConnectionCreatedAction | TransactionsReceivedAction;
+export type Actions = LoadCompilerWorkerAction |
+    ContractSelectedAction |
+    ContractsReceivedAction | ContractCreatedAction |
+    CreateContractAction | CreateConnectionAction |
+    ConnectionsReceivedAction | ConnectionCreatedAction |
+    TransactionsReceivedAction;

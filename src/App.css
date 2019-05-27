@@ -30,6 +30,13 @@ html, body {
     line-height: 32px;
 }
 
+.ant-tabs .ant-tabs-top-content, .ant-tabs .ant-tabs-bottom-content {
+    height: 100%;
+    width: 100%;   
+}
+.ant-tabs.ant-tabs-top.ant-tabs-card.ant-tabs-no-animation{
+    padding: 0 !important;
+}
 /* For Collapse */
 .ant-collapse > .ant-collapse-item > .ant-collapse-header {
     position: relative;
@@ -47,5 +54,12 @@ html, body {
 }
 
 .ant-collapse-borderless > .ant-collapse-item {
-    border-bottom: 0.018px solid white;
+    border-bottom: none;
+}
+
+
+/* solid-terminal */
+
+.solid-terminal {
+    min-height: 100% !important;
 }

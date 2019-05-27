@@ -3,29 +3,15 @@ import { ThunkAction } from "redux-thunk";
 
 import { Status, Connection, Contract } from "./types";
 import { ApplicationState } from "./reducers";
+import { AsyncActionThunk, ActionThunk, ExtraArgument } from "./thunk-types";
 import { ActionType, CreateConnectionAction, ConnectionsReceivedAction, ConnectionCreatedAction, CreateContractAction, ContractCreatedAction, ContractsReceivedAction, ContractSelectedAction } from "./action-types";
 
-import { HttpRequest, ApiAction } from "../utils/http";
 import { CONNECTION_URL, TRANSACTION_URL, CONTRACTS_URL } from "./constants";
-
-export type ActionThunk = ThunkAction<
-    Action,
-    ApplicationState,
-    HttpRequest,
-    ApiAction
->;
-
-export type AsyncActionThunk = ThunkAction<
-    Promise<Action>,
-    ApplicationState,
-    HttpRequest,
-    ApiAction
->;
 
 export const createOrUpdateConnection: ActionCreator<AsyncActionThunk> = (values) => async (
     dispatch,
     _,
-    api
+    { api }
 ): Promise<Action> => {
     return dispatch(
         api.post(`${CONNECTION_URL}`, {
@@ -40,7 +26,7 @@ export const createOrUpdateConnection: ActionCreator<AsyncActionThunk> = (values
 export const getConnections: ActionCreator<ActionThunk> = () => (
     dispatch,
     _,
-    api
+    { api }
 ): Action =>
     dispatch(
         api.get(`${CONNECTION_URL}`, {
@@ -121,7 +107,7 @@ export const updateConnectionStarted: ActionCreator<Action> = (connection: Conne
 export const getTransactions: ActionCreator<ActionThunk> = () => (
     dispatch,
     _,
-    api
+    { api }
 ): Action =>
     dispatch(
         api.get(`${TRANSACTION_URL}`, {
@@ -145,7 +131,7 @@ export const createContractStarted: ActionCreator<Action> = (): CreateContractAc
 export const createOrUpdateContract: ActionCreator<AsyncActionThunk> = (values) => async (
     dispatch,
     getState,
-    api
+    { api }
 ): Promise<Action> => {
     const currentConnection = getState().appState.currentConnection as Connection;
     if (!currentConnection) {
@@ -176,7 +162,7 @@ export const createOrUpdateContractInProgress: ActionCreator<Action> = (): Creat
     }
 }
 
-export const createOrUpdateContractCompleted: ActionCreator<ThunkAction<void, ApplicationState, HttpRequest, Action>> = (contract: Contract) => {
+export const createOrUpdateContractCompleted: ActionCreator<ThunkAction<void, ApplicationState, ExtraArgument, Action>> = (contract: Contract) => {
     return (dispatch): CreateContractAction => {
         dispatch(contractCreated(contract));
         dispatch(getContractInstances());
@@ -210,7 +196,7 @@ export const createContractCancelled: ActionCreator<Action> = (): CreateContract
 export const getContractInstances: ActionCreator<ActionThunk> = () => (
     dispatch,
     _,
-    api
+    { api }
 ): Action =>
     dispatch(
         api.get(`${CONTRACTS_URL}`, {

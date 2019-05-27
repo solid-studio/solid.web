@@ -1,26 +1,24 @@
+import { Button, Dropdown, Icon, Menu, Tree } from 'antd';
 import React from 'react';
-import styled, { css } from 'styled-components';
-import { Button, Menu, Dropdown, Icon, Tree, Tabs } from 'antd';
-
-import { bindActionCreators, Dispatch, ActionCreator, Action } from "redux";
 import { connect } from "react-redux";
-
-import { ConnectionModal, TransactionDrawer, ContractModal } from "../components";
-
-
-import { createConnectionStarted, getConnections, createContractStarted, getContractInstances, contractSelected } from "../redux/actions"
-import { Connection, Contract } from "../redux/types";
+import { Action, ActionCreator, bindActionCreators, Dispatch } from "redux";
+import styled, { css } from 'styled-components';
+import { ConnectionModal, ContractModal } from "../components";
+import { contractSelected, createConnectionStarted, createContractStarted, getConnections, getContractInstances } from "../redux/actions";
 import { ApplicationState } from "../redux/reducers";
+import { Connection, Contract } from "../redux/types";
+import { loadCompilerWorker } from "../worker-redux/actions"
 
 const ButtonGroup = Button.Group;
 const DirectoryTree = Tree.DirectoryTree;
 const { TreeNode } = Tree;
+const MenuItem = Menu.Item;
 
 const Wrapper = styled.div`
-  height: 100%;
+  height: 100vh;
   display: grid;
   grid-template-columns: 20em auto 20em;
-  grid-template-rows: 5em auto;
+  grid-template-rows: 5em 1fr;
   grid-row-gap: 0.4px;
   grid-template-areas: 
     "header header header"
@@ -52,15 +50,6 @@ const Sidebar = styled.div`
 const Content = styled.section`
   grid-area: content;
   background-color: #2A2929;
-`
-//   display: grid;
-//   grid-template-columns: 2em auto 2.6em;
-//   grid-template-areas: 
-//   "padding mainarea rightsidebar"
-
-const RightSideBar = styled.div`
-    grid-area: rightsidebar;
-    background: #323436;
 `
 
 const ButtonRightArea = styled.div`
@@ -109,13 +98,6 @@ const SidebarTitle = styled.h3`
     font-size: 1em;
 `
 
-const DrawerButton = styled(Button)`
-    transform: rotate(90deg);
-    position: absolute;
-    top: 7em;
-    right: -3em;
-`
-
 const SidebarHeaderButtons = styled.div`
 
 `
@@ -126,6 +108,21 @@ const TreeNodeStyled = styled(TreeNode)`
     }
     .
 `
+const MenuStyled = styled(Menu)`
+    z-index: 1000;
+    border: none !important;
+`
+const MenuItemStyled = styled(MenuItem)`
+    height: 2em !important;
+    line-height: 2em !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+   
+    &:hover{
+        background: #25b864;
+        color: white;
+    }
+`
 
 interface Props {
     createConnectionStarted: ActionCreator<Action>
@@ -135,51 +132,32 @@ interface Props {
     getConnections: ActionCreator<any> // TODO fix this
     getContractInstances: ActionCreator<any>
     contractSelected: ActionCreator<Action>
+    loadCompilerWorker: ActionCreator<any>
 }
 
 interface State {
-    activeKey: string;
-    showDrawer: boolean;
+    rightClickNodeTreeItem: any
+    selectedKeys: any[]
 }
 
-// eslint-disable-next-line
-const TabPane = Tabs.TabPane;
-
 export class DefaultLayout extends React.Component<Props, State> {
-
     constructor(props: Props) {
-        super(props)
-        this.state = { activeKey: '1', showDrawer: false }
+        super(props);
+        this.state = {
+            rightClickNodeTreeItem: {},
+            selectedKeys: []
+        }
     }
 
     componentDidMount() {
+        // start worker for compiler and load default version for MVP
+        this.props.loadCompilerWorker();
         this.props.getConnections();
         this.props.getContractInstances(); // TODO, need to be filtered by connection
     }
-    // drawer
-    showDrawer = () => {
-        this.setState({
-            showDrawer: true,
-        });
-    };
 
-    closeDrawer = () => {
-        this.setState({
-            showDrawer: false,
-        });
-    };
-
-    // modal
     openConnectionModal = () => {
         this.props.createConnectionStarted();
-    }
-
-    onChange = (activeKey: any) => {
-        this.setState({ activeKey });
-    }
-
-    callback = (key: any) => {
-        console.log(key);
     }
 
     onDropDownClickk = ({ key }: any) => {
@@ -201,23 +179,53 @@ export class DefaultLayout extends React.Component<Props, State> {
             <Menu.Item key="tag">Tag</Menu.Item>
         </Menu>
     }
-    // showCode = (contract: Contract) => {
-    //     debugger;
-    //     const contract
-    //     console.log("Contract code", contract.sourceCode)
-    // }
+
     onSelect = (selectedKeys: any, info: any) => {
-        const contractToShow = this.props.contracts.find((item) =>{
-            return item._id == selectedKeys[0];
+        const contractToShow = this.props.contracts.find((item) => {
+            return item._id === selectedKeys[0];
         })
-        console.log('selected', selectedKeys, contractToShow);
         this.props.contractSelected(contractToShow);
+        this.setState({
+            selectedKeys
+        });
     };
+
+    rightClickOnTree = ({ event, node }: any) => {
+        const id = node.props['eventKey'];
+        this.setState({
+            rightClickNodeTreeItem: {
+                pageX: event.pageX,
+                pageY: event.pageY,
+                id: id,
+                categoryName: node.props['eventKey']
+            },
+            selectedKeys: [id]
+        });
+    }
+
+    onIDEClick = () => {
+        this.setState({
+            rightClickNodeTreeItem: {}
+        });
+    }
+
+    getNodeTreeRightClickMenu = () => {
+        const { pageX, pageY } = { ...this.state.rightClickNodeTreeItem } as any
+        if (!pageX || !pageY) {
+            return (<div></div>);
+        }
+        const menu = (<MenuStyled style={{ position: 'absolute', left: `${pageX}px`, top: `${pageY}px` }}>
+            <MenuItemStyled key='1'>Deploy</MenuItemStyled>
+            <MenuItemStyled key='2'>Open Console</MenuItemStyled>
+        </MenuStyled>);
+        return (menu)
+    }
 
     render() {
         const { connections, contracts } = this.props;
         return (
-            <Wrapper {...this.props}>
+            <Wrapper {...this.props} onClick={this.onIDEClick}>
+                {this.getNodeTreeRightClickMenu()}
                 <Navbar>
                     <ButtonRightArea>
                         <ButtonGroupItem>
@@ -249,8 +257,10 @@ export class DefaultLayout extends React.Component<Props, State> {
                         </SidebarHeaderButtons>
                     </SidebarHeader>
                     {connections && connections.length > 0 && <DirectoryTree
-                        onSelect={this.onSelect} 
+                        onSelect={this.onSelect}
                         multiple
+                        onRightClick={this.rightClickOnTree}
+                        selectedKeys={this.state.selectedKeys}
                         defaultExpandAll style={{ color: "white" }}>
                         {connections.map((item) => {
                             return <TreeNodeStyled icon={<Icon type="database" />} title={item.name} key={item.url} style={{ color: "white" }}>
@@ -264,16 +274,10 @@ export class DefaultLayout extends React.Component<Props, State> {
                     </DirectoryTree>}
                 </Sidebar>
                 <Content>
-                    {/* <RightSideBar>
-                        <DrawerButton onClick={this.showDrawer}>Transactions</DrawerButton>
-                    </RightSideBar> */}
                     {this.props.children}
                 </Content>
                 <ConnectionModal />
                 <ContractModal />
-                {connections && connections.length > 0 &&
-                    <TransactionDrawer transactionReceipts={connections[0].transactionReceipts} onClose={this.closeDrawer} visible={this.state.showDrawer} />
-                }
             </Wrapper >
         )
     }
@@ -289,6 +293,7 @@ const mapStateToProps = (state: ApplicationState) => {
 const mapDispatchToProps = (dispatch: Dispatch) => {
     return bindActionCreators(
         {
+            loadCompilerWorker,
             createConnectionStarted,
             getConnections,
             createContractStarted,

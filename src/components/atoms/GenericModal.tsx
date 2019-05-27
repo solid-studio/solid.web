@@ -13,11 +13,10 @@ interface Props<FormFields> {
     onCancel: () => void
     loading: boolean;
     validator: (item: FormFields) => FormikErrors<FormFields>
-    // createOrUpdateConnection: (item: Connection) => any
     onSubmit: (item: FormFields) => void // TODO
-    // selectedItem?: Connection
-    onChange?: OnChangeHandler<FormFields>
     title: string
+    disableSubmitButton?: boolean
+    buttonText?: string
 }
 
 type FormComponentProps<FormFields> = { fields: FormFields } & Handlers<
@@ -30,7 +29,6 @@ type OnChangeHandler<FormFields> = <K extends keyof FormFields>(
 ) => void;
 
 interface Handlers<FormFields> {
-    onChange: OnChangeHandler<FormFields>;
     onSubmit: (e?: React.FormEvent<HTMLFormElement> | undefined) => void
 }
 
@@ -50,10 +48,6 @@ class GenericModal<FormFields> extends React.Component<Props<FormFields>, State<
         this.setState({
             fields: result
         });
-        debugger;
-        if (this.props.onChange) {
-            this.props.onChange(field, value)
-        }
     };
 
     submit = (values: FormFields) => {
@@ -62,15 +56,14 @@ class GenericModal<FormFields> extends React.Component<Props<FormFields>, State<
     }
 
     public render() {
-        const { FormComponent, visible, onCancel, loading, validator, title } = this.props;
+        const { FormComponent, visible, onCancel, loading, validator, title, disableSubmitButton } = this.props;
         const { fields } = this.state;
         return (
 
             <Modal
                 width={500}
                 visible={visible}
-                title={title} // change title if it is edit or creation mode
-                okText="Save"
+                title={title} // TODO change title if it is edit or creation mode
                 onCancel={onCancel}
                 footer={[<Button key="cancel" onClick={onCancel}>Cancel</Button>,
                 <Button
@@ -78,7 +71,8 @@ class GenericModal<FormFields> extends React.Component<Props<FormFields>, State<
                     key="submit"
                     htmlType="submit"
                     type="primary"
-                    loading={loading}>Save</Button>]}>
+                    disabled={disableSubmitButton || false}
+                    loading={loading}>{this.props.buttonText || "Save"}</Button>]}>
                 <div>
                     <Formik
                         initialValues={fields}
@@ -88,7 +82,7 @@ class GenericModal<FormFields> extends React.Component<Props<FormFields>, State<
                         render={({
                             handleSubmit
                         }: FormikProps<FormFields>) => (
-                                <FormComponent onSubmit={handleSubmit} onChange={this.onChange} fields={fields} />
+                                <FormComponent onSubmit={handleSubmit} fields={fields} />
                             )}
                     />
                 </div>
