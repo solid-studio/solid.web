@@ -124,14 +124,7 @@ const selectAfter = (
         <Option value=".jp">Convert To</Option>
     </Select>
 );
-// execute function receives
-// abi 
-// parameters
-// where is web3?
-// when I execute the function call
-// I get the current web3 connection
-// and I dispatch an action..
-// middleware to do the encoding
+
 const mapStateToProps = (state: ApplicationState) => {
     return {
 
