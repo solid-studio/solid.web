@@ -12,6 +12,7 @@ import { loadCompilerWorker } from "../worker-redux/actions"
 const ButtonGroup = Button.Group;
 const DirectoryTree = Tree.DirectoryTree;
 const { TreeNode } = Tree;
+const MenuItem = Menu.Item;
 
 const Wrapper = styled.div`
   height: 100vh;
@@ -107,6 +108,21 @@ const TreeNodeStyled = styled(TreeNode)`
     }
     .
 `
+const MenuStyled = styled(Menu)`
+    z-index: 1000;
+    border: none !important;
+`
+const MenuItemStyled = styled(MenuItem)`
+    height: 2em !important;
+    line-height: 2em !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+   
+    &:hover{
+        background: #25b864;
+        color: white;
+    }
+`
 
 interface Props {
     createConnectionStarted: ActionCreator<Action>
@@ -119,11 +135,22 @@ interface Props {
     loadCompilerWorker: ActionCreator<any>
 }
 
-export class DefaultLayout extends React.Component<Props> {
+interface State {
+    rightClickNodeTreeItem: any
+    selectedKeys: any[]
+}
+
+export class DefaultLayout extends React.Component<Props, State> {
+    constructor(props: Props) {
+        super(props);
+        this.state = {
+            rightClickNodeTreeItem: {},
+            selectedKeys: []
+        }
+    }
 
     componentDidMount() {
-        // start worker for compiler
-        // load default version for MVP
+        // start worker for compiler and load default version for MVP
         this.props.loadCompilerWorker();
         this.props.getConnections();
         this.props.getContractInstances(); // TODO, need to be filtered by connection
@@ -157,14 +184,48 @@ export class DefaultLayout extends React.Component<Props> {
         const contractToShow = this.props.contracts.find((item) => {
             return item._id === selectedKeys[0];
         })
-        console.log('selected', selectedKeys, contractToShow);
         this.props.contractSelected(contractToShow);
+        this.setState({
+            selectedKeys
+        });
     };
+
+    rightClickOnTree = ({ event, node }: any) => {
+        const id = node.props['eventKey'];
+        this.setState({
+            rightClickNodeTreeItem: {
+                pageX: event.pageX,
+                pageY: event.pageY,
+                id: id,
+                categoryName: node.props['eventKey']
+            },
+            selectedKeys: [id]
+        });
+    }
+
+    onSideBackClick = () => {
+        this.setState({
+            rightClickNodeTreeItem: {}
+        });
+    }
+
+    getNodeTreeRightClickMenu = () => {
+        const { pageX, pageY } = { ...this.state.rightClickNodeTreeItem } as any
+        if (!pageX || !pageY) {
+            return (<div></div>);
+        }
+        const menu = (<MenuStyled style={{ position: 'absolute', left: `${pageX}px`, top: `${pageY}px` }}>
+            <MenuItemStyled key='1'>Deploy</MenuItemStyled>
+            <MenuItemStyled key='2'>Open Console</MenuItemStyled>
+        </MenuStyled>);
+        return (menu)
+    }
 
     render() {
         const { connections, contracts } = this.props;
         return (
-            <Wrapper {...this.props}>
+            <Wrapper {...this.props} onClick={this.onSideBackClick}>
+                {this.getNodeTreeRightClickMenu()}
                 <Navbar>
                     <ButtonRightArea>
                         <ButtonGroupItem>
@@ -198,6 +259,8 @@ export class DefaultLayout extends React.Component<Props> {
                     {connections && connections.length > 0 && <DirectoryTree
                         onSelect={this.onSelect}
                         multiple
+                        onRightClick={this.rightClickOnTree}
+                        selectedKeys={this.state.selectedKeys}
                         defaultExpandAll style={{ color: "white" }}>
                         {connections.map((item) => {
                             return <TreeNodeStyled icon={<Icon type="database" />} title={item.name} key={item.url} style={{ color: "white" }}>

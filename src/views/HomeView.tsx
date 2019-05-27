@@ -8,7 +8,6 @@ import styled from 'styled-components';
 import { ApplicationState } from "../redux/reducers";
 import { Contract } from "../redux/types";
 import { ContractActions } from '../components/ContractActions';
-import { AbiItem } from 'web3-utils';
 
 const TabPane = Tabs.TabPane;
 const Panel = Collapse.Panel;
