@@ -1,6 +1,7 @@
 import { Action, ActionCreator } from "redux";
 import { ThunkAction } from "redux-thunk";
 import { ApplicationState } from "../redux/reducers";
+import { ExtraArgument } from "../redux/thunk-types";
 
 export enum ApiActionType {
     API_REQUEST = "@@http/API_REQUEST"
@@ -12,13 +13,14 @@ export enum Method {
     PUT = "Put",
     DELETE = "Delete"
 }
+
 export interface ApiAction {
     type: ApiActionType.API_REQUEST;
     meta?: Meta;
     payload?: {};
 }
 
-type OnSuccessType = string | Action | ActionCreator<Action> | ActionCreator<ThunkAction<void, ApplicationState, HttpRequest, Action>>
+type OnSuccessType = string | Action | ActionCreator<Action> | ActionCreator<ThunkAction<void, ApplicationState, ExtraArgument, Action>>
 
 type OnErrorType = string | Action | ActionCreator<Action>;
 
