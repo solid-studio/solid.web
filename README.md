@@ -66,14 +66,11 @@ Create contract size Profiler
 
 - Storage visualiser
 
-- Integrate Security Tools
-	Mythril
-	Manticore
+- Integrate Security Tools (Mythril, Manticore)
 
 #### November 2019
 
-- IDE Dynamic Layout
-	Allow windows to be expandable, resizable and stackable to different sections
+- IDE Dynamic Layout(Allow windows to be expandable, resizable and stackable to different sections)
 
 - Debugger
 	
