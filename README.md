@@ -7,7 +7,7 @@ A Smart contract management system that makes easy the interaction, exploration 
 - Elegant
 - High Performance
 
-![Solid Studio](./docs/images/main-design.png)
+![Solid Studio](https://github.com/solid-studio/solid.docs/blob/master/images/main-design.png)
 
 ## Motivation
 
