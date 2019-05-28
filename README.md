@@ -28,6 +28,8 @@ Discover the hidden world of smart contracts with Solid.
 - Magic content generator
 - Universal encoder
 
+![Solid Studio](./docs/images/main-design.png)
+
 ## Roadmap
 
 #### June 2019
