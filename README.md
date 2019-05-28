@@ -28,4 +28,53 @@ Discover the hidden world of smart contracts with Solid.
 - Magic content generator
 - Universal encoder
 
+## Roadmap
+
+#### June 2019
+
+Complete Smart Contract Interaction
+
+Include utility tools for smart contract interactions (universal encoding and magic generator for mock data)
+
+Create Gas Profiler
+	
+Create contract size Profiler 
+
+#### August 2019
+
+Extend Add Contract Instance Form to support different sources: ABI, Bytecode, Existing contracts and Source code.
+
+Finish smart contract editor, compile and deploy
+
+Improve smart contract instances view 
+
+Allow Edit contract files and connection names
+
+Filtering and search of smart contracts and connections
+
+#### September 2019
+
+Finish Universal Web3 Console
+
+Allow Web3 Console scripts to be saved
+
+Surya Integration
+
+Control flow graph visualisation and exploration
+
+#### October 2019
+
+Storage visualiser
+
+Integrate Security Tools
+	Mythril
+	Manticore
+
+#### November 2019
+
+IDE Dynamic Layout
+	Allow windows to be expandable, resizable and stackable to different sections
+
+Debugger
+	
 
