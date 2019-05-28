@@ -7,6 +7,8 @@ A Smart contract management system that makes easy the interaction, exploration 
 - Elegant
 - High Performance
 
+![Solid Studio](./docs/images/main-design.png)
+
 ## Motivation
 
 Let's be honest, accessing the Blockchain is difficult, you need to install geth, find your credentials, attach to an rpc endpoint and then start typing web3 commands. This process repeats over and over again, also the problem is that your scripts won't be there the next time you try to attach again, we call this: `geth pain`;
@@ -27,8 +29,6 @@ Discover the hidden world of smart contracts with Solid.
 - Universal Web3 Console for multiple connections and support to store web3 scripts
 - Magic content generator
 - Universal encoder
-
-![Solid Studio](./docs/images/main-design.png)
 
 ## Roadmap
 
