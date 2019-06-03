@@ -7,3 +7,5 @@ export { ConnectionModal }
 
 export { TransactionDrawer } from "./TransactionDrawer";
 export { SolidTerminal } from "./SolidTerminal";
+export { ConnectionsTree } from "./ConnectionsTree";
+export { ContractsTree } from "./ContractsTree";
