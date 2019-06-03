@@ -1,7 +1,6 @@
 import { Collapse, Icon, Tabs } from 'antd';
 import copy from 'copy-to-clipboard';
 import React from "react";
-import Terminal from 'react-console-emulator';
 import MonacoEditor from 'react-monaco-editor';
 import { connect } from "react-redux";
 import styled from 'styled-components';
@@ -9,6 +8,7 @@ import { ApplicationState } from "../redux/reducers";
 import { Contract } from "../redux/types";
 import { ContractActions } from '../components/ContractActions';
 import { AbiItem } from 'web3-utils';
+import { SolidTerminal } from '../components';
 
 const TabPane = Tabs.TabPane;
 const Panel = Collapse.Panel;
@@ -81,18 +81,6 @@ const TableDetails = styled.table`
       line-height: 2em;
   }
 `
-
-
-
-const commands = {
-    echo: {
-        description: 'Echo a passed string.',
-        usage: 'echo <string>',
-        fn: function () {
-            return `${Array.from(arguments).join(' ')}`
-        }
-    }
-}
 
 const CollapseStyled = styled(Collapse)`
   margin-top:1em;
@@ -242,15 +230,7 @@ uint256 value;
                     </Tabs>
                 </Editor>
                 <Results>
-                    <Terminal
-                        className="solid-terminal"
-                        promptLabelColor="#DF1A7A"
-                        promptTextColor="#DF1A7A"
-                        textColor="#25b864"
-                        commands={commands}
-                        welcomeMessage={'Welcome to the Solid Studio Console!'}
-                        promptLabel={'$'}
-                    />
+                    <SolidTerminal />
                 </Results>
                 <Details>
                     {selectedContract &&

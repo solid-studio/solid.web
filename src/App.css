@@ -56,10 +56,3 @@ html, body {
 .ant-collapse-borderless > .ant-collapse-item {
     border-bottom: none;
 }
-
-
-/* solid-terminal */
-
-.solid-terminal {
-    min-height: 100% !important;
-}

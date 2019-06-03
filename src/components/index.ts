@@ -6,3 +6,4 @@ export { ContractModal }
 export { ConnectionModal }
 
 export { TransactionDrawer } from "./TransactionDrawer";
+export { SolidTerminal } from "./SolidTerminal";
