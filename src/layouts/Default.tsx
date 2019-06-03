@@ -51,9 +51,6 @@ interface Props {
 }
 
 export class DefaultLayout extends React.Component<Props> {
-    constructor(props: Props) {
-        super(props);
-    }
 
     componentDidMount() {
         // start worker for compiler and load default version for MVP
@@ -83,8 +80,6 @@ export class DefaultLayout extends React.Component<Props> {
                         onNewConnectionClick={this.props.createConnectionStarted}
                         onContractSelected={this.props.contractSelected} />
                     <ContractsTree contracts={contracts}
-                        connections={connections}
-                        onNewConnectionClick={this.props.createConnectionStarted}
                         onContractSelected={this.props.contractSelected} />
                 </Sidebar>
                 <Content>

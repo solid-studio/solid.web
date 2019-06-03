@@ -53,6 +53,10 @@ const MenuItemStyled = styled(MenuItem)`
     }
 `
 
+const DirectoryTreeStyled = styled(DirectoryTree)`
+    overflow: "auto";
+`
+
 interface Props {
     connections: Connection[]
     contracts: Contract[]
@@ -64,7 +68,7 @@ interface State {
     rightClickNodeTreeItem: any
     selectedKeys: any[]
 }
-// : React.FC<Props> = ({ connections, onNewConnectionClick, contracts }: Props) => {
+
 export class ConnectionsTree extends React.Component<Props, State> {
 
     constructor(props: Props) {
@@ -122,7 +126,7 @@ export class ConnectionsTree extends React.Component<Props, State> {
                         <Icon type="down" style={{ color: "white" }} />
                     </SidebarHeaderButtons>
                 </SidebarHeader >
-                {connections && connections.length > 0 && <DirectoryTree
+                {connections && connections.length > 0 && <DirectoryTreeStyled
                     onSelect={this.onSelect}
                     multiple
                     onRightClick={this.rightClickOnTree}
@@ -137,7 +141,7 @@ export class ConnectionsTree extends React.Component<Props, State> {
                             </TreeNodeStyled>
                         </TreeNodeStyled>
                     })}
-                </DirectoryTree>}
+                </DirectoryTreeStyled>}
             </div >
         )
     }

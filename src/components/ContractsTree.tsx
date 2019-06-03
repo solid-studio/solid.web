@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import { Action, ActionCreator } from "redux";
 
@@ -41,6 +41,7 @@ const MenuStyled = styled(Menu)`
     z-index: 1000;
     border: none !important;
 `
+
 const MenuItemStyled = styled(MenuItem)`
     height: 2em !important;
     line-height: 2em !important;
@@ -53,10 +54,12 @@ const MenuItemStyled = styled(MenuItem)`
     }
 `
 
+const DirectoryTreeStyled = styled(DirectoryTree)`
+    overflow: "auto";
+`
+
 interface Props {
-    connections: Connection[]
     contracts: Contract[]
-    onNewConnectionClick: ActionCreator<Action>
     onContractSelected: ActionCreator<Action>
 }
 
@@ -111,33 +114,28 @@ export class ContractsTree extends React.Component<Props, State> {
     }
 
     render() {
-        const { connections, contracts, onNewConnectionClick } = this.props;
+        const { contracts } = this.props;
         return (
-            <div style={{ height: "100%", overflow: "auto" }}>
+            <div style={{ height: "100%" }}>
                 {this.getNodeTreeRightClickMenu()}
                 < SidebarHeader >
                     <SidebarTitle>Contracts</SidebarTitle>
                     <SidebarHeaderButtons>
-                        <Icon type="plus" style={{ color: "white", paddingRight: "0.5em" }} onClick={onNewConnectionClick} />
+                        <Icon type="plus" style={{ color: "white", paddingRight: "0.5em" }} onClick={() => console.log("TODO, on new contract")} />
                         <Icon type="down" style={{ color: "white" }} />
                     </SidebarHeaderButtons>
                 </SidebarHeader >
-                {connections && connections.length > 0 && <DirectoryTree
+                {contracts && contracts.length > 0 && <DirectoryTreeStyled
                     onSelect={this.onSelect}
                     multiple
                     onRightClick={this.rightClickOnTree}
                     selectedKeys={this.state.selectedKeys}
                     defaultExpandAll style={{ color: "white" }}>
-                    {connections.map((item) => {
-                        return <TreeNodeStyled icon={<Icon type="database" />} title={item.name} key={item.url} style={{ color: "white" }}>
-                            <TreeNodeStyled title="Contract Instances" key="0-0-0" style={{ color: "white" }}>
-                                {contracts && contracts.length > 0 && contracts.map((contract: Contract) => {
-                                    return <TreeNodeStyled title={contract.name} key={contract._id} isLeaf />
-                                })}
-                            </TreeNodeStyled>
-                        </TreeNodeStyled>
+                    {contracts && contracts.length > 0 && contracts.map((contract: Contract) => {
+                        return <TreeNodeStyled title={contract.name} key={contract._id} isLeaf />
                     })}
-                </DirectoryTree>}
+                    })}
+                </DirectoryTreeStyled>}
             </div >
         )
     }
