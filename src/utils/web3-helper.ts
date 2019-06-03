@@ -2,7 +2,6 @@ import { Action, ActionCreator } from "redux";
 import { ThunkAction } from "redux-thunk";
 import { ApplicationState } from "../redux/reducers";
 import { AbiItem } from "web3-utils";
-import { HttpRequest } from "./http";
 import { ExtraArgument } from "../redux/thunk-types";
 
 export enum Web3ActionType {

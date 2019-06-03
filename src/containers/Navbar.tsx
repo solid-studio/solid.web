@@ -1,9 +1,9 @@
 import React from 'react';
+
 import { Action, ActionCreator } from "redux";
 
+import { Button, Dropdown, Icon, Menu } from 'antd';
 import styled, { css } from 'styled-components';
-
-import { Button, Dropdown, Icon, Menu, Tree } from 'antd';
 
 const ButtonGroup = Button.Group;
 
