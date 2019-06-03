@@ -9,7 +9,7 @@ import { ApplicationState } from "../redux/reducers";
 import { Connection, Contract } from "../redux/types";
 import { loadCompilerWorker } from "../worker-redux/actions"
 
-import { Navbar } from "../components/containers";
+import { Navbar } from "../containers";
 
 const DirectoryTree = Tree.DirectoryTree;
 const { TreeNode } = Tree;
