@@ -2,14 +2,15 @@ import { Button, Dropdown, Icon, Menu, Tree } from 'antd';
 import React from 'react';
 import { connect } from "react-redux";
 import { Action, ActionCreator, bindActionCreators, Dispatch } from "redux";
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { ConnectionModal, ContractModal } from "../components";
 import { contractSelected, createConnectionStarted, createContractStarted, getConnections, getContractInstances } from "../redux/actions";
 import { ApplicationState } from "../redux/reducers";
 import { Connection, Contract } from "../redux/types";
 import { loadCompilerWorker } from "../worker-redux/actions"
 
-const ButtonGroup = Button.Group;
+import { Navbar } from "../components/containers";
+
 const DirectoryTree = Tree.DirectoryTree;
 const { TreeNode } = Tree;
 const MenuItem = Menu.Item;
@@ -25,20 +26,6 @@ const Wrapper = styled.div`
     "sidebar content content"
 `
 
-const Navbar = styled.header`
-  grid-area: header;
-  background-color: #272727;
-  display: flex;
-  color: white;
-  align-items: center;
-  padding-left: 1em;
-  padding-right: 1em;
-  display: grid;
-  grid-template-columns: 16em auto 16em;
-  grid-template-areas: 
-    "leftbutton title rightbutton"
-`
-
 const Sidebar = styled.div`
   grid-area: sidebar;
   background-color: #323436;
@@ -51,38 +38,6 @@ const Content = styled.section`
   grid-area: content;
   background-color: #2A2929;
 `
-
-const ButtonRightArea = styled.div`
-    grid-column-start: 1;
-    grid-column-end: 3;
-    grid-area: leftbutton;
-    display: flex;
-    justify-content: flex-start;
-`
-
-const ButtonGroupItem = styled(ButtonGroup)`
-    padding-right: 1em;
-`
-
-const SmallButton = styled(Button)`
-    height: 26px !important;
-    padding: 0 6px !important;
-`
-
-const styles = css`
-  font-weight: 100;
-  font-size: 1.2em;
-  color: white;
-  font-family: 'Helvetica'
-  grid-area: title;
-  grid-column-start: 2;
-  grid-column-end: 3;
-  justify-self: center;
-`
-
-const NavbarTitle = styled(({
-    children, reverse, palette, theme, ...props
-}) => React.createElement(`h1`, props, children))`${styles}`
 
 const SidebarHeader = styled.div`
     display: flex;
@@ -160,26 +115,6 @@ export class DefaultLayout extends React.Component<Props, State> {
         this.props.createConnectionStarted();
     }
 
-    onDropDownClickk = ({ key }: any) => {
-        if (key === 'contract') {
-            this.props.createContractStarted();
-        }
-        else if (key === 'tag') {
-            this.props.createConnectionStarted();
-        }
-        else if (key === 'connection') {
-            this.props.createConnectionStarted();
-        }
-    }
-
-    renderMenu = () => {
-        return <Menu onClick={this.onDropDownClickk}>
-            <Menu.Item key="contract">Contract Instance</Menu.Item>
-            <Menu.Item key="connection">Connection</Menu.Item>
-            <Menu.Item key="tag">Tag</Menu.Item>
-        </Menu>
-    }
-
     onSelect = (selectedKeys: any, info: any) => {
         const contractToShow = this.props.contracts.find((item) => {
             return item._id === selectedKeys[0];
@@ -226,28 +161,7 @@ export class DefaultLayout extends React.Component<Props, State> {
         return (
             <Wrapper {...this.props} onClick={this.onIDEClick}>
                 {this.getNodeTreeRightClickMenu()}
-                <Navbar>
-                    <ButtonRightArea>
-                        <ButtonGroupItem>
-                            <SmallButton type="primary" size="small" onClick={this.openConnectionModal}>
-                                <Icon type="plus" />
-                                New
-                            </SmallButton>
-                            <Dropdown overlay={this.renderMenu}>
-                                <SmallButton type="primary" size="small">
-                                    <Icon type="down" />
-                                </SmallButton>
-                            </Dropdown>
-                        </ButtonGroupItem>
-                        <ButtonGroupItem>
-                            <SmallButton type="primary" size="small">
-                                <Icon type="fall" />
-                                Profiler
-                            </SmallButton>
-                        </ButtonGroupItem>
-                    </ButtonRightArea>
-                    <NavbarTitle>Solid</NavbarTitle>
-                </Navbar>
+                <Navbar onNewConnectionClick={this.props.createConnectionStarted} onNewContractInstanceClick={this.props.createContractStarted} />
                 <Sidebar>
                     <SidebarHeader>
                         <SidebarTitle>Connections</SidebarTitle>

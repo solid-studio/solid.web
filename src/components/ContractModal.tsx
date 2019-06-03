@@ -45,23 +45,13 @@ export class ContractModalComponent extends GenericModal<Contract> {
 
 };
 
-// const sourceCodeIsValid = (sourceCode: string, name: string) => {
-//     const inputObject: any = {};
-//     inputObject[`${name}`] = {
-//         content: sourceCode
-//     }
-//     const input = simpleCompilerInput(inputObject, { optimize: true });
-//     const result = JSON.parse(solc.compile(input));
-//     console.log("RESULT", result)
-//     return result.errors == undefined;
-// }
 export class ContractModal extends React.Component<Props> {
     compiler: any;
 
     componentDidMount() {
         this.compiler = solc.compile;
         const sourceCode = `
-        pragma solidity ^0.5.8;
+pragma solidity ^0.5.8;
 
 contract SimpleStorage {
     
@@ -132,13 +122,9 @@ contract SimpleStorage {
                     }
 
                     if (items.name && items.sourceCode && !this.sourceCodeIsValid(items.sourceCode, items.name)) {
-                        //&& !sourceCodeIsValid(items.sourceCode, items.name)
-                        // const { result, error } = useWorker('./slow_fib.js', 10);
-                        // console.log("Result", result, error);
-                        // //&& !sourceCodeIsValid(items.sourceCode, items.name)
-                        // this.props.validateSourceCode(items.sourceCode);
                         errors.sourceCode = "Invalid solidity code";
                     }
+
                     return errors;
                 }}
                 FormComponent={({ fields: { name, sourceCode }, onSubmit }) => (

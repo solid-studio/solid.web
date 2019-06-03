@@ -4,14 +4,13 @@ import { bindActionCreators, Dispatch } from "redux";
 import { connect } from "react-redux";
 import { AbiItem, AbiInput, AbiOutput } from "web3-utils";
 import styled from "styled-components";
-import { Input, Button, Tag, Select, Icon } from "antd";
+import { Input, Button, Tag } from "antd";
 
 import { executeContractFunction } from "../redux/web3-actions";
 import { ApplicationState } from "../redux/reducers";
 import { AsynActionThunkCreator } from "../redux/thunk-types";
 
 const InputGroup = Input.Group;
-const { Option } = Select;
 
 interface ContractViewProps {
     abi: AbiItem,
@@ -117,13 +116,6 @@ const ContractView: React.FC<ContractViewProps> = (props: ContractViewProps) => 
         </Wrapper>
     )
 }
-
-const selectAfter = (
-    <Select defaultValue=".com">
-        <Option value=".com">Generate</Option>
-        <Option value=".jp">Convert To</Option>
-    </Select>
-);
 
 const mapStateToProps = (state: ApplicationState) => {
     return {

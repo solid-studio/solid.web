@@ -30,7 +30,6 @@ export const RadioField: React.FC<InputOwnProps> = ({
     form,
     options
 }: any) => {
-    // console.log("name", name)
     return (
         <FormItem
             label={label}

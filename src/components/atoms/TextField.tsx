@@ -23,7 +23,6 @@ export const TextField: React.FC<InputOwnProps> = ({
     form,
     placeHolder
 }: any) => {
-    // console.log("name", name)
     return (
         <FormItem
             label={label}
