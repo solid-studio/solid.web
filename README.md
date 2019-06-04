@@ -1,5 +1,7 @@
 # Solid Studio
 
+[![CircleCI](https://circleci.com/gh/solid-studio/solid.web.svg?style=svg)](https://circleci.com/gh/solid-studio/solid.web)
+
 A Smart contract management system that makes easy the interaction, exploration and visualisation of smart contracts deployed to different networks.
 
 - Minimalistic
