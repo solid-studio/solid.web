@@ -1,7 +1,7 @@
 export const compilerInput = (sources: any, opts: any) => {
     return JSON.stringify({
         language: 'Solidity',
-        sources: sources,
+        sources,
         settings: {
             optimizer: {
                 enabled: opts.optimize === true || opts.optimize === 1,
@@ -21,7 +21,7 @@ export const compilerInput = (sources: any, opts: any) => {
 export const simpleCompilerInput = (sources: any, opts: any) => {
     return JSON.stringify({
         language: 'Solidity',
-        sources: sources,
+        sources,
         settings: {
             optimizer: {
                 enabled: opts.optimize === true || opts.optimize === 1,

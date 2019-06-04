@@ -90,13 +90,13 @@ export class ConnectionsTree extends React.Component<Props, State> {
     };
 
     rightClickOnTree = ({ event, node }: any) => {
-        const id = node.props['eventKey'];
+        const id = node.props.eventKey;
         this.setState({
             rightClickNodeTreeItem: {
                 pageX: event.pageX,
                 pageY: event.pageY,
-                id: id,
-                categoryName: node.props['eventKey']
+                id,
+                categoryName: node.props.eventKey
             },
             selectedKeys: [id]
         });
@@ -105,7 +105,7 @@ export class ConnectionsTree extends React.Component<Props, State> {
     getNodeTreeRightClickMenu = () => {
         const { pageX, pageY } = { ...this.state.rightClickNodeTreeItem } as any
         if (!pageX || !pageY) {
-            return (<div></div>);
+            return (<div/>);
         }
         const menu = (<MenuStyled style={{ position: 'absolute', left: `${pageX}px`, top: `${pageY}px` }}>
             <MenuItemStyled key='1'>Deploy</MenuItemStyled>
@@ -128,15 +128,15 @@ export class ConnectionsTree extends React.Component<Props, State> {
                 </SidebarHeader >
                 {connections && connections.length > 0 && <DirectoryTreeStyled
                     onSelect={this.onSelect}
-                    multiple
+                    multiple={true}
                     onRightClick={this.rightClickOnTree}
                     selectedKeys={this.state.selectedKeys}
-                    defaultExpandAll style={{ color: "white" }}>
+                    defaultExpandAll={true} style={{ color: "white" }}>
                     {connections.map((item) => {
                         return <TreeNodeStyled icon={<Icon type="database" />} title={item.name} key={item.url} style={{ color: "white" }}>
                             <TreeNodeStyled title="Contract Instances" key="0-0-0" style={{ color: "white" }}>
                                 {contracts && contracts.length > 0 && contracts.map((contract: Contract) => {
-                                    return <TreeNodeStyled title={contract.name} key={contract._id} isLeaf />
+                                    return <TreeNodeStyled title={contract.name} key={contract._id} isLeaf={true} />
                                 })}
                             </TreeNodeStyled>
                         </TreeNodeStyled>

@@ -51,7 +51,7 @@ class Web3ReduxWrapper implements IWeb3ReduxWrapper {
         type: Web3ActionType.Web3Action,
         payload: config.payload,
         meta: {
-            url: url,
+            url,
             // onSuccess: config.onSuccess,
             // onError: config.onError,
             // onProgress: config.onProgress
@@ -62,7 +62,7 @@ class Web3ReduxWrapper implements IWeb3ReduxWrapper {
         type: Web3ActionType.Web3Action,
         payload: config.payload,
         meta: {
-            url: url,
+            url,
             // onSuccess: config.onSuccess,
             // onError: config.onError,
             // onProgress: config.onProgress
