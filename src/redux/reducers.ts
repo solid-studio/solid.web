@@ -1,12 +1,12 @@
-import { combineReducers } from "redux";
-import { appReducer, AppState } from "./reducer";
+import { combineReducers } from 'redux'
+import { appReducer, AppState } from './reducer'
 
 export interface ApplicationState {
-    appState: AppState;
+  appState: AppState
 }
 
 const rootReducer = combineReducers<ApplicationState>({
-    appState: appReducer
-});
+  appState: appReducer
+})
 
-export default rootReducer;
+export default rootReducer
