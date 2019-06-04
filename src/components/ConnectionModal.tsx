@@ -21,15 +21,11 @@ interface Props {
     // onCancel: () => void
 }
 
-interface State {
-    // visible: boolean;
-}
-
 export class ConnectionModalComponent extends GenericModal<Connection> {
 
 };
 
-export class ConnectionModal extends React.Component<Props, State> {
+export class ConnectionModal extends React.Component<Props> {
 
     saveConnection = (item: Connection) => {
         // if (this.state.itemToEdit) { // TODO

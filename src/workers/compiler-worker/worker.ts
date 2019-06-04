@@ -47,7 +47,7 @@ ctx.onmessage = (event: IMessageEvent) => {
                         compilerVersion,
                         sourceCode,
                         status: Status.Completed,
-                        isValid: result.errors == undefined
+                        isValid: result.errors === undefined
                     }
                 }
                 ctx.postMessage(validateSourceCodeResult)

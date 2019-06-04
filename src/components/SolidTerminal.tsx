@@ -12,7 +12,7 @@ const commands = {
     echo: {
         description: 'Echo a passed string.',
         usage: 'echo <string>',
-        fn () {
+        fn() {
             return `${Array.from(arguments).join(' ')}`
         }
     }

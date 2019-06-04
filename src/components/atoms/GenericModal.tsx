@@ -43,7 +43,6 @@ class GenericModal<FormFields> extends React.Component<Props<FormFields>, State<
     }
 
     public onChange: OnChangeHandler<FormFields> = (field, value) => {
-        debugger;
         const result = R.merge(this.state.fields, { [field]: value }) as any
         this.setState({
             fields: result
