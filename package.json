@@ -91,7 +91,8 @@
     "tslint:ci": "npm run tslint -- -t json -o report-lint.json",
     "prettier": "prettier --write 'src/**/*.{ts,tsx,js,json}'",
     "check-formatting": "prettier --list-different 'src/**/*.{ts,tsx,js,json}'",
-    "test:coverage": "npm run test -- --coverage"
+    "test:coverage": "npm run test -- --coverage",
+    "test:ci:coverage": "jest --ci --runInBand --reporters=default --reporters=jest-junit"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -115,6 +116,7 @@
     "axios-mock-adapter": "^1.16.0",
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.14.0",
+    "jest-junit": "^6.4.0",
     "prettier": "^1.17.1",
     "react-console-component": "^0.6.1",
     "tslint": "^5.17.0",
@@ -150,6 +152,10 @@
       "^react-native$": "react-native-web",
       "^.+\\.module\\.(css|sass|scss)$": "identity-obj-proxy"
     },
+    "reporters": [
+      "default",
+      "jest-unit"
+    ],
     "moduleFileExtensions": [
       "web.js",
       "js",
