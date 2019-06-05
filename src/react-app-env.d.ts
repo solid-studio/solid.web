@@ -76,3 +76,5 @@ declare module 'worker-loader!*' {
 declare function importScripts(...urls: string[]): void
 
 declare module 'solc'
+
+declare module 'solc/wrapper'

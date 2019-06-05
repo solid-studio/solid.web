@@ -12,6 +12,8 @@ import { validateSourceCode } from '../worker-redux/actions'
 import { simpleCompilerInput } from '../workers/compiler-worker/compiler-input'
 import { solc } from '../utils/compiler'
 
+import { ContractModalComponent } from "./ContractModalComponent";
+
 const FORM_TITLE = 'ItemForm' // TODO change to dinamic
 const radioFromOptions = [
   {
@@ -40,8 +42,6 @@ interface Props {
   validateSourceCode: ActionCreator<Action>
   validatingSourceCode: boolean
 }
-
-export class ContractModalComponent extends GenericModal<Contract> {}
 
 export class ContractModal extends React.Component<Props> {
   compiler: any

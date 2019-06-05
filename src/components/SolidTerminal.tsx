@@ -4,7 +4,9 @@ import Terminal from 'react-console-emulator'
 
 import styled from 'styled-components'
 
-interface Props {}
+interface Props {
+  welcomeMessage?: string;
+}
 
 const commands = {
   echo: {
@@ -20,14 +22,14 @@ const StyledTerminal = styled(Terminal)`
   min-height: 100% !important;
 `
 
-export const SolidTerminal: React.FC<Props> = () => {
+export const SolidTerminal: React.FC<Props> = ({ welcomeMessage }: Props) => {
   return (
     <StyledTerminal
       promptLabelColor="#DF1A7A"
       promptTextColor="#DF1A7A"
       textColor="#25b864"
       commands={commands}
-      welcomeMessage={'Welcome to the Solid Studio Console!'}
+      welcomeMessage={welcomeMessage || 'Welcome to the Solid Studio Console!'}
       promptLabel={'$'}
     />
   )

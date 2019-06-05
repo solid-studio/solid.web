@@ -8,7 +8,8 @@ import { FormikErrors, Field } from 'formik'
 import { Connection, Status } from '../redux/types'
 import { ApplicationState } from '../redux/reducers'
 import { createOrUpdateConnection, createConnectionCancelled } from '../redux/actions'
-import { GenericModal, TextField } from './atoms'
+import { TextField } from './atoms'
+import { ConnectionModalComponent } from "./ConnectionModalComponent";
 
 const FORM_TITLE = 'ItemForm' // TODO change to dinamic
 
@@ -20,8 +21,6 @@ interface Props {
   createConnectionCancelled: ActionCreator<Action>
   // onCancel: () => void
 }
-
-export class ConnectionModalComponent extends GenericModal<Connection> {}
 
 export class ConnectionModal extends React.Component<Props> {
   saveConnection = (item: Connection) => {

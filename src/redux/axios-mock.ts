@@ -1,5 +1,6 @@
 import { CONNECTION_URL } from './constants'
 
+// tslint:disable-next-line 
 const uuidv4 = require('uuid/v4')
 
 export const getMocks = (mock: any) => {
