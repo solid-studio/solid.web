@@ -35,7 +35,7 @@ jobs:
       - *restore_cache
       - run:
           name: TS Lint
-          command: npm run tslint
+          command: npm run tslint:ci
 
   unit-tests:
     docker: *nodejs-docker-image
@@ -44,7 +44,7 @@ jobs:
       - *restore_cache
       - run:
           name: Unit tests
-          command: npm run unit:test
+          command: npm run test:coverage
 
   e2e-tests:
     docker: *nodejs-docker-image
@@ -53,7 +53,7 @@ jobs:
       - *restore_cache
       - run:
           name: Unit tests
-          command: npm run unit:test
+          command: npm run test:coverage
 
   build-and-push-docker-image:
     docker: *nodejs-docker-image
@@ -62,7 +62,7 @@ jobs:
       - *restore_cache
       - run:
           name: Unit tests
-          command: npm run unit:test
+          command: npm run test:coverage
 
 workflows:
   version: 2
