@@ -104,7 +104,7 @@ workflows:
           requires:
             - tslint
             - unit-tests
-            - e2e tests 
+            - e2e-tests 
       - publish-to-GKE:
           requires:
             - build-and-push-docker-image
