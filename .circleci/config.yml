@@ -27,15 +27,18 @@ jobs:
           key: node-v1-{{ .Branch }}-{{ checksum "package-lock.json" }}
           paths:
             - node_modules
-  
-  lint: 
+
+  tslint: 
     docker: *nodejs-docker-image
     steps:
       - checkout
       - *restore_cache
       - run:
-          name: TS Lint
-          command: npm run tslint:ci
+          name: TSLint
+          command: npm run tslint
+      - run:
+          name: Check formatting (Prettier)
+          command: npm run check-formatting        
 
   unit-tests:
     docker: *nodejs-docker-image
@@ -43,23 +46,12 @@ jobs:
       - checkout
       - *restore_cache
       - run:
-          name: Unit tests
-          command: npm run test:ci:coverage
-          environment:
-            JEST_JUNIT_OUTPUT: "reports/junit/js-test-results.xml"  
+          name: Run unit tests
+          command: npm run test:ci
       - store_test_results:
-          path: reports/junit
+          path: test_results
       - store_artifacts:
-          path: reports/junit
-      # - store_test_results:
-      #     path: test-results
-      # - store_artifacts:
-      #     path: test-results.xml
-      #     prefix: tests
-      # - store_artifacts:
-      #     path: coverage
-      #     prefix: coverage
-
+          path: test_results
 
   e2e-tests:
     docker: *nodejs-docker-image
@@ -67,8 +59,8 @@ jobs:
       - checkout
       - *restore_cache
       - run:
-          name: Unit tests
-          command: npm run test:coverage
+          name: E2E Tests
+          command: echo "E2E tests running"
 
   build-and-push-docker-image:
     machine: true
@@ -77,12 +69,13 @@ jobs:
       - run:
           name: Building and pushing image to Docker Hub
           command: |
-            echo '${CIRCLE_BUILD_NUM}'
-            echo 'export TAG=0.1.${CIRCLE_BUILD_NUM}' >> $BASH_ENV
-            echo 'export IMAGE_NAME=python-circleci-docker' >> $BASH_ENV
-            docker build -t edsonalcala/solid-api:1 .
+            TAG_VERSION=$(node -p -e "require('./package.json').version")
+            echo '$TAG_VERSION' $TAG_VERSION     
+            IMAGE_NAME=edsonalcala/solid-web
+            docker build -t $IMAGE_NAME:$TAG_VERSION -t $IMAGE_NAME:latest .
             echo $DOCKER_HUB_PASSWORD | docker login -u $DOCKER_HUB_USER --password-stdin
-            docker push edsonalcala/solid-api:1
+            docker push $IMAGE_NAME:$TAG_VERSION
+            docker push $IMAGE_NAME:latest
 
   publish-to-GKE:
     docker: *nodejs-docker-image
@@ -90,14 +83,14 @@ jobs:
       - checkout
       - run:
           name: Publishing new version
-          command: "Echo publishing to GKE"
+          command: echo "publishing to GKE"
 
 workflows:
   version: 2
   build-deploy:
     jobs:
       - setup
-      - lint:
+      - tslint:
           requires:
             - setup
       - unit-tests:
@@ -109,10 +102,9 @@ workflows:
       - build-and-push-docker-image:
           context: SolidStudio
           requires:
-            - setup
-            # - integration-tests
-            # - unit-tests
-            # - e2e tests 
+            - tslint
+            - unit-tests
+            - e2e tests 
       - publish-to-GKE:
           requires:
             - build-and-push-docker-image

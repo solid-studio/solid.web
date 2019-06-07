@@ -30,7 +30,6 @@
     },
     "linterOptions": {
         "exclude": [
-            "config/**/*.js",
             "node_modules/**/*.ts",
             "coverage/**/*.js",
             "src/**/*.json"

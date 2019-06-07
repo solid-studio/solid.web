@@ -2,7 +2,7 @@ import { IMessageEvent, MessageType, IValidateSourceCodeResultMessage } from '..
 import { solidityCompilerVersionsMap, solidityCompilerInstanceMap } from './compiler-versions'
 import { simpleCompilerInput } from './compiler-input'
 import { Status } from '../../redux/types'
-import wrapper from "solc/wrapper";
+import wrapper from 'solc/wrapper'
 
 const ctx: Worker = self as any
 
@@ -16,7 +16,7 @@ ctx.onmessage = (event: IMessageEvent) => {
       const version = solidityCompilerVersionsMap.get(msg.payload.version)
       console.log('Version', version, msg.payload.version)
       const url = `${BASE_URL}${version}`
-        ; (ctx as any).importScripts(url)
+      ;(ctx as any).importScripts(url)
       const compiler = wrapper((ctx as any).Module)
       solidityCompilerInstanceMap.set(version, compiler)
       const compilerInstance = solidityCompilerInstanceMap.get(version)
