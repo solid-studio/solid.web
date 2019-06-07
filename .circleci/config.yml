@@ -46,7 +46,7 @@ jobs:
           name: Unit tests
           command: npm run test:ci:coverage
           environment:
-          JEST_JUNIT_OUTPUT: "reports/junit/js-test-results.xml"  
+            JEST_JUNIT_OUTPUT: "reports/junit/js-test-results.xml"  
       - store_test_results:
           path: reports/junit
       - store_artifacts:
@@ -71,15 +71,26 @@ jobs:
           command: npm run test:coverage
 
   build-and-push-docker-image:
+    machine: true
+    steps:
+      - checkout
+      - run:
+          name: Building and pushing image to Docker Hub
+          command: |
+            echo '${CIRCLE_BUILD_NUM}'
+            echo 'export TAG=0.1.${CIRCLE_BUILD_NUM}' >> $BASH_ENV
+            echo 'export IMAGE_NAME=python-circleci-docker' >> $BASH_ENV
+            docker build -t edsonalcala/solid-api:1 .
+            echo $DOCKER_HUB_PASSWORD | docker login -u $DOCKER_HUB_USER --password-stdin
+            docker push edsonalcala/solid-api:1
+
+  publish-to-GKE:
     docker: *nodejs-docker-image
     steps:
       - checkout
-      - *restore_cache
       - run:
-          name: Unit tests
-          command: npm run test:coverage
-      - store_artifacts:
-          path: coverage
+          name: Publishing new version
+          command: "Echo publishing to GKE"
 
 workflows:
   version: 2
@@ -96,11 +107,15 @@ workflows:
           requires:
             - setup
       - build-and-push-docker-image:
+          context: SolidStudio
           requires:
             - setup
-      # - publish-to-aks:
-      #     requires:
-      #       - build-and-push-docker-image
-      #     filters:
-      #       branches:
-      #         only: master
+            # - integration-tests
+            # - unit-tests
+            # - e2e tests 
+      - publish-to-GKE:
+          requires:
+            - build-and-push-docker-image
+          filters:
+            branches:
+              only: master
