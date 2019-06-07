@@ -1,7 +1,7 @@
-import * as createHistory from "history";
+import * as createHistory from 'history'
 
-import initialiseStore from "./initialiseStore";
+import initialiseStore from './initialiseStore'
 
-export const history = createHistory.createBrowserHistory();
+export const history = createHistory.createBrowserHistory()
 
-export const { store } = initialiseStore(history);
+export const { store } = initialiseStore(history)

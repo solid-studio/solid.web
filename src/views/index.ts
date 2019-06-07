@@ -1,4 +1,4 @@
-import HomeView from "./HomeView";
+import HomeView from './HomeView'
 export { HomeView }
 
-export { NotFoundView } from "./NotFoundView"
+export { NotFoundView } from './NotFoundView'

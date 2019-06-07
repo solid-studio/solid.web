@@ -27,15 +27,18 @@ jobs:
           key: node-v1-{{ .Branch }}-{{ checksum "package-lock.json" }}
           paths:
             - node_modules
-  
-  lint: 
+
+  tslint: 
     docker: *nodejs-docker-image
     steps:
       - checkout
       - *restore_cache
       - run:
-          name: TS Lint
+          name: TSLint
           command: npm run tslint
+      - run:
+          name: Check formatting (Prettier)
+          command: npm run check-formatting        
 
   unit-tests:
     docker: *nodejs-docker-image
@@ -43,8 +46,12 @@ jobs:
       - checkout
       - *restore_cache
       - run:
-          name: Unit tests
-          command: npm run unit:test
+          name: Run unit tests
+          command: npm run test:ci
+      - store_test_results:
+          path: test_results
+      - store_artifacts:
+          path: test_results
 
   e2e-tests:
     docker: *nodejs-docker-image
@@ -52,24 +59,38 @@ jobs:
       - checkout
       - *restore_cache
       - run:
-          name: Unit tests
-          command: npm run unit:test
+          name: E2E Tests
+          command: echo "E2E tests running"
 
   build-and-push-docker-image:
+    machine: true
+    steps:
+      - checkout
+      - run:
+          name: Building and pushing image to Docker Hub
+          command: |
+            TAG_VERSION=$(node -p -e "require('./package.json').version")
+            echo '$TAG_VERSION' $TAG_VERSION     
+            IMAGE_NAME=edsonalcala/solid-web
+            docker build -t $IMAGE_NAME:$TAG_VERSION -t $IMAGE_NAME:latest .
+            echo $DOCKER_HUB_PASSWORD | docker login -u $DOCKER_HUB_USER --password-stdin
+            docker push $IMAGE_NAME:$TAG_VERSION
+            docker push $IMAGE_NAME:latest
+
+  publish-to-GKE:
     docker: *nodejs-docker-image
     steps:
       - checkout
-      - *restore_cache
       - run:
-          name: Unit tests
-          command: npm run unit:test
+          name: Publishing new version
+          command: echo "publishing to GKE"
 
 workflows:
   version: 2
   build-deploy:
     jobs:
       - setup
-      - lint:
+      - tslint:
           requires:
             - setup
       - unit-tests:
@@ -79,11 +100,14 @@ workflows:
           requires:
             - setup
       - build-and-push-docker-image:
+          context: SolidStudio
           requires:
-            - setup
-      # - publish-to-aks:
-      #     requires:
-      #       - build-and-push-docker-image
-      #     filters:
-      #       branches:
-      #         only: master
+            - tslint
+            - unit-tests
+            - e2e-tests 
+      - publish-to-GKE:
+          requires:
+            - build-and-push-docker-image
+          filters:
+            branches:
+              only: master
