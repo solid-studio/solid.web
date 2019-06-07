@@ -1,7 +1,5 @@
-# base image
 FROM node:8 as builder
 
-# set working directory
 WORKDIR /opt/app
 
 COPY package.json package-lock.json ./
@@ -13,7 +11,6 @@ COPY . .
 RUN [ "npm", "run", "build" ]
 
 # Stage 2 - the production environment
-
 FROM nginx:1.14-alpine
 
 WORKDIR /var/www/app
