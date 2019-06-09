@@ -3,7 +3,7 @@ import { ThunkAction } from 'redux-thunk'
 
 import { ApplicationState } from './reducers'
 import { AbiItem } from 'web3-utils'
-import { Connection, Status } from './types'
+import { Connection } from '../features/connections'
 import { Web3Action, IWeb3ReduxWrapper, Web3ActionType } from '../utils/web3-helper'
 import { ActionType } from './action-types'
 import { ApiAction, HttpRequest } from '../utils/http'

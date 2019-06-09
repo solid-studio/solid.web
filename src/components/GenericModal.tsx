@@ -4,8 +4,6 @@ import * as R from 'ramda'
 import { Modal, Button } from 'antd'
 import { Formik, FormikErrors, FormikProps } from 'formik'
 
-const FORM_TITLE = 'ItemForm'
-
 interface Props<FormFields> {
   FormComponent: React.ComponentType<FormComponentProps<FormFields>>
   initialValues: FormFields
@@ -17,6 +15,7 @@ interface Props<FormFields> {
   title: string
   disableSubmitButton?: boolean
   buttonText?: string
+  formId: string;
 }
 
 type FormComponentProps<FormFields> = { fields: FormFields } & Handlers<FormFields>
@@ -31,7 +30,7 @@ interface State<FormFields> {
   fields: FormFields
 }
 
-class GenericModal<FormFields> extends React.Component<Props<FormFields>, State<FormFields>> {
+export class GenericModal<FormFields> extends React.Component<Props<FormFields>, State<FormFields>> {
   constructor(props: Props<FormFields>) {
     super(props)
     this.state = { fields: props.initialValues }
@@ -44,26 +43,26 @@ class GenericModal<FormFields> extends React.Component<Props<FormFields>, State<
     })
   }
 
-  submit = (values: FormFields) => {
-    console.log('Submitting', values)
-    this.props.onSubmit(values)
-  }
+  // submit = (values: FormFields) => {
+  //   console.log('Submitting', values)
+  //   this.props.onSubmit(values)
+  // }
 
   public render() {
-    const { FormComponent, visible, onCancel, loading, validator, title, disableSubmitButton } = this.props
+    const { FormComponent, visible, onCancel, loading, validator, title, disableSubmitButton, formId, onSubmit } = this.props
     const { fields } = this.state
     return (
       <Modal
         width={500}
         visible={visible}
-        title={title} // TODO change title if it is edit or creation mode
+        title={title}
         onCancel={onCancel}
         footer={[
           <Button key="cancel" onClick={onCancel}>
             Cancel
           </Button>,
           <Button
-            form={FORM_TITLE}
+            form={formId}
             key="submit"
             htmlType="submit"
             type="primary"
@@ -77,7 +76,7 @@ class GenericModal<FormFields> extends React.Component<Props<FormFields>, State<
         <div>
           <Formik
             initialValues={fields}
-            onSubmit={this.submit}
+            onSubmit={onSubmit}
             enableReinitialize={true}
             validate={validator}
             render={({ handleSubmit }: FormikProps<FormFields>) => (
@@ -89,4 +88,3 @@ class GenericModal<FormFields> extends React.Component<Props<FormFields>, State<
     )
   }
 }
-export default GenericModal

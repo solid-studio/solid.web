@@ -2,9 +2,12 @@ import React from 'react'
 import { Action, ActionCreator, bindActionCreators, Dispatch } from 'redux'
 import { connect } from 'react-redux'
 
-import styled from 'styled-components'
+import { ConnectionModal, ConnectionsTree, Connection } from '../features/connections'
+import { ContractModal, ContractsTree, Contract } from '../features/contracts'
 
-import { ConnectionModal, ContractModal, ConnectionsTree, ContractsTree } from '../components'
+import { Sidebar, Content, Wrapper } from "./components"
+import { Navbar } from './components/Navbar'
+
 import {
   contractSelected,
   createConnectionStarted,
@@ -12,38 +15,10 @@ import {
   getConnections,
   getContractInstances
 } from '../redux/actions'
+
 import { ApplicationState } from '../redux/reducers'
-import { Connection, Contract } from '../redux/types'
-import { loadCompilerWorker } from '../worker-redux/actions'
-
-import { Navbar } from '../containers'
-
-const Wrapper = styled.div`
-  height: 100vh;
-  display: grid;
-  grid-template-columns: 20em auto 20em;
-  grid-template-rows: 5% 95%;
-  grid-row-gap: 0.4px;
-  grid-template-areas:
-    'header header header'
-    'sidebar content content';
-`
-
-const Sidebar = styled.div`
-  grid-area: sidebar;
-  background-color: #323436;
-  padding-left: 1em;
-  padding-right: 1em;
-  padding-top: 1em;
-  display: grid;
-  height: 100%;
-  grid-template-rows: 50% 50%;
-`
-
-const Content = styled.section`
-  grid-area: content;
-  background-color: #2a2929;
-`
+// import { Connection, Contract } from '../redux/types'
+import { loadCompilerWorker } from '../workers/compiler-worker/actions'
 
 interface Props {
   createConnectionStarted: ActionCreator<Action>
@@ -84,7 +59,7 @@ export class DefaultLayout extends React.Component<Props> {
         />
         <Sidebar>
           <ConnectionsTree
-            contracts={contracts}
+            // contracts={contracts}
             connections={connections}
             onNewConnectionClick={this.props.createConnectionStarted}
             onContractSelected={this.props.contractSelected}

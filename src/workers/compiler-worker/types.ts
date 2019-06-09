@@ -1,5 +1,5 @@
 import { Action } from 'redux'
-import { Status } from '../redux/types'
+import { Status } from '../../features/common/types'
 
 // Enumerate message types
 export enum MessageType {

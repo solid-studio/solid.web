@@ -2,62 +2,16 @@ import React from 'react'
 
 import { Action, ActionCreator } from 'redux'
 
-import styled from 'styled-components'
-import { Icon, Tree, Menu } from 'antd'
+import { Icon } from 'antd'
 
-import { Connection, Contract } from '../redux/types'
-
-const DirectoryTree = Tree.DirectoryTree
-
-const { TreeNode } = Tree
-const MenuItem = Menu.Item
-
-const SidebarHeader = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-`
-
-const SidebarTitle = styled.h3`
-  color: white;
-  font-weight: 100;
-  padding: 0;
-  margin: 0;
-  font-size: 1em;
-`
-
-const SidebarHeaderButtons = styled.div``
-
-const TreeNodeStyled = styled(TreeNode)`
-  span {
-    color: white;
-  }
-  .;
-`
-
-const MenuStyled = styled(Menu)`
-  z-index: 1000;
-  border: none !important;
-`
-const MenuItemStyled = styled(MenuItem)`
-  height: 2em !important;
-  line-height: 2em !important;
-  margin-top: 0 !important;
-  margin-bottom: 0 !important;
-
-  &:hover {
-    background: #25b864;
-    color: white;
-  }
-`
-
-const DirectoryTreeStyled = styled(DirectoryTree)`
-  overflow: 'auto';
-`
+import { Connection } from './types'
+import { MenuStyled, MenuItemStyled, SidebarHeader, SidebarTitle, SidebarHeaderButtons, DirectoryTreeStyled, TreeNodeStyled } from './components';
+// Contract
+// TODO: I need to create contract instances and render per connection
 
 interface Props {
   connections: Connection[]
-  contracts: Contract[]
+  // contracts: Contract[]
   onNewConnectionClick: ActionCreator<Action>
   onContractSelected: ActionCreator<Action>
 }
@@ -77,10 +31,11 @@ export class ConnectionsTree extends React.Component<Props, State> {
   }
 
   onSelect = (selectedKeys: any, info: any) => {
-    const contractToShow = this.props.contracts.find(item => {
-      return item._id === selectedKeys[0]
-    })
-    this.props.onContractSelected(contractToShow)
+    // TODO: Show contract on editor when clicked
+    // const contractToShow = this.props.contracts.find(item => {
+    //   return item._id === selectedKeys[0]
+    // })
+    // this.props.onContractSelected(contractToShow)
     this.setState({
       selectedKeys
     })
@@ -114,7 +69,7 @@ export class ConnectionsTree extends React.Component<Props, State> {
   }
 
   render() {
-    const { connections, contracts, onNewConnectionClick } = this.props
+    const { connections, onNewConnectionClick } = this.props
     return (
       <div style={{ overflow: 'scroll', height: '100%' }}>
         {this.getNodeTreeRightClickMenu()}
@@ -143,11 +98,11 @@ export class ConnectionsTree extends React.Component<Props, State> {
                   style={{ color: 'white' }}
                 >
                   <TreeNodeStyled title="Contract Instances" key="0-0-0" style={{ color: 'white' }}>
-                    {contracts &&
+                    {/* {contracts &&
                       contracts.length > 0 &&
                       contracts.map((contract: Contract) => {
                         return <TreeNodeStyled title={contract.name} key={contract._id} isLeaf={true} />
-                      })}
+                      })} */}
                   </TreeNodeStyled>
                 </TreeNodeStyled>
               )

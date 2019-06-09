@@ -3,34 +3,29 @@ import React from 'react'
 import { Form, Input } from 'antd'
 import { FieldProps } from 'formik'
 
-import { Connection } from '../../redux/types'
-
-const { TextArea } = Input
+const FormItem = Form.Item
+const TextArea = Input.TextArea;
 
 interface InputProps {
   label: string
   placeHolder?: string
-  onChange?: any
 }
 
-type FormValues = Connection
-
-type InputOwnProps = FieldProps<FormValues> & InputProps
+type InputOwnProps = FieldProps & InputProps
 
 export const TextAreaField: React.FC<InputOwnProps> = (props: InputOwnProps) => {
   const { label, field, form, placeHolder } = props
   const { name } = field
-  const { errors } = form as any // TODO
+  const { errors } = form
   const nameKey = name.toString()
 
   return (
-    <Form.Item
+    <FormItem
       label={label}
       hasFeedback={!!errors[nameKey]}
       validateStatus={errors[nameKey] && 'error'}
-      help={errors[nameKey]}
-    >
-      <TextArea onChange={field.onChange} rows={15} {...field} placeholder={placeHolder} />
-    </Form.Item>
+      help={errors[nameKey]}>
+      <TextArea rows={15} {...field} placeholder={placeHolder} />
+    </FormItem>
   )
 }

@@ -1,6 +1,18 @@
 import { Action } from 'redux'
 
-import { Connection, CreateConnection, CreateContract, Contract, Transaction } from './types'
+import {
+  Connection,
+  CreateConnection
+} from '../features/connections'
+
+import {
+  CreateContract,
+  Contract
+} from '../features/contracts'
+
+import {
+  Transaction
+} from '../features/transactions'
 
 export enum ActionType {
   ERROR_WHEN_GETTING_DATA = 'ERROR_WHEN_GETTING_DATA',

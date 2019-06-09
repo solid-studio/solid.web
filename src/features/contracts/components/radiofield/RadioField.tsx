@@ -1,10 +1,9 @@
-import { Form, Radio } from 'antd'
-import { FieldProps } from 'formik'
 import React from 'react'
-import { Connection } from '../../redux/types'
+
+import { Form, Radio } from 'antd'
+import { FieldProps } from 'formik';
 
 const RadioGroup = Radio.Group
-
 const FormItem = Form.Item
 
 interface RadioOption {
@@ -18,9 +17,7 @@ interface RadioProps {
   defaultValue: string
 }
 
-type FormValues = Connection // TODO, make this generic
-
-type InputOwnProps = FieldProps<FormValues> & RadioProps
+type InputOwnProps = FieldProps & RadioProps
 
 export const RadioField: React.FC<InputOwnProps> = ({ label, defaultValue, field, form, options }: any) => {
   return (

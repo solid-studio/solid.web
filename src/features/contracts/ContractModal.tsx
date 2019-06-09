@@ -1,38 +1,24 @@
 import { Form } from 'antd'
-import { Field, FormikErrors } from 'formik'
+import { Field, FormikErrors, FieldProps } from 'formik'
 import React from 'react'
 import { connect } from 'react-redux'
 import { Action, ActionCreator, bindActionCreators, Dispatch } from 'redux'
-import { createContractCancelled, createOrUpdateContract } from '../redux/actions'
-import { ApplicationState } from '../redux/reducers'
-import { Contract, Status } from '../redux/types'
-import { GenericModal, RadioField, TextAreaField, TextField } from './atoms'
+
+import { createContractCancelled, createOrUpdateContract } from '../../redux/actions'
+import { ApplicationState } from '../../redux/reducers'
+import { Contract } from './types'
+import { Status } from "../common/types" // TODO: this shouldn't be the case with Sagas
+import { TextAreaField, TextField } from '../../components'
 import { ABI, Bytecode } from './contract-sample-data'
-import { validateSourceCode } from '../worker-redux/actions'
-import { simpleCompilerInput } from '../workers/compiler-worker/compiler-input'
-import { solc } from '../utils/compiler'
+import { validateSourceCode } from '../../workers/compiler-worker/actions'
+import { simpleCompilerInput } from '../../workers/compiler-worker/compiler-input'
+import { solc } from '../../utils/compiler'
 
 import { ContractModalComponent } from "./ContractModalComponent";
+import { RadioField, defaultRadioFormOptions } from './components/radiofield';
 
-const FORM_TITLE = 'ItemForm' // TODO change to dinamic
-const radioFromOptions = [
-  {
-    key: 'sourcecode',
-    value: 'Source Code'
-  },
-  {
-    key: 'abi',
-    value: 'ABI'
-  },
-  {
-    key: 'bytecode',
-    value: 'Bytecode'
-  },
-  {
-    key: 'contract',
-    value: 'Contract'
-  }
-]
+const FORM_ID = 'CONTRACT_FORM'
+
 interface Props {
   visible: boolean
   loading: boolean
@@ -98,6 +84,7 @@ contract SimpleStorage {
   render() {
     return (
       <ContractModalComponent
+        formId={FORM_ID}
         title="Add Contract Instance"
         onSubmit={this.saveContract}
         visible={this.props.visible}
@@ -124,28 +111,28 @@ contract SimpleStorage {
 
           return errors
         }}
-        FormComponent={({ fields: { name, sourceCode }, onSubmit }) => (
-          <Form id={FORM_TITLE} onSubmit={onSubmit}>
+        FormComponent={({ fields: Contract, onSubmit }) => (
+          <Form id={FORM_ID} onSubmit={onSubmit}>
             <Field
               name="name"
-              render={(innerProps: any) => <TextField {...innerProps} label="Name" placeHolder="Contract.Sol" />}
+              render={(innerProps: FieldProps) => <TextField {...innerProps} label="Name" placeHolder="Contract.Sol" />}
             />
             <Field
               name="address"
-              render={(innerProps: any) => (
+              render={(innerProps: FieldProps) => (
                 <TextField {...innerProps} label="Address" placeHolder="0xAC716460A84B85d774bEa75666ddf0088b024741" />
               )}
             />
             <Field
               name="type"
-              render={(innerProps: any) => (
-                <RadioField options={radioFromOptions} {...innerProps} defaultValue="sourcecode" label="From" />
+              render={(innerProps: FieldProps) => (
+                <RadioField options={defaultRadioFormOptions} defaultValue="sourcecode" label="From" {...innerProps} />
               )}
             />
             <Field
               name="sourceCode"
-              render={(innerProps: any) => (
-                <TextAreaField {...innerProps} label="Source code" placeHolder="pragma solidity ^0.5.8" />
+              render={(innerProps: FieldProps) => (
+                <TextAreaField label="Source code" placeHolder="pragma solidity ^0.5.8" {...innerProps} />
               )}
             />
           </Form>

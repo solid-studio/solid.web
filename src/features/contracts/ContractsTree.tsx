@@ -2,59 +2,11 @@ import React from 'react'
 
 import { Action, ActionCreator } from 'redux'
 
-import styled from 'styled-components'
-import { Icon, Tree, Menu } from 'antd'
+import { Icon } from 'antd'
 
-import { Connection, Contract } from '../redux/types'
+import { Contract } from './types'
 
-const DirectoryTree = Tree.DirectoryTree
-
-const { TreeNode } = Tree
-const MenuItem = Menu.Item
-
-const SidebarHeader = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-`
-
-const SidebarTitle = styled.h3`
-  color: white;
-  font-weight: 100;
-  padding: 0;
-  margin: 0;
-  font-size: 1em;
-`
-
-const SidebarHeaderButtons = styled.div``
-
-const TreeNodeStyled = styled(TreeNode)`
-  span {
-    color: white;
-  }
-  .;
-`
-
-const MenuStyled = styled(Menu)`
-  z-index: 1000;
-  border: none !important;
-`
-
-const MenuItemStyled = styled(MenuItem)`
-  height: 2em !important;
-  line-height: 2em !important;
-  margin-top: 0 !important;
-  margin-bottom: 0 !important;
-
-  &:hover {
-    background: #25b864;
-    color: white;
-  }
-`
-
-const DirectoryTreeStyled = styled(DirectoryTree)`
-  overflow: 'auto';
-`
+import { SidebarHeader, MenuStyled, MenuItemStyled, SidebarTitle, SidebarHeaderButtons, DirectoryTreeStyled, TreeNodeStyled } from "./components"
 
 interface Props {
   contracts: Contract[]
@@ -135,8 +87,7 @@ export class ContractsTree extends React.Component<Props, State> {
             onRightClick={this.rightClickOnTree}
             selectedKeys={this.state.selectedKeys}
             defaultExpandAll={true}
-            style={{ color: 'white' }}
-          >
+            style={{ color: 'white' }}>
             {contracts &&
               contracts.length > 0 &&
               contracts.map((contract: Contract) => {
@@ -149,3 +100,5 @@ export class ContractsTree extends React.Component<Props, State> {
     )
   }
 }
+
+// TODO: Remove inline style

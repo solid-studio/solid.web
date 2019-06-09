@@ -1,7 +1,10 @@
 import { ActionCreator, Action } from 'redux'
 import { ThunkAction } from 'redux-thunk'
 
-import { Status, Connection, Contract } from './types'
+import { Status } from '../features/common/types'
+import { Connection } from '../features/connections'
+import { Contract } from '../features/contracts'
+
 import { ApplicationState } from './reducers'
 import { AsyncActionThunk, ActionThunk, ExtraArgument } from './thunk-types'
 import {

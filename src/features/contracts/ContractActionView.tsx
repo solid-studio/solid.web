@@ -6,9 +6,9 @@ import { AbiItem, AbiInput, AbiOutput } from 'web3-utils'
 import styled from 'styled-components'
 import { Input, Button, Tag } from 'antd'
 
-import { executeContractFunction } from '../redux/web3-actions'
-import { ApplicationState } from '../redux/reducers'
-import { AsynActionThunkCreator } from '../redux/thunk-types'
+import { executeContractFunction } from '../../redux/web3-actions'
+import { ApplicationState } from '../../redux/reducers'
+import { AsynActionThunkCreator } from '../../redux/thunk-types'
 
 const InputGroup = Input.Group
 

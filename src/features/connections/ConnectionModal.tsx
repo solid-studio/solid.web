@@ -5,24 +5,40 @@ import { connect } from 'react-redux'
 import { Form } from 'antd'
 import { FormikErrors, Field } from 'formik'
 
-import { Connection, Status } from '../redux/types'
-import { ApplicationState } from '../redux/reducers'
-import { createOrUpdateConnection, createConnectionCancelled } from '../redux/actions'
-import { TextField } from './atoms'
+import { Connection, CreateConnection } from './types'
+import { Status } from "../common/types" // TODO: this shouldn't be the case with Sagas
+
+import { ApplicationState } from '../../redux/reducers'
+import { createOrUpdateConnection, createConnectionCancelled } from '../../redux/actions'
+import { TextField } from '../../components'
 import { ConnectionModalComponent } from "./ConnectionModalComponent";
 
-const FORM_TITLE = 'ItemForm' // TODO change to dinamic
+const FORM_ID = 'CONNECTION_FORM'
 
-interface Props {
-  visible: boolean
-  loading: boolean
-  itemToEdit?: Connection
-  createOrUpdateConnection: (item: Connection) => void
-  createConnectionCancelled: ActionCreator<Action>
-  // onCancel: () => void
+interface OwnProps {
+
 }
 
-export class ConnectionModal extends React.Component<Props> {
+interface StateProps {
+  visible: boolean
+  loading: boolean
+  submitted: boolean
+  createConnection: CreateConnection
+}
+
+interface DispatchProps {
+  // itemToEdit?: Connection
+  createOrUpdateConnection: (item: Connection) => void
+  createConnectionCancelled: ActionCreator<Action>
+}
+
+type AllProps = OwnProps & DispatchProps & StateProps
+
+export class ConnectionModal extends React.Component<AllProps> {
+  // static defaultProps = {
+  //   visible: false,
+  //   loading: false    
+  // }
   saveConnection = (item: Connection) => {
     // if (this.state.itemToEdit) { // TODO
     //     // update values
@@ -34,6 +50,7 @@ export class ConnectionModal extends React.Component<Props> {
   render() {
     return (
       <ConnectionModalComponent
+        formId={FORM_ID}
         title="Add Connection"
         onSubmit={this.saveConnection}
         visible={this.props.visible}
@@ -51,7 +68,7 @@ export class ConnectionModal extends React.Component<Props> {
           return errors
         }}
         FormComponent={({ fields: { name, url }, onSubmit }) => (
-          <Form id={FORM_TITLE} onSubmit={onSubmit}>
+          <Form id={FORM_ID} onSubmit={onSubmit}>
             <Field
               name="name"
               render={(innerProps: any) => <TextField {...innerProps} label="Name" placeHolder="http://" />}
@@ -88,7 +105,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
   )
 }
 
-export default connect(
+export default connect<StateProps, DispatchProps, {}, ApplicationState>(
   mapStateToProps,
   mapDispatchToProps
 )(ConnectionModal)
