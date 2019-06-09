@@ -2,7 +2,7 @@ import React from 'react'
 import { Provider } from 'react-redux'
 import { Router } from 'react-router-dom'
 
-import './App.less'
+import './themes/ant-customized.less'
 import './App.css'
 
 import { history, store } from './redux'
