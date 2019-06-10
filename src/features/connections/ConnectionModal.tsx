@@ -5,12 +5,13 @@ import { connect } from 'react-redux'
 import { Form } from 'antd'
 import { FormikErrors, Field } from 'formik'
 
-import { Connection, CreateConnection } from './types'
+import { AppState } from './reducer'
+import { TextField } from '../../components'
+
 import { Status } from "../common/types" // TODO: this shouldn't be the case with Sagas
 
-import { ApplicationState } from '../../redux/reducers'
-import { createOrUpdateConnection, createConnectionCancelled } from '../../redux/actions'
-import { TextField } from '../../components'
+import { createOrUpdateConnection, createConnectionCancelled } from './actions'
+import { Connection, CreateConnection } from './types'
 import { ConnectionModalComponent } from "./ConnectionModalComponent";
 
 const FORM_ID = 'CONNECTION_FORM'
@@ -86,12 +87,12 @@ export class ConnectionModal extends React.Component<AllProps> {
   }
 }
 
-const mapStateToProps = (state: ApplicationState) => {
+const mapStateToProps = (state: AppState) => {
   return {
-    createConnection: state.appState.createConnection,
-    visible: state.appState.createConnection.status === Status.Started,
-    submitted: state.appState.createConnection.status === Status.Completed,
-    loading: state.appState.createConnection.status === Status.InProgress
+    createConnection: state.createConnection,
+    visible: state.createConnection.status === Status.Started,
+    submitted: state.createConnection.status === Status.Completed,
+    loading: state.createConnection.status === Status.InProgress
   }
 }
 
@@ -105,7 +106,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
   )
 }
 
-export default connect<StateProps, DispatchProps, {}, ApplicationState>(
+export default connect<StateProps, DispatchProps, {}, AppState>(
   mapStateToProps,
   mapDispatchToProps
 )(ConnectionModal)

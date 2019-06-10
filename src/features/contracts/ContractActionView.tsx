@@ -3,12 +3,14 @@ import React, { useState } from 'react'
 import { bindActionCreators, Dispatch } from 'redux'
 import { connect } from 'react-redux'
 import { AbiItem, AbiInput, AbiOutput } from 'web3-utils'
+
 import styled from 'styled-components'
 import { Input, Button, Tag } from 'antd'
 
-import { executeContractFunction } from '../../redux/web3-actions'
-import { ApplicationState } from '../../redux/reducers'
-import { AsynActionThunkCreator } from '../../redux/thunk-types'
+import { ApplicationState } from '../rootReducer'
+import { AsynActionThunkCreator } from '../common/types'
+
+import { executeContractFunction } from './actions-web3'
 
 const InputGroup = Input.Group
 

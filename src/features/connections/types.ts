@@ -12,14 +12,3 @@ export interface Connection {
     // transactionReceipts: Transaction[] TODO
     // contractInstances?: Contract[] TODO
 }
-
-export interface ValidateSourceCode {
-    status: Status
-    compilerVersion: string
-    sourceCode: string
-}
-
-export interface LoadCompilerRequest {
-    version: string
-    status: Status
-}

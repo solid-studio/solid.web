@@ -4,14 +4,14 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Action, ActionCreator, bindActionCreators, Dispatch } from 'redux'
 
-import { createContractCancelled, createOrUpdateContract } from '../../redux/actions'
-import { ApplicationState } from '../../redux/reducers'
-import { Contract } from './types'
+import { createContractCancelled, createOrUpdateContract } from './actions'
+import { AppState } from './reducer'
+import { Contract, CreateContract } from './types'
 import { Status } from "../common/types" // TODO: this shouldn't be the case with Sagas
 import { TextAreaField, TextField } from '../../components'
 import { ABI, Bytecode } from './contract-sample-data'
-import { validateSourceCode } from '../../workers/compiler-worker/actions'
-import { simpleCompilerInput } from '../../workers/compiler-worker/compiler-input'
+import { validateSourceCode } from '../../features/compiler/web-workers/compiler-worker/actions'
+import { simpleCompilerInput } from '../../features/compiler/web-workers/compiler-worker/compiler-input'
 import { solc } from '../../utils/compiler'
 
 import { ContractModalComponent } from "./ContractModalComponent";
@@ -19,17 +19,27 @@ import { RadioField, defaultRadioFormOptions } from './components/radiofield';
 
 const FORM_ID = 'CONTRACT_FORM'
 
-interface Props {
+interface OwnProps {
+  itemToEdit?: Contract
+}
+
+interface StateProps {
   visible: boolean
   loading: boolean
-  itemToEdit?: Contract
+  submitted: boolean
+  createContract: CreateContract
+  // validatingSourceCode: boolean
+}
+
+interface DispatchProps {
   createOrUpdateContract: (item: Contract) => void
   createContractCancelled: ActionCreator<Action>
   validateSourceCode: ActionCreator<Action>
-  validatingSourceCode: boolean
 }
 
-export class ContractModal extends React.Component<Props> {
+type AllProps = OwnProps & DispatchProps & StateProps
+
+export class ContractModal extends React.Component<AllProps> {
   compiler: any
 
   componentDidMount() {
@@ -90,7 +100,7 @@ contract SimpleStorage {
         visible={this.props.visible}
         loading={this.props.loading}
         onCancel={this.props.createContractCancelled}
-        disableSubmitButton={this.props.validatingSourceCode}
+        disableSubmitButton={false} // this.props.validatingSourceCode TODO: Disable when compiling
         initialValues={{ name: 'ERC20.sol', sourceCode: '', abi: [], bytecode: '' }}
         validator={(items: Contract) => {
           console.log('Validator called')
@@ -142,13 +152,13 @@ contract SimpleStorage {
   }
 }
 
-const mapStateToProps = (state: ApplicationState) => {
+const mapStateToProps = (state: AppState) => {
   return {
-    createContract: state.appState.createContract,
-    visible: state.appState.createContract.status === Status.Started,
-    submitted: state.appState.createContract.status === Status.Completed,
-    loading: state.appState.createContract.status === Status.InProgress,
-    validatingSourceCode: state.appState.validateSourceCode.status === Status.Started
+    createContract: state.createContract,
+    visible: state.createContract.status === Status.Started,
+    submitted: state.createContract.status === Status.Completed,
+    loading: state.createContract.status === Status.InProgress,
+    // validatingSourceCode: state.validateSourceCode.status === Status.Started
   }
 }
 
@@ -163,7 +173,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
   )
 }
 
-export default connect(
+export default connect<StateProps, DispatchProps, {}, AppState>(
   mapStateToProps,
   mapDispatchToProps
 )(ContractModal)
