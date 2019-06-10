@@ -6,7 +6,7 @@ import { AsyncActionThunk, ActionThunk, ExtraArgument } from '../common/types'
 
 import { ActionType } from './action-types'
 
-import { TRANSACTION_URL } from '../../constants'
+import { TRANSACTION_URL } from './constants'
 
 export const getTransactions: ActionCreator<ActionThunk> = () => (dispatch, _, { api }): Action =>
     dispatch(

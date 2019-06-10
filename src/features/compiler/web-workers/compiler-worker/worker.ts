@@ -1,7 +1,7 @@
 import { IMessageEvent, MessageType, IValidateSourceCodeResultMessage } from './types'
 import { solidityCompilerVersionsMap, solidityCompilerInstanceMap } from './compiler-versions'
 import { simpleCompilerInput } from './compiler-input'
-import { Status } from '../../features/common/types'
+import { Status } from '../../../common/types'
 import wrapper from 'solc/wrapper'
 
 const ctx: Worker = self as any

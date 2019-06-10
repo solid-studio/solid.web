@@ -13,6 +13,7 @@ import { Status } from "../../common/types" // TODO: this shouldn't be the case 
 import { createOrUpdateConnection, createConnectionCancelled } from '../actions'
 import { Connection, CreateConnection } from '../types'
 import { ConnectionModalComponent } from "./ConnectionModalComponent";
+import { ApplicationState } from '../../rootReducer';
 
 const FORM_ID = 'CONNECTION_FORM'
 
@@ -87,12 +88,13 @@ export class ConnectionModal extends React.Component<AllProps> {
   }
 }
 
-const mapStateToProps = (state: ConnectionState) => {
+const mapStateToProps = ({ connectionState }: ApplicationState) => {
+  console.log("STATE", connectionState)
   return {
-    createConnection: state.createConnection,
-    visible: state.createConnection.status === Status.Started,
-    submitted: state.createConnection.status === Status.Completed,
-    loading: state.createConnection.status === Status.InProgress
+    createConnection: connectionState.createConnection,
+    visible: connectionState.createConnection.status === Status.Started,
+    submitted: connectionState.createConnection.status === Status.Completed,
+    loading: connectionState.createConnection.status === Status.InProgress
   }
 }
 
@@ -106,7 +108,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
   )
 }
 
-export default connect<StateProps, DispatchProps, {}, ConnectionState>(
+export default connect<StateProps, DispatchProps, {}, ApplicationState>(
   mapStateToProps,
   mapDispatchToProps
 )(ConnectionModal)

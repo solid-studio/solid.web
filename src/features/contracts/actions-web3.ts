@@ -14,7 +14,7 @@ export const executeContractFunction: ActionCreator<AsyncActionThunk> = (abi: Ab
   getState,
   { web3 }
 ): Promise<Action> => {
-  const currentConnection = getState().appState.currentConnection as Connection
+  const currentConnection = getState().connectionState.currentConnection as Connection
   console.log('Values in action', abi)
   console.log('Values in action', parameters)
   console.log('WEB3', web3)

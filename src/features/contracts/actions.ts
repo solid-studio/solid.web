@@ -24,7 +24,7 @@ export const createOrUpdateContract: ActionCreator<AsyncActionThunk> = values =>
   getState,
   { api }
 ): Promise<Action> => {
-  const currentConnection = getState().appState.currentConnection as any // Connection 
+  const currentConnection = getState().connectionState.currentConnection as any // Connection 
   // TODO: define how to access global state
   if (!currentConnection) {
     throw new Error('Non current connection')

@@ -28,16 +28,16 @@ import CompilerWorker from '.'
 export const loadCompilerWorker: ActionCreator<ThunkAction<void, ApplicationState, HttpRequest, Action>> = () => {
   return (dispatch, getState, _): void => {
     // TODO: Edson Fix
-    // const compilerWorker = getState().appState.compilerWorker as CompilerWorker
-    // setupWorkerReducer(compilerWorker, dispatch)
+    const compilerWorker = getState().compilerState.compilerWorker as CompilerWorker
+    setupWorkerReducer(compilerWorker, dispatch)
 
-    // const loadCompilerVersionMessage: ILoadCompilerVersionMessage = {
-    //   type: MessageType.LOAD_COMPILER_VERSION,
-    //   payload: { version: '0.5.8' } // TODO, just for for MVP
-    // }
-    // // TODO FALLBACK
-    // // if worker is here, do postMessage, other wise, use redux
-    // compilerWorker.postMessage(loadCompilerVersionMessage)
+    const loadCompilerVersionMessage: ILoadCompilerVersionMessage = {
+      type: MessageType.LOAD_COMPILER_VERSION,
+      payload: { version: '0.5.8' } // TODO, just for for MVP
+    }
+    // TODO FALLBACK
+    // if worker is here, do postMessage, other wise, use redux
+    compilerWorker.postMessage(loadCompilerVersionMessage)
   }
 }
 

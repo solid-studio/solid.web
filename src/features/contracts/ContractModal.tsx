@@ -16,6 +16,7 @@ import { solc } from '../../utils/compiler'
 
 import { ContractModalComponent } from "./ContractModalComponent";
 import { RadioField, defaultRadioFormOptions } from './components/radiofield';
+import { ApplicationState } from '../rootReducer';
 
 const FORM_ID = 'CONTRACT_FORM'
 
@@ -152,13 +153,13 @@ contract SimpleStorage {
   }
 }
 
-const mapStateToProps = (state: ContractState) => {
+const mapStateToProps = ({ contractState }: ApplicationState) => {
   return {
-    createContract: state.createContract,
-    visible: state.createContract.status === Status.Started,
-    submitted: state.createContract.status === Status.Completed,
-    loading: state.createContract.status === Status.InProgress,
-    // validatingSourceCode: state.validateSourceCode.status === Status.Started
+    createContract: contractState.createContract,
+    visible: contractState.createContract.status === Status.Started,
+    submitted: contractState.createContract.status === Status.Completed,
+    loading: contractState.createContract.status === Status.InProgress,
+    // validatingSourceCode: contractState.validateSourceCode.status === Status.Started
   }
 }
 
@@ -173,7 +174,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
   )
 }
 
-export default connect<StateProps, DispatchProps, {}, ContractState>(
+export default connect<StateProps, DispatchProps, {}, ApplicationState>(
   mapStateToProps,
   mapDispatchToProps
 )(ContractModal)

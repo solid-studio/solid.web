@@ -8,7 +8,7 @@ import { Actions, ActionType } from './action-types';
 import { MessageType, MyWorkerMessage } from './web-workers/compiler-worker/types'
 import CompilerWorker from './web-workers/compiler-worker'
 
-export interface AppState {
+export interface CompilerState {
     // connections: Connection[]
     // currentConnection?: Connection
     // currentContract?: Contract
@@ -41,7 +41,7 @@ const defaultLoadCompilerRequest: LoadCompilerRequest = {
     version: '0.5.8'
 }
 
-const initialState: AppState = {
+const initialState: CompilerState = {
     // connections: [],
     // contracts: [],
     // createConnection: defaultCreateConnection,
@@ -53,10 +53,10 @@ const initialState: AppState = {
     validateSourceCode: defaultValidateSourceCode
 }
 
-export const appReducer: Reducer<AppState, Actions> = (
-    state: AppState = initialState,
+export const appReducer: Reducer<CompilerState, Actions> = (
+    state: CompilerState = initialState,
     action: Actions | MyWorkerMessage
-): AppState => {
+): CompilerState => {
     switch (action.type) {
         // case ActionType.CONNECTION_CREATED:
         //     const newConnections = [...state.connections, action.payload]
