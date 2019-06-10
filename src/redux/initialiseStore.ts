@@ -9,7 +9,7 @@ import apiMiddleware from './middlewares/api'
 import workerMessengerMiddleware from './middlewares/worker-messenger'
 import web3Middleware from './middlewares/web3'
 
-import rootReducer, { ApplicationState } from './reducers'
+import rootReducer, { ApplicationState } from '../features/rootReducer'
 
 const initialiseStore = (history: History) => {
   const __REDUX_DEVTOOLS_EXTENSION_COMPOSE__ = '__REDUX_DEVTOOLS_EXTENSION_COMPOSE__'

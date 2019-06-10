@@ -1,7 +1,7 @@
 import { Middleware } from 'redux'
 
-import { MessageType } from '../../workers/compiler-worker/types'
-import CompilerWorker from '../../workers/compiler-worker'
+import { MessageType } from '../../features/compiler/web-workers/compiler-worker/types'
+import CompilerWorker from '../../features/compiler/web-workers/compiler-worker'
 
 const apiMiddleware: Middleware = ({ dispatch, getState }) => next => (action: any) => {
     console.log('Object.values(MessageType)', Object.values(MessageType))

@@ -10,15 +10,18 @@ import { Navbar } from './components/Navbar'
 
 import {
   contractSelected,
-  createConnectionStarted,
   createContractStarted,
-  getConnections,
   getContractInstances
-} from '../redux/actions'
+} from '../features/contracts/actions'
 
-import { ApplicationState } from '../redux/reducers'
+import {
+  createConnectionStarted,
+  getConnections
+} from '../features/connections/actions'
+
+import { ApplicationState } from '../features/rootReducer'
 // import { Connection, Contract } from '../redux/types'
-import { loadCompilerWorker } from '../workers/compiler-worker/actions'
+import { loadCompilerWorker } from '../features/compiler/web-workers/compiler-worker/actions'
 
 interface Props {
   createConnectionStarted: ActionCreator<Action>

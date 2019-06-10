@@ -5,14 +5,14 @@ import copy from 'copy-to-clipboard'
 import MonacoEditor from 'react-monaco-editor'
 import { connect } from 'react-redux'
 
-import { ApplicationState } from '../redux/reducers'
-import { Contract } from '../features/contracts/types' // TODO: FIX, contract should in contracts
+import { ApplicationState } from '../features/rootReducer'
+import { Contract } from '../features/contracts' // TODO: FIX, contract should in contracts
 import { ContractActions } from '../features/contracts/ContractActions'
 import { SolidTerminal } from '../features/terminal/SolidTerminal'// TODO: fix import
 
 import { Wrapper, Editor, Results, Details, TableDetails, CollapseStyled } from "./components";
 
-import { SAMPLE_ABI, SAMPLE_CONTRACT } from "../sample-data"
+import { SAMPLE_ABI, SAMPLE_CONTRACT } from "./sample-data"
 
 const TabPane = Tabs.TabPane
 const Panel = Collapse.Panel
