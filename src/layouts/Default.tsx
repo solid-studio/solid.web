@@ -79,8 +79,8 @@ export class DefaultLayout extends React.Component<Props> {
 
 const mapStateToProps = (state: ApplicationState) => {
   return {
-    connections: state.appState.connections,
-    contracts: state.appState.contracts
+    connections: state.connectionState.connections,
+    contracts: state.contractState.contracts
   }
 }
 

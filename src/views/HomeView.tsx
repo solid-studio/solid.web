@@ -165,7 +165,7 @@ export class HomeView extends React.Component<Props, State> {
 
 const mapStateToProps = (state: ApplicationState) => {
     return {
-        selectedContract: state.appState.currentContract
+        selectedContract: state.contractState.currentContract
     }
 }
 
