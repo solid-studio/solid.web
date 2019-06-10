@@ -18,7 +18,7 @@ import { ActionType, Actions } from './action-types';
 // Connections
 // Contracts
 // Compiler (done)
-export interface AppState {
+export interface ContractState {
     // connections: Connection[]
     // currentConnection?: Connection
     currentContract?: Contract
@@ -51,7 +51,7 @@ const defaultCreateContract: CreateContract = {
 //     version: '0.5.8'
 // }
 
-const initialState: AppState = {
+const initialState: ContractState = {
     // connections: [],
     contracts: [],
     // createConnection: defaultCreateConnection,
@@ -63,10 +63,10 @@ const initialState: AppState = {
     // validateSourceCode: defaultValidateSourceCode
 }
 
-export const appReducer: Reducer<AppState, Actions> = (
-    state: AppState = initialState,
+export const appReducer: Reducer<ContractState, Actions> = (
+    state: ContractState = initialState,
     action: Actions // | MyWorkerMessage
-): AppState => {
+): ContractState => {
     switch (action.type) {
         // case ActionType.CONNECTION_CREATED:
         //     const newConnections = [...state.connections, action.payload]

@@ -4,8 +4,8 @@ import { Action, ActionCreator } from 'redux'
 
 import { Icon } from 'antd'
 
-import { Connection } from './types'
-import { MenuStyled, MenuItemStyled, SidebarHeader, SidebarTitle, SidebarHeaderButtons, DirectoryTreeStyled, TreeNodeStyled } from './components';
+import { Connection } from '../types'
+import { MenuStyled, MenuItemStyled, SidebarHeader, SidebarTitle, SidebarHeaderButtons, DirectoryTreeStyled, TreeNodeStyled } from '.';
 // Contract
 // TODO: I need to create contract instances and render per connection
 

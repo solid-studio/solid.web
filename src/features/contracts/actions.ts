@@ -1,7 +1,7 @@
 import { ActionCreator, Action } from 'redux'
 import { ThunkAction } from 'redux-thunk'
 
-import { CONTRACTS_URL } from '../../constants'
+import { CONTRACTS_URL } from './constants'
 
 import { Status, AsyncActionThunk, ActionThunk, ExtraArgument } from '../common/types'
 import { ApplicationState } from '../rootReducer'

@@ -3,7 +3,7 @@ import { ThunkAction } from 'redux-thunk'
 
 import { Status, AsyncActionThunk, ActionThunk } from '../common/types'
 import { Connection } from './types'
-import { CONNECTION_URL } from "../../constants"
+import { CONNECTION_URL } from "./constants"
 import {
   ActionType,
   CreateConnectionAction,

@@ -6,16 +6,19 @@ html, body {
     height: 100%;    
 }
 
-.ant-tree.ant-tree-directory > li span.ant-tree-node-content-wrapper:hover::before, .ant-tree.ant-tree-directory .ant-tree-child-tree > li span.ant-tree-node-content-wrapper:hover::before {
+/* tree */
+.ant-tree.ant-tree-directory > li span.ant-tree-node-content-wrapper:hover::before, 
+.ant-tree.ant-tree-directory .ant-tree-child-tree > li span.ant-tree-node-content-wrapper:hover::before {
     background: #25b864;
 }
-/* For tabs */
-  .ant-tabs-bar{
-      margin: 1px 0;
-      border-bottom: none;
-  }
 
-  .ant-tabs.ant-tabs-card .ant-tabs-card-bar .ant-tabs-tab-active {
+/* tabs */
+.ant-tabs-bar{
+    margin: 1px 0;
+    border-bottom: none;
+}
+
+.ant-tabs.ant-tabs-card .ant-tabs-card-bar .ant-tabs-tab-active {
     height: 33px;
     color: white;
     background: #1e1e1e;
@@ -34,10 +37,12 @@ html, body {
     height: 100%;
     width: 100%;   
 }
+
 .ant-tabs.ant-tabs-top.ant-tabs-card.ant-tabs-no-animation{
     padding: 0 !important;
 }
-/* For Collapse */
+
+/* collapse */
 .ant-collapse > .ant-collapse-item > .ant-collapse-header {
     position: relative;
     padding: 12px 16px;

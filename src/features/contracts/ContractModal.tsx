@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { Action, ActionCreator, bindActionCreators, Dispatch } from 'redux'
 
 import { createContractCancelled, createOrUpdateContract } from './actions'
-import { AppState } from './reducer'
+import { ContractState } from './reducer'
 import { Contract, CreateContract } from './types'
 import { Status } from "../common/types" // TODO: this shouldn't be the case with Sagas
 import { TextAreaField, TextField } from '../../components'
@@ -152,7 +152,7 @@ contract SimpleStorage {
   }
 }
 
-const mapStateToProps = (state: AppState) => {
+const mapStateToProps = (state: ContractState) => {
   return {
     createContract: state.createContract,
     visible: state.createContract.status === Status.Started,
@@ -173,7 +173,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
   )
 }
 
-export default connect<StateProps, DispatchProps, {}, AppState>(
+export default connect<StateProps, DispatchProps, {}, ContractState>(
   mapStateToProps,
   mapDispatchToProps
 )(ContractModal)

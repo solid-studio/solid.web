@@ -1,14 +1,15 @@
 import { ActionCreator, Action } from 'redux'
 import { ThunkAction } from 'redux-thunk'
 
-import { ApplicationState } from '../../redux/reducers'
-import { HttpRequest } from '../../utils/http'
+import { ApplicationState } from '../../../rootReducer'
+import { HttpRequest } from '../../../../utils/http'
+import { Status } from '../../../common/types';
 
-import { ActionType, LoadCompilerWorkerAction } from '../../redux/action-types'
+import { ActionType, LoadCompilerWorkerAction } from '../../action-types'
+
 import { MessageType, ILoadCompilerVersionMessage, IValidateSourceCodeMessage } from './types'
 import { setupWorkerReducer } from './worker-reducer'
 import CompilerWorker from '.'
-import { Status } from '../../features/common/types';
 
 // export const loadCompilerWorker: ActionCreator<Action> = (): LoadCompilerWorkerAction => {
 //     const compilerWorker = new CompilerWorker();

@@ -5,13 +5,13 @@ import { connect } from 'react-redux'
 import { Form } from 'antd'
 import { FormikErrors, Field } from 'formik'
 
-import { AppState } from './reducer'
-import { TextField } from '../../components'
+import { ConnectionState } from '../reducer'
+import { TextField } from '../../../components'
 
-import { Status } from "../common/types" // TODO: this shouldn't be the case with Sagas
+import { Status } from "../../common/types" // TODO: this shouldn't be the case with Sagas
 
-import { createOrUpdateConnection, createConnectionCancelled } from './actions'
-import { Connection, CreateConnection } from './types'
+import { createOrUpdateConnection, createConnectionCancelled } from '../actions'
+import { Connection, CreateConnection } from '../types'
 import { ConnectionModalComponent } from "./ConnectionModalComponent";
 
 const FORM_ID = 'CONNECTION_FORM'
@@ -87,7 +87,7 @@ export class ConnectionModal extends React.Component<AllProps> {
   }
 }
 
-const mapStateToProps = (state: AppState) => {
+const mapStateToProps = (state: ConnectionState) => {
   return {
     createConnection: state.createConnection,
     visible: state.createConnection.status === Status.Started,
@@ -106,7 +106,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
   )
 }
 
-export default connect<StateProps, DispatchProps, {}, AppState>(
+export default connect<StateProps, DispatchProps, {}, ConnectionState>(
   mapStateToProps,
   mapDispatchToProps
 )(ConnectionModal)
