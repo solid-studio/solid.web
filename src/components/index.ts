@@ -1,3 +1,3 @@
 export { GenericModal } from './GenericModal'
-export { TextAreaField } from './TextAreaField'
-export { TextField } from './TextField'
+export { TextAreaFormItem } from './TextAreaFormItem'
+export { InputFormItem } from './InputFormItem'

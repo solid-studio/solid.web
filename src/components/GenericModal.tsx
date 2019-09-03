@@ -11,19 +11,19 @@ interface Props<FormFields> {
   onCancel: () => void
   loading: boolean
   validator: (item: FormFields) => FormikErrors<FormFields>
-  onSubmit: (item: FormFields) => void // TODO
+  onSubmit: (item: FormFields) => void
   title: string
   disableSubmitButton?: boolean
   buttonText?: string
   formId: string;
 }
 
-type FormComponentProps<FormFields> = { fields: FormFields } & Handlers<FormFields>
+type FormComponentProps<FormFields> = { fields: FormFields } & Handlers
 
 type OnChangeHandler<FormFields> = <K extends keyof FormFields>(s: K, a: FormFields[K]) => void
 
-interface Handlers<FormFields> {
-  onSubmit: (e?: React.FormEvent<HTMLFormElement> | undefined) => void
+interface Handlers {
+  onSubmit: ((event?: React.FormEvent<HTMLFormElement> | undefined) => void)
 }
 
 interface State<FormFields> {
@@ -36,17 +36,12 @@ export class GenericModal<FormFields> extends React.Component<Props<FormFields>,
     this.state = { fields: props.initialValues }
   }
 
-  public onChange: OnChangeHandler<FormFields> = (field, value) => {
+  onChange: OnChangeHandler<FormFields> = (field, value) => {
     const result = R.merge(this.state.fields, { [field]: value }) as any
     this.setState({
       fields: result
     })
   }
-
-  // submit = (values: FormFields) => {
-  //   console.log('Submitting', values)
-  //   this.props.onSubmit(values)
-  // }
 
   public render() {
     const { FormComponent, visible, onCancel, loading, validator, title, disableSubmitButton, formId, onSubmit } = this.props
@@ -58,17 +53,17 @@ export class GenericModal<FormFields> extends React.Component<Props<FormFields>,
         title={title}
         onCancel={onCancel}
         footer={[
-          <Button key="cancel" onClick={onCancel}>
+          <Button data-testid={`cancel-button-${formId}`} key="cancel" onClick={onCancel}>
             Cancel
           </Button>,
           <Button
+            data-testid={`submit-button-${formId}`}
             form={formId}
             key="submit"
             htmlType="submit"
             type="primary"
             disabled={disableSubmitButton || false}
-            loading={loading}
-          >
+            loading={loading}>
             {this.props.buttonText || 'Save'}
           </Button>
         ]}
@@ -83,6 +78,7 @@ export class GenericModal<FormFields> extends React.Component<Props<FormFields>,
               <FormComponent onSubmit={handleSubmit} fields={fields} />
             )}
           />
+
         </div>
       </Modal>
     )
