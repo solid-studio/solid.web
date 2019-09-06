@@ -84,4 +84,22 @@ describe('Navbar', () => {
     expect(onNewContractInstanceClickMock).toHaveBeenCalled()
     expect(onNewContractInstanceClickMock).toHaveBeenCalledTimes(1)
   })
+
+  test('renders navbar snapshot', async () => {
+
+    const { getByTestId, baseElement } = render(
+      <Navbar onNewConnectionClick={onNewConnectionClickMock}
+        onNewContractInstanceClick={onNewContractInstanceClickMock}>
+      </Navbar>)
+
+    const dropdownButton = getByTestId('navbar-menu')
+    fireEvent.mouseOver(dropdownButton)
+
+    await wait(() => {
+      expect(getByTestId('navbar-menu-contract')).toBeInTheDOM()
+      expect(getByTestId('navbar-menu-connection')).toBeInTheDOM()
+    })
+
+    expect(baseElement.innerHTML).toMatchSnapshot()
+  })
 })
