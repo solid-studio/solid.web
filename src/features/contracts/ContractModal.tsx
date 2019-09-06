@@ -8,7 +8,7 @@ import { createContractCancelled, createOrUpdateContract } from './actions'
 import { ContractState } from './reducer'
 import { Contract, CreateContract } from './types'
 import { Status } from "../common/types" // TODO: this shouldn't be the case with Sagas
-import { TextAreaField, TextField } from '../../components'
+import { TextAreaFormItem, InputFormItem } from 'components'
 import { ABI, Bytecode } from './contract-sample-data'
 import { validateSourceCode } from '../../features/compiler/web-workers/compiler-worker/actions'
 import { simpleCompilerInput } from '../../features/compiler/web-workers/compiler-worker/compiler-input'
@@ -122,16 +122,16 @@ contract SimpleStorage {
 
           return errors
         }}
-        FormComponent={({ fields: Contract, onSubmit }) => (
+        FormComponent={({ onSubmit }) => (
           <Form id={FORM_ID} onSubmit={onSubmit}>
             <Field
               name="name"
-              render={(innerProps: FieldProps) => <TextField {...innerProps} label="Name" placeHolder="Contract.Sol" />}
+              render={(innerProps: FieldProps) => <InputFormItem {...innerProps} label="Name" placeHolder="Contract.Sol" />}
             />
             <Field
               name="address"
               render={(innerProps: FieldProps) => (
-                <TextField {...innerProps} label="Address" placeHolder="0xAC716460A84B85d774bEa75666ddf0088b024741" />
+                <InputFormItem {...innerProps} label="Address" placeHolder="0xAC716460A84B85d774bEa75666ddf0088b024741" />
               )}
             />
             <Field
@@ -143,7 +143,7 @@ contract SimpleStorage {
             <Field
               name="sourceCode"
               render={(innerProps: FieldProps) => (
-                <TextAreaField label="Source code" placeHolder="pragma solidity ^0.5.8" {...innerProps} />
+                <TextAreaFormItem label="Source code" placeHolder="pragma solidity ^0.5.8" {...innerProps} />
               )}
             />
           </Form>

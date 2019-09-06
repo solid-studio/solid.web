@@ -71,9 +71,9 @@ export const Navbar: React.FC<Props> = ({ onNewConnectionClick, onNewContractIns
   const renderMenu = () => {
     return (
       <Menu onClick={onDropDownClickk}>
-        <Menu.Item key="contract">Contract Instance</Menu.Item>
-        <Menu.Item key="connection">Connection</Menu.Item>
-        <Menu.Item key="tag">Tag</Menu.Item>
+        <Menu.Item data-testid="navbar-menu-contract" key="contract">Contract Instance</Menu.Item>
+        <Menu.Item data-testid="navbar-menu-connection" key="connection">Connection</Menu.Item>
+        {/* <Menu.Item data-testid="navbar-menu-tag" key="tag">Tag</Menu.Item> */}
       </Menu>
     )
   }
@@ -82,22 +82,22 @@ export const Navbar: React.FC<Props> = ({ onNewConnectionClick, onNewContractIns
     <Wrapper>
       <ButtonRightArea>
         <ButtonGroupItem>
-          <SmallButton type="primary" size="small" onClick={onNewConnectionClick}>
+          <SmallButton data-testid={`button-navbar-new`} type="primary" size="small" onClick={onNewConnectionClick}>
             <Icon type="plus" />
             New
           </SmallButton>
           <Dropdown overlay={renderMenu}>
-            <SmallButton type="primary" size="small">
+            <SmallButton data-testid={`navbar-menu`} type="primary" size="small">
               <Icon type="down" />
             </SmallButton>
           </Dropdown>
         </ButtonGroupItem>
-        <ButtonGroupItem>
+        {/* <ButtonGroupItem>
           <SmallButton type="primary" size="small">
             <Icon type="fall" />
             Profiler
           </SmallButton>
-        </ButtonGroupItem>
+        </ButtonGroupItem> */}
       </ButtonRightArea>
       <NavbarTitle>Solid</NavbarTitle>
     </Wrapper>

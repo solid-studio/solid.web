@@ -1,24 +1,29 @@
 import React from 'react'
+
 import { bindActionCreators, Dispatch, ActionCreator, Action } from 'redux'
 import { connect } from 'react-redux'
-
 import { Form } from 'antd'
-import { FormikErrors, Field } from 'formik'
+import { FormikErrors, Field, FieldProps } from 'formik'
 
-import { ConnectionState } from '../reducer'
-import { TextField } from '../../../components'
-
+import { ApplicationState } from '../../rootReducer';
+import { InputFormItem } from '../../../components'
 import { Status } from "../../common/types" // TODO: this shouldn't be the case with Sagas
 
 import { createOrUpdateConnection, createConnectionCancelled } from '../actions'
 import { Connection, CreateConnection } from '../types'
+
 import { ConnectionModalComponent } from "./ConnectionModalComponent";
-import { ApplicationState } from '../../rootReducer';
 
 const FORM_ID = 'CONNECTION_FORM'
+const FORM_TITLE = "Add Connection"
+
+const defaultConnection: Connection = {
+  name: '',
+  url: ''
+}
 
 interface OwnProps {
-
+  item: Connection
 }
 
 interface StateProps {
@@ -29,7 +34,6 @@ interface StateProps {
 }
 
 interface DispatchProps {
-  // itemToEdit?: Connection
   createOrUpdateConnection: (item: Connection) => void
   createConnectionCancelled: ActionCreator<Action>
 }
@@ -37,15 +41,11 @@ interface DispatchProps {
 type AllProps = OwnProps & DispatchProps & StateProps
 
 export class ConnectionModal extends React.Component<AllProps> {
-  // static defaultProps = {
-  //   visible: false,
-  //   loading: false    
-  // }
+
+  static defaultProps = {
+    item: defaultConnection
+  }
   saveConnection = (item: Connection) => {
-    // if (this.state.itemToEdit) { // TODO
-    //     // update values
-    // }
-    console.log('save connection', item)
     this.props.createOrUpdateConnection(item)
   }
 
@@ -53,32 +53,23 @@ export class ConnectionModal extends React.Component<AllProps> {
     return (
       <ConnectionModalComponent
         formId={FORM_ID}
-        title="Add Connection"
-        onSubmit={this.saveConnection}
+        title={FORM_TITLE}
         visible={this.props.visible}
         loading={this.props.loading}
+        initialValues={this.props.item}
+        onSubmit={this.saveConnection}
         onCancel={this.props.createConnectionCancelled}
-        initialValues={{ name: '13', url: '', transactionReceipts: [] }}
-        validator={(items: Connection) => {
-          const errors: FormikErrors<Connection> = {}
-          if (!items.name) {
-            errors.name = 'Required'
-          }
-          if (!items.url) {
-            errors.url = 'Required'
-          }
-          return errors
-        }}
-        FormComponent={({ fields: { name, url }, onSubmit }) => (
+        validator={validator}
+        FormComponent={({ onSubmit }) => (
           <Form id={FORM_ID} onSubmit={onSubmit}>
             <Field
               name="name"
-              render={(innerProps: any) => <TextField {...innerProps} label="Name" placeHolder="http://" />}
+              render={(innerProps: FieldProps) => <InputFormItem {...innerProps} label="Name" placeHolder="http://" />}
             />
             <Field
               name="url"
-              render={(innerProps: any) => (
-                <TextField {...innerProps} label="Blockchain URL" placeHolder="JSON RPC endpoint" />
+              render={(innerProps: FieldProps) => (
+                <InputFormItem {...innerProps} label="Blockchain URL" placeHolder="JSON RPC endpoint" />
               )}
             />
           </Form>
@@ -86,6 +77,17 @@ export class ConnectionModal extends React.Component<AllProps> {
       />
     )
   }
+}
+
+const validator = (items: Connection) => {
+  const errors: FormikErrors<Connection> = {}
+  if (!items.name) {
+    errors.name = 'Required'
+  }
+  if (!items.url) {
+    errors.url = 'Required'
+  }
+  return errors
 }
 
 const mapStateToProps = ({ connectionState }: ApplicationState) => {

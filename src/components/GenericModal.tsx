@@ -10,7 +10,7 @@ interface Props<FormFields> {
   visible: boolean
   onCancel: () => void
   loading: boolean
-  validator: (item: FormFields) => FormikErrors<FormFields>
+  validator?: (item: FormFields) => FormikErrors<FormFields>
   onSubmit: (item: FormFields) => void
   title: string
   disableSubmitButton?: boolean
@@ -44,7 +44,7 @@ export class GenericModal<FormFields> extends React.Component<Props<FormFields>,
   }
 
   public render() {
-    const { FormComponent, visible, onCancel, loading, validator, title, disableSubmitButton, formId, onSubmit } = this.props
+    const { FormComponent, visible, onCancel, loading, title, disableSubmitButton, formId, onSubmit, validator } = this.props
     const { fields } = this.state
     return (
       <Modal
