@@ -45,6 +45,7 @@ export class ConnectionModal extends React.Component<AllProps> {
   static defaultProps = {
     item: defaultConnection
   }
+
   saveConnection = (item: Connection) => {
     this.props.createOrUpdateConnection(item)
   }

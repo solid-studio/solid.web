@@ -50,8 +50,8 @@ export class ConnectionsTree extends React.Component<Props, State> {
     }
     const menu = (
       <MenuStyled style={{ position: 'absolute', left: `${pageX}px`, top: `${pageY}px` }}>
-        <MenuItemStyled key="1">Deploy</MenuItemStyled>
-        <MenuItemStyled key="2">Open Console</MenuItemStyled>
+        <MenuItemStyled data-testid="connections-tree-rightclick-menu-option-deploy" key="1">Deploy</MenuItemStyled>
+        <MenuItemStyled data-testid="connections-tree-rightclick-menu-option-openconsole" key="2">Open Console</MenuItemStyled>
       </MenuStyled>
     )
     return menu
