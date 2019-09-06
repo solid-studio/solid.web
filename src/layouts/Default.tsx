@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 
 import { ConnectionModal, ConnectionsTree, Connection } from '../features/connections'
 import { ContractModal, ContractsTree, Contract } from '../features/contracts'
-
 import { Sidebar, Content, Wrapper } from "./components"
 import { Navbar } from './components/Navbar'
 

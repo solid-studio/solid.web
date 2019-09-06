@@ -97,7 +97,7 @@ export class HomeView extends React.Component<Props, State> {
     render() {
         const { selectedContract } = this.props
         return (
-            <Wrapper>
+            <Wrapper data-testId="home-view">
                 <Editor>
                     <Tabs type="card" style={{ paddingLeft: '1em', paddingRight: '1em', height: '100%' }}>
                         <TabPane tab={selectedContract && selectedContract.name} key="1" style={{ height: '100%' }}>
