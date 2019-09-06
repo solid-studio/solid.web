@@ -1,19 +1,13 @@
 import React from 'react'
-
 import { Action, ActionCreator } from 'redux'
-
 import { Icon } from 'antd'
 
 import { Connection } from '../types'
-import { MenuStyled, MenuItemStyled, SidebarHeader, SidebarTitle, SidebarHeaderButtons, DirectoryTreeStyled, TreeNodeStyled } from '.';
-// Contract
-// TODO: I need to create contract instances and render per connection
+import { MenuStyled, MenuItemStyled, SidebarHeader, SidebarTitle, SidebarHeaderButtons, DirectoryTreeStyled, TreeNodeStyled } from './ConnectionsTreeComponents';
 
 interface Props {
   connections: Connection[]
-  // contracts: Contract[]
   onNewConnectionClick: ActionCreator<Action>
-  onContractSelected: ActionCreator<Action>
 }
 
 interface State {
@@ -31,11 +25,6 @@ export class ConnectionsTree extends React.Component<Props, State> {
   }
 
   onSelect = (selectedKeys: any, info: any) => {
-    // TODO: Show contract on editor when clicked
-    // const contractToShow = this.props.contracts.find(item => {
-    //   return item._id === selectedKeys[0]
-    // })
-    // this.props.onContractSelected(contractToShow)
     this.setState({
       selectedKeys
     })
@@ -74,10 +63,10 @@ export class ConnectionsTree extends React.Component<Props, State> {
       <div style={{ overflow: 'scroll', height: '100%' }}>
         {this.getNodeTreeRightClickMenu()}
         <SidebarHeader>
-          <SidebarTitle>Connections</SidebarTitle>
+          <SidebarTitle data-testid="connections-tree-header">Connections</SidebarTitle>
           <SidebarHeaderButtons>
-            <Icon type="plus" style={{ color: 'white', paddingRight: '0.5em' }} onClick={onNewConnectionClick} />
-            <Icon type="down" style={{ color: 'white' }} />
+            <Icon type="plus" data-testid="connections-tree-plus" style={{ color: 'white', paddingRight: '0.5em' }} onClick={onNewConnectionClick} />
+            <Icon type="down" data-testid="connections-tree-down" style={{ color: 'white' }} />
           </SidebarHeaderButtons>
         </SidebarHeader>
         {connections && connections.length > 0 && (
@@ -95,15 +84,9 @@ export class ConnectionsTree extends React.Component<Props, State> {
                   icon={<Icon type="database" />}
                   title={item.name}
                   key={item.url}
-                  style={{ color: 'white' }}
-                >
-                  <TreeNodeStyled title="Contract Instances" key="0-0-0" style={{ color: 'white' }}>
-                    {/* {contracts &&
-                      contracts.length > 0 &&
-                      contracts.map((contract: Contract) => {
-                        return <TreeNodeStyled title={contract.name} key={contract._id} isLeaf={true} />
-                      })} */}
-                  </TreeNodeStyled>
+                  style={{ color: 'white' }}>
+                  {/* <TreeNodeStyled title="Contract Definitions" key="0-0-0" style={{ color: 'white' }}>
+                  </TreeNodeStyled> */}
                 </TreeNodeStyled>
               )
             })}
