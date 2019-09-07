@@ -2,7 +2,7 @@ import React from 'react'
 import { render, fireEvent, wait } from '@testing-library/react'
 import '@testing-library/jest-dom/extend-expect';
 
-import { getMouseEvent } from 'components/__tests__/helpers/getMouseEvent';
+import { getMouseEvent } from 'utils/getMouseEvent';
 
 import { buildFakeConnections } from '../faker'
 
@@ -20,7 +20,7 @@ describe('ConnectionsTree', () => {
         const text1 = connections[0].name
         const text2 = connections[1].name
 
-        const { getByTestId, getByText, debug } = render(
+        const { getByTestId, getByText } = render(
             <ConnectionsTree connections={connections}
                 onNewConnectionClick={onNewConnectionClickMockHandler}
             />)

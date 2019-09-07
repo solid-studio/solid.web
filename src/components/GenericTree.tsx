@@ -2,7 +2,7 @@ import React from 'react'
 import { Action, ActionCreator } from 'redux'
 import { Icon } from 'antd'
 
-import { MenuStyled, MenuItemStyled, SidebarHeader, SidebarTitle, SidebarHeaderButtons, DirectoryTreeStyled, TreeNodeStyled } from './GenericTreeStyledComponents';
+import { MenuStyled, MenuItemStyled, SidebarHeader, SidebarTitle, SidebarHeaderButtons, DirectoryTreeStyled } from './GenericTreeStyledComponents';
 
 interface MenuItemOption {
     name: string
@@ -43,8 +43,8 @@ export class GenericTree<T> extends React.Component<Props<T>, State> {
     }
 
     onSelect = (selectedKeys: any, info: any) => {
-        console.log("ON SELECT", selectedKeys)
-        console.log("INFO", info)
+        // TODO: TYPE THIS console.log("ON SELECT", selectedKeys)
+        // TODO: TYPE THIS console.log("INFO", info)
         this.setState({
             selectedKeys
         })

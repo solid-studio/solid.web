@@ -3,7 +3,7 @@ import { render, fireEvent, wait } from '@testing-library/react'
 import { Icon } from 'antd';
 import '@testing-library/jest-dom/extend-expect';
 
-import { getMouseEvent } from './__tests__/helpers/getMouseEvent';
+import { getMouseEvent } from 'utils/getMouseEvent';
 
 import { TreeNodeStyled } from './GenericTreeStyledComponents';
 import { GenericTree } from './GenericTree'

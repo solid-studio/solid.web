@@ -24,17 +24,16 @@ interface FakeMouseEventInit {
 }
 
 class FakeMouseEvent extends MouseEvent {
-    offsetX: number;
-    offsetY: number;
-    pageX: number;
-    pageY: number;
-    x: number;
-    y: number;
+    offsetX: number = 0
+    offsetY: number = 0
+    pageX: number = 0
+    pageY: number = 0
+    x: number = 0
+    y: number = 0
 
     constructor(type: string, values: Partial<FakeMouseEventInit>) {
-        const { pageX, pageY, offsetX, offsetY, x, y, ...mouseValues } = values;
-        super(type, mouseValues);
-
+        super(type, values);
+        const { pageX, pageY, offsetX, offsetY, x, y } = values;
         Object.assign(this, {
             offsetX: offsetX || 0,
             offsetY: offsetY || 0,

@@ -67,6 +67,7 @@ exports[`ConnectionsTree renders connections tree snapshop 1`] = `
           class="anticon anticon-down"
           data-testid="connections-tree-down"
           style="color: white;"
+          tabindex="-1"
         >
           <svg
             aria-hidden="true"

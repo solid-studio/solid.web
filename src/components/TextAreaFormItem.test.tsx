@@ -55,7 +55,7 @@ describe('TextAreaFormItem', () => {
         const label = "Blockchain URL"
         const name = "url"
 
-        const { getByTestId, debug } = renderWithWrapperForm(
+        const { getByTestId } = renderWithWrapperForm(
             <Field
                 name={name}
                 render={(innerProps: any) => (
@@ -66,7 +66,6 @@ describe('TextAreaFormItem', () => {
 
         const element = getByTestId('textarea-url')
 
-        debug()
         expect(element).toHaveAttribute('placeHolder', placeHolder)
         expect(element).toHaveAttribute('name', name)
         expect(element).toHaveAttribute('id', name)

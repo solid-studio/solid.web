@@ -69,9 +69,8 @@ describe('GenericModal', () => {
   })
 
   it('renders a modal', () => {
-    const { baseElement, debug } = renderWithGenericModal()
+    const { baseElement } = renderWithGenericModal()
 
-    debug(baseElement)
     expect(baseElement).toMatchSnapshot()
   })
 })
