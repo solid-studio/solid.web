@@ -1,3 +1,4 @@
+// Reference https://github.com/testing-library/react-testing-library/issues/268
 interface FakeMouseEventInit {
     bubbles: boolean,
     cancelable: boolean,

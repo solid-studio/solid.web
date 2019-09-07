@@ -1,15 +1,12 @@
 import React from 'react';
-import { Formik, FormikErrors, Field, FieldProps } from 'formik';
-import { render, fireEvent } from '@testing-library/react'
+import { FormikErrors, Field, FieldProps } from 'formik';
+import { render } from '@testing-library/react'
 import { Form } from 'antd'
 
 import { InputFormItem } from 'components'
-import { GenericModal } from './GenericModal'
 
-type GenericType = {
-  name: string,
-  url: string
-}
+import { GenericType } from './fakeTypes'
+import { GenericModal } from './GenericModal'
 
 class GenericModalComponent extends GenericModal<GenericType> { }
 

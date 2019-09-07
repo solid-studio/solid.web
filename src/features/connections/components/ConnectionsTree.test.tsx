@@ -1,17 +1,15 @@
 import React from 'react'
-import { render, fireEvent, queryByText, findByText, getByText, wait, queryByTestId, findByTestId } from '@testing-library/react'
+import { render, fireEvent, wait } from '@testing-library/react'
 import '@testing-library/jest-dom/extend-expect';
+
+import { getMouseEvent } from 'components/__tests__/helpers/getMouseEvent';
+
+import { buildFakeConnections } from '../faker'
 
 import { ConnectionsTree } from './ConnectionsTree'
 
-import { Connection } from '../types'
-import { buildFakeConnections } from '../faker'
-
-import { getMouseEvent } from './__tests__/helpers/getMouseEvent';
-
 describe('ConnectionsTree', () => {
     const onNewConnectionClickMockHandler = jest.fn()
-    let connections: Connection[]
 
     beforeEach(() => {
         onNewConnectionClickMockHandler.mockClear()
@@ -79,7 +77,7 @@ describe('ConnectionsTree', () => {
         fireEvent(connection1Element, rightClick)
 
         await wait(() => {
-            expect(getByTestId('connections-tree-rightclick-menu-option-deploy')).toBeInTheDocument()
+            expect(getByTestId('connections-tree-rightclick-menu-option-openconsole')).toBeInTheDocument()
             expect(getByTestId('connections-tree-rightclick-menu-option-deploy')).toBeInTheDocument()
         })
     })
@@ -123,7 +121,7 @@ describe('ConnectionsTree', () => {
         fireEvent(connection1Element, rightClick)
 
         await wait(() => {
-            expect(getByTestId('connections-tree-rightclick-menu-option-deploy')).toBeInTheDocument()
+            expect(getByTestId('connections-tree-rightclick-menu-option-openconsole')).toBeInTheDocument()
             expect(getByTestId('connections-tree-rightclick-menu-option-deploy')).toBeInTheDocument()
         })
 
