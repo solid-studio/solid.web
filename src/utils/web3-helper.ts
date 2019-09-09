@@ -1,8 +1,8 @@
 import { Action, ActionCreator } from 'redux'
 import { ThunkAction } from 'redux-thunk'
-import { ApplicationState } from '../redux/reducers'
+import { ApplicationState } from '../features/rootReducer'
 import { AbiItem } from 'web3-utils'
-import { ExtraArgument } from '../redux/thunk-types'
+import { ExtraArgument } from '../features/common/types'
 
 export enum Web3ActionType {
   Web3Action = '@@web3/WEB3_ACTION'

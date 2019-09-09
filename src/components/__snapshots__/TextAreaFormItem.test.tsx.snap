@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TextAreaFormItem should match snapshot 1`] = `
+<div>
+  <div
+    class="ant-row ant-form-item"
+  >
+    <div
+      class="ant-col ant-form-item-label"
+    >
+      <label
+        class=""
+        for="url"
+        title="Blockchain URL"
+      >
+        Blockchain URL
+      </label>
+    </div>
+    <div
+      class="ant-col ant-form-item-control-wrapper"
+    >
+      <div
+        class="ant-form-item-control"
+      >
+        <span
+          class="ant-form-item-children"
+        >
+          <textarea
+            class="ant-input"
+            data-testid="textarea-url"
+            id="url"
+            name="url"
+            placeholder="JSON RPC endpoint"
+            rows="15"
+          />
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+`;

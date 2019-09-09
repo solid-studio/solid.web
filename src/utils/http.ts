@@ -1,7 +1,7 @@
 import { Action, ActionCreator } from 'redux'
 import { ThunkAction } from 'redux-thunk'
-import { ApplicationState } from '../redux/reducers'
-import { ExtraArgument } from '../redux/thunk-types'
+import { ApplicationState } from '../features/rootReducer'
+import { ExtraArgument } from '../features/common/types'
 
 export enum ApiActionType {
   API_REQUEST = '@@http/API_REQUEST'

@@ -1,0 +1,42 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`InputFormItem should match snapshot 1`] = `
+<div>
+  <div
+    class="ant-row ant-form-item"
+  >
+    <div
+      class="ant-col ant-form-item-label"
+    >
+      <label
+        class=""
+        for="url"
+        title="Blockchain URL"
+      >
+        Blockchain URL
+      </label>
+    </div>
+    <div
+      class="ant-col ant-form-item-control-wrapper"
+    >
+      <div
+        class="ant-form-item-control"
+      >
+        <span
+          class="ant-form-item-children"
+        >
+          <input
+            class="ant-input ant-input-lg"
+            data-testid="input-url"
+            id="url"
+            name="url"
+            placeholder="JSON RPC endpoint"
+            type="text"
+            value=""
+          />
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+`;

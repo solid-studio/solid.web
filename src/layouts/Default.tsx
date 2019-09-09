@@ -2,57 +2,34 @@ import React from 'react'
 import { Action, ActionCreator, bindActionCreators, Dispatch } from 'redux'
 import { connect } from 'react-redux'
 
-import styled from 'styled-components'
+import { ConnectionModal, ConnectionsTree, Connection } from '../features/connections'
+import { ContractModal, ContractsTree, Contract } from '../features/contracts'
+import { Sidebar, Content, Wrapper } from "./components"
+import { Navbar } from './components/Navbar'
 
-import { ConnectionModal, ContractModal, ConnectionsTree, ContractsTree } from '../components'
 import {
   contractSelected,
-  createConnectionStarted,
   createContractStarted,
-  getConnections,
   getContractInstances
-} from '../redux/actions'
-import { ApplicationState } from '../redux/reducers'
-import { Connection, Contract } from '../redux/types'
-import { loadCompilerWorker } from '../worker-redux/actions'
+} from '../features/contracts/actions'
 
-import { Navbar } from '../containers'
+import {
+  createConnectionStarted,
+  getConnections
+} from '../features/connections/actions'
 
-const Wrapper = styled.div`
-  height: 100vh;
-  display: grid;
-  grid-template-columns: 20em auto 20em;
-  grid-template-rows: 5% 95%;
-  grid-row-gap: 0.4px;
-  grid-template-areas:
-    'header header header'
-    'sidebar content content';
-`
-
-const Sidebar = styled.div`
-  grid-area: sidebar;
-  background-color: #323436;
-  padding-left: 1em;
-  padding-right: 1em;
-  padding-top: 1em;
-  display: grid;
-  height: 100%;
-  grid-template-rows: 50% 50%;
-`
-
-const Content = styled.section`
-  grid-area: content;
-  background-color: #2a2929;
-`
+import { ApplicationState } from '../features/rootReducer'
+// import { Connection, Contract } from '../redux/types'
+import { loadCompilerWorker } from '../features/compiler/web-workers/compiler-worker/actions'
 
 interface Props {
   createConnectionStarted: ActionCreator<Action>
   createContractStarted: ActionCreator<Action>
   connections: Connection[]
-  contracts: Contract[]
+  // contracts: Contract[]
   getConnections: ActionCreator<any> // TODO fix this
-  getContractInstances: ActionCreator<any>
-  contractSelected: ActionCreator<Action>
+  // getContractInstances: ActionCreator<any>
+  // contractSelected: ActionCreator<Action>
   loadCompilerWorker: ActionCreator<any>
 }
 
@@ -61,7 +38,7 @@ export class DefaultLayout extends React.Component<Props> {
     // start worker for compiler and load default version for MVP
     this.props.loadCompilerWorker()
     this.props.getConnections()
-    this.props.getContractInstances() // TODO, need to be filtered by connection
+    // this.props.getContractInstances() // TODO, need to be filtered by connection
   }
 
   openConnectionModal = () => {
@@ -75,7 +52,7 @@ export class DefaultLayout extends React.Component<Props> {
   }
 
   render() {
-    const { connections, contracts } = this.props
+    const { connections } = this.props
     return (
       <Wrapper {...this.props} onClick={this.onIDEClick}>
         <Navbar
@@ -84,16 +61,14 @@ export class DefaultLayout extends React.Component<Props> {
         />
         <Sidebar>
           <ConnectionsTree
-            contracts={contracts}
             connections={connections}
             onNewConnectionClick={this.props.createConnectionStarted}
-            onContractSelected={this.props.contractSelected}
           />
-          <ContractsTree contracts={contracts} onContractSelected={this.props.contractSelected} />
+          {/* <ContractsTree contracts={contracts} onContractSelected={this.props.contractSelected} /> */}
         </Sidebar>
         <Content>{this.props.children}</Content>
         <ConnectionModal />
-        <ContractModal />
+        {/* <ContractModal /> */}
       </Wrapper>
     )
   }
@@ -101,8 +76,8 @@ export class DefaultLayout extends React.Component<Props> {
 
 const mapStateToProps = (state: ApplicationState) => {
   return {
-    connections: state.appState.connections,
-    contracts: state.appState.contracts
+    connections: state.connectionState.connections
+    // contracts: state.contractState.contracts
   }
 }
 
