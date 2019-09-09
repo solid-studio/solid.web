@@ -26,10 +26,10 @@ interface Props {
   createConnectionStarted: ActionCreator<Action>
   createContractStarted: ActionCreator<Action>
   connections: Connection[]
-  contracts: Contract[]
+  // contracts: Contract[]
   getConnections: ActionCreator<any> // TODO fix this
-  getContractInstances: ActionCreator<any>
-  contractSelected: ActionCreator<Action>
+  // getContractInstances: ActionCreator<any>
+  // contractSelected: ActionCreator<Action>
   loadCompilerWorker: ActionCreator<any>
 }
 
@@ -38,7 +38,7 @@ export class DefaultLayout extends React.Component<Props> {
     // start worker for compiler and load default version for MVP
     this.props.loadCompilerWorker()
     this.props.getConnections()
-    this.props.getContractInstances() // TODO, need to be filtered by connection
+    // this.props.getContractInstances() // TODO, need to be filtered by connection
   }
 
   openConnectionModal = () => {
@@ -52,7 +52,7 @@ export class DefaultLayout extends React.Component<Props> {
   }
 
   render() {
-    const { connections, contracts } = this.props
+    const { connections } = this.props
     return (
       <Wrapper {...this.props} onClick={this.onIDEClick}>
         <Navbar
@@ -61,16 +61,14 @@ export class DefaultLayout extends React.Component<Props> {
         />
         <Sidebar>
           <ConnectionsTree
-            // contracts={contracts}
             connections={connections}
             onNewConnectionClick={this.props.createConnectionStarted}
-            onContractSelected={this.props.contractSelected}
           />
-          <ContractsTree contracts={contracts} onContractSelected={this.props.contractSelected} />
+          {/* <ContractsTree contracts={contracts} onContractSelected={this.props.contractSelected} /> */}
         </Sidebar>
         <Content>{this.props.children}</Content>
         <ConnectionModal />
-        <ContractModal />
+        {/* <ContractModal /> */}
       </Wrapper>
     )
   }
@@ -78,8 +76,8 @@ export class DefaultLayout extends React.Component<Props> {
 
 const mapStateToProps = (state: ApplicationState) => {
   return {
-    connections: state.connectionState.connections,
-    contracts: state.contractState.contracts
+    connections: state.connectionState.connections
+    // contracts: state.contractState.contracts
   }
 }
 
