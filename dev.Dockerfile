@@ -1,5 +1,5 @@
 # base image
-FROM node:8 as builder
+FROM node:8
 
 # set working directory
 WORKDIR /opt/app
