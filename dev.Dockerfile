@@ -1,5 +1,5 @@
 # base image
-FROM node:8
+FROM node:10-slim
 
 # set working directory
 WORKDIR /opt/app
