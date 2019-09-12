@@ -1,6 +1,7 @@
 import { History } from 'history'
 import { createStore, applyMiddleware, compose, Store } from 'redux'
 import reduxThunk from 'redux-thunk'
+import { createEpicMiddleware } from 'redux-observable'
 
 import api from '../utils/http'
 import web3 from '../utils/web3-helper'
@@ -10,6 +11,7 @@ import workerMessengerMiddleware from './middlewares/worker-messenger'
 import web3Middleware from './middlewares/web3'
 
 import rootReducer, { ApplicationState } from '../features/rootReducer'
+import { rootEpic } from '../features/rootEpic';
 
 const initialiseStore = (history: History) => {
   const __REDUX_DEVTOOLS_EXTENSION_COMPOSE__ = '__REDUX_DEVTOOLS_EXTENSION_COMPOSE__'
@@ -19,14 +21,19 @@ const initialiseStore = (history: History) => {
   const composeEnhancers =
     (process.env.NODE_ENV !== 'production' && windowIfDefined[__REDUX_DEVTOOLS_EXTENSION_COMPOSE__]) || compose
 
+  const epicMiddleware = createEpicMiddleware();
+
   const middlewares = applyMiddleware(
-    reduxThunk.withExtraArgument({ api, web3 }),
-    apiMiddleware,
-    workerMessengerMiddleware,
-    web3Middleware
+    epicMiddleware
+    // reduxThunk.withExtraArgument({ api, web3 }),
+    // apiMiddleware,
+    // workerMessengerMiddleware,
+    // web3Middleware
   )
 
   const store: Store<ApplicationState> = createStore(rootReducer, composeEnhancers(middlewares))
+
+  epicMiddleware.run(rootEpic);
 
   return { store }
 }

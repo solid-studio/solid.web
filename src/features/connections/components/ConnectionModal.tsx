@@ -9,8 +9,8 @@ import { ApplicationState } from '../../rootReducer';
 import { InputFormItem } from '../../../components'
 import { Status } from "../../common/types" // TODO: this shouldn't be the case with Sagas
 
-import { createOrUpdateConnection, createConnectionCancelled } from '../actions'
-import { Connection, CreateConnection } from '../types'
+import { createOrUpdateConnection, closeConnectionModal } from '../actions'
+import { Connection } from '../types'
 
 import { ConnectionModalComponent } from "./ConnectionModalComponent";
 
@@ -30,12 +30,11 @@ interface StateProps {
   visible: boolean
   loading: boolean
   submitted: boolean
-  createConnection: CreateConnection
 }
 
 interface DispatchProps {
   createOrUpdateConnection: (item: Connection) => void
-  createConnectionCancelled: ActionCreator<Action>
+  closeConnectionModal: ActionCreator<Action>
 }
 
 type AllProps = OwnProps & DispatchProps & StateProps
@@ -59,7 +58,7 @@ export class ConnectionModal extends React.Component<AllProps> {
         loading={this.props.loading}
         initialValues={this.props.item}
         onSubmit={this.saveConnection}
-        onCancel={this.props.createConnectionCancelled}
+        onCancel={this.props.closeConnectionModal}
         validator={validator}
         FormComponent={({ onSubmit }) => (
           <Form id={FORM_ID} onSubmit={onSubmit}>
@@ -94,10 +93,9 @@ const validator = (items: Connection) => {
 const mapStateToProps = ({ connectionState }: ApplicationState) => {
   console.log("STATE", connectionState)
   return {
-    createConnection: connectionState.createConnection,
-    visible: connectionState.createConnection.status === Status.Started,
-    submitted: connectionState.createConnection.status === Status.Completed,
-    loading: connectionState.createConnection.status === Status.InProgress
+    visible: connectionState.connectionModalOpen,
+    submitted: connectionState.createConnectionStatus === Status.Completed,
+    loading: connectionState.createConnectionStatus === Status.InProgress
   }
 }
 
@@ -105,7 +103,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
   return bindActionCreators(
     {
       createOrUpdateConnection,
-      createConnectionCancelled
+      closeConnectionModal
     },
     dispatch
   )
