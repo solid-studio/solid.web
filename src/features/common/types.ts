@@ -1,9 +1,9 @@
 import { ActionCreator, Action } from 'redux'
 import { ThunkAction } from 'redux-thunk'
 
-import { ApplicationState } from '../../rootReducer';
-import { HttpRequest } from '../../../utils/http'
-import { IWeb3ReduxWrapper } from '../../../utils/web3-helper'
+import { ApplicationState } from '../rootReducer';
+import { HttpRequest } from '../../utils/http'
+import { IWeb3ReduxWrapper } from '../../utils/web3-helper'
 
 export interface ExtraArgument {
     api: HttpRequest

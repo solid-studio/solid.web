@@ -1,1 +1,1 @@
-export const CONNECTION_URL = 'connection'
+export const CONNECTION_URL = 'connections'

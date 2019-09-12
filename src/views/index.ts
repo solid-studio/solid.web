@@ -1,4 +1,4 @@
-import HomeView from './HomeView'
-export { HomeView }
+import MainContentView from './MainContentView'
+export { MainContentView }
 
 export { NotFoundView } from './NotFoundView'

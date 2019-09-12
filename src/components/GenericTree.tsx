@@ -3,6 +3,7 @@ import { Action, ActionCreator } from 'redux'
 import { Icon } from 'antd'
 
 import { MenuStyled, MenuItemStyled, SidebarHeader, SidebarTitle, SidebarHeaderButtons, DirectoryTreeStyled } from './GenericTreeStyledComponents';
+import { emitter } from '../features/common/event-emitter'
 
 interface MenuItemOption {
     name: string
@@ -40,6 +41,13 @@ export class GenericTree<T> extends React.Component<Props<T>, State> {
             rightClickNodeTreeItem: {},
             selectedKeys: []
         }
+
+    }
+
+    componentDidMount() {
+        emitter.on("IDECLICKED", () => {
+            this.closeContextMenu()
+        })
     }
 
     onSelect = (selectedKeys: any, info: any) => {
@@ -70,6 +78,12 @@ export class GenericTree<T> extends React.Component<Props<T>, State> {
                     key={option.id}>{option.name}</MenuItemStyled>
             })}
         </MenuStyled>
+    }
+
+    closeContextMenu = () => {
+        this.setState({
+            rightClickNodeTreeItem: {}
+        })
     }
 
     getNodeTreeRightClickMenu = () => {
