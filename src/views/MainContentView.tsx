@@ -40,7 +40,7 @@ const options = {
     width: '100%'
 }
 
-export class HomeView extends React.Component<Props, State> {
+export class MainContentView extends React.Component<Props, State> {
     private editor = null
     private child: {
         console?: Console
@@ -172,4 +172,4 @@ const mapStateToProps = (state: ApplicationState) => {
 export default connect(
     mapStateToProps,
     null
-)(HomeView)
+)(MainContentView)
