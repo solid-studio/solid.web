@@ -3,18 +3,20 @@ import { combineReducers } from 'redux'
 import { ConnectionState, appReducer as connectionReducer } from "./connections/reducer"
 import { ContractState, appReducer as contractReducer } from "./contracts/reducer"
 import { CompilerState, appReducer as compilerReducer } from "./compiler/reducer"
-// import reducers from all features
-// done
+import { ContractDefinitionState, appReducer as contractDefinitionReducer } from './contract-definitions/reducer'
+
 export interface ApplicationState {
   contractState: ContractState
   connectionState: ConnectionState,
-  compilerState: CompilerState
+  compilerState: CompilerState,
+  contractDefinitionState: ContractDefinitionState
 }
 
 const rootReducer = combineReducers<ApplicationState>({
   contractState: contractReducer,
   connectionState: connectionReducer,
-  compilerState: compilerReducer
+  compilerState: compilerReducer,
+  contractDefinitionState: contractDefinitionReducer
 })
 
 export default rootReducer
