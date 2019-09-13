@@ -14,7 +14,7 @@ import {
   getContractInstances
 } from '../features/contracts/actions'
 
-import { openContractDefinitionsModal } from '../features/contract-definitions/actions'
+import { openContractDefinitionsModal, contractDefinitionSelected, getContractDefinitions } from '../features/contract-definitions/actions'
 import {
   openConnectionModal,
   getConnections
@@ -26,23 +26,26 @@ import { loadCompilerWorker } from '../features/compiler/web-workers/compiler-wo
 import { ContractDefinitionsTree, ContractDefinition } from 'features/contract-definitions'
 
 interface Props {
-  openConnectionModal: ActionCreator<Action>
-  openContractDefinitionsModal: ActionCreator<Action>
   createContractStarted: ActionCreator<Action> // TO REMOVE
-  connections: Connection[]
   // contracts: Contract[]
-  getConnections: ActionCreator<Action>
   // getContractInstances: ActionCreator<any>
   // contractSelected: ActionCreator<Action>
   loadCompilerWorker: ActionCreator<any>
-
+  // NEW
+  openConnectionModal: ActionCreator<Action>
+  openContractDefinitionsModal: ActionCreator<Action>
+  contractDefinitionSelected: ActionCreator<Action>
   contractDefinitions: ContractDefinition[]
+  connections: Connection[]
+  getConnections: ActionCreator<Action>
+  getContractDefinitions: ActionCreator<Action>
 }
 
 export class DefaultLayout extends React.Component<Props> {
 
   componentDidMount() {
     this.props.getConnections();
+    this.props.getContractDefinitions();
     // start worker for compiler and load default version for MVP
     // this.props.loadCompilerWorker()
     // this.props.getConnections()
@@ -72,6 +75,7 @@ export class DefaultLayout extends React.Component<Props> {
             onNewConnectionClick={this.props.openConnectionModal}
           />
           <ContractDefinitionsTree
+            onContractDefinitionSelected={this.props.contractDefinitionSelected}
             contractDefinitions={contractDefinitions}></ContractDefinitionsTree>
           {/* <ContractsTree contracts={contracts} onContractSelected={this.props.contractSelected} /> */}
         </Sidebar>
@@ -98,10 +102,12 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
       loadCompilerWorker,
       openConnectionModal,
       getConnections,
+      getContractDefinitions,
       createContractStarted,
       getContractInstances,
       contractSelected,
-      openContractDefinitionsModal
+      openContractDefinitionsModal,
+      contractDefinitionSelected
     },
     dispatch
   )

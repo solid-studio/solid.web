@@ -16,7 +16,7 @@ interface DataRowProps<T> {
 
 interface Props<T> {
     dataItems: T[]
-    onClickDataItem?: ActionCreator<Action>// TO BE IMPLEMENTED
+    onClickDataItem?: ActionCreator<Action> | any// TODO FIX
     headerTitle: string
     onPlusClick?: ActionCreator<Action>
     onCollapseClick?: ActionCreator<Action>
@@ -27,7 +27,7 @@ interface Props<T> {
 
 interface State {
     rightClickNodeTreeItem: any
-    selectedKeys: any[]
+    selectedKeys: string[] | undefined
 }
 
 export class GenericTree<T> extends React.Component<Props<T>, State> {
@@ -50,11 +50,13 @@ export class GenericTree<T> extends React.Component<Props<T>, State> {
         })
     }
 
-    onSelect = (selectedKeys: any, info: any) => {
-        // TODO: TYPE THIS console.log("ON SELECT", selectedKeys)
-        // TODO: TYPE THIS console.log("INFO", info)
+    onSelect = (selectedKeys: string[] | undefined, info: any) => {
         this.setState({
             selectedKeys
+        }, () => {
+            if (this.props.onClickDataItem) {
+                this.props.onClickDataItem(selectedKeys, info.node.props, info.node.props.extra)
+            }
         })
     }
 

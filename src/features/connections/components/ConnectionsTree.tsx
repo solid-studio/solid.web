@@ -11,6 +11,11 @@ interface Props {
   onNewConnectionClick: ActionCreator<Action>
 }
 
+interface ExtraArguments {
+  connectionId: string,
+  type: 'transactions' | 'blocks' | 'contracts'
+}
+
 const rightClickOptions = [{
   id: 'deploy',
   name: 'Deploy'
@@ -34,10 +39,40 @@ export class ConnectionsTree extends React.Component<Props> {
             title={item.name}
             key={item.url}
             style={{ color: 'white' }}>
+
+            <TreeNodeStyled
+              extra={{ connectionId: item._id, type: 'contracts' }}
+              icon={({ selected }: any) => <Icon type={selected ? 'folder' : 'folder'} />}
+              title={"Contracts"}
+              key={`${item.name}-contracts`}
+              style={{ color: 'white' }}>
+            </TreeNodeStyled>
+
+            <TreeNodeStyled
+              extra={{ connectionId: item._id, type: 'transactions' }}
+              icon={({ selected }: any) => <Icon type={selected ? 'folder' : 'folder'} />}
+              title={"Transactions"}
+              key={`${item.name}-transactions`}
+              style={{ color: 'white' }}>
+            </TreeNodeStyled>
+
+            <TreeNodeStyled
+              extra={{ connectionId: item._id, type: 'blocks' }}
+              icon={({ selected }: any) => <Icon type={selected ? 'folder' : 'folder'} />}
+              title={"Blocks"}
+              key={`${item.name}-blocks`}
+              style={{ color: 'white' }}>
+            </TreeNodeStyled>
+
           </TreeNodeStyled>
         )}
         selectorPrefix="connections"
-        onClickDataItem={undefined}
+        onClickDataItem={(value: string | undefined, node: any, extra: ExtraArguments) => {
+          if (extra) {
+            const { connectionId, type } = extra
+            console.log("TREE NODE CLICKED", value, connectionId, type)
+          }
+        }}
         rightClickMenuItems={rightClickOptions}
       />
     )
