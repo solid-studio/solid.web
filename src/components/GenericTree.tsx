@@ -16,11 +16,11 @@ interface DataRowProps<T> {
 
 interface Props<T> {
     dataItems: T[]
-    onClickDataItem?: ActionCreator<Action> // TO BE IMPLEMENTED
+    onClickDataItem?: ActionCreator<Action>// TO BE IMPLEMENTED
     headerTitle: string
-    onPlusClick: ActionCreator<Action>
-    onCollapseClick: ActionCreator<Action>
-    rightClickMenuItems: MenuItemOption[]
+    onPlusClick?: ActionCreator<Action>
+    onCollapseClick?: ActionCreator<Action>
+    rightClickMenuItems?: MenuItemOption[]
     selectorPrefix: string
     DataRowComponentRender: (t: T) => React.ReactNode | React.ComponentClass<DataRowProps<T>> | React.StatelessComponent<DataRowProps<T>>
 }
@@ -89,6 +89,10 @@ export class GenericTree<T> extends React.Component<Props<T>, State> {
     getNodeTreeRightClickMenu = () => {
         const { pageX, pageY } = { ...this.state.rightClickNodeTreeItem } as any
         if (!pageX || !pageY) {
+            return <div />
+        }
+
+        if (!this.props.rightClickMenuItems) {
             return <div />
         }
 

@@ -19,12 +19,8 @@ export class ContractDefinitionsTree extends React.Component<Props> {
     return (
       <ContractDefinitionsTreeComponent headerTitle="Contract Definitions"
         dataItems={contractDefinitions}
-        onPlusClick={() => {
-          console.log("PLUS Clicked")
-        }}
-        onCollapseClick={() => {
-          console.log("COLLAPSED Clicked")
-        }}
+        onPlusClick={undefined}
+        onCollapseClick={undefined}
         DataRowComponentRender={(item: ContractDefinition) => (
           <TreeNodeStyled
             icon={<Icon type="database" />}

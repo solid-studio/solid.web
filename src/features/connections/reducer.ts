@@ -1,20 +1,18 @@
 import { Reducer } from 'redux'
 
-import {
-    Connection,
-    CreateConnection
-} from './types'
-
-
 import { Status } from '../common/types'
 
 import { ActionType, Actions } from './action-types';
+import { Connection } from './types'
 
 export interface ConnectionState {
+    connectionModalOpen: boolean
     connections: Connection[]
     currentConnection?: Connection
+    getConnectionsStatus: Status
+    createConnectionStatus: Status
     // currentContract?: Contract
-    createConnection: CreateConnection
+    // getConnections: GetConnections
     // createContract: CreateContract
     // contracts: Contract[]
     // loadCompilerRequest: LoadCompilerRequest
@@ -22,10 +20,10 @@ export interface ConnectionState {
     // compilerWorker: Worker | undefined
 }
 
-const defaultCreateConnection: CreateConnection = {
-    status: Status.NotStarted,
-    result: undefined
-}
+// const defaultConnection: Connection = {
+//     name: '',
+//     url: ''
+// }
 
 // const defaultCreateContract: CreateContract = {
 //     status: Status.NotStarted,
@@ -46,9 +44,12 @@ const defaultCreateConnection: CreateConnection = {
 const initialState: ConnectionState = {
     connections: [],
     // contracts: [],
-    createConnection: defaultCreateConnection,
+    connectionModalOpen: false,
+    createConnectionStatus: Status.NotStarted,
+    getConnectionsStatus: Status.NotStarted,
     // createContract: defaultCreateContract,
     currentConnection: undefined,
+    // getConnections: defaultGetConnections
     // currentContract: undefined,
     // compilerWorker: new CompilerWorker(),
     // loadCompilerRequest: defaultLoadCompilerRequest,
@@ -60,15 +61,29 @@ export const appReducer: Reducer<ConnectionState, Actions> = (
     action: Actions //| MyWorkerMessage
 ): ConnectionState => {
     switch (action.type) {
+        case ActionType.CLOSE_CONNECTION_MODAL:
+            return { ...state, connectionModalOpen: false, currentConnection: undefined }
+        case ActionType.OPEN_CONNECTION_MODAL:
+            return { ...state, connectionModalOpen: true, currentConnection: action.payload }
+        case ActionType.GET_CONNECTIONS:
+            return { ...state, getConnectionsStatus: Status.InProgress }
+        case ActionType.CONNECTIONS_RECEIVED:
+            return {
+                ...state, connections: action.payload,
+                currentConnection: action.payload[0],
+                getConnectionsStatus: Status.Completed
+            }
+        case ActionType.CREATE_CONNECTION:
+            return { ...state, createConnectionStatus: Status.InProgress }
         case ActionType.CONNECTION_CREATED:
             const newConnections = [...state.connections, action.payload]
-            return { ...state, connections: newConnections, currentConnection: action.payload }
+            return {
+                ...state, connections: newConnections,
+                currentConnection: action.payload,
+                createConnectionStatus: Status.Completed
+            }
         // case ActionType.CREATE_CONTRACT:
         //     return { ...state, createContract: action.payload }
-        case ActionType.CREATE_CONNECTION:
-            return { ...state, createConnection: action.payload }
-        case ActionType.CONNECTIONS_RECEIVED:
-            return { ...state, connections: action.payload, currentConnection: action.payload[0] }
         // case ActionType.CONTRACTS_RECEIVED:
         //     return { ...state, contracts: action.payload, currentContract: action.payload[0] }
         // case ActionType.CONTRACT_SELECTED:
