@@ -1,12 +1,12 @@
 import { History } from 'history'
 import { createStore, applyMiddleware, compose, Store } from 'redux'
-import reduxThunk from 'redux-thunk'
+// import reduxThunk from 'redux-thunk'
 import { createEpicMiddleware } from 'redux-observable'
 
-import api from '../utils/http'
+// import api from '../utils/http'
 import web3 from '../utils/web3-helper'
 
-import apiMiddleware from './middlewares/api'
+// import apiMiddleware from './middlewares/api'
 import workerMessengerMiddleware from './middlewares/worker-messenger'
 import web3Middleware from './middlewares/web3'
 

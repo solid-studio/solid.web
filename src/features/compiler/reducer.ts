@@ -4,7 +4,7 @@ import { ValidateSourceCode, LoadCompilerRequest } from './types'
 
 import { Status } from '../common/types'
 
-import { Actions, ActionType } from './action-types';
+import { Actions } from './action-types';
 import { MessageType, MyWorkerMessage } from './web-workers/compiler-worker/types'
 import CompilerWorker from './web-workers/compiler-worker'
 
