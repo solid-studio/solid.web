@@ -3,7 +3,8 @@ import { Action, ActionCreator, bindActionCreators, Dispatch } from 'redux'
 import { connect } from 'react-redux'
 
 import { ConnectionModal, ConnectionsTree, Connection } from '../features/connections'
-import { ContractModal, ContractsTree, Contract } from '../features/contracts'
+// import { ContractModal, ContractsTree, Contract } from '../features/contracts'
+import { ContractDefinitionsModal } from '../features/contract-definitions'
 import { Sidebar, Content, Wrapper } from "./components"
 import { Navbar } from './components/Navbar'
 
@@ -13,6 +14,7 @@ import {
   getContractInstances
 } from '../features/contracts/actions'
 
+import { openContractDefinitionsModal } from '../features/contract-definitions/actions'
 import {
   openConnectionModal,
   getConnections
@@ -21,12 +23,12 @@ import { emitter } from '../features/common/event-emitter'
 import { ApplicationState } from '../features/rootReducer'
 // import { Connection, Contract } from '../redux/types'
 import { loadCompilerWorker } from '../features/compiler/web-workers/compiler-worker/actions'
-import { GetConnectionsAction } from 'features/connections/action-types'
 import { ContractDefinitionsTree, ContractDefinition } from 'features/contract-definitions'
 
 interface Props {
   openConnectionModal: ActionCreator<Action>
-  createContractStarted: ActionCreator<Action> // TODO
+  openContractDefinitionsModal: ActionCreator<Action>
+  createContractStarted: ActionCreator<Action> // TO REMOVE
   connections: Connection[]
   // contracts: Contract[]
   getConnections: ActionCreator<Action>
@@ -62,7 +64,7 @@ export class DefaultLayout extends React.Component<Props> {
       <Wrapper {...this.props} onClick={this.onIDEClick}>
         <Navbar
           onNewConnectionClick={this.props.openConnectionModal}
-          onNewContractInstanceClick={this.props.createContractStarted}
+          onNewContractInstanceClick={this.props.openContractDefinitionsModal}
         />
         <Sidebar>
           <ConnectionsTree
@@ -75,6 +77,7 @@ export class DefaultLayout extends React.Component<Props> {
         </Sidebar>
         <Content>{this.props.children}</Content>
         <ConnectionModal />
+        <ContractDefinitionsModal />
         {/* <ContractModal /> */}
       </Wrapper>
     )
@@ -97,7 +100,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
       getConnections,
       createContractStarted,
       getContractInstances,
-      contractSelected
+      contractSelected,
+      openContractDefinitionsModal
     },
     dispatch
   )
