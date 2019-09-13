@@ -21,6 +21,18 @@ export const SidebarTitle = styled.h3`
 `
 
 export const SidebarHeaderButtons = styled.div`
+    display: flex;
+    justify-content: space-between;
+    .ant-upload-list {
+        width : 100%;
+        display: block;
+        position: absolute;
+        left: 0;
+        max-width: 280px;
+    }
+    .ant-upload-list-item-info {
+        width: 280px;
+    }
 `
 
 export const TreeNodeStyled = styled(TreeNode)`

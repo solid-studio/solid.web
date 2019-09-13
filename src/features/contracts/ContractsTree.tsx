@@ -2,7 +2,7 @@ import React from 'react'
 
 import { Action, ActionCreator } from 'redux'
 
-import { Icon } from 'antd'
+import { Upload, Button, Icon } from 'antd';
 
 import { Contract } from './types'
 
@@ -66,17 +66,30 @@ export class ContractsTree extends React.Component<Props, State> {
 
   render() {
     const { contracts } = this.props
+
+    const UPLOAD_URL:string = 'https://solc-bin.ethereum.org/bin/contract-definitions'
+
+
     return (
       <div style={{ height: '100%' }}>
         {this.getNodeTreeRightClickMenu()}
         <SidebarHeader>
           <SidebarTitle>Contracts</SidebarTitle>
-          <SidebarHeaderButtons>
+          <SidebarHeaderButtons>          
+          <Upload accept=".soi"  action={UPLOAD_URL} >
             <Icon
               type="plus"
               style={{ color: 'white', paddingRight: '0.5em' }}
-              onClick={() => console.log('TODO, on new contract')}
+              onClick={() => console.log('TODO, on new contract.....')}
             />
+            </Upload>
+            <Upload accept=".soi" action={UPLOAD_URL} directory>
+            <Icon
+              type="folder"
+              style={{ color: 'white', paddingRight: '0.5em' }}
+              onClick={() => console.log('TODO, on new contract.....')}
+            />
+            </Upload>
             <Icon type="down" style={{ color: 'white' }} />
           </SidebarHeaderButtons>
         </SidebarHeader>

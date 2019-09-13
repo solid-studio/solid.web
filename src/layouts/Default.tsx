@@ -26,10 +26,10 @@ interface Props {
   createConnectionStarted: ActionCreator<Action>
   createContractStarted: ActionCreator<Action>
   connections: Connection[]
-  // contracts: Contract[]
+  contracts: Contract[]
   getConnections: ActionCreator<any> // TODO fix this
   // getContractInstances: ActionCreator<any>
-  // contractSelected: ActionCreator<Action>
+  contractSelected: ActionCreator<Action>
   loadCompilerWorker: ActionCreator<any>
 }
 
@@ -64,11 +64,11 @@ export class DefaultLayout extends React.Component<Props> {
             connections={connections}
             onNewConnectionClick={this.props.createConnectionStarted}
           />
-          {/* <ContractsTree contracts={contracts} onContractSelected={this.props.contractSelected} /> */}
+          <ContractsTree contracts={this.props.contracts} onContractSelected={this.props.contractSelected} />
         </Sidebar>
         <Content>{this.props.children}</Content>
         <ConnectionModal />
-        {/* <ContractModal /> */}
+        <ContractModal />
       </Wrapper>
     )
   }
