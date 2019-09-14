@@ -35,6 +35,7 @@ export class ConnectionsTree extends React.Component<Props> {
         onCollapseClick={onNewConnectionClick}
         DataRowComponentRender={(item: Connection) => (
           <TreeNodeStyled
+            blockNode={true}
             icon={<Icon type="database" />}
             title={item.name}
             key={item.url}
