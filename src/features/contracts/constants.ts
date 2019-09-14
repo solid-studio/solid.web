@@ -1,1 +1,1 @@
-export const CONTRACTS_URL = 'contract'
+export const CONTRACTS_URL = 'contracts'

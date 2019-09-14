@@ -31,8 +31,7 @@ export interface CreateConnectionAction extends Action {
     payload: Connection
 }
 
-export type Actions =
-    | ConnectionModalAction
+export type Actions = ConnectionModalAction
     | GetConnectionsAction
     | ConnectionsReceivedAction
     | CreateConnectionAction
