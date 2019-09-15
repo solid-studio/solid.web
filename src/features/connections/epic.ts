@@ -3,7 +3,7 @@ import { of } from 'rxjs';
 import { mapTo, switchMap, map, catchError } from 'rxjs/operators';
 import { ajax } from 'rxjs/ajax';
 
-import { ActionType, GetConnectionsAction } from './action-types'
+import { ActionType, GetConnectionsAction, CreateConnectionAction } from './action-types'
 import { connectionsReceived, connectionCreated } from './actions';
 import { CONNECTION_URL } from './constants';
 import { Connection } from './types';
@@ -17,7 +17,7 @@ interface Response {
     data: Connection[];
 }
 
-const createConnectionEpic = (action$: any) => action$.pipe(
+const createConnectionEpic = (action$: ActionsObservable<CreateConnectionAction>) => action$.pipe(
     ofType(ActionType.CREATE_CONNECTION),
     switchMap(({ payload }) => {
         return ajax.post(`${BASE_URL}/${CONNECTION_URL}`, payload)
@@ -32,7 +32,7 @@ const createConnectionEpic = (action$: any) => action$.pipe(
     })
 )
 
-const onConnectionCompletedEpic = (action$: any) => action$.pipe(
+const onConnectionCompletedEpic = (action$: ActionsObservable<CreateConnectionAction>) => action$.pipe(
     ofType(ActionType.CONNECTION_CREATED),
     mapTo({
         type: ActionType.OPEN_CONNECTION_MODAL,

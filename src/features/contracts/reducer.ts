@@ -1,43 +1,22 @@
 import { Reducer } from 'redux'
 
-// import {
-//     Connection,
-//     CreateConnection,
-//     ValidateSourceCode,
-//     LoadCompilerRequest
-// } from './connections'
-
-import { CreateContract, Contract } from './types'
-
 import { Status } from '../common/types'
 
 import { ActionType, Actions } from './action-types';
+import { Contract } from './types'
+
 // import { MessageType, MyWorkerMessage } from '../workers/compiler-worker/types'
 // import CompilerWorker from './web-workers/compiler-worker'
 
-// Connections
 // Contracts
 // Compiler (done)
 export interface ContractState {
-    // connections: Connection[]
-    // currentConnection?: Connection
     currentContract?: Contract
-    // createConnection: CreateConnection
-    createContract: CreateContract
     contracts: Contract[]
+    getContractsStatus: Status
     // loadCompilerRequest: LoadCompilerRequest
     // validateSourceCode: ValidateSourceCode
     // compilerWorker: Worker | undefined
-}
-
-// const defaultCreateConnection: CreateConnection = {
-//     status: Status.NotStarted,
-//     result: undefined
-// }
-
-const defaultCreateContract: CreateContract = {
-    status: Status.NotStarted,
-    result: undefined
 }
 
 // const defaultValidateSourceCode: ValidateSourceCode = {
@@ -52,12 +31,9 @@ const defaultCreateContract: CreateContract = {
 // }
 
 const initialState: ContractState = {
-    // connections: [],
     contracts: [],
-    // createConnection: defaultCreateConnection,
-    createContract: defaultCreateContract,
-    // currentConnection: undefined,
     currentContract: undefined,
+    getContractsStatus: Status.NotStarted
     // compilerWorker: new CompilerWorker(),
     // loadCompilerRequest: defaultLoadCompilerRequest,
     // validateSourceCode: defaultValidateSourceCode
@@ -68,19 +44,10 @@ export const appReducer: Reducer<ContractState, Actions> = (
     action: Actions // | MyWorkerMessage
 ): ContractState => {
     switch (action.type) {
-        // case ActionType.CONNECTION_CREATED:
-        //     const newConnections = [...state.connections, action.payload]
-        //     return { ...state, connections: newConnections, currentConnection: action.payload }
-        case ActionType.CREATE_CONTRACT:
-            return { ...state, createContract: action.payload }
-        // case ActionType.CREATE_CONNECTION:
-        //     return { ...state, createConnection: action.payload }
-        // case ActionType.CONNECTIONS_RECEIVED:
-        //     return { ...state, connections: action.payload, currentConnection: action.payload[0] }
         case ActionType.CONTRACTS_RECEIVED:
             return { ...state, contracts: action.payload, currentContract: action.payload[0] }
-        case ActionType.CONTRACT_SELECTED:
-            return { ...state, currentContract: action.payload }
+        // case ActionType.CONTRACT_SELECTED:
+        // return { ...state, currentContract: action.payload }
         // compiler cases
         // case MessageType.VALIDATE_SOURCE_CODE:
         //     return { ...state, validateSourceCode: action.payload }
