@@ -8,11 +8,11 @@ import { ContractDefinitionsModal } from '../features/contract-definitions'
 import { Sidebar, Content, Wrapper } from "./components"
 import { Navbar } from './components/Navbar'
 
-import {
-  contractSelected,
-  createContractStarted,
-  getContractInstances
-} from '../features/contracts/actions'
+// import {
+//   contractSelected,
+//   createContractStarted,
+//   getContractInstances
+// } from '../features/contracts/actions'
 
 import { openContractDefinitionsModal, contractDefinitionSelected, getContractDefinitions } from '../features/contract-definitions/actions'
 import {
@@ -26,7 +26,7 @@ import { loadCompilerWorker } from '../features/compiler/web-workers/compiler-wo
 import { ContractDefinitionsTree, ContractDefinition } from 'features/contract-definitions'
 
 interface Props {
-  createContractStarted: ActionCreator<Action> // TO REMOVE
+  // createContractStarted: ActionCreator<Action> // TO REMOVE
   // contracts: Contract[]
   // getContractInstances: ActionCreator<any>
   // contractSelected: ActionCreator<Action>
@@ -103,9 +103,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
       openConnectionModal,
       getConnections,
       getContractDefinitions,
-      createContractStarted,
-      getContractInstances,
-      contractSelected,
+      // createContractStarted,
+      // getContractInstances,
+      // contractSelected,
       openContractDefinitionsModal,
       contractDefinitionSelected
     },

@@ -4,17 +4,42 @@ import { connect } from 'react-redux'
 import { Form } from 'antd'
 import { FormikErrors, Field, FieldProps } from 'formik'
 
+import { InputFormItem, TextAreaFormItem } from 'components'
+
 import { ApplicationState } from '../../rootReducer';
-import { InputFormItem } from '../../../components'
 import { Status } from "../../common/types" // TODO: this shouldn't be the case with Sagas
 
 import { createOrUpdateContractDefinition, closeContractDefinitionsModal } from '../actions'
 import { ContractDefinition } from '../types'
 
 import { ContractDefinitionModalComponent } from "./ContractDefinitionModalComponent";
+import { RadioField } from './RadioField';
+
+// TODO: TO REMOVE
+import { simpleCompilerInput } from '../../compiler/web-workers/compiler-worker/compiler-input'
+import { solc } from '../../../utils/compiler'
 
 const FORM_ID = 'CONTRACT_DEFINITION_FORM'
 const FORM_TITLE = "Add Contract Definition"
+
+const defaultRadioFormOptions = [
+  {
+    key: 'sourcecode',
+    value: 'Source Code'
+  },
+  {
+    key: 'abi',
+    value: 'ABI'
+  },
+  {
+    key: 'bytecode',
+    value: 'Bytecode'
+  }
+  // {
+  //   key: 'contract',
+  //   value: 'Contract'
+  // }
+]
 
 const defaultContractDefinition: ContractDefinition = {
   name: '',
@@ -41,13 +66,56 @@ interface DispatchProps {
 type AllProps = OwnProps & DispatchProps & StateProps
 
 export class ContractDefinitionsModal extends React.Component<AllProps> {
+  compiler: any
 
   static defaultProps = {
     item: defaultContractDefinition
   }
 
+  componentDidMount() {
+    this.compiler = solc.compile
+    const sourceCode = `
+    pragma solidity ^0.5.8;
+
+    contract SimpleStorage {
+        
+        uint256 value;
+        
+        constructor() public {
+            value = 1000;
+        }
+        
+        function getValue(uint256 newValue) public view returns(uint256){
+            if(newValue > 100){
+                return newValue;
+            }
+            return value;
+        }
+    }`
+    this.sourceCodeIsValid(sourceCode, 'SimpleStorage.sol')
+    // TODO.. I'm not sure how this part works, is like I need to cache the usage
+    // of my module. Not sure if webpack is doing code splitting.
+  }
+
+  sourceCodeIsValid = (sourceCode: string, name: string) => {
+    const inputObject: any = {}
+    inputObject[`${name}`] = {
+      content: sourceCode
+    }
+    const input = simpleCompilerInput(inputObject, { optimize: true })
+    const result = JSON.parse(this.compiler(input))
+    console.log('RESULT', result)
+    return result.errors === undefined
+  }
+
   submit = (item: ContractDefinition) => {
-    this.props.createOrUpdateContractDefinition(item)
+    console.log('save Contract', item)
+    const newItemWithSampleData = { // TODO: TO COMPILE OR STORE COMPILATION SOMEWHERE
+      ...item,
+      abi: [],
+      bytecode: '0x000'
+    }
+    this.props.createOrUpdateContractDefinition(newItemWithSampleData)
   }
 
   render() {
@@ -60,17 +128,48 @@ export class ContractDefinitionsModal extends React.Component<AllProps> {
         initialValues={this.props.item}
         onSubmit={this.submit}
         onCancel={this.props.closeContractDefinitionsModal}
-        validator={validator}
+        validator={(items: ContractDefinition) => {
+          console.log('Validator called')
+          // TODO REVIEW
+          const errors: FormikErrors<ContractDefinition> = {}
+          if (!items.name) {
+            errors.name = 'Required'
+          }
+          // if (!items.address) {
+          //   errors.address = 'Required'
+          // }
+          if (!items.sourceCode) {
+            errors.sourceCode = 'Required'
+          }
+
+          if (items.name && items.sourceCode && !this.sourceCodeIsValid(items.sourceCode, items.name)) {
+            errors.sourceCode = 'Invalid solidity code'
+          }
+
+          return errors
+        }}
         FormComponent={({ onSubmit }) => (
           <Form id={FORM_ID} onSubmit={onSubmit}>
             <Field
               name="name"
-              render={(innerProps: FieldProps) => <InputFormItem {...innerProps} label="Name" placeHolder="http://" />}
+              render={(innerProps: FieldProps) => <InputFormItem {...innerProps} label="Name" placeHolder="Contract.Sol" />}
+            />
+            {/* <Field
+              name="address"
+              render={(innerProps: FieldProps) => (
+                <InputFormItem {...innerProps} label="Address" placeHolder="0xAC716460A84B85d774bEa75666ddf0088b024741" />
+              )}
+            /> */}
+            <Field
+              name="type"
+              render={(innerProps: FieldProps) => (
+                <RadioField options={defaultRadioFormOptions} defaultValue="sourcecode" label="From" {...innerProps} />
+              )}
             />
             <Field
-              name="url"
+              name="sourceCode"
               render={(innerProps: FieldProps) => (
-                <InputFormItem {...innerProps} label="Blockchain URL" placeHolder="JSON RPC endpoint" />
+                <TextAreaFormItem label="Source code" placeHolder="pragma solidity ^0.5.8" {...innerProps} />
               )}
             />
           </Form>
@@ -78,16 +177,6 @@ export class ContractDefinitionsModal extends React.Component<AllProps> {
       />
     )
   }
-}
-
-const validator = (items: ContractDefinition) => {
-  const errors: FormikErrors<ContractDefinition> = {}
-  // TODO: VALIDATE Properly
-  if (!items.name) {
-    errors.name = 'Required'
-  }
-
-  return errors
 }
 
 const mapStateToProps = ({ contractDefinitionState }: ApplicationState) => {

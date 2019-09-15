@@ -4,6 +4,7 @@ import { Collapse, Icon, Tabs } from 'antd'
 import copy from 'copy-to-clipboard'
 import MonacoEditor from 'react-monaco-editor'
 import { connect } from 'react-redux'
+import { AbiItem } from 'web3-utils'
 
 import { ApplicationState } from '../features/rootReducer'
 import { Contract } from '../features/contracts' // TODO: FIX, contract should in contracts
@@ -11,7 +12,6 @@ import { ContractActions } from '../features/contracts/ContractActions'
 import { SolidTerminal } from '../features/terminal/SolidTerminal'// TODO: fix import
 
 import { Wrapper, Editor, Results, Details, TableDetails, CollapseStyled } from "./components";
-
 import { SAMPLE_ABI, SAMPLE_CONTRACT } from "./sample-data"
 
 const TabPane = Tabs.TabPane
@@ -82,7 +82,7 @@ export class MainContentView extends React.Component<Props, State> {
         copy(byteCode)
     }
 
-    copyABI = (abi: []) => {
+    copyABI = (abi: AbiItem[]) => {
         console.log('copyABI clicked')
         copy(JSON.stringify(abi))
     }
