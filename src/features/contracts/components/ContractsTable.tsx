@@ -42,8 +42,32 @@ const tableColumns: ColumnProps<Contract>[] = [
 ];
 
 export class ContractsTable extends React.Component<AllProps> {
+
+    showContractsDrawer(record: Contract) {
+        console.log("RECORD", record)
+    }
+
+    onDoubleClick(record: Contract) {
+        console.log("DOUBLE CLICK", record)
+    }
+
     render() {
         const { contracts } = this.props
-        return <ContractTableComponent dataSource={contracts} columns={tableColumns} />
+        return <ContractTableComponent rowKey="_id" dataSource={contracts} columns={tableColumns}
+            onRow={(record, rowIndex) => {
+                return {
+                    onClick: event => {
+                        this.showContractsDrawer(record)
+                    }, // click row
+                    onDoubleClick: event => {
+                        this.onDoubleClick(record)
+                    }, // double click row
+                    onContextMenu: event => { }, // right button click row
+                    onMouseEnter: event => { }, // mouse enter row
+                    onMouseLeave: event => { }, // mouse leave row
+                };
+            }}
+
+        />
     }
 }
