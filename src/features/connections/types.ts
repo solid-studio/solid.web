@@ -5,3 +5,7 @@ export interface Connection {
     // transactionReceipts: Transaction[] TODO
     // contractInstances?: Contract[] TODO
 }
+
+export interface ConnectionItem extends Connection {
+    type: string
+}

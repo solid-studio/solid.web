@@ -91,7 +91,6 @@ const validator = (items: Connection) => {
 }
 
 const mapStateToProps = ({ connectionState }: ApplicationState) => {
-  console.log("STATE", connectionState)
   return {
     visible: connectionState.connectionModalOpen,
     submitted: connectionState.createConnectionStatus === Status.Completed,

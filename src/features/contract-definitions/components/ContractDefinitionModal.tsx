@@ -104,7 +104,6 @@ export class ContractDefinitionsModal extends React.Component<AllProps> {
     }
     const input = simpleCompilerInput(inputObject, { optimize: true })
     const result = JSON.parse(this.compiler(input))
-    console.log('RESULT', result)
     return result.errors === undefined
   }
 

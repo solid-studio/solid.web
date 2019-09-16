@@ -1,6 +1,6 @@
 import { Action } from 'redux'
 
-import { Connection } from './types'
+import { Connection, ConnectionItem } from './types'
 
 export enum ActionType {
     OPEN_CONNECTION_MODAL = 'OPEN_CONNECTION_MODAL',
@@ -10,6 +10,7 @@ export enum ActionType {
     CONNECTIONS_RECEIVED = 'CONNECTIONS_RECEIVED',
     CREATE_CONNECTION = 'CREATE_CONNECTION',
     CONNECTION_CREATED = 'CONNECTION_CREATED',
+    CONNECTION_ITEM_SELECTED = 'CONNECTION_ITEM_SELECTED'
 }
 
 export interface ConnectionModalAction extends Action {
@@ -31,7 +32,13 @@ export interface CreateConnectionAction extends Action {
     payload: Connection
 }
 
+export interface ConnectionItemSelectedAction extends Action {
+    type: ActionType.CONNECTION_ITEM_SELECTED,
+    payload: ConnectionItem
+}
+
 export type Actions = ConnectionModalAction
     | GetConnectionsAction
     | ConnectionsReceivedAction
     | CreateConnectionAction
+    | ConnectionItemSelectedAction

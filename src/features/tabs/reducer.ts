@@ -20,7 +20,12 @@ export const appReducer: Reducer<TabsManagerState, Actions> = (state: TabsManage
             return { ...state, activeTab: action.payload }
         case ActionType.OPEN_TAB:
             const newTabs = [...state.tabs, action.payload]
-            return { ...state, tabs: newTabs }
+            return { ...state, tabs: newTabs, activeTab: action.payload }
+        case ActionType.OPEN_OR_SET_ACTIVE_TAB_BY_ID:
+            const newTabActive = state.tabs.find(item => {
+                return item.id === action.payload
+            })
+            return { ...state, activeTab: newTabActive }
         case ActionType.CLOSE_TAB:
             // TODO: encontrar la tab en el arreglo, y removerla..
             return { ...state }

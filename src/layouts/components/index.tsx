@@ -1,5 +1,7 @@
 import styled from 'styled-components'
 
+export { Navbar } from './Navbar'
+
 export const Wrapper = styled.div`
   height: 100vh;
   display: grid;
@@ -26,3 +28,4 @@ export const Content = styled.section`
   grid-area: content;
   background-color: #2a2929;
 `
+

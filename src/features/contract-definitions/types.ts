@@ -7,3 +7,7 @@ export interface ContractDefinition {
     abi: AbiItem[]
     bytecode: string
 }
+
+export interface ContractDefinitionItem extends ContractDefinition {
+    type: string
+}

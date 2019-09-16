@@ -9,6 +9,7 @@ import { TreeNodeStyled } from 'components/GenericTreeStyledComponents'
 interface Props {
   connections: Connection[]
   onNewConnectionClick: ActionCreator<Action>
+  onConnectionItemSelected: ActionCreator<Action>
 }
 
 interface ExtraArguments {
@@ -71,7 +72,13 @@ export class ConnectionsTree extends React.Component<Props> {
         onClickDataItem={(value: string | undefined, node: any, extra: ExtraArguments) => {
           if (extra) {
             const { connectionId, type } = extra
-            console.log("TREE NODE CLICKED", value, connectionId, type)
+            const connectionToShow = this.props.connections.find(item => {
+              return item._id === connectionId
+            })
+            this.props.onConnectionItemSelected({
+              ...connectionToShow,
+              type: `${type}`
+            })
           }
         }}
         rightClickMenuItems={rightClickOptions}

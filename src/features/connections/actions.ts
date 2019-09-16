@@ -1,7 +1,7 @@
 import { ActionCreator, Action } from 'redux'
 
-import { ActionType, CreateConnectionAction, ConnectionsReceivedAction, GetConnectionsAction, ConnectionModalAction } from './action-types'
-import { Connection } from './types'
+import { ActionType, CreateConnectionAction, ConnectionsReceivedAction, GetConnectionsAction, ConnectionModalAction, ConnectionItemSelectedAction } from './action-types'
+import { Connection, ConnectionItem } from './types'
 
 export const closeConnectionModal: ActionCreator<Action> = (): ConnectionModalAction => {
   return {
@@ -43,3 +43,9 @@ export const connectionCreated: ActionCreator<Action> = (values: Connection): Cr
   }
 }
 
+export const connectionItemSelected: ActionCreator<Action> = (values: ConnectionItem): ConnectionItemSelectedAction => {
+  return {
+    type: ActionType.CONNECTION_ITEM_SELECTED,
+    payload: values
+  }
+}

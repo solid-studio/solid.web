@@ -31,13 +31,15 @@ export class ContractDefinitionsTree extends React.Component<Props> {
           </TreeNodeStyled>
         )}
         selectorPrefix="contract-definitions"
-        onClickDataItem={(value: string | undefined, props: any) => {
-          console.log("CONTRACT ID", value)
+        onClickDataItem={(value: string | undefined | string[], props: any) => {
           const contractToShow = this.props.contractDefinitions.find(item => {
-            console.log("ITEM", item._id, props)
-            return item._id === value
+            const valueToCompare = value !== undefined ? value![0] : '1'
+            return item._id === valueToCompare
           })
-          this.props.onContractDefinitionSelected(contractToShow)
+          this.props.onContractDefinitionSelected({
+            ...contractToShow,
+            type: 'editor'
+          })
         }}
         rightClickMenuItems={rightClickOptions}
       />

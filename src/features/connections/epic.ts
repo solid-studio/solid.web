@@ -3,10 +3,12 @@ import { of } from 'rxjs';
 import { mapTo, switchMap, map, catchError } from 'rxjs/operators';
 import { ajax } from 'rxjs/ajax';
 
-import { ActionType, GetConnectionsAction, CreateConnectionAction } from './action-types'
+import { ActionType, GetConnectionsAction, CreateConnectionAction, ConnectionItemSelectedAction } from './action-types'
 import { connectionsReceived, connectionCreated } from './actions';
 import { CONNECTION_URL } from './constants';
 import { Connection } from './types';
+
+import { openOrSetTabActive } from 'features/tabs/actions';
 
 const BASE_URL = 'http://localhost:3030'
 
@@ -32,7 +34,7 @@ const createConnectionEpic = (action$: ActionsObservable<CreateConnectionAction>
     })
 )
 
-const onConnectionCompletedEpic = (action$: ActionsObservable<CreateConnectionAction>) => action$.pipe(
+const onCreateConnectionCompletedEpic = (action$: ActionsObservable<CreateConnectionAction>) => action$.pipe(
     ofType(ActionType.CONNECTION_CREATED),
     mapTo({
         type: ActionType.OPEN_CONNECTION_MODAL,
@@ -54,8 +56,21 @@ const getConnectionsEpic = (action$: ActionsObservable<GetConnectionsAction>) =>
     })
 );
 
+const onConnectionItemSelected = (action$: ActionsObservable<ConnectionItemSelectedAction>) => action$.pipe(
+    ofType<ConnectionItemSelectedAction>(ActionType.CONNECTION_ITEM_SELECTED),
+    map(({ payload }) => {
+        return openOrSetTabActive({
+            type: payload.type,
+            data: payload,
+            title: payload.type,
+            id: `${payload.type}-${payload._id}`
+        })
+    })
+)
+
 export const connectionsEpic = combineEpics(
     getConnectionsEpic,
     createConnectionEpic,
-    onConnectionCompletedEpic
+    onCreateConnectionCompletedEpic,
+    onConnectionItemSelected
 )

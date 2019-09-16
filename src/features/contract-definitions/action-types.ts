@@ -1,6 +1,6 @@
 import { Action } from 'redux'
 
-import { ContractDefinition } from './types'
+import { ContractDefinition, ContractDefinitionItem } from './types'
 
 export enum ActionType {
     GET_CONTRACT_DEFINITIONS = 'GET_CONTRACTS',
@@ -29,7 +29,7 @@ export interface ContractDefinitionsReceivedAction extends Action {
 
 export interface ContractDefinitionSelectedAction extends Action {
     type: ActionType.CONTRACT_DEFINITION_SELECTED,
-    payload: ContractDefinition
+    payload: ContractDefinitionItem // TO BE IMPROVED
 }
 
 export interface CreateContractDefinitionAction extends Action {

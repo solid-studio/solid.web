@@ -1,12 +1,13 @@
 import { ofType, combineEpics, ActionsObservable } from 'redux-observable'
 import { of } from 'rxjs';
-import { switchMap, map, catchError } from 'rxjs/operators';
+import { switchMap, map, catchError, tap } from 'rxjs/operators';
 import { ajax } from 'rxjs/ajax';
 
-import { ActionType, GetContractDefinitionsAction } from './action-types'
+import { ActionType, GetContractDefinitionsAction, ContractDefinitionSelectedAction } from './action-types'
 import { contractDefinitionsReceived } from './actions';
 import { CONTRACT_DEFINITIONS_URL } from './constants';
 import { ContractDefinition } from './types';
+import { openOrSetTabActive } from 'features/tabs/actions';
 
 // TODO: To improve this duplicate
 const BASE_URL = 'http://localhost:3030'
@@ -32,6 +33,20 @@ const getContractDefinitionsEpic = (action$: ActionsObservable<GetContractDefini
     })
 );
 
+const onContractDefinitionSelected = (action$: ActionsObservable<ContractDefinitionSelectedAction>) => action$.pipe(
+    ofType<ContractDefinitionSelectedAction>(ActionType.CONTRACT_DEFINITION_SELECTED),
+    tap(({ payload }) => console.log("PAYLOAD", payload)),
+    map(({ payload }) => {
+        return openOrSetTabActive({
+            type: payload.type,
+            data: payload,
+            title: payload.name,
+            id: payload._id
+        })
+    })
+)
+
 export const contractDefinitionsEpic = combineEpics(
-    getContractDefinitionsEpic
+    getContractDefinitionsEpic,
+    onContractDefinitionSelected
 )

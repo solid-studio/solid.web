@@ -1,7 +1,7 @@
 import { ActionCreator, Action } from 'redux'
 
 import { ActionType, GetContractDefinitionsAction, ContractDefinitionsReceivedAction, ContractDefinitionModalAction, CreateContractDefinitionAction, ContractDefinitionSelectedAction } from './action-types'
-import { ContractDefinition } from './types'
+import { ContractDefinition, ContractDefinitionItem } from './types'
 
 export const contractDefinitionsReceived: ActionCreator<Action> = (contracts: ContractDefinition[]): ContractDefinitionsReceivedAction => {
   return {
@@ -44,7 +44,7 @@ export const contractDefinitionCreated: ActionCreator<Action> = (values: Contrac
   }
 }
 
-export const contractDefinitionSelected: ActionCreator<Action> = (values: ContractDefinition): ContractDefinitionSelectedAction => {
+export const contractDefinitionSelected: ActionCreator<Action> = (values: ContractDefinitionItem): ContractDefinitionSelectedAction => {
   return {
     type: ActionType.CONTRACT_DEFINITION_SELECTED,
     payload: values

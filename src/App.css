@@ -61,3 +61,8 @@ html, body {
 .ant-collapse-borderless > .ant-collapse-item {
     border-bottom: none;
 }
+
+/* tabs */
+.ant-tabs-tabpane.ant-tabs-tabpane-active.full-tab{
+    height: 100%;
+}

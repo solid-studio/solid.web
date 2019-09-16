@@ -1,6 +1,6 @@
 import { ActionCreator, Action } from 'redux'
 
-import { ActionType, TabAction } from './action-types'
+import { ActionType, TabAction, SetTabByIdAction } from './action-types'
 import { Tab } from './types'
 
 export const openOrSetTabActive: ActionCreator<Action> = (tab: Tab): TabAction => {
@@ -30,5 +30,12 @@ export const closeTab: ActionCreator<Action> = (tab: Tab): TabAction => {
     return {
         type: ActionType.CLOSE_TAB,
         payload: tab
+    }
+}
+
+export const setTabActiveById: ActionCreator<Action> = (tabId: string): SetTabByIdAction => {
+    return {
+        type: ActionType.OPEN_OR_SET_ACTIVE_TAB_BY_ID,
+        payload: tabId
     }
 }
