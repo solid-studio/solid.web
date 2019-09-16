@@ -11,11 +11,6 @@ export enum ActionType {
   // LOAD_COMPILER = 'LOAD_COMPILER'
 }
 
-// export interface ContractSelectedAction extends Action {
-//   type: ActionType.CONTRACT_SELECTED
-//   payload: Contract
-// }
-
 export interface GetContractsAction extends Action {
   type: ActionType.GET_CONTRACTS
 }
@@ -25,13 +20,19 @@ export interface ContractsReceivedAction extends Action {
   payload: Contract[]
 }
 
+export type Actions = GetContractsAction
+  | ContractsReceivedAction
+
 // compiler
 // export interface LoadCompilerWorkerAction extends Action {
 //   type: ActionType.LOAD_COMPILER
 //   payload: Worker | undefined
 // }
+// export interface ContractSelectedAction extends Action {
+//   type: ActionType.CONTRACT_SELECTED
+//   payload: Contract
+// }
 
-export type Actions = GetContractsAction
-  | ContractsReceivedAction
+
   // | LoadCompilerWorkerAction
   // | ContractSelectedAction

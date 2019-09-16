@@ -1,1 +1,1 @@
-export const TRANSACTION_URL = 'transaction'
+export const TRANSACTIONS_URL = 'transactions'

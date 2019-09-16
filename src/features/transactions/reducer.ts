@@ -1,24 +1,29 @@
 import { Reducer } from 'redux'
 
 import { Status } from '../common/types'
+import { ActionType, Actions } from './action-types';
+import { Transaction } from './types'
 
-import { Actions, ActionType } from './action-types';
 
-export interface AppState {
-
+export interface TransactionsState {
+    currentTransaction?: Transaction
+    transactions: Transaction[]
+    getTransactionsStatus: Status
 }
 
-const initialState: AppState = {
-
+const initialState: TransactionsState = {
+    transactions: [],
+    currentTransaction: undefined,
+    getTransactionsStatus: Status.NotStarted
 }
 
-export const appReducer: Reducer<AppState, Actions> = (
-    state: AppState = initialState,
+export const appReducer: Reducer<TransactionsState, Actions> = (
+    state: TransactionsState = initialState,
     action: Actions
-): AppState => {
+): TransactionsState => {
     switch (action.type) {
-        //case MessageType.LOAD_COMPILER_VERSION_RESULT:
-        //    return { ...state, loadCompilerRequest: action.payload }
+        case ActionType.TRANSACTIONS_RECEIVED:
+            return { ...state, transactions: action.payload, currentTransaction: action.payload[0] }
         default:
             return state
     }

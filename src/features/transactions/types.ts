@@ -6,7 +6,7 @@ export interface Transaction {
     blockHash: string
     blockNumber: number
     from: string
-    to: string
+    to: string | null
     contractAddress?: string
     cumulativeGasUsed: number
     gasUsed: number
