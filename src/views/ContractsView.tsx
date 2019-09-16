@@ -20,6 +20,7 @@ export class ContractsView extends React.Component<Props, State> {
         // TODO: Get contracts from server
         // this.props.getContracts(this.props.connectionId) The Table shouldn't do anything...
     }
+
     render() {
         const connection = buildFakeConnection() // TODO: FIX Views
         return (

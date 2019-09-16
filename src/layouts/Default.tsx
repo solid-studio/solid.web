@@ -2,43 +2,29 @@ import React from 'react'
 import { Action, ActionCreator, bindActionCreators, Dispatch } from 'redux'
 import { connect } from 'react-redux'
 
+import { ContractDefinitionsTree, ContractDefinition, ContractDefinitionsModal } from 'features/contract-definitions'
 import { ConnectionModal, ConnectionsTree, Connection } from '../features/connections'
-// import { ContractModal, ContractsTree, Contract } from '../features/contracts'
-import { ContractDefinitionsModal } from '../features/contract-definitions'
-import { Sidebar, Content, Wrapper } from "./components"
-import { Navbar } from './components/Navbar'
-
-// import {
-//   contractSelected,
-//   createContractStarted,
-//   getContractInstances
-// } from '../features/contracts/actions'
+import { ApplicationState } from '../features/rootReducer'
+import { emitter } from '../features/common/event-emitter'
+import { loadCompilerWorker } from '../features/compiler/web-workers/compiler-worker/actions' // TO BE MOVED
 
 import { openContractDefinitionsModal, contractDefinitionSelected, getContractDefinitions } from '../features/contract-definitions/actions'
-import {
-  openConnectionModal,
-  getConnections
-} from '../features/connections/actions'
-import { emitter } from '../features/common/event-emitter'
-import { ApplicationState } from '../features/rootReducer'
-// import { Connection, Contract } from '../redux/types'
-import { loadCompilerWorker } from '../features/compiler/web-workers/compiler-worker/actions'
-import { ContractDefinitionsTree, ContractDefinition } from 'features/contract-definitions'
+import { openConnectionModal, getConnections, connectionItemSelected } from '../features/connections/actions'
+
+import { Sidebar, Content, Wrapper, Navbar } from "./components"
 
 interface Props {
-  // createContractStarted: ActionCreator<Action> // TO REMOVE
-  // contracts: Contract[]
-  // getContractInstances: ActionCreator<any>
-  // contractSelected: ActionCreator<Action>
-  loadCompilerWorker: ActionCreator<any>
+  loadCompilerWorker: ActionCreator<any> // TO BE REMOVED
   // NEW
   openConnectionModal: ActionCreator<Action>
-  openContractDefinitionsModal: ActionCreator<Action>
-  contractDefinitionSelected: ActionCreator<Action>
-  contractDefinitions: ContractDefinition[]
   connections: Connection[]
   getConnections: ActionCreator<Action>
+  connectionItemSelected: ActionCreator<Action>
+
+  openContractDefinitionsModal: ActionCreator<Action>
+  contractDefinitions: ContractDefinition[]
   getContractDefinitions: ActionCreator<Action>
+  contractDefinitionSelected: ActionCreator<Action>
 }
 
 export class DefaultLayout extends React.Component<Props> {
@@ -48,8 +34,6 @@ export class DefaultLayout extends React.Component<Props> {
     this.props.getContractDefinitions();
     // start worker for compiler and load default version for MVP
     // this.props.loadCompilerWorker()
-    // this.props.getConnections()
-    // this.props.getContractInstances() // TODO, need to be filtered by connection
   }
 
   openConnectionModal = () => {
@@ -58,7 +42,7 @@ export class DefaultLayout extends React.Component<Props> {
 
   onIDEClick = () => {
     console.log("IDE CLICKED")
-    emitter.emit("IDECLICKED")
+    emitter.emit("IDECLICKED") // TODO: MAKE ENUM OR SOMETHING ELSE
   }
 
   render() {
@@ -72,17 +56,16 @@ export class DefaultLayout extends React.Component<Props> {
         <Sidebar>
           <ConnectionsTree
             connections={connections}
+            onConnectionItemSelected={this.props.connectionItemSelected}
             onNewConnectionClick={this.props.openConnectionModal}
           />
           <ContractDefinitionsTree
             onContractDefinitionSelected={this.props.contractDefinitionSelected}
             contractDefinitions={contractDefinitions}></ContractDefinitionsTree>
-          {/* <ContractsTree contracts={contracts} onContractSelected={this.props.contractSelected} /> */}
         </Sidebar>
         <Content>{this.props.children}</Content>
         <ConnectionModal />
         <ContractDefinitionsModal />
-        {/* <ContractModal /> */}
       </Wrapper>
     )
   }
@@ -92,7 +75,6 @@ const mapStateToProps = (state: ApplicationState) => {
   return {
     connections: state.connectionState.connections,
     contractDefinitions: state.contractDefinitionState.contractDefinitions
-    // contracts: state.contractState.contracts
   }
 }
 
@@ -103,11 +85,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
       openConnectionModal,
       getConnections,
       getContractDefinitions,
-      // createContractStarted,
-      // getContractInstances,
-      // contractSelected,
       openContractDefinitionsModal,
-      contractDefinitionSelected
+      contractDefinitionSelected,
+      connectionItemSelected
     },
     dispatch
   )
