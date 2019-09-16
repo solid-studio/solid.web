@@ -26,6 +26,6 @@ export const Sidebar = styled.div`
 
 export const Content = styled.section`
   grid-area: content;
-  background-color: #2a2929;
+  background-color: #ffffff;
 `
 

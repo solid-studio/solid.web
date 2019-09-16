@@ -50,3 +50,14 @@ export const TableDetails = styled.table`
 export const CollapseStyled = styled(Collapse)`
   margin-top: 1em;
 `
+
+
+export const StyledDiv = styled.div`
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 1rem;
+`
+
+export const StyledH1 = styled.h1`
+    margin-bottom: 1rem;
+`

@@ -8,4 +8,7 @@ export interface Contract {
     bytecode: string
     address: string // TODO, for ALREADY DEPLOYED is fine, but for simulation?
     connectionId: string // TODO, for ALREADY DEPLOYED is fine, but for simulation?
+    creationDate: string,
+    lastExecutionDate: string,
+    transactionCount: number
 }

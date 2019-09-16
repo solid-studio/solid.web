@@ -23,13 +23,18 @@ interface DispatchProps {
 
 type AllProps = OwnProps & DispatchProps
 
+const capitalize = (s: string) => {
+    if (typeof s !== 'string') return ''
+    return s.charAt(0).toUpperCase() + s.slice(1)
+}
+
 export class MainContentView extends React.Component<AllProps> {
     render() {
         const { tabs, activeTab } = this.props
         console.log('ACTIVE TAB', activeTab)
         console.log("TABS", tabs)
         return (
-            <div style={{ height: "100%" }} data-testid="main-content-view">
+            <div style={{ height: "100%" }} data-testid="main-content-view" id="main-content-view">
                 {tabs && tabs.length > 0 &&
                     <Tabs type="card" style={{ paddingLeft: '1em', paddingRight: '1em', height: '100%' }}
                         activeKey={activeTab && activeTab.id}
@@ -37,7 +42,7 @@ export class MainContentView extends React.Component<AllProps> {
                             this.props.setTabActiveById(e)
                         }}>
                         {tabs.map((currentTab: Tab) => {
-                            return <TabPane tab={`${currentTab.title}`} key={currentTab.id} className={'full-tab'}>
+                            return <TabPane tab={`${capitalize(currentTab.title)}`} key={currentTab.id} className={'full-tab'}>
                                 {currentTab.type === 'transactions' && <TransactionsView />}
                                 {currentTab.type === 'contracts' && <ContractsView />}
                                 {currentTab.type === 'editor' && <EditorView selectedContract={currentTab.data} />}

@@ -1,6 +1,11 @@
 
 import React from 'react'
 
+import { ContractsTable } from 'features/contracts/components/ContractsTable'
+import { buildFakeContracts } from 'features/contracts/faker'
+import { buildFakeConnection } from 'features/connections/faker'
+
+import { StyledDiv, StyledH1 } from './components'
 
 interface Props {
 
@@ -11,23 +16,17 @@ interface State {
 }
 
 export class ContractsView extends React.Component<Props, State> {
+    componentDidMount() {
+        // TODO: Get contracts from server
+        // this.props.getContracts(this.props.connectionId) The Table shouldn't do anything...
+    }
     render() {
+        const connection = buildFakeConnection() // TODO: FIX Views
         return (
-            <h1 style={{ color: 'white' }}>Contracts View</h1>
+            <StyledDiv>
+                <StyledH1>Contracts</StyledH1>
+                <ContractsTable connectionId={connection._id} contracts={buildFakeContracts()} />
+            </StyledDiv>
         )
     }
 }
-
-// add header
-
-// add table
-
-// define columns
-
-// create fajer
-
-// create test 
-
-// pass faker
-
-// done
