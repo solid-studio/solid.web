@@ -13,6 +13,7 @@ import { Layout } from 'antd'
 import { Contract, maximizeContractView } from 'features/contracts'
 
 import { emitter } from '../features/common/event-emitter'
+import { ContractDetails } from './components/ContractDetails'
 
 // actions
 const { Sider, Content } = Layout;
@@ -46,7 +47,7 @@ export class ContractsView extends React.Component<AllProps, State> {
         super(props)
         this.state = {
             showContractDrawer: false,
-            drawerWidth: 400,
+            drawerWidth: 470,
             testContractInstance: undefined
         }
     }
@@ -89,9 +90,9 @@ export class ContractsView extends React.Component<AllProps, State> {
 
     closeDrawer = () => {
         console.log("ON MOUSE LEAVE")
-        this.setState({
-            showContractDrawer: true
-        })
+        // this.setState({
+        //     showContractDrawer: true
+        // })
     }
 
     render() {
@@ -111,9 +112,11 @@ export class ContractsView extends React.Component<AllProps, State> {
                     {/* <button onClick={this.testing}>Grow</button> */}
                 </Content>
                 <Sider trigger={null} collapsed={!showContractDrawer} collapsible={true} collapsedWidth={0} width={drawerWidth}>
-                    <div style={{ float: "right" }}>
+                    <div>
                         <CustomIcon src="https://res.cloudinary.com/key-solutions/image/upload/v1568672208/solid/maximize.png" alt="maximise" onClick={this.maximiseWindow} />
                         {/* <img src="https://res.cloudinary.com/key-solutions/image/upload/v1568673196/solid/error.png" alt="close" onClick={this.closeDrawer} /> */}
+                        {this.state.testContractInstance &&
+                            <ContractDetails contract={this.state.testContractInstance} />}
                     </div>
                 </Sider>
             </Layout>

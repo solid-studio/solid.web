@@ -1,20 +1,16 @@
 import React from 'react'
 
-import { Collapse, Icon } from 'antd'
-import copy from 'copy-to-clipboard'
+// import { Collapse } from 'antd'
 import MonacoEditor from 'react-monaco-editor'
 import { connect } from 'react-redux'
-import { AbiItem } from 'web3-utils'
 
-import { ApplicationState } from '../features/rootReducer'
-import { Contract } from '../features/contracts' // TODO: FIX, contract should in contracts
-import { ContractActions } from '../features/contracts/ContractActions'
-import { SolidTerminal } from '../features/terminal/SolidTerminal'// TODO: fix import
+import { ApplicationState } from 'features/rootReducer'
+import { Contract } from 'features/contracts' // TODO: FIX, contract should in contracts
+import { SolidTerminal } from 'features/terminal/SolidTerminal'// TODO: fix import
 
-import { Wrapper, Editor, Results, Details, TableDetails, CollapseStyled } from "./components";
-import { SAMPLE_ABI, SAMPLE_CONTRACT } from "./sample-data"
+import { Wrapper, Editor, Results, ContractDetails, Details } from "./components";
 
-const Panel = Collapse.Panel
+import { SAMPLE_CONTRACT } from "./sample-data"
 
 interface Props {
     selectedContract: Contract | undefined
@@ -76,16 +72,6 @@ export class EditorView extends React.Component<Props, State> {
         console.log(key)
     }
 
-    copyByteCode = (byteCode: string) => {
-        console.log('copyByteCode clicked')
-        copy(byteCode)
-    }
-
-    copyABI = (abi: AbiItem[]) => {
-        console.log('copyABI clicked')
-        copy(JSON.stringify(abi))
-    }
-
     echo = (text: string) => {
         ; (this.child as any).console.log(text)
     }
@@ -112,46 +98,8 @@ export class EditorView extends React.Component<Props, State> {
             </Results>
             <Details>
                 {selectedContract && (
-                    <TableDetails>
-                        <thead>
-                            <tr>
-                                <th>Details</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>{selectedContract.name}</td>
-                            </tr>
-                            <tr>
-                                <td>Address</td>
-                                <td>{selectedContract.address}</td>
-                            </tr>
-                            <tr>
-                                <td>ABI</td>
-                                <td>
-                                    <Icon onClick={() => this.copyABI(selectedContract.abi)} type="copy" />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Bytecode</td>
-                                <td>
-                                    <Icon onClick={() => this.copyByteCode(selectedContract.bytecode)} type="copy" />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Size </td>
-                                <td>12 KB</td>
-                            </tr>
-                        </tbody>
-                    </TableDetails>
+                    <ContractDetails contract={selectedContract} />
                 )}
-                <CollapseStyled defaultActiveKey={['0']} onChange={this.callback} bordered={false}>
-                    {selectedContract && (
-                        <Panel header="Methods" key="2">
-                            <ContractActions abi={SAMPLE_ABI || selectedContract.abi} />
-                        </Panel>
-                    )}
-                </CollapseStyled>
             </Details>
         </Wrapper >)
     }

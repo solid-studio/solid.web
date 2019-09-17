@@ -48,15 +48,29 @@ export class GenericTree<T> extends React.Component<Props<T>, State> {
         emitter.on("IDECLICKED", () => {
             this.closeContextMenu()
         })
+
+        emitter.on("UNSELECT_OTHER_TREES", (callback) => {
+            this.unSelectKeys(callback) // TODO: REVIEW because maybe I should pass callback..
+        })
+    }
+
+    // TODO IMPROVE TYPE
+    unSelectKeys = (callback: any) => {
+        this.setState({
+            selectedKeys: []
+        }, () => callback())
     }
 
     onSelect = (selectedKeys: string[] | undefined, info: any) => {
-        this.setState({
-            selectedKeys
-        }, () => {
-            if (this.props.onClickDataItem) {
-                this.props.onClickDataItem(selectedKeys, info.node.props, info.node.props.extra)
-            }
+        emitter.emit("UNSELECT_OTHER_TREES", () => {
+
+            this.setState({
+                selectedKeys
+            }, () => {
+                if (this.props.onClickDataItem) {
+                    this.props.onClickDataItem(selectedKeys, info.node.props, info.node.props.extra)
+                }
+            })
         })
     }
 
