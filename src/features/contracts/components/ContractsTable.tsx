@@ -7,7 +7,6 @@ import { ContractTableComponent } from './ContractsTableComponent';
 
 interface OwnProps {
     contracts?: Contract[]
-    connectionId: string | undefined
     onClick: any // TODO type correctly
     onDoubleClick: any // TODO type correctly
     onMouseLeave: any // TODO: type correctly
@@ -47,6 +46,7 @@ const tableColumns: ColumnProps<Contract>[] = [
 export class ContractsTable extends React.Component<AllProps> {
     render() {
         const { contracts } = this.props
+        console.log("CONTRACTS TABLE DATA", contracts)
         return <ContractTableComponent rowKey="_id" dataSource={contracts} columns={tableColumns}
             onRow={(record, rowIndex) => {
                 return {

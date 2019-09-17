@@ -3,13 +3,13 @@ import { connect } from 'react-redux'
 import { bindActionCreators, Dispatch, ActionCreator, Action } from 'redux'
 import { Tabs } from 'antd';
 
-import { ApplicationState } from 'features/rootReducer'
 import { Tab, setTabActiveById } from 'features/tabs'
+import { ApplicationState } from 'features/rootReducer'
 
+import TransactionsView from './TransactionsView'
 import { EditorView } from './EditorView'
 import ContractsView from './ContractsView'
-import { TransactionsView } from './TransactionsView'
-import { BlocksView } from './BlocksView'
+import BlocksView from './BlocksView'
 
 const TabPane = Tabs.TabPane
 

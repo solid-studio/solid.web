@@ -9,7 +9,7 @@ export const openTabEpic = (action$: ActionsObservable<TabAction>, state$: State
     ofType(ActionType.OPEN_OR_SET_ACTIVE_TAB),
     filter(({ payload }) => {
         return state$.value.tabsManagerState.tabs.findIndex((item: any) => {
-            return item.id == payload.id
+            return item.id === payload.id
         }) === -1
     }),
     map(({ payload }) => openTab(payload))
@@ -19,7 +19,7 @@ export const setActiveTabEpic = (action$: ActionsObservable<TabAction>, state$: 
     ofType(ActionType.OPEN_OR_SET_ACTIVE_TAB),
     filter(({ payload }) => {
         return state$.value.tabsManagerState.tabs.findIndex((item: any) => {
-            return item.id == payload.id
+            return item.id === payload.id
         }) !== -1
     }),
     map(({ payload }) => setTabActive(payload))

@@ -5,13 +5,17 @@ import { ContractState, appReducer as contractReducer } from "./contracts/reduce
 import { CompilerState, appReducer as compilerReducer } from "./compiler/reducer"
 import { ContractDefinitionState, appReducer as contractDefinitionReducer } from './contract-definitions/reducer'
 import { TabsManagerState, appReducer as tabsReducer } from './tabs/reducer'
+import { BlocksState, appReducer as blocksReducer } from './blocks/reducer'
+import { TransactionsState, appReducer as transactionsReducer } from './transactions/reducer'
 
 export interface ApplicationState {
   contractState: ContractState
   connectionState: ConnectionState,
   compilerState: CompilerState,
   contractDefinitionState: ContractDefinitionState
-  tabsManagerState: TabsManagerState
+  tabsManagerState: TabsManagerState,
+  blocksState: BlocksState,
+  transactionsState: TransactionsState
 }
 
 const rootReducer = combineReducers<ApplicationState>({
@@ -19,7 +23,9 @@ const rootReducer = combineReducers<ApplicationState>({
   connectionState: connectionReducer,
   compilerState: compilerReducer,
   contractDefinitionState: contractDefinitionReducer,
-  tabsManagerState: tabsReducer
+  tabsManagerState: tabsReducer,
+  blocksState: blocksReducer,
+  transactionsState: transactionsReducer
 })
 
 export default rootReducer

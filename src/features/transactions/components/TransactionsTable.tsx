@@ -7,8 +7,7 @@ import { TransactionsTableComponent } from './TransactionsTableComponent';
 import { Tag } from 'antd';
 
 interface OwnProps {
-    transactions?: Transaction[] // TO BE REMOVED
-    connectionId: string | undefined
+    transactions?: Transaction[]
 }
 
 type AllProps = OwnProps //& DispatchProps & StateProps

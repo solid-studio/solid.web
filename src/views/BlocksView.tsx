@@ -1,32 +1,69 @@
 
 import React from 'react'
+import { Action, ActionCreator, bindActionCreators, Dispatch } from 'redux'
+import { connect } from 'react-redux'
 
+import { Block, getBlocks } from 'features/blocks'
+import { ApplicationState } from 'features/rootReducer'
 import { BlocksTable } from 'features/blocks/components/BlocksTable'
-import { buildFakeBlocks } from 'features/blocks/faker'
+import { Connection } from 'features/connections'
 
 import { StyledDiv, StyledH1 } from './components'
-import { buildFakeConnection } from 'features/connections/faker'
 
-interface Props {
-
-}
-
-interface State {
+interface OwnProps {
 
 }
 
-export class BlocksView extends React.Component<Props, State> {
-    componentDidMount() {
-        // TODO: Get blocks from server
-        // this.props.getBlocks(this.props.connectionId)
+interface StateProps {
+    blocks: Block[]
+    currentConnection: Connection | undefined
+}
+
+interface DispatchProps {
+    getBlocks: ActionCreator<Action>
+}
+
+type AllProps = OwnProps & DispatchProps & StateProps
+
+export class BlocksView extends React.Component<AllProps> {
+    static defaultProps = {
+        blocks: []
     }
+
+    componentDidMount() {
+        if (this.props.currentConnection) {
+            this.props.getBlocks(this.props.currentConnection._id)
+        }
+    }
+
     render() {
-        const connection = buildFakeConnection() // TODO: FIX Views
+        const { blocks } = this.props
         return (
             <StyledDiv>
                 <StyledH1>Blocks</StyledH1>
-                <BlocksTable connectionId={connection._id} blocks={buildFakeBlocks()} />
+                <BlocksTable blocks={blocks} />
             </StyledDiv>
         )
     }
 }
+
+const mapStateToProps = ({ blocksState, connectionState }: ApplicationState) => {
+    return {
+        blocks: blocksState.blocks,
+        currentConnection: connectionState.currentConnection
+    }
+}
+
+const mapDispatchToProps = (dispatch: Dispatch) => {
+    return bindActionCreators(
+        {
+            getBlocks
+        },
+        dispatch
+    )
+}
+
+export default connect<StateProps, DispatchProps, {}, ApplicationState>(
+    mapStateToProps,
+    mapDispatchToProps
+)(BlocksView)

@@ -2,32 +2,30 @@
 import React from 'react'
 import { Action, ActionCreator, bindActionCreators, Dispatch } from 'redux'
 import { connect } from 'react-redux'
-
-import { ContractsTable } from 'features/contracts/components/ContractsTable'
-import { buildFakeContracts } from 'features/contracts/faker'
-import { buildFakeConnection } from 'features/connections/faker'
-
-import { StyledDiv, StyledH1, CustomIcon } from './components'
-
 import { Layout } from 'antd'
-import { Contract, maximizeContractView } from 'features/contracts'
 
-import { emitter } from '../features/common/event-emitter'
-import { ContractDetails } from './components/ContractDetails'
+import { Contract, getContracts, maximizeContractView } from 'features/contracts'
+import { ApplicationState } from 'features/rootReducer'
+import { ContractsTable } from 'features/contracts/components/ContractsTable'
+import { Connection } from 'features/connections'
+import { emitter } from 'features/common/event-emitter'
 
-// actions
+import { StyledDiv, StyledH1, CustomIcon, ContractDetails } from './components'
+
 const { Sider, Content } = Layout;
 
 interface OwnProps {
-
+    // connection: Connection
 }
 
 interface StateProps {
     contracts: Contract[]
+    currentConnection: Connection | undefined
 }
 
 interface DispatchProps {
     maximizeContractView: ActionCreator<Action>
+    getContracts: ActionCreator<Action>
 }
 
 type AllProps = OwnProps & DispatchProps & StateProps
@@ -35,7 +33,7 @@ type AllProps = OwnProps & DispatchProps & StateProps
 interface State {
     showContractDrawer: boolean
     drawerWidth: number
-    testContractInstance?: Contract
+    selectedContractRowItem?: Contract
 }
 
 export class ContractsView extends React.Component<AllProps, State> {
@@ -48,22 +46,21 @@ export class ContractsView extends React.Component<AllProps, State> {
         this.state = {
             showContractDrawer: false,
             drawerWidth: 470,
-            testContractInstance: undefined
+            selectedContractRowItem: undefined
         }
     }
 
     componentDidMount() {
-        // TODO: Get contracts from server
-        // this.props.getContracts(this.props.connectionId) The Table shouldn't do anything...
+        if (this.props.currentConnection) {
+            this.props.getContracts(this.props.currentConnection._id)
+        }
     }
 
     showContractsDrawer = (record: Contract) => {
-        console.log("RECORD", record)
         this.setState({
             showContractDrawer: true,
-            testContractInstance: record
+            selectedContractRowItem: record
         }, () => {
-            // collapseRightSideBarMenu
             emitter.emit("COLLAPSE_RIGHT_SIDEBAR_MENU")
         })
     }
@@ -73,11 +70,7 @@ export class ContractsView extends React.Component<AllProps, State> {
     }
 
     maximiseWindow = () => {
-        const contractToShow = this.state.testContractInstance //TODO FIX THIS I PUT testContractInstance ... this.props.contracts[0]
-        //.find(item => {
-        //     const valueToCompare = value !== undefined ? value![0] : '1'
-        //     return item._id === valueToCompare
-        // })]
+        const contractToShow = this.state.selectedContractRowItem
         this.setState({
             showContractDrawer: false
         }, () => {
@@ -89,15 +82,12 @@ export class ContractsView extends React.Component<AllProps, State> {
     }
 
     closeDrawer = () => {
-        console.log("ON MOUSE LEAVE")
-        // this.setState({
-        //     showContractDrawer: true
-        // })
+        console.log("ON MOUSE LEAVE") // UNUSED METHOD, maybe remove
     }
 
     render() {
-        const { showContractDrawer, drawerWidth } = this.state
-        const connection = buildFakeConnection() // TODO: FIX Views
+        const { showContractDrawer, drawerWidth, selectedContractRowItem } = this.state
+        const { contracts } = this.props
         return (
             <Layout style={{ height: "100%" }}>
                 <Content style={{ height: "100%" }}>
@@ -105,18 +95,16 @@ export class ContractsView extends React.Component<AllProps, State> {
                         <StyledH1>Contracts</StyledH1>
                         <ContractsTable onClick={this.showContractsDrawer}
                             onDoubleClick={this.onDoubleClick}
-                            connectionId={connection._id}
-                            contracts={buildFakeContracts()}
+                            contracts={contracts}
                             onMouseLeave={this.closeDrawer} />
                     </StyledDiv>
-                    {/* <button onClick={this.testing}>Grow</button> */}
                 </Content>
                 <Sider trigger={null} collapsed={!showContractDrawer} collapsible={true} collapsedWidth={0} width={drawerWidth}>
                     <div>
                         <CustomIcon src="https://res.cloudinary.com/key-solutions/image/upload/v1568672208/solid/maximize.png" alt="maximise" onClick={this.maximiseWindow} />
                         {/* <img src="https://res.cloudinary.com/key-solutions/image/upload/v1568673196/solid/error.png" alt="close" onClick={this.closeDrawer} /> */}
-                        {this.state.testContractInstance &&
-                            <ContractDetails contract={this.state.testContractInstance} />}
+                        {selectedContractRowItem &&
+                            <ContractDetails contract={selectedContractRowItem} />}
                     </div>
                 </Sider>
             </Layout>
@@ -125,22 +113,24 @@ export class ContractsView extends React.Component<AllProps, State> {
 }
 
 
-// const mapStateToProps = (state: ApplicationState) => {
-//     return {
-
-//     }
-// }
+const mapStateToProps = ({ contractState, connectionState }: ApplicationState) => {
+    return {
+        contracts: contractState.contracts,
+        currentConnection: connectionState.currentConnection
+    }
+}
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
     return bindActionCreators(
         {
+            getContracts,
             maximizeContractView
         },
         dispatch
     )
 }
 
-export default connect(
-    null,
+export default connect<StateProps, DispatchProps, {}, ApplicationState>(
+    mapStateToProps,
     mapDispatchToProps
 )(ContractsView)

@@ -7,7 +7,7 @@ import { Icon, Collapse } from 'antd'
 import { Contract } from 'features/contracts' // TODO: FIX, contract should in contracts
 import { ContractActions } from 'features/contracts/ContractActions' // TODO MOVE IT
 
-import { TableDetails, Details, CollapseStyled } from './index'
+import { TableDetails, CollapseStyled } from './index'
 import { SAMPLE_ABI } from "../sample-data"
 
 const Panel = Collapse.Panel

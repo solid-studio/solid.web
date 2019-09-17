@@ -7,7 +7,6 @@ import { BlocksTableComponent } from './BlocksTableComponent';
 
 interface OwnProps {
     blocks?: Block[]
-    connectionId: string | undefined
 }
 
 type AllProps = OwnProps
