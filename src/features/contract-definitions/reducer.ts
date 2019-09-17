@@ -4,7 +4,6 @@ import { Status } from '../common/types'
 
 import { ActionType, Actions } from './action-types';
 import { ContractDefinition } from './types'
-import { buildFakeContractDefinitions } from './faker';
 
 export interface ContractDefinitionState {
     contractDefinitions: ContractDefinition[]
@@ -14,11 +13,9 @@ export interface ContractDefinitionState {
     createContractDefinitionStatus: Status
 }
 
-const defaultContractDefinitions: ContractDefinition[] = buildFakeContractDefinitions()
-
 const initialState: ContractDefinitionState = {
-    contractDefinitions: defaultContractDefinitions,//[],
-    currentContractDefinition: defaultContractDefinitions[0],//undefined,
+    contractDefinitions: [],
+    currentContractDefinition: undefined,
     getContractDefinitionsStatus: Status.NotStarted,
     contractDefinitionModalOpen: false,
     createContractDefinitionStatus: Status.NotStarted

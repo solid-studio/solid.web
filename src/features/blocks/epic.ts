@@ -1,15 +1,13 @@
-import { ofType, combineEpics, ActionsObservable } from 'redux-observable'
+import { ofType, combineEpics, ActionsObservable, StateObservable } from 'redux-observable'
 import { of } from 'rxjs';
 import { switchMap, map, catchError } from 'rxjs/operators';
-import { ajax } from 'rxjs/ajax';
 
 import { ActionType, GetBlocksAction } from './action-types'
 import { blocksReceived } from './actions';
 import { BLOCKS_URL } from './constants';
 import { Block } from './types';
-
-// TODO: To improve this duplicate
-const BASE_URL = 'http://localhost:3030'
+import { ApplicationState } from 'features/rootReducer';
+import { AjaxCreationMethod } from 'rxjs/internal/observable/dom/AjaxObservable';
 
 interface Response {
     total: number;
@@ -18,10 +16,10 @@ interface Response {
     data: Block[];
 }
 
-const getBlocksEpic = (action$: ActionsObservable<GetBlocksAction>) => action$.pipe(
+const getBlocksEpic = (action$: ActionsObservable<GetBlocksAction>, state$: StateObservable<ApplicationState>, ajax: AjaxCreationMethod) => action$.pipe(
     ofType(ActionType.GET_BLOCKS),
     switchMap(() => {
-        return ajax.getJSON<Response>(`${BASE_URL}/${BLOCKS_URL}`)
+        return ajax.getJSON<Response>(`${BLOCKS_URL}`)
             .pipe(
                 map(response => blocksReceived(response.data)),
                 catchError(error => of({

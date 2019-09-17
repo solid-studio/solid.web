@@ -1,16 +1,14 @@
-import { ofType, combineEpics, ActionsObservable } from 'redux-observable'
+import { ofType, combineEpics, ActionsObservable, StateObservable } from 'redux-observable'
 import { of } from 'rxjs';
 import { switchMap, map, catchError } from 'rxjs/operators';
-import { ajax } from 'rxjs/ajax';
 
 import { ActionType, GetContractsAction, MaximizeContractViewAction } from './action-types'
 import { contractsReceived } from './actions';
 import { CONTRACTS_URL } from './constants';
 import { Contract } from './types';
 import { openOrSetTabActive } from 'features/tabs';
-
-// TODO: To improve this duplicate
-const BASE_URL = 'http://localhost:3030'
+import { ApplicationState } from 'features/rootReducer';
+import { AjaxCreationMethod } from 'rxjs/internal/observable/dom/AjaxObservable';
 
 interface Response {
     total: number;
@@ -19,10 +17,10 @@ interface Response {
     data: Contract[];
 }
 
-const getContractsEpic = (action$: ActionsObservable<GetContractsAction>) => action$.pipe(
+const getContractsEpic = (action$: ActionsObservable<GetContractsAction>, state$: StateObservable<ApplicationState>, ajax: AjaxCreationMethod) => action$.pipe(
     ofType(ActionType.GET_CONTRACTS),
     switchMap(() => {
-        return ajax.getJSON<Response>(`${BASE_URL}/${CONTRACTS_URL}`)
+        return ajax.getJSON<Response>(`${CONTRACTS_URL}`)
             .pipe(
                 map(response => contractsReceived(response.data)),
                 catchError(error => of({

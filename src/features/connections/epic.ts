@@ -1,7 +1,6 @@
-import { ofType, combineEpics, ActionsObservable } from 'redux-observable'
+import { ofType, combineEpics, ActionsObservable, StateObservable } from 'redux-observable'
 import { of } from 'rxjs';
 import { mapTo, switchMap, map, catchError } from 'rxjs/operators';
-import { ajax } from 'rxjs/ajax';
 
 import { ActionType, GetConnectionsAction, CreateConnectionAction, ConnectionItemSelectedAction } from './action-types'
 import { connectionsReceived, connectionCreated } from './actions';
@@ -9,8 +8,8 @@ import { CONNECTION_URL } from './constants';
 import { Connection } from './types';
 
 import { openOrSetTabActive } from 'features/tabs/actions';
-
-const BASE_URL = 'http://localhost:3030'
+import { AjaxCreationMethod } from 'rxjs/internal/observable/dom/AjaxObservable';
+import { ApplicationState } from 'features/rootReducer';
 
 interface Response {
     total: number;
@@ -19,10 +18,10 @@ interface Response {
     data: Connection[];
 }
 
-const createConnectionEpic = (action$: ActionsObservable<CreateConnectionAction>) => action$.pipe(
+const createConnectionEpic = (action$: ActionsObservable<CreateConnectionAction>, state$: StateObservable<ApplicationState>, ajax: AjaxCreationMethod) => action$.pipe(
     ofType(ActionType.CREATE_CONNECTION),
     switchMap(({ payload }) => {
-        return ajax.post(`${BASE_URL}/${CONNECTION_URL}`, payload)
+        return ajax.post(`${CONNECTION_URL}`, payload)
             .pipe(
                 map((data) => connectionCreated(data.response)),
                 catchError(error => of({
@@ -42,12 +41,12 @@ const onCreateConnectionCompletedEpic = (action$: ActionsObservable<CreateConnec
     })
 )
 
-const getConnectionsEpic = (action$: ActionsObservable<GetConnectionsAction>) => action$.pipe(
+const getConnectionsEpic = (action$: ActionsObservable<GetConnectionsAction>, state$: StateObservable<ApplicationState>, ajax: AjaxCreationMethod) => action$.pipe(
     ofType(ActionType.GET_CONNECTIONS),
     switchMap(() => {
-        return ajax.getJSON<Response>(`${BASE_URL}/${CONNECTION_URL}`)
+        return ajax.getJSON<Response>(`${CONNECTION_URL}`)
             .pipe(
-                map(response => connectionsReceived(response.data)),
+                map((response) => connectionsReceived(response.data)),
                 catchError(error => of({
                     type: ActionType.ERROR_WHEN_GETTING_DATA,
                     payload: error.xhr.response,

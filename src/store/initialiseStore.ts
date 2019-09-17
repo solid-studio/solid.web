@@ -1,12 +1,11 @@
 import { History } from 'history'
 import { createStore, applyMiddleware, compose, Store } from 'redux'
-// import reduxThunk from 'redux-thunk'
 import { createEpicMiddleware } from 'redux-observable'
 
-// import api from '../utils/http'
-import web3 from '../utils/web3-helper'
+import { ajax } from 'rxjs/ajax';
+import { mockAjax } from '../utils/fakeAPI'
 
-// import apiMiddleware from './middlewares/api'
+import web3 from '../utils/web3-helper'
 import workerMessengerMiddleware from './middlewares/worker-messenger'
 import web3Middleware from './middlewares/web3'
 
@@ -21,7 +20,12 @@ const initialiseStore = (history: History) => {
   const composeEnhancers =
     (process.env.NODE_ENV !== 'production' && windowIfDefined[__REDUX_DEVTOOLS_EXTENSION_COMPOSE__]) || compose
 
-  const epicMiddleware = createEpicMiddleware();
+  // This enable work in client mode only with fake data
+  const getJSONInstance = process.env.REACT_APP_MOCK_API ? mockAjax.getJSON : ajax.getJSON
+
+  const epicMiddleware = createEpicMiddleware({
+    dependencies: { getJSON: getJSONInstance }
+  });
 
   const middlewares = applyMiddleware(
     epicMiddleware

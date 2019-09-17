@@ -1,16 +1,14 @@
-import { ofType, combineEpics, ActionsObservable } from 'redux-observable'
+import { ofType, combineEpics, ActionsObservable, StateObservable } from 'redux-observable'
 import { of } from 'rxjs';
 import { switchMap, map, catchError, tap } from 'rxjs/operators';
-import { ajax } from 'rxjs/ajax';
 
 import { ActionType, GetContractDefinitionsAction, ContractDefinitionSelectedAction } from './action-types'
 import { contractDefinitionsReceived } from './actions';
 import { CONTRACT_DEFINITIONS_URL } from './constants';
 import { ContractDefinition } from './types';
 import { openOrSetTabActive } from 'features/tabs/actions';
-
-// TODO: To improve this duplicate
-const BASE_URL = 'http://localhost:3030'
+import { AjaxCreationMethod } from 'rxjs/internal/observable/dom/AjaxObservable';
+import { ApplicationState } from 'features/rootReducer';
 
 interface Response {
     total: number;
@@ -19,10 +17,10 @@ interface Response {
     data: ContractDefinition[];
 }
 
-const getContractDefinitionsEpic = (action$: ActionsObservable<GetContractDefinitionsAction>) => action$.pipe(
+const getContractDefinitionsEpic = (action$: ActionsObservable<GetContractDefinitionsAction>, state$: StateObservable<ApplicationState>, ajax: AjaxCreationMethod) => action$.pipe(
     ofType(ActionType.GET_CONTRACT_DEFINITIONS),
     switchMap(() => {
-        return ajax.getJSON<Response>(`${BASE_URL}/${CONTRACT_DEFINITIONS_URL}`)
+        return ajax.getJSON<Response>(`${CONTRACT_DEFINITIONS_URL}`)
             .pipe(
                 map(response => contractDefinitionsReceived(response.data)),
                 catchError(error => of({

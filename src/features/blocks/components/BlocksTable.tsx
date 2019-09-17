@@ -6,13 +6,12 @@ import { Block } from '../types';
 import { BlocksTableComponent } from './BlocksTableComponent';
 
 interface OwnProps {
-    blocks?: Block[] // TO BE REMOVED
+    blocks?: Block[]
     connectionId: string | undefined
 }
 
-type AllProps = OwnProps //& DispatchProps & StateProps
+type AllProps = OwnProps
 
-// TODO FIX
 const tableColumns: ColumnProps<Block>[] = [
     {
         key: 'hash',
