@@ -7,7 +7,7 @@ import { ApplicationState } from 'features/rootReducer'
 import { Tab, setTabActiveById } from 'features/tabs'
 
 import { EditorView } from './EditorView'
-import { ContractsView } from './ContractsView'
+import ContractsView from './ContractsView'
 import { TransactionsView } from './TransactionsView'
 
 const TabPane = Tabs.TabPane
@@ -34,7 +34,7 @@ export class MainContentView extends React.Component<AllProps> {
         console.log('ACTIVE TAB', activeTab)
         console.log("TABS", tabs)
         return (
-            <div style={{ height: "100%" }} data-testid="main-content-view" id="main-content-view">
+            <div style={{ height: "100%", width: "100%" }} data-testid="main-content-view" id="main-content-view">
                 {tabs && tabs.length > 0 &&
                     <Tabs type="card" style={{ paddingLeft: '1em', paddingRight: '1em', height: '100%' }}
                         activeKey={activeTab && activeTab.id}

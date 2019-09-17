@@ -18,7 +18,7 @@ export interface BlockHeader {
 }
 
 export interface Block extends BlockHeader {
-    transactions: Transaction[];
+    transactions: Transaction[] | string[]; // TODO: Fix this types, should I just keep hashes here?
     size: number
     difficulty: number
     totalDifficulty: number

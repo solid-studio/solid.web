@@ -61,3 +61,7 @@ export const StyledDiv = styled.div`
 export const StyledH1 = styled.h1`
     margin-bottom: 1rem;
 `
+
+export const CustomIcon = styled.img`
+cursor: pointer;
+`
