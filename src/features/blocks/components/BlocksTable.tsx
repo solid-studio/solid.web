@@ -15,29 +15,32 @@ type AllProps = OwnProps //& DispatchProps & StateProps
 // TODO FIX
 const tableColumns: ColumnProps<Block>[] = [
     {
-        key: 'transactionHash',
-        title: 'Transaction Hash',
-        dataIndex: 'transactionHash',
+        key: 'hash',
+        title: 'Hash',
+        dataIndex: 'hash',
     },
     {
-        key: 'address',
-        title: 'Contract Address',
-        dataIndex: 'address',
+        key: 'number',
+        title: 'Number',
+        dataIndex: 'number',
     },
     {
-        key: 'txcount',
-        title: 'Transaction Count',
-        dataIndex: 'txcount',
+        key: 'transactions',
+        title: 'Transactions',
+        dataIndex: 'transactions',
+        render: (text: string, record: Block) => {
+            return record.transactions.length
+        }
     },
     {
-        key: 'creationDate',
-        title: 'Creation Date',
-        dataIndex: 'creationDate',
+        key: 'gasUsed',
+        title: 'Gas Used',
+        dataIndex: 'gasUsed',
     },
     {
-        key: 'lastExecutionDate',
-        title: 'Last Execution Date',
-        dataIndex: 'lastExecutionDate',
+        key: 'timestamp',
+        title: 'Timestamp',
+        dataIndex: 'timestamp',
     }
 
 ];

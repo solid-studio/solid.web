@@ -9,6 +9,7 @@ import { Tab, setTabActiveById } from 'features/tabs'
 import { EditorView } from './EditorView'
 import ContractsView from './ContractsView'
 import { TransactionsView } from './TransactionsView'
+import { BlocksView } from './BlocksView'
 
 const TabPane = Tabs.TabPane
 
@@ -45,6 +46,7 @@ export class MainContentView extends React.Component<AllProps> {
                             return <TabPane tab={`${capitalize(currentTab.title)}`} key={currentTab.id} className={'full-tab'}>
                                 {currentTab.type === 'transactions' && <TransactionsView />}
                                 {currentTab.type === 'contracts' && <ContractsView />}
+                                {currentTab.type === 'blocks' && <BlocksView />}
                                 {currentTab.type === 'editor' && <EditorView selectedContract={currentTab.data} />}
                             </TabPane>
                         })}

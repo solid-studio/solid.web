@@ -20,6 +20,7 @@ export class TransactionsView extends React.Component<Props, State> {
         // TODO: Get transactions from server
         // this.props.getTransactions(this.props.connectionId)
     }
+
     render() {
         const connection = buildFakeConnection() // TODO: FIX Views
         return (

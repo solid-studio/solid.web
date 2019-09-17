@@ -4,6 +4,7 @@ import { ColumnProps } from 'antd/es/table';
 
 import { Transaction } from '../types';
 import { TransactionsTableComponent } from './TransactionsTableComponent';
+import { Tag } from 'antd';
 
 interface OwnProps {
     transactions?: Transaction[] // TO BE REMOVED
@@ -12,32 +13,69 @@ interface OwnProps {
 
 type AllProps = OwnProps //& DispatchProps & StateProps
 
+const failedTransactionTag = (key: string) => (
+    <Tag color="volcano" key={key}>
+        Failed
+    </Tag>
+)
+
+const successfulTransactionTag = (key: string) => (
+    <Tag color="green" key={key}>
+        Success
+    </Tag>
+)
+
+const contractCreationTag = (key: string) => (
+    <Tag color="green" key={key}>
+        Contract Creation
+    </Tag>
+)
+
+const contractCallTag = (key: string) => (
+    <Tag color="geekblue" key={key}>
+        Contract Call
+    </Tag>
+)
+
 const tableColumns: ColumnProps<Transaction>[] = [
+    {
+        key: 'type',
+        title: 'Type',
+        dataIndex: 'type',
+        render: (text: string, record: Transaction) => record.to === null ? contractCreationTag(record.transactionHash) : contractCallTag(record.transactionHash)
+    },
     {
         key: 'transactionHash',
         title: 'Transaction Hash',
         dataIndex: 'transactionHash',
     },
     {
-        key: 'address',
+        key: 'from',
+        title: 'From',
+        dataIndex: 'from',
+    },
+    {
+        key: 'to',
+        title: 'To',
+        dataIndex: 'to',
+        render: (text: string, record: Transaction) => record.to == null ? "null" : record.to
+    },
+    {
+        key: 'contractAddress',
         title: 'Contract Address',
-        dataIndex: 'address',
+        dataIndex: 'contractAddress',
     },
     {
-        key: 'txcount',
-        title: 'Transaction Count',
-        dataIndex: 'txcount',
-    },
-    {
-        key: 'creationDate',
-        title: 'Creation Date',
-        dataIndex: 'creationDate',
-    },
-    {
-        key: 'lastExecutionDate',
-        title: 'Last Execution Date',
-        dataIndex: 'lastExecutionDate',
+        key: 'status',
+        title: 'Status',
+        dataIndex: 'status',
+        render: (text: string, record: Transaction) => record.status ? successfulTransactionTag(record.transactionHash) : failedTransactionTag(record.transactionHash)
     }
+    // {
+    //     key: 'executionDate',
+    //     title: 'Execution Date',
+    //     dataIndex: 'executionDate',
+    // }
 
 ];
 

@@ -11,3 +11,6 @@ export interface Transaction {
     cumulativeGasUsed: number
     gasUsed: number
 }
+
+// tags for contract creation
+// status
