@@ -51,8 +51,15 @@ export class TransactionsView extends React.Component<AllProps> {
 }
 
 const mapStateToProps = ({ transactionsState, connectionState }: ApplicationState) => {
+    const transactionsByConnection = transactionsState.transactions.filter((item) => {
+        if (connectionState.currentConnection) {
+            return item.connectionId === connectionState.currentConnection._id
+        }
+        return item;
+    })
+
     return {
-        transactions: transactionsState.transactions,
+        transactions: transactionsByConnection,
         currentConnection: connectionState.currentConnection
     }
 }

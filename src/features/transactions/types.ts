@@ -10,6 +10,7 @@ export interface Transaction {
     contractAddress?: string
     cumulativeGasUsed: number
     gasUsed: number
+    connectionId: string
 }
 
 // tags for contract creation

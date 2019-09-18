@@ -1,7 +1,9 @@
 import { Transaction } from "./types"
+import { generateFakeObjectId } from "utils/fakeObjectId"
 
 export const buildFakeTransaction = (): Transaction => {
     return {
+        connectionId: generateFakeObjectId(),
         blockHash: "0xfac2431708c0698b66a3a4a3ad4ba44b268df402b9350a909175d6ce6ca9004f",
         blockNumber: 646892,
         contractAddress: "0xb5a04884b36984a4d27a796e7fa75561d6a5533a",
@@ -19,6 +21,7 @@ export const buildFakeTransactions = (): Transaction[] => {
     return [
         buildFakeTransaction(),
         {
+            connectionId: generateFakeObjectId(),
             blockHash: "0xdac2431708c0698b66a3a4a3ad4ba44b268df402b9350a909175d6ce6ca9004d",
             blockNumber: 646893,
             contractAddress: "0xb5a04884b36984a4d27a796e7fa75561d6a5533a",
