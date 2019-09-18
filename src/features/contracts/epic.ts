@@ -20,7 +20,7 @@ interface Response {
 const getContractsEpic = (action$: ActionsObservable<GetContractsAction>, state$: StateObservable<ApplicationState>, ajax: AjaxCreationMethod) => action$.pipe(
     ofType(ActionType.GET_CONTRACTS),
     switchMap(({ payload }) => {
-        return ajax.getJSON<Response>(`${CONTRACTS_URL}?connectionId=${payload}`)
+        return ajax.getJSON<Response>(`${CONTRACTS_URL}`) // ?connectionId=${payload} TODO: removed for demo, but I should lazy load
             .pipe(
                 map(response => contractsReceived(response.data)),
                 catchError(error => of({
