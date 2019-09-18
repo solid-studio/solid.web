@@ -8,7 +8,6 @@ import { Contract } from 'features/contracts' // TODO: FIX, contract should in c
 import { ContractActions } from 'features/contracts/ContractActions' // TODO MOVE IT
 
 import { TableDetails, CollapseStyled } from './index'
-import { SAMPLE_ABI } from "../sample-data"
 
 const Panel = Collapse.Panel
 
@@ -29,8 +28,17 @@ export const MethodsPanel: React.FC<ContractDetailsProps> = ({ contract }: Contr
     const { abi } = contract;
     return (
         <CollapseStyled defaultActiveKey={['0']} bordered={false}>
-            <Panel header="Methods" key="2">
-                <ContractActions abi={SAMPLE_ABI || abi} />
+            <Panel header="Methods" key="1">
+                <ContractActions abi={abi} />
+            </Panel>
+            <Panel header="Storage" key="2">
+                <p style={{ color: "white" }}>Work in progress</p>
+            </Panel>
+            <Panel header="Inheritance" key="3">
+                <p style={{ color: "white" }}>Work in progress</p>
+            </Panel>
+            <Panel header="Dependencies" key="4">
+                <p style={{ color: "white" }}>Work in progress</p>
             </Panel>
         </CollapseStyled>
     )
