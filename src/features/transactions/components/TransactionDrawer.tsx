@@ -2,7 +2,7 @@ import React from 'react'
 
 import { Drawer, Collapse } from 'antd'
 
-import { Transaction } from './types'
+import { Transaction } from '../types'
 
 interface Props {
     visible: boolean

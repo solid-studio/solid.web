@@ -9,6 +9,12 @@ import { TreeNodeStyled } from 'components/GenericTreeStyledComponents'
 interface Props {
   connections: Connection[]
   onNewConnectionClick: ActionCreator<Action>
+  onConnectionItemSelected: ActionCreator<Action>
+}
+
+interface ExtraArguments {
+  connectionId: string,
+  type: 'transactions' | 'blocks' | 'contracts'
 }
 
 const rightClickOptions = [{
@@ -30,14 +36,51 @@ export class ConnectionsTree extends React.Component<Props> {
         onCollapseClick={onNewConnectionClick}
         DataRowComponentRender={(item: Connection) => (
           <TreeNodeStyled
+            blockNode={true}
             icon={<Icon type="database" />}
             title={item.name}
             key={item.url}
             style={{ color: 'white' }}>
+
+            <TreeNodeStyled
+              extra={{ connectionId: item._id, type: 'contracts' }}
+              icon={({ selected }: any) => <Icon type={selected ? 'folder' : 'folder'} />}
+              title={"Contracts"}
+              key={`${item.name}-contracts`}
+              style={{ color: 'white' }}>
+            </TreeNodeStyled>
+
+            <TreeNodeStyled
+              extra={{ connectionId: item._id, type: 'transactions' }}
+              icon={({ selected }: any) => <Icon type={selected ? 'folder' : 'folder'} />}
+              title={"Transactions"}
+              key={`${item.name}-transactions`}
+              style={{ color: 'white' }}>
+            </TreeNodeStyled>
+
+            <TreeNodeStyled
+              extra={{ connectionId: item._id, type: 'blocks' }}
+              icon={({ selected }: any) => <Icon type={selected ? 'folder' : 'folder'} />}
+              title={"Blocks"}
+              key={`${item.name}-blocks`}
+              style={{ color: 'white' }}>
+            </TreeNodeStyled>
+
           </TreeNodeStyled>
         )}
         selectorPrefix="connections"
-        onClickDataItem={undefined}
+        onClickDataItem={(value: string | undefined, node: any, extra: ExtraArguments) => {
+          if (extra) {
+            const { connectionId, type } = extra
+            const connectionToShow = this.props.connections.find(item => {
+              return item._id === connectionId
+            })
+            this.props.onConnectionItemSelected({
+              ...connectionToShow,
+              type: `${type}`
+            })
+          }
+        }}
         rightClickMenuItems={rightClickOptions}
       />
     )

@@ -2,73 +2,100 @@ import React from 'react'
 import { Action, ActionCreator, bindActionCreators, Dispatch } from 'redux'
 import { connect } from 'react-redux'
 
+import { ContractDefinitionsTree, ContractDefinition, ContractDefinitionsModal } from 'features/contract-definitions'
 import { ConnectionModal, ConnectionsTree, Connection } from '../features/connections'
-import { ContractModal, ContractsTree, Contract } from '../features/contracts'
-import { Sidebar, Content, Wrapper } from "./components"
-import { Navbar } from './components/Navbar'
-
-import {
-  contractSelected,
-  createContractStarted,
-  getContractInstances
-} from '../features/contracts/actions'
-
-import {
-  createConnectionStarted,
-  getConnections
-} from '../features/connections/actions'
-
 import { ApplicationState } from '../features/rootReducer'
-// import { Connection, Contract } from '../redux/types'
-import { loadCompilerWorker } from '../features/compiler/web-workers/compiler-worker/actions'
+import { emitter } from '../features/common/event-emitter'
+import { loadCompilerWorker } from '../features/compiler/web-workers/compiler-worker/actions' // TO BE MOVED
+
+import { openContractDefinitionsModal, contractDefinitionSelected, getContractDefinitions } from '../features/contract-definitions/actions'
+import { openConnectionModal, getConnections, connectionItemSelected } from '../features/connections/actions'
+
+import { Sidebar, Content, Wrapper, Navbar } from "./components"
+import { Layout } from 'antd'
+
+// const { Sider } = Layout;
 
 interface Props {
-  createConnectionStarted: ActionCreator<Action>
-  createContractStarted: ActionCreator<Action>
+  loadCompilerWorker: ActionCreator<any> // TO BE REMOVED
+  // NEW
+  openConnectionModal: ActionCreator<Action>
   connections: Connection[]
-  // contracts: Contract[]
-  getConnections: ActionCreator<any> // TODO fix this
-  // getContractInstances: ActionCreator<any>
-  // contractSelected: ActionCreator<Action>
-  loadCompilerWorker: ActionCreator<any>
+  getConnections: ActionCreator<Action>
+  connectionItemSelected: ActionCreator<Action>
+
+  openContractDefinitionsModal: ActionCreator<Action>
+  contractDefinitions: ContractDefinition[]
+  getContractDefinitions: ActionCreator<Action>
+  contractDefinitionSelected: ActionCreator<Action>
 }
 
-export class DefaultLayout extends React.Component<Props> {
+interface State {
+  collapsed: boolean
+}
+
+export class DefaultLayout extends React.Component<Props, State> {
+
+  constructor(props: Props) {
+    super(props)
+    this.state = {
+      collapsed: false,
+    };
+  }
   componentDidMount() {
+    this.props.getConnections();
+    this.props.getContractDefinitions();
     // start worker for compiler and load default version for MVP
-    this.props.loadCompilerWorker()
-    this.props.getConnections()
-    // this.props.getContractInstances() // TODO, need to be filtered by connection
+    // this.props.loadCompilerWorker()
+    emitter.on("COLLAPSE_RIGHT_SIDEBAR_MENU", () => { // TODO: Fix this.. 
+      // this.collapseRightSider()
+    })
+
+  }
+
+  collapseRightSider = () => {
+    this.setState({ collapsed: true });
   }
 
   openConnectionModal = () => {
-    this.props.createConnectionStarted()
+    this.props.openConnectionModal()
   }
 
   onIDEClick = () => {
-    this.setState({
-      rightClickNodeTreeItem: {}
-    })
+    console.log("IDE CLICKED")
+    emitter.emit("IDECLICKED") // TODO: MAKE ENUM OR SOMETHING ELSE
   }
 
+  onCollapse = (collapsed: boolean) => {
+    console.log(collapsed);
+    this.setState({ collapsed });
+  };
+
   render() {
-    const { connections } = this.props
+    const { connections, contractDefinitions } = this.props
     return (
       <Wrapper {...this.props} onClick={this.onIDEClick}>
         <Navbar
-          onNewConnectionClick={this.props.createConnectionStarted}
-          onNewContractInstanceClick={this.props.createContractStarted}
+          onNewConnectionClick={this.props.openConnectionModal}
+          onNewContractInstanceClick={this.props.openContractDefinitionsModal}
         />
-        <Sidebar>
-          <ConnectionsTree
-            connections={connections}
-            onNewConnectionClick={this.props.createConnectionStarted}
-          />
-          {/* <ContractsTree contracts={contracts} onContractSelected={this.props.contractSelected} /> */}
-        </Sidebar>
+        <Layout>
+          <Sidebar trigger={null} collapsible collapsed={this.state.collapsed} onCollapse={this.onCollapse} collapsedWidth={40} theme='dark' width={280}>
+            {!this.state.collapsed &&
+              <ConnectionsTree
+                connections={connections}
+                onConnectionItemSelected={this.props.connectionItemSelected}
+                onNewConnectionClick={this.props.openConnectionModal}
+              />}
+            {!this.state.collapsed &&
+              <ContractDefinitionsTree
+                onContractDefinitionSelected={this.props.contractDefinitionSelected}
+                contractDefinitions={contractDefinitions}></ContractDefinitionsTree>}
+          </Sidebar>
+        </Layout>
         <Content>{this.props.children}</Content>
         <ConnectionModal />
-        {/* <ContractModal /> */}
+        <ContractDefinitionsModal />
       </Wrapper>
     )
   }
@@ -76,8 +103,8 @@ export class DefaultLayout extends React.Component<Props> {
 
 const mapStateToProps = (state: ApplicationState) => {
   return {
-    connections: state.connectionState.connections
-    // contracts: state.contractState.contracts
+    connections: state.connectionState.connections,
+    contractDefinitions: state.contractDefinitionState.contractDefinitions
   }
 }
 
@@ -85,11 +112,12 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
   return bindActionCreators(
     {
       loadCompilerWorker,
-      createConnectionStarted,
+      openConnectionModal,
       getConnections,
-      createContractStarted,
-      getContractInstances,
-      contractSelected
+      getContractDefinitions,
+      openContractDefinitionsModal,
+      contractDefinitionSelected,
+      connectionItemSelected
     },
     dispatch
   )

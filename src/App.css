@@ -1,5 +1,6 @@
 html, body {
     height: 100%;    
+    font-family: 'Barlow', Arial, sans-serif;
 }
 
 #root {
@@ -60,4 +61,18 @@ html, body {
 
 .ant-collapse-borderless > .ant-collapse-item {
     border-bottom: none;
+}
+
+/* tabs */
+.ant-tabs-tabpane.ant-tabs-tabpane-active.full-tab{
+    height: 100%;
+}
+
+#main-content-view .ant-tabs.ant-tabs-card .ant-tabs-card-bar .ant-tabs-tab {
+    border-radius: 0 2px 0 0;
+    font-size: 12px;
+}
+
+#main-content-view .ant-tabs-bar.ant-tabs-top-bar.ant-tabs-card-bar {
+    margin: 0;
 }

@@ -1,18 +1,17 @@
 import { ActionCreator, Action } from 'redux'
-import { ThunkAction } from 'redux-thunk'
 
-import { ApplicationState } from '../rootReducer'
-import { AsyncActionThunk, ActionThunk, ExtraArgument } from '../common/types'
+import { Transaction } from './types'
+import { ActionType, TransactionsReceivedAction, GetTransactionsAction } from './action-types'
 
-import { ActionType } from './action-types'
+export const transactionsReceived: ActionCreator<Action> = (transactions: Transaction[]): TransactionsReceivedAction => {
+    return {
+        type: ActionType.TRANSACTIONS_RECEIVED,
+        payload: transactions
+    }
+}
 
-import { TRANSACTION_URL } from './constants'
-
-export const getTransactions: ActionCreator<ActionThunk> = () => (dispatch, _, { api }): Action =>
-    dispatch(
-        api.get(`${TRANSACTION_URL}`, {
-            onSuccess: ActionType.TRANSACTIONS_RECEIVED,
-            onError: ActionType.ERROR_WHEN_GETTING_DATA,
-            // onProgress: TODO: include an on progress
-        })
-    )
+export const getTransactions: ActionCreator<Action> = (): GetTransactionsAction => {
+    return {
+        type: ActionType.GET_TRANSACTIONS
+    }
+}

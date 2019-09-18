@@ -1,7 +1,7 @@
 import React from 'react'
 import { Route, Switch, RouteProps } from 'react-router-dom'
 
-import { HomeView, NotFoundView } from './views'
+import { MainContentView, NotFoundView } from './views'
 import { DefaultLayout } from './layouts'
 
 interface Props extends RouteProps {
@@ -23,7 +23,7 @@ const DashboardRoute = ({ component: Component, ...rest }: Props) => {
 
 export const MainRoutes = () => (
   <Switch>
-    <DashboardRoute path="/" exact={true} component={HomeView} />
+    <DashboardRoute path="/" exact={true} component={MainContentView} />
     <Route component={NotFoundView} />
   </Switch>
 )

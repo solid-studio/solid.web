@@ -27,7 +27,7 @@ import CompilerWorker from '.'
 
 export const loadCompilerWorker: ActionCreator<ThunkAction<void, ApplicationState, HttpRequest, Action>> = () => {
   return (dispatch, getState, _): void => {
-    // TODO: Edson Fix
+    // TODO: To Fix
     const compilerWorker = getState().compilerState.compilerWorker as CompilerWorker
     setupWorkerReducer(compilerWorker, dispatch)
 

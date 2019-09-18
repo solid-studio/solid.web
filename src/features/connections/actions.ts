@@ -1,63 +1,18 @@
 import { ActionCreator, Action } from 'redux'
-import { ThunkAction } from 'redux-thunk'
 
-import { Status, AsyncActionThunk, ActionThunk } from '../common/types'
-import { Connection } from './types'
-import { CONNECTION_URL } from "./constants"
-import {
-  ActionType,
-  CreateConnectionAction,
-  ConnectionsReceivedAction,
-  ConnectionCreatedAction
-} from './action-types'
-import { ApplicationState } from '../rootReducer';
+import { ActionType, CreateConnectionAction, ConnectionsReceivedAction, GetConnectionsAction, ConnectionModalAction, ConnectionItemSelectedAction } from './action-types'
+import { Connection, ConnectionItem } from './types'
 
-export const createOrUpdateConnection: ActionCreator<AsyncActionThunk> = values => async (
-  dispatch,
-  _,
-  { api }
-): Promise<Action> => {
-  return dispatch(
-    api.post(`${CONNECTION_URL}`, {
-      params: values,
-      onSuccess: createOrUpdateConnectionCompleted,
-      onError: ActionType.ERROR_WHEN_GETTING_DATA,
-      onProgress: createOrUpdateConnectionInProgress
-    })
-  )
-}
-
-export const getConnections: ActionCreator<ActionThunk> = () => (dispatch, _, { api }): Action =>
-  dispatch(
-    api.get(`${CONNECTION_URL}`, {
-      onSuccess: connectionsReceived,
-      onError: ActionType.ERROR_WHEN_GETTING_DATA,
-      onProgress: createOrUpdateConnectionInProgress
-    })
-  )
-
-export const createOrUpdateConnectionInProgress: ActionCreator<Action> = (): CreateConnectionAction => {
+export const closeConnectionModal: ActionCreator<Action> = (): ConnectionModalAction => {
   return {
-    type: ActionType.CREATE_CONNECTION,
-    payload: {
-      status: Status.InProgress,
-      result: undefined
-    }
+    type: ActionType.CLOSE_CONNECTION_MODAL
   }
 }
 
-export const createOrUpdateConnectionCompleted: ActionCreator<ThunkAction<void, ApplicationState, {}, Action>> = (
-  connection: Connection
-) => {
-  return (dispatch): CreateConnectionAction => {
-    dispatch(connectionCreated(connection))
-    return {
-      type: ActionType.CREATE_CONNECTION,
-      payload: {
-        result: connection,
-        status: Status.Completed
-      }
-    }
+export const openConnectionModal: ActionCreator<Action> = (connection?: Connection): ConnectionModalAction => {
+  return {
+    type: ActionType.OPEN_CONNECTION_MODAL,
+    payload: connection
   }
 }
 
@@ -68,39 +23,29 @@ export const connectionsReceived: ActionCreator<Action> = (connections: Connecti
   }
 }
 
-export const connectionCreated: ActionCreator<Action> = (connection: Connection): ConnectionCreatedAction => {
+export const getConnections: ActionCreator<Action> = (): GetConnectionsAction => {
+  return {
+    type: ActionType.GET_CONNECTIONS
+  }
+}
+
+export const createOrUpdateConnection: ActionCreator<Action> = (values: Connection): CreateConnectionAction => {
+  return {
+    type: ActionType.CREATE_CONNECTION,
+    payload: values
+  }
+}
+
+export const connectionCreated: ActionCreator<Action> = (values: Connection): CreateConnectionAction => {
   return {
     type: ActionType.CONNECTION_CREATED,
-    payload: connection
+    payload: values
   }
 }
 
-export const createConnectionCancelled: ActionCreator<Action> = (): CreateConnectionAction => {
+export const connectionItemSelected: ActionCreator<Action> = (values: ConnectionItem): ConnectionItemSelectedAction => {
   return {
-    type: ActionType.CREATE_CONNECTION,
-    payload: {
-      status: Status.NotStarted,
-      result: undefined
-    }
-  }
-}
-
-export const createConnectionStarted: ActionCreator<Action> = (): CreateConnectionAction => {
-  return {
-    type: ActionType.CREATE_CONNECTION,
-    payload: {
-      status: Status.Started,
-      result: undefined
-    }
-  }
-}
-
-export const updateConnectionStarted: ActionCreator<Action> = (connection: Connection): CreateConnectionAction => {
-  return {
-    type: ActionType.CREATE_CONNECTION,
-    payload: {
-      status: Status.Started,
-      result: connection
-    }
+    type: ActionType.CONNECTION_ITEM_SELECTED,
+    payload: values
   }
 }

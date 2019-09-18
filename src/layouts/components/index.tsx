@@ -1,5 +1,11 @@
 import styled from 'styled-components'
 
+import { Layout } from 'antd'
+
+const { Sider } = Layout;
+
+export { Navbar } from './Navbar'
+
 export const Wrapper = styled.div`
   height: 100vh;
   display: grid;
@@ -11,9 +17,9 @@ export const Wrapper = styled.div`
     'sidebar content content';
 `
 
-export const Sidebar = styled.div`
-  grid-area: sidebar;
+export const Sidebar = styled(Sider)`
   background-color: #323436;
+  width: 100%;
   padding-left: 1em;
   padding-right: 1em;
   padding-top: 1em;
@@ -24,5 +30,6 @@ export const Sidebar = styled.div`
 
 export const Content = styled.section`
   grid-area: content;
-  background-color: #2a2929;
+  background-color: #ffffff;
 `
+

@@ -1,16 +1,14 @@
-import { Status } from "../common/types";
+import { AbiItem } from "web3-utils";
 
 export interface Contract {
     _id?: string
-    address?: string
-    connectionId?: string
     name: string
     sourceCode: string
-    abi: []
+    abi: AbiItem[]
     bytecode: string
-}
-
-export interface CreateContract {
-    status: Status
-    result?: Contract
+    address: string // TODO, for ALREADY DEPLOYED is fine, but for simulation?
+    connectionId: string // TODO, for ALREADY DEPLOYED is fine, but for simulation?
+    creationDate: string,
+    lastExecutionDate: string,
+    transactionCount: number
 }

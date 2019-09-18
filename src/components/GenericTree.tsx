@@ -3,6 +3,7 @@ import { Action, ActionCreator } from 'redux'
 import { Icon } from 'antd'
 
 import { MenuStyled, MenuItemStyled, SidebarHeader, SidebarTitle, SidebarHeaderButtons, DirectoryTreeStyled } from './GenericTreeStyledComponents';
+import { emitter } from '../features/common/event-emitter'
 
 interface MenuItemOption {
     name: string
@@ -15,18 +16,18 @@ interface DataRowProps<T> {
 
 interface Props<T> {
     dataItems: T[]
-    onClickDataItem?: ActionCreator<Action> // TO BE IMPLEMENTED
+    onClickDataItem?: ActionCreator<Action> | any// TODO FIX
     headerTitle: string
-    onPlusClick: ActionCreator<Action>
-    onCollapseClick: ActionCreator<Action>
-    rightClickMenuItems: MenuItemOption[]
+    onPlusClick?: ActionCreator<Action>
+    onCollapseClick?: ActionCreator<Action>
+    rightClickMenuItems?: MenuItemOption[]
     selectorPrefix: string
     DataRowComponentRender: (t: T) => React.ReactNode | React.ComponentClass<DataRowProps<T>> | React.StatelessComponent<DataRowProps<T>>
 }
 
 interface State {
     rightClickNodeTreeItem: any
-    selectedKeys: any[]
+    selectedKeys: string[] | undefined
 }
 
 export class GenericTree<T> extends React.Component<Props<T>, State> {
@@ -40,13 +41,36 @@ export class GenericTree<T> extends React.Component<Props<T>, State> {
             rightClickNodeTreeItem: {},
             selectedKeys: []
         }
+
     }
 
-    onSelect = (selectedKeys: any, info: any) => {
-        // TODO: TYPE THIS console.log("ON SELECT", selectedKeys)
-        // TODO: TYPE THIS console.log("INFO", info)
+    componentDidMount() {
+        emitter.on("IDECLICKED", () => {
+            this.closeContextMenu()
+        })
+
+        emitter.on("UNSELECT_OTHER_TREES", (callback) => {
+            this.unSelectKeys(callback) // TODO: REVIEW because maybe I should pass callback..
+        })
+    }
+
+    // TODO IMPROVE TYPE
+    unSelectKeys = (callback: any) => {
         this.setState({
-            selectedKeys
+            selectedKeys: []
+        }, () => callback())
+    }
+
+    onSelect = (selectedKeys: string[] | undefined, info: any) => {
+        emitter.emit("UNSELECT_OTHER_TREES", () => {
+
+            this.setState({
+                selectedKeys
+            }, () => {
+                if (this.props.onClickDataItem) {
+                    this.props.onClickDataItem(selectedKeys, info.node.props, info.node.props.extra)
+                }
+            })
         })
     }
 
@@ -72,9 +96,19 @@ export class GenericTree<T> extends React.Component<Props<T>, State> {
         </MenuStyled>
     }
 
+    closeContextMenu = () => {
+        this.setState({
+            rightClickNodeTreeItem: {}
+        })
+    }
+
     getNodeTreeRightClickMenu = () => {
         const { pageX, pageY } = { ...this.state.rightClickNodeTreeItem } as any
         if (!pageX || !pageY) {
+            return <div />
+        }
+
+        if (!this.props.rightClickMenuItems) {
             return <div />
         }
 
