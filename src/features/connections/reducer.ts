@@ -67,6 +67,8 @@ export const appReducer: Reducer<ConnectionState, Actions> = (
             return { ...state, connectionModalOpen: true, currentConnection: action.payload }
         case ActionType.GET_CONNECTIONS:
             return { ...state, getConnectionsStatus: Status.InProgress }
+        case ActionType.CONNECTION_ITEM_SELECTED:
+            return { ...state, currentConnection: action.payload }
         case ActionType.CONNECTIONS_RECEIVED:
             return {
                 ...state, connections: action.payload,

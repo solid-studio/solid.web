@@ -14,7 +14,8 @@ export enum ActionType {
 }
 
 export interface GetContractsAction extends Action {
-  type: ActionType.GET_CONTRACTS
+  type: ActionType.GET_CONTRACTS,
+  payload: string // connectionId
 }
 
 export interface ContractsReceivedAction extends Action {

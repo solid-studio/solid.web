@@ -36,8 +36,8 @@ const createConnectionEpic = (action$: ActionsObservable<CreateConnectionAction>
 const onCreateConnectionCompletedEpic = (action$: ActionsObservable<CreateConnectionAction>) => action$.pipe(
     ofType(ActionType.CONNECTION_CREATED),
     mapTo({
-        type: ActionType.OPEN_CONNECTION_MODAL,
-        payload: false
+        type: ActionType.CLOSE_CONNECTION_MODAL,
+        payload: undefined
     })
 )
 

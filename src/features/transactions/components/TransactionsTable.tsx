@@ -25,7 +25,7 @@ const successfulTransactionTag = (key: string) => (
 )
 
 const contractCreationTag = (key: string) => (
-    <Tag color="green" key={key}>
+    <Tag color="geekblue" key={key}>
         Contract Creation
     </Tag>
 )
@@ -37,27 +37,27 @@ const contractCallTag = (key: string) => (
 )
 
 const tableColumns: ColumnProps<Transaction>[] = [
-    {
-        key: 'type',
-        title: 'Type',
-        dataIndex: 'type',
-        render: (text: string, record: Transaction) => record.to === null ? contractCreationTag(record.transactionHash) : contractCallTag(record.transactionHash)
-    },
+    // {
+    //     key: 'type',
+    //     title: 'Type',
+    //     dataIndex: 'type',
+    //     render: (text: string, record: Transaction) => record.to === null ? contractCreationTag(record.transactionHash) : contractCallTag(record.transactionHash)
+    // },
     {
         key: 'transactionHash',
         title: 'Transaction Hash',
         dataIndex: 'transactionHash',
     },
     {
-        key: 'from',
-        title: 'From',
-        dataIndex: 'from',
-    },
-    {
         key: 'to',
         title: 'To',
         dataIndex: 'to',
-        render: (text: string, record: Transaction) => record.to == null ? "null" : record.to
+        render: (text: string, record: Transaction) => record.to == null ? contractCreationTag(record.transactionHash) : record.to
+    },
+    {
+        key: 'from',
+        title: 'From',
+        dataIndex: 'from',
     },
     {
         key: 'contractAddress',

@@ -10,9 +10,10 @@ export const contractsReceived: ActionCreator<Action> = (contracts: Contract[]):
   }
 }
 
-export const getContracts: ActionCreator<Action> = (): GetContractsAction => {
+export const getContracts: ActionCreator<Action> = (connectionId: string): GetContractsAction => {
   return {
-    type: ActionType.GET_CONTRACTS
+    type: ActionType.GET_CONTRACTS,
+    payload: connectionId
   }
 }
 

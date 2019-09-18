@@ -14,25 +14,27 @@ Improve smart contract instances view
 
 Control flow graph visualisation and exploration (react-ethereum-components)
 
+# November 2019
+
 Storage visualiser (react-ethereum-components)
 
 Finish smart contract editor, compile and deploy (November)
 
-# November 2019
-
 Filtering and search of smart contracts and connections (Nice to have)
+
+# December 2019
 
 Create Gas Profiler - To November (Ethereum Foundation Plugin)
 
 Create contract size Profiler (To November)
 
-# December 2019
+# January
 
 Finish Universal Web3 Console (To December)
 
 Allow Web3 Console scripts to be saved (To December)
 
-# January
+# February
 
 Extend Add Contract Instance Form to support different sources: ABI, Bytecode, Existing contracts and Source code. (OUT)
 
@@ -44,8 +46,11 @@ Debugger
 
 # Components
 
-// Control flow visualisation
+React-Ethereum-Components
+(Create tag React-Ethereum-Component)
 
+// Control flow visualisation
+ 
 A react component that accepts an array of geth traces and that renders a 
 Control Flow Graph.
 

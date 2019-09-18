@@ -21,10 +21,10 @@ const initialiseStore = (history: History) => {
     (process.env.NODE_ENV !== 'production' && windowIfDefined[__REDUX_DEVTOOLS_EXTENSION_COMPOSE__]) || compose
 
   // This enable work in client mode only with fake data
-  const getJSONInstance = process.env.REACT_APP_MOCK_API ? mockAjax.getJSON : ajax.getJSON
+  const getJSONInstance = process.env.REACT_APP_MOCK_API === "true" ? mockAjax.getJSON : ajax.getJSON
 
   const epicMiddleware = createEpicMiddleware({
-    dependencies: { getJSON: getJSONInstance }
+    dependencies: { getJSON: getJSONInstance, post: ajax.post }
   });
 
   const middlewares = applyMiddleware(
