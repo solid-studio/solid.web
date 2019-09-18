@@ -9,6 +9,7 @@ import { ApplicationState } from 'features/rootReducer'
 import { ContractsTable } from 'features/contracts/components/ContractsTable'
 import { Connection } from 'features/connections'
 import { emitter } from 'features/common/event-emitter'
+import client from '../utils/feathers'
 
 import { StyledDiv, StyledH1, CustomIcon, ContractDetails } from './components'
 
@@ -53,6 +54,14 @@ export class ContractsView extends React.Component<AllProps, State> {
     componentDidMount() {
         if (this.props.currentConnection) {
             this.props.getContracts(this.props.currentConnection._id)
+
+            // TODO IMPROVE
+            client.service('contracts')
+                .on('created', (message: string) => {
+                    if (this.props.currentConnection) {
+                        this.props.getContracts(this.props.currentConnection._id)
+                    }
+                });
         }
     }
 
@@ -114,8 +123,24 @@ export class ContractsView extends React.Component<AllProps, State> {
 
 
 const mapStateToProps = ({ contractState, connectionState }: ApplicationState) => {
+    const contractsByConnection = contractState.contracts.filter((item) => {
+        if (connectionState.currentConnection) {
+            return item.connectionId === connectionState.currentConnection._id
+        }
+        return item;
+    })
+
+    const uniqueContracts = contractsByConnection.reduce((acc: Contract[], current) => {
+        const x = acc.find((item: Contract) => item.address === current.address);
+        if (!x) {
+            return acc.concat([current]);
+        } else {
+            return acc;
+        }
+    }, []);
+
     return {
-        contracts: contractState.contracts,
+        contracts: uniqueContracts,
         currentConnection: connectionState.currentConnection
     }
 }
