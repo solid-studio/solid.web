@@ -1,4 +1,4 @@
-FROM node:10-slim as builder
+FROM node:10.16.3-jessie as builder
 
 WORKDIR /opt/app
 
