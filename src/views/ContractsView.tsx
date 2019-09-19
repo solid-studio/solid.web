@@ -108,7 +108,7 @@ export class ContractsView extends React.Component<AllProps, State> {
                             onMouseLeave={this.closeDrawer} />
                     </StyledDiv>
                 </Content>
-                <Sider trigger={null} collapsed={!showContractDrawer} collapsible={true} collapsedWidth={0} width={drawerWidth}>
+                <Sider style={{ background: "#272727"}} trigger={null} collapsed={!showContractDrawer} collapsible={true} collapsedWidth={0} width={drawerWidth}>
                     <div>
                         <CustomIcon src="https://res.cloudinary.com/key-solutions/image/upload/v1568672208/solid/maximize.png" alt="maximise" onClick={this.maximiseWindow} />
                         {/* <img src="https://res.cloudinary.com/key-solutions/image/upload/v1568673196/solid/error.png" alt="close" onClick={this.closeDrawer} /> */}

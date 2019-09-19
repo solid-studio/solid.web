@@ -80,7 +80,7 @@ export class DefaultLayout extends React.Component<Props, State> {
           onNewContractInstanceClick={this.props.openContractDefinitionsModal}
         />
         <Layout>
-          <Sidebar trigger={null} collapsible collapsed={this.state.collapsed} onCollapse={this.onCollapse} collapsedWidth={40} theme='dark' width={280}>
+          <Sidebar id={"default-side"} trigger={null} collapsible collapsed={this.state.collapsed} onCollapse={this.onCollapse} collapsedWidth={40} theme='dark' width={280}>
             {!this.state.collapsed &&
               <ConnectionsTree
                 connections={connections}

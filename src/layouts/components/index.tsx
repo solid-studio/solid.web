@@ -25,6 +25,7 @@ export const Sidebar = styled(Sider)`
   padding-top: 1em;
   display: grid;
   height: 100%;
+  overflow: hidden;
   grid-template-rows: 50% 50%;
 `
 

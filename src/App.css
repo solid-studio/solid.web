@@ -76,3 +76,14 @@ html, body {
 #main-content-view .ant-tabs-bar.ant-tabs-top-bar.ant-tabs-card-bar {
     margin: 0;
 }
+
+.ant-layout-sider {
+    position: relative;
+    min-width: 0;
+    background-color: #272727 !important;
+    transition: all 0.2s;
+}
+
+#default-side .ant-layout-sider-children div {
+    overflow: hidden !important;
+}
