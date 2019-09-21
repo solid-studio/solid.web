@@ -10,7 +10,7 @@ import { SidebarHeader, MenuStyled, MenuItemStyled, SidebarTitle, SidebarHeaderB
 
 interface Props {
   contracts: Contract[]
-  onContractSelected: ActionCreator<Action>
+  onContractSelected?: ActionCreator<Action>
 }
 
 interface State {
@@ -66,9 +66,10 @@ export class ContractsTree extends React.Component<Props, State> {
 
   render() {
     const { contracts } = this.props
-
+        
     const UPLOAD_URL:string = 'https://solc-bin.ethereum.org/bin/contract-definitions'
-
+    // for test const UPLOAD_URL:string = 'https://www.mocky.io/v2/5cc8019d300000980a055e76'
+    
 
     return (
       <div style={{ height: '100%' }}>
@@ -76,15 +77,19 @@ export class ContractsTree extends React.Component<Props, State> {
         <SidebarHeader>
           <SidebarTitle>Contracts</SidebarTitle>
           <SidebarHeaderButtons>          
-          <Upload accept=".soi"  action={UPLOAD_URL} >
+          <Upload data-testid="file-upload" accept=".sol"  action={UPLOAD_URL} >
             <Icon
+              data-testid="single-file-upload"
               type="plus"
               style={{ color: 'white', paddingRight: '0.5em' }}
-              onClick={() => console.log('TODO, on new contract.....')}
+              onClick={() => {
+                console.log('TODO, on new contract.....')
+              }}
             />
             </Upload>
-            <Upload accept=".soi" action={UPLOAD_URL} directory>
+            <Upload id="folder-upload" accept=".sol" action={UPLOAD_URL} directory>
             <Icon
+              data-testid="folder-file-upload"
               type="folder"
               style={{ color: 'white', paddingRight: '0.5em' }}
               onClick={() => console.log('TODO, on new contract.....')}

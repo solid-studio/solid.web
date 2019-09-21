@@ -33,6 +33,12 @@ export const SidebarHeaderButtons = styled.div`
     .ant-upload-list-item-info {
         width: 280px;
     }
+    .ant-upload-list-item-name, .anticon-paper-clip {
+        color: #ffffff;
+    }
+    .ant-upload-list-item-name:hover {
+        color: #000000 !important;
+    }
 `
 
 export const TreeNodeStyled = styled(TreeNode)`
