@@ -1,9 +1,10 @@
 import { Reducer } from 'redux'
 
+import { ContractDefinition } from '@solidstudio/solid.types'
+
 import { Status } from '../common/types'
 
 import { ActionType, Actions } from './action-types';
-import { ContractDefinition } from './types'
 
 export interface ContractDefinitionState {
     contractDefinitions: ContractDefinition[]

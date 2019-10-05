@@ -1,6 +1,8 @@
 import { Action } from 'redux'
 
-import { Connection, ConnectionItem } from './types'
+import { Connection } from '@solidstudio/solid.types'
+
+import { ConnectionItem } from './types'
 
 export enum ActionType {
     OPEN_CONNECTION_MODAL = 'OPEN_CONNECTION_MODAL',

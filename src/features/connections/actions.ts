@@ -1,7 +1,9 @@
 import { ActionCreator, Action } from 'redux'
 
+import { Connection } from '@solidstudio/solid.types'
+
 import { ActionType, CreateConnectionAction, ConnectionsReceivedAction, GetConnectionsAction, ConnectionModalAction, ConnectionItemSelectedAction } from './action-types'
-import { Connection, ConnectionItem } from './types'
+import { ConnectionItem } from './types'
 
 export const closeConnectionModal: ActionCreator<Action> = (): ConnectionModalAction => {
   return {

@@ -1,6 +1,7 @@
 import { ActionCreator, Action } from 'redux'
 
-import { Contract } from './types'
+import { Contract } from '@solidstudio/solid.types'
+
 import { ActionType, ContractsReceivedAction, GetContractsAction, MaximizeContractViewAction } from './action-types'
 
 export const contractsReceived: ActionCreator<Action> = (contracts: Contract[]): ContractsReceivedAction => {

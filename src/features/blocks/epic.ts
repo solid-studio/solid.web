@@ -18,7 +18,7 @@ interface Response {
     data: Block[];
 }
 
-const getBlocksEpic = (action$: ActionsObservable<GetBlocksAction>, state$: StateObservable<ApplicationState>, ajax: AjaxCreationMethod) => action$.pipe(
+export const getBlocksEpic = (action$: ActionsObservable<GetBlocksAction>, state$: StateObservable<ApplicationState>, ajax: AjaxCreationMethod) => action$.pipe(
     ofType(ActionType.GET_BLOCKS),
     switchMap(() => {
         return ajax.getJSON<Response>(`${BLOCKS_URL}`)

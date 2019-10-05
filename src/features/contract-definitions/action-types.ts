@@ -1,6 +1,8 @@
 import { Action } from 'redux'
 
-import { ContractDefinition, ContractDefinitionItem } from './types'
+import { ContractDefinition } from '@solidstudio/solid.types'
+
+import { ContractDefinitionItem } from './types'
 
 export enum ActionType {
     GET_CONTRACT_DEFINITIONS = 'GET_CONTRACTS',

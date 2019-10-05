@@ -1,9 +1,10 @@
 import { Reducer } from 'redux'
 
+import { Connection } from '@solidstudio/solid.types'
+
 import { Status } from '../common/types'
 
 import { ActionType, Actions } from './action-types';
-import { Connection } from './types'
 
 export interface ConnectionState {
     connectionModalOpen: boolean

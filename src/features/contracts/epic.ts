@@ -1,14 +1,15 @@
 import { ofType, combineEpics, ActionsObservable, StateObservable } from 'redux-observable'
 import { of } from 'rxjs';
 import { switchMap, map, catchError } from 'rxjs/operators';
+import { AjaxCreationMethod } from 'rxjs/internal/observable/dom/AjaxObservable';
+
+import { Contract } from '@solidstudio/solid.types'
 
 import { ActionType, GetContractsAction, MaximizeContractViewAction } from './action-types'
 import { contractsReceived } from './actions';
 import { CONTRACTS_URL } from './constants';
-import { Contract } from './types';
 import { openOrSetTabActive } from 'features/tabs';
 import { ApplicationState } from 'features/rootReducer';
-import { AjaxCreationMethod } from 'rxjs/internal/observable/dom/AjaxObservable';
 
 interface Response {
     total: number;
