@@ -1,6 +1,6 @@
 import { Action } from 'redux'
 
-import { Block } from './types'
+import { Block } from '@solidstudio/solid.types'
 
 export enum ActionType {
     ERROR_WHEN_GETTING_DATA = 'ERROR_WHEN_GETTING_DATA', // TODO: MOVE

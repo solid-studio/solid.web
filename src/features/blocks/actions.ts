@@ -1,6 +1,7 @@
 import { ActionCreator, Action } from 'redux'
 
-import { Block } from './types'
+import { Block } from '@solidstudio/solid.types'
+
 import { ActionType, BlocksReceivedAction, GetBlocksAction } from './action-types'
 
 export const blocksReceived: ActionCreator<Action> = (blocks: Block[]): BlocksReceivedAction => {

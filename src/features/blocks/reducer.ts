@@ -1,9 +1,9 @@
 import { Reducer } from 'redux'
 
+import { Block } from '@solidstudio/solid.types'
+
 import { Status } from '../common/types'
 import { ActionType, Actions } from './action-types';
-import { Block } from './types'
-
 
 export interface BlocksState {
     currentBlock?: Block

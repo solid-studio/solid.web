@@ -1,13 +1,15 @@
 import { ofType, combineEpics, ActionsObservable, StateObservable } from 'redux-observable'
 import { of } from 'rxjs';
 import { switchMap, map, catchError } from 'rxjs/operators';
+import { AjaxCreationMethod } from 'rxjs/internal/observable/dom/AjaxObservable';
+
+import { Block } from '@solidstudio/solid.types'
+
+import { ApplicationState } from 'features/rootReducer';
 
 import { ActionType, GetBlocksAction } from './action-types'
 import { blocksReceived } from './actions';
 import { BLOCKS_URL } from './constants';
-import { Block } from './types';
-import { ApplicationState } from 'features/rootReducer';
-import { AjaxCreationMethod } from 'rxjs/internal/observable/dom/AjaxObservable';
 
 interface Response {
     total: number;

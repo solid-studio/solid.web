@@ -2,11 +2,14 @@ import React from 'react'
 
 import { ColumnProps } from 'antd/es/table';
 
-import { Block } from '../types';
+import { Block } from '@solidstudio/solid.types'
+
 import { BlocksTableComponent } from './BlocksTableComponent';
 
 interface OwnProps {
     blocks?: Block[]
+    onClick: any // TODO type correctly and think if I 
+    onDoubleClick: any // should abstract differently, maybe in another generic table that already has all events..
 }
 
 type AllProps = OwnProps
@@ -16,11 +19,12 @@ const tableColumns: ColumnProps<Block>[] = [
         key: 'hash',
         title: 'Hash',
         dataIndex: 'hash',
+        render: text => <p data-testid={`blocks-table-row-${text}`}>{text}</p>
     },
     {
-        key: 'number',
+        key: 'blockNumber',
         title: 'Number',
-        dataIndex: 'number',
+        dataIndex: 'blockNumber',
     },
     {
         key: 'transactions',
@@ -46,6 +50,18 @@ const tableColumns: ColumnProps<Block>[] = [
 export class BlocksTable extends React.Component<AllProps> {
     render() {
         const { blocks } = this.props
-        return <BlocksTableComponent dataSource={blocks} columns={tableColumns} />
+        return <BlocksTableComponent rowKey="hash" dataSource={blocks}
+            columns={tableColumns}
+            onRow={(record, rowIndex) => {
+                return {
+                    onClick: event => {
+                        this.props.onClick(record)
+                    },
+                    onDoubleClick: event => {
+                        this.props.onDoubleClick(record)
+                    }
+                };
+            }}
+        />
     }
 }
