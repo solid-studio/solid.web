@@ -6,6 +6,7 @@ import { contractsEpic } from './contracts/epic'
 import { contractDefinitionsEpic } from './contract-definitions/epic'
 import { transactionsEpic } from './transactions/epic'
 import { blocksEpic } from './blocks/epic'
+import { compilerEpic } from './compiler/epic'
 
 export const rootEpic = combineEpics(
     connectionsEpic,
@@ -13,5 +14,6 @@ export const rootEpic = combineEpics(
     contractsEpic,
     contractDefinitionsEpic,
     transactionsEpic,
-    blocksEpic
+    blocksEpic,
+    compilerEpic
 );

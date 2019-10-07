@@ -2,8 +2,10 @@ const { override, fixBabelImports, addLessLoader } = require('customize-cra');
 
 const addWorkerLoaderModule = () => config => {
     config.module.rules.push({
-        test: /\.worker\.js$/,
-        use: { loader: 'worker-loader' }
+        test: /\.worker\.ts$/,
+        use: {
+            loader: 'worker-loader'
+        }
     })
     config.output.globalObject = 'this';
     return config;
@@ -20,3 +22,13 @@ module.exports = override(
         javascriptEnabled: true
     })
 )
+
+// module.exports = {
+//     webpack: rewireWebpackConfig,
+//     jest: (config) => {
+//         config.moduleNameMapper = {
+//             "\\.worker.js": "<rootDir>/__mocks__/workerMock.js"
+//         };
+//         return config;
+//     }
+// };

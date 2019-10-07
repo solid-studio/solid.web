@@ -11,7 +11,7 @@ export interface BlocksState {
     getBlocksStatus: Status
 }
 
-const initialState: BlocksState = {
+export const initialState: BlocksState = {
     blocks: [],
     currentBlock: undefined,
     getBlocksStatus: Status.NotStarted

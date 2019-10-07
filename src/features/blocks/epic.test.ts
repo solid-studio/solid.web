@@ -1,18 +1,16 @@
-import 'jsdom-worker'
 import { ActionsObservable, StateObservable } from 'redux-observable'
-import { Action } from 'redux';
 import { Subject, of } from 'rxjs';
 import { AjaxCreationMethod } from 'rxjs/internal/observable/dom/AjaxObservable';
 
 import { buildFakeBlocks } from '@solidstudio/solid.types';
 
-import { getBlocksEpic } from './epic';
+import { ApplicationState, initialState } from '../rootReducer'
+
 import { ActionType, GetBlocksAction } from './action-types';
-
 import { blocksReceived } from './actions';
-import rootReducer, { ApplicationState } from '../rootReducer'
+import { getBlocksEpic } from './epic';
 
-describe('Blocks Tests', () => {
+describe('Blocks Epic Tests', () => {
     const mockAjax: jest.Mocked<AjaxCreationMethod> = {
         get: jest.fn(),
         post: jest.fn(),
@@ -22,7 +20,7 @@ describe('Blocks Tests', () => {
         getJSON: jest.fn()
     } as any // TODO FIX
 
-    it('should open tab', (done) => {
+    test('getBlocksEpic', (done) => {
         const blocks = buildFakeBlocks()
 
         const getBlocksAction: GetBlocksAction = {
@@ -31,12 +29,7 @@ describe('Blocks Tests', () => {
 
         const actions$ = ActionsObservable.of(getBlocksAction)
 
-        const initialState = {
-
-        } as ApplicationState
-
-
-        const applicationState$: StateObservable<ApplicationState> = new StateObservable(new Subject(), initialState);
+        const applicationState$: StateObservable<ApplicationState> = new StateObservable<ApplicationState>(new Subject(), initialState);
 
         mockAjax.getJSON.mockImplementation((url: string, headers?: Object | undefined) => {
             return of({ data: blocks })
@@ -45,7 +38,6 @@ describe('Blocks Tests', () => {
         const output$ = getBlocksEpic(actions$, applicationState$, mockAjax)
 
         output$.subscribe((action) => {
-            console.log("ACTION", action)
             expect(action).toEqual(blocksReceived(blocks))
             done()
         })

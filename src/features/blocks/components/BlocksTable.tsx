@@ -8,8 +8,8 @@ import { BlocksTableComponent } from './BlocksTableComponent';
 
 interface OwnProps {
     blocks?: Block[]
-    onClick: any // TODO type correctly and think if I 
-    onDoubleClick: any // should abstract differently, maybe in another generic table that already has all events..
+    onClick?: any // TODO type correctly and think if I 
+    onDoubleClick?: any // should abstract differently, maybe in another generic table that already has all events..
 }
 
 type AllProps = OwnProps
