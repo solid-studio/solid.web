@@ -14,7 +14,7 @@ export interface ContractDefinitionState {
     createContractDefinitionStatus: Status
 }
 
-const initialState: ContractDefinitionState = {
+export const initialState: ContractDefinitionState = {
     contractDefinitions: [],
     currentContractDefinition: undefined,
     getContractDefinitionsStatus: Status.NotStarted,
@@ -32,7 +32,8 @@ export const appReducer: Reducer<ContractDefinitionState, Actions> = (state: Con
             return { ...state, getContractDefinitionsStatus: Status.InProgress }
         case ActionType.CONTRACTS_DEFINITIONS_RECEIVED:
             return {
-                ...state, contractDefinitions: action.payload,
+                ...state,
+                contractDefinitions: action.payload,
                 currentContractDefinition: action.payload[0],
                 getContractDefinitionsStatus: Status.Completed
             }
@@ -43,7 +44,8 @@ export const appReducer: Reducer<ContractDefinitionState, Actions> = (state: Con
         case ActionType.CONTRACT_DEFINITION_CREATED:
             const newContractDefinitions = [...state.contractDefinitions, action.payload]
             return {
-                ...state, contractDefinitions: newContractDefinitions,
+                ...state,
+                contractDefinitions: newContractDefinitions,
                 currentContractDefinition: action.payload,
                 createContractDefinitionStatus: Status.Completed
             }

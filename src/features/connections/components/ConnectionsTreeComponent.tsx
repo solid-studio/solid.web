@@ -1,4 +1,5 @@
 import { GenericTree } from 'components';
-import { Connection } from '../types'
+
+import { Connection } from '@solidstudio/solid.types'
 
 export class ConnectionsTreeComponent extends GenericTree<Connection> { }

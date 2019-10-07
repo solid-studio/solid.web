@@ -6,17 +6,13 @@ import { AjaxCreationMethod } from 'rxjs/internal/observable/dom/AjaxObservable'
 import { Block } from '@solidstudio/solid.types'
 
 import { ApplicationState } from 'features/rootReducer';
+import { GenericArrayResponse } from 'features/common/types';
 
 import { ActionType, GetBlocksAction } from './action-types'
 import { blocksReceived } from './actions';
 import { BLOCKS_URL } from './constants';
 
-interface Response {
-    total: number;
-    limit: number;
-    skip: number;
-    data: Block[];
-}
+type Response = GenericArrayResponse<Block>
 
 export const getBlocksEpic = (action$: ActionsObservable<GetBlocksAction>, state$: StateObservable<ApplicationState>, ajax: AjaxCreationMethod) => action$.pipe(
     ofType(ActionType.GET_BLOCKS),

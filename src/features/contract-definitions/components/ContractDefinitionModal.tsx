@@ -4,21 +4,22 @@ import { connect } from 'react-redux'
 import { Form } from 'antd'
 import { FormikErrors, Field, FieldProps } from 'formik'
 
+import { ContractDefinition } from '@solidstudio/solid.types'
+
 import { InputFormItem, TextAreaFormItem } from 'components'
 
 import { ApplicationState } from '../../rootReducer';
 import { Status } from "../../common/types" // TODO: this shouldn't be the case with Sagas
 
 import { createOrUpdateContractDefinition, closeContractDefinitionsModal } from '../actions'
-import { ContractDefinition } from '../types'
-
 import { ContractDefinitionModalComponent } from "./ContractDefinitionModalComponent";
+
 import { RadioField } from './RadioField';
 
 // TODO: TO REMOVE
 import { simpleCompilerInput } from '../../compiler/web-workers/compiler-worker/compiler-input'
-import { solc } from '../../../utils/compiler'
-
+// import { solc } from '../../../utils/compiler'
+// console.log("SOLC", solc)
 const FORM_ID = 'CONTRACT_DEFINITION_FORM'
 const FORM_TITLE = "Add Contract Definition"
 
@@ -45,7 +46,8 @@ const defaultContractDefinition: ContractDefinition = {
   name: '',
   sourceCode: '',
   abi: [],
-  bytecode: ''
+  bytecode: '',
+  runtimeBycode: ''
 }
 
 interface OwnProps {
@@ -73,7 +75,7 @@ export class ContractDefinitionsModal extends React.Component<AllProps> {
   }
 
   componentDidMount() {
-    this.compiler = solc.compile
+    // this.compiler = solc.compile
     const sourceCode = `
     pragma solidity ^0.5.8;
 
@@ -92,7 +94,7 @@ export class ContractDefinitionsModal extends React.Component<AllProps> {
             return value;
         }
     }`
-    this.sourceCodeIsValid(sourceCode, 'SimpleStorage.sol')
+    // this.sourceCodeIsValid(sourceCode, 'SimpleStorage.sol')
     // TODO.. I'm not sure how this part works, is like I need to cache the usage
     // of my module. Not sure if webpack is doing code splitting.
   }

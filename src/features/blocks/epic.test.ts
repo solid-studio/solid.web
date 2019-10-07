@@ -1,3 +1,4 @@
+// import "jsdom-worker" // TODO Maybe my workers should extend from worker, then I will nneed this
 import { ActionsObservable, StateObservable } from 'redux-observable'
 import { Subject, of } from 'rxjs';
 import { AjaxCreationMethod } from 'rxjs/internal/observable/dom/AjaxObservable';
@@ -6,8 +7,8 @@ import { buildFakeBlocks } from '@solidstudio/solid.types';
 
 import { ApplicationState, initialState } from '../rootReducer'
 
-import { ActionType, GetBlocksAction } from './action-types';
-import { blocksReceived } from './actions';
+import { GetBlocksAction } from './action-types';
+import { blocksReceived, getBlocks } from './actions';
 import { getBlocksEpic } from './epic';
 
 describe('Blocks Epic Tests', () => {
@@ -23,9 +24,7 @@ describe('Blocks Epic Tests', () => {
     test('getBlocksEpic', (done) => {
         const blocks = buildFakeBlocks()
 
-        const getBlocksAction: GetBlocksAction = {
-            type: ActionType.GET_BLOCKS
-        }
+        const getBlocksAction: GetBlocksAction = getBlocks()
 
         const actions$ = ActionsObservable.of(getBlocksAction)
 

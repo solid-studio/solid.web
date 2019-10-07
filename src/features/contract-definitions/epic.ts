@@ -1,23 +1,21 @@
 import { ofType, combineEpics, ActionsObservable, StateObservable } from 'redux-observable'
 import { of } from 'rxjs';
 import { switchMap, map, catchError, tap } from 'rxjs/operators';
+import { AjaxCreationMethod } from 'rxjs/internal/observable/dom/AjaxObservable';
+
+import { ContractDefinition } from '@solidstudio/solid.types'
+
+import { ApplicationState } from 'features/rootReducer';
+import { openOrSetTabActive } from 'features/tabs/actions';
+import { GenericArrayResponse } from 'features/common/types';
 
 import { ActionType, GetContractDefinitionsAction, ContractDefinitionSelectedAction } from './action-types'
 import { contractDefinitionsReceived } from './actions';
 import { CONTRACT_DEFINITIONS_URL } from './constants';
-import { ContractDefinition } from './types';
-import { openOrSetTabActive } from 'features/tabs/actions';
-import { AjaxCreationMethod } from 'rxjs/internal/observable/dom/AjaxObservable';
-import { ApplicationState } from 'features/rootReducer';
 
-interface Response {
-    total: number;
-    limit: number;
-    skip: number;
-    data: ContractDefinition[];
-}
+type Response = GenericArrayResponse<ContractDefinition>
 
-const getContractDefinitionsEpic = (action$: ActionsObservable<GetContractDefinitionsAction>, state$: StateObservable<ApplicationState>, ajax: AjaxCreationMethod) => action$.pipe(
+export const getContractDefinitionsEpic = (action$: ActionsObservable<GetContractDefinitionsAction>, state$: StateObservable<ApplicationState>, ajax: AjaxCreationMethod) => action$.pipe(
     ofType(ActionType.GET_CONTRACT_DEFINITIONS),
     switchMap(() => {
         return ajax.getJSON<Response>(`${CONTRACT_DEFINITIONS_URL}`)
@@ -31,20 +29,19 @@ const getContractDefinitionsEpic = (action$: ActionsObservable<GetContractDefini
     })
 );
 
-const onContractDefinitionSelected = (action$: ActionsObservable<ContractDefinitionSelectedAction>) => action$.pipe(
+export const onContractDefinitionSelectedEpic = (action$: ActionsObservable<ContractDefinitionSelectedAction>) => action$.pipe(
     ofType<ContractDefinitionSelectedAction>(ActionType.CONTRACT_DEFINITION_SELECTED),
-    tap(({ payload }) => console.log("PAYLOAD", payload)),
     map(({ payload }) => {
         return openOrSetTabActive({
             type: payload.type,
             data: payload,
             title: payload.name,
-            id: payload._id
+            id: payload.id
         })
     })
 )
 
 export const contractDefinitionsEpic = combineEpics(
     getContractDefinitionsEpic,
-    onContractDefinitionSelected
+    onContractDefinitionSelectedEpic
 )

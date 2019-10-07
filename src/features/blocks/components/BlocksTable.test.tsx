@@ -60,7 +60,7 @@ describe('Blocks table test', () => {
         })
     })
 
-    test.only('double clicks', () => {
+    test('double clicks', () => {
         const { getByTestId } = renderBlocksTable(blocks)
 
         blocks.forEach((item) => {
