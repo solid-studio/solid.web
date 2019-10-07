@@ -4,10 +4,11 @@ import { Action, ActionCreator, bindActionCreators, Dispatch } from 'redux'
 import { connect } from 'react-redux'
 import { Layout } from 'antd'
 
-import { Contract, getContracts, maximizeContractView } from 'features/contracts'
+import { Contract, Connection } from '@solidstudio/solid.types'
+
+import { getContracts, maximizeContractView } from 'features/contracts'
 import { ApplicationState } from 'features/rootReducer'
 import { ContractsTable } from 'features/contracts/components/ContractsTable'
-import { Connection } from 'features/connections'
 import { emitter } from 'features/common/event-emitter'
 import client from '../utils/feathers'
 
@@ -53,13 +54,13 @@ export class ContractsView extends React.Component<AllProps, State> {
 
     componentDidMount() {
         if (this.props.currentConnection) {
-            this.props.getContracts(this.props.currentConnection._id)
+            this.props.getContracts(this.props.currentConnection.id)
 
             // TODO IMPROVE
             client.service('contracts')
                 .on('created', (message: string) => {
                     if (this.props.currentConnection) {
-                        this.props.getContracts(this.props.currentConnection._id)
+                        this.props.getContracts(this.props.currentConnection.id)
                     }
                 });
         }
@@ -108,7 +109,7 @@ export class ContractsView extends React.Component<AllProps, State> {
                             onMouseLeave={this.closeDrawer} />
                     </StyledDiv>
                 </Content>
-                <Sider style={{ background: "#272727"}} trigger={null} collapsed={!showContractDrawer} collapsible={true} collapsedWidth={0} width={drawerWidth}>
+                <Sider style={{ background: "#272727" }} trigger={null} collapsed={!showContractDrawer} collapsible={true} collapsedWidth={0} width={drawerWidth}>
                     <div>
                         <CustomIcon src="https://res.cloudinary.com/key-solutions/image/upload/v1568672208/solid/maximize.png" alt="maximise" onClick={this.maximiseWindow} />
                         {/* <img src="https://res.cloudinary.com/key-solutions/image/upload/v1568673196/solid/error.png" alt="close" onClick={this.closeDrawer} /> */}
@@ -125,7 +126,7 @@ export class ContractsView extends React.Component<AllProps, State> {
 const mapStateToProps = ({ contractState, connectionState }: ApplicationState) => {
     const contractsByConnection = contractState.contracts.filter((item) => {
         if (connectionState.currentConnection) {
-            return item.connectionId === connectionState.currentConnection._id
+            return item.connectionId === connectionState.currentConnection.id
         }
         return item;
     })

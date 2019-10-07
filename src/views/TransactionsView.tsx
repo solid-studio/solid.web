@@ -4,10 +4,11 @@ import React from 'react'
 import { Action, ActionCreator, bindActionCreators, Dispatch } from 'redux'
 import { connect } from 'react-redux'
 
-import { Transaction, getTransactions } from 'features/transactions'
+import { Connection, Transaction } from '@solidstudio/solid.types'
+
+import { getTransactions } from 'features/transactions'
 import { TransactionsTable } from 'features/transactions/components/TransactionsTable'
 import { ApplicationState } from 'features/rootReducer'
-import { Connection } from 'features/connections'
 
 import { StyledDiv, StyledH1 } from './components'
 
@@ -34,7 +35,7 @@ export class TransactionsView extends React.Component<AllProps> {
 
     componentDidMount() {
         if (this.props.currentConnection) {
-            this.props.getTransactions(this.props.currentConnection._id)
+            this.props.getTransactions(this.props.currentConnection.id)
         }
     }
 
@@ -52,8 +53,8 @@ export class TransactionsView extends React.Component<AllProps> {
 
 const mapStateToProps = ({ transactionsState, connectionState }: ApplicationState) => {
     const transactionsByConnection = transactionsState.transactions.filter((item) => {
-        if (connectionState.currentConnection) {
-            return item.connectionId === connectionState.currentConnection._id
+        if (connectionState.currentConnection && connectionState.currentConnection.id) {
+            return item.connectionId === connectionState.currentConnection.id
         }
         return item;
     })

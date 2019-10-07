@@ -1,9 +1,10 @@
 import { Reducer } from 'redux'
 
+import { Contract } from '@solidstudio/solid.types'
+
 import { Status } from '../common/types'
 
 import { ActionType, Actions } from './action-types';
-import { Contract } from './types'
 
 // import { MessageType, MyWorkerMessage } from '../workers/compiler-worker/types'
 // import CompilerWorker from './web-workers/compiler-worker'
@@ -30,7 +31,7 @@ export interface ContractState {
 //     version: '0.5.8'
 // }
 
-const initialState: ContractState = {
+export const initialState: ContractState = {
     contracts: [],
     currentContract: undefined,
     getContractsStatus: Status.NotStarted

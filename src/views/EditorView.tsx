@@ -4,13 +4,12 @@ import React from 'react'
 import MonacoEditor from 'react-monaco-editor'
 import { connect } from 'react-redux'
 
+import { Contract } from '@solidstudio/solid.types'
+
 import { ApplicationState } from 'features/rootReducer'
-import { Contract } from 'features/contracts' // TODO: FIX, contract should in contracts
 import { SolidTerminal } from 'features/terminal/SolidTerminal'// TODO: fix import
 
 import { Wrapper, Editor, Results, ContractDetails, Details } from "./components";
-
-import { SAMPLE_CONTRACT } from "./sample-data"
 
 interface Props {
     selectedContract: Contract | undefined
@@ -45,7 +44,7 @@ export class EditorView extends React.Component<Props, State> {
         super(props)
         this.state = {
             editor: undefined,
-            code: SAMPLE_CONTRACT
+            code: ''
         }
     }
     editorDidMount = (editor: any, monaco: any) => {

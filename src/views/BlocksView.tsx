@@ -3,10 +3,11 @@ import React from 'react'
 import { Action, ActionCreator, bindActionCreators, Dispatch } from 'redux'
 import { connect } from 'react-redux'
 
-import { Block, getBlocks } from 'features/blocks'
+import { Block, Connection } from '@solidstudio/solid.types'
+
+import { getBlocks } from 'features/blocks'
 import { ApplicationState } from 'features/rootReducer'
 import { BlocksTable } from 'features/blocks/components/BlocksTable'
-import { Connection } from 'features/connections'
 
 import { StyledDiv, StyledH1 } from './components'
 
@@ -32,7 +33,7 @@ export class BlocksView extends React.Component<AllProps> {
 
     componentDidMount() {
         if (this.props.currentConnection) {
-            this.props.getBlocks(this.props.currentConnection._id)
+            this.props.getBlocks(this.props.currentConnection.id)
         }
     }
 

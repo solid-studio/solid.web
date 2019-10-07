@@ -1,6 +1,7 @@
 import { ActionCreator, Action } from 'redux'
 
-import { Transaction } from './types'
+import { Transaction } from '@solidstudio/solid.types'
+
 import { ActionType, TransactionsReceivedAction, GetTransactionsAction } from './action-types'
 
 export const transactionsReceived: ActionCreator<Action> = (transactions: Transaction[]): TransactionsReceivedAction => {

@@ -1,8 +1,10 @@
 import { Reducer } from 'redux'
 
+import { Transaction } from '@solidstudio/solid.types'
+
 import { Status } from '../common/types'
+
 import { ActionType, Actions } from './action-types';
-import { Transaction } from './types'
 
 
 export interface TransactionsState {
@@ -11,7 +13,7 @@ export interface TransactionsState {
     getTransactionsStatus: Status
 }
 
-const initialState: TransactionsState = {
+export const initialState: TransactionsState = {
     transactions: [],
     currentTransaction: undefined,
     getTransactionsStatus: Status.NotStarted

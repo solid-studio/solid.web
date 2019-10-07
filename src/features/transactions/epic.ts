@@ -2,10 +2,11 @@ import { ofType, combineEpics, ActionsObservable, StateObservable } from 'redux-
 import { of } from 'rxjs';
 import { switchMap, map, catchError } from 'rxjs/operators';
 
+import { Transaction } from '@solidstudio/solid.types'
+
 import { ActionType, GetTransactionsAction } from './action-types'
 import { transactionsReceived } from './actions';
 import { TRANSACTIONS_URL } from './constants';
-import { Transaction } from './types';
 import { AjaxCreationMethod } from 'rxjs/internal/observable/dom/AjaxObservable';
 import { ApplicationState } from 'features/rootReducer';
 

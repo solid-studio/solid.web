@@ -1,20 +1,20 @@
 import React from 'react'
 import { Action, ActionCreator, bindActionCreators, Dispatch } from 'redux'
 import { connect } from 'react-redux'
-
-import { ContractDefinitionsTree, ContractDefinition, ContractDefinitionsModal } from 'features/contract-definitions'
-import { ConnectionModal, ConnectionsTree, Connection } from '../features/connections'
-import { ApplicationState } from '../features/rootReducer'
-import { emitter } from '../features/common/event-emitter'
-import { loadCompilerWorker } from '../features/compiler/web-workers/compiler-worker/actions' // TO BE MOVED
-
-import { openContractDefinitionsModal, contractDefinitionSelected, getContractDefinitions } from '../features/contract-definitions/actions'
-import { openConnectionModal, getConnections, connectionItemSelected } from '../features/connections/actions'
-
-import { Sidebar, Content, Wrapper, Navbar } from "./components"
 import { Layout } from 'antd'
 
-// const { Sider } = Layout;
+import { ContractDefinition, Connection } from '@solidstudio/solid.types'
+
+import { openContractDefinitionsModal, contractDefinitionSelected, getContractDefinitions } from 'features/contract-definitions/actions'
+import { openConnectionModal, getConnections, connectionItemSelected } from 'features/connections/actions'
+import { ContractDefinitionsTree, ContractDefinitionsModal } from 'features/contract-definitions'
+import { ConnectionModal, ConnectionsTree } from 'features/connections'
+import { loadCompilerWorker } from 'features/compiler/web-workers/compiler-worker/actions' // TO BE MOVED
+import { ApplicationState } from 'features/rootReducer'
+import { emitter } from 'features/common/event-emitter'
+
+import { Sidebar, Content, Wrapper, Navbar } from "./components"
+
 
 interface Props {
   loadCompilerWorker: ActionCreator<any> // TO BE REMOVED
