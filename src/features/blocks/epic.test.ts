@@ -1,4 +1,3 @@
-// import "jsdom-worker" // TODO Maybe my workers should extend from worker, then I will nneed this
 import { ActionsObservable, StateObservable } from 'redux-observable'
 import { Subject, of } from 'rxjs';
 import { AjaxCreationMethod } from 'rxjs/internal/observable/dom/AjaxObservable';
