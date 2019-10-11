@@ -5,9 +5,9 @@ import { connect } from 'react-redux'
 
 import { Block, Connection } from '@solidstudio/solid.types'
 
-import { getBlocks } from 'features/blocks'
 import { ApplicationState } from 'features/rootReducer'
-import { BlocksTable } from 'features/blocks/components/BlocksTable'
+import { BlocksTable } from 'features/blocks/components'
+import { getBlocks } from 'features/blocks/actions'
 
 import { StyledDiv, StyledH1 } from './components'
 

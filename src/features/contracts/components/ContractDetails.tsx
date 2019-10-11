@@ -6,9 +6,9 @@ import { Icon, Collapse } from 'antd'
 
 import { Contract } from '@solidstudio/solid.types'
 
-import { ContractActions } from 'features/contracts/ContractActions' // TODO MOVE IT
+import ContractActionView from './ContractActionView'
 
-import { TableDetails, CollapseStyled } from './index'
+import { TableDetails, CollapseStyled } from './ContractDetailsComponents'
 
 const Panel = Collapse.Panel
 
@@ -16,21 +16,44 @@ interface ContractDetailsProps {
     contract: Contract
 }
 
+interface ContractActionsProps {
+    abi: AbiItem[]
+}
+
+export const processABIData = (abi: AbiItem[]) => {
+    const onlyFunctions = abi.filter((item: AbiItem) => {
+        console.log('Inside filter', item)
+        return item.type === 'function'
+    })
+    return onlyFunctions
+}
+
+export const ContractActionsViewWrapper: React.FC<ContractActionsProps> = (props: ContractActionsProps) => {
+    const onlyFunctions = processABIData(props.abi)
+    return (
+        <div>
+            {onlyFunctions &&
+                onlyFunctions.length > 0 &&
+                onlyFunctions.map(item => <ContractActionView key={item.name} abi={item} />)}
+        </div>
+    )
+}
+
 export const ContractDetails: React.FC<ContractDetailsProps> = (props: ContractDetailsProps) => {
     return (
         <div style={{ color: "white", padding: "1em 1em" }}>
             <TableDetailsPanel {...props} />
-            <MethodsPanel {...props} />
+            <CollapsedDetailsPanels {...props} />
         </div >
     )
 }
 
-export const MethodsPanel: React.FC<ContractDetailsProps> = ({ contract }: ContractDetailsProps) => {
+export const CollapsedDetailsPanels: React.FC<ContractDetailsProps> = ({ contract }: ContractDetailsProps) => {
     const { abi } = contract;
     return (
         <CollapseStyled defaultActiveKey={['0']} bordered={false}>
             <Panel header="Methods" key="1">
-                <ContractActions abi={abi} />
+                <ContractActionsViewWrapper abi={abi} />
             </Panel>
             <Panel header="Storage" key="2">
                 <p style={{ color: "white" }}>Work in progress</p>
@@ -44,15 +67,14 @@ export const MethodsPanel: React.FC<ContractDetailsProps> = ({ contract }: Contr
         </CollapseStyled>
     )
 }
+
 export const TableDetailsPanel: React.FC<ContractDetailsProps> = ({ contract }: ContractDetailsProps) => {
     const { name, address, abi, bytecode } = contract;
     const copyByteCode = (byteCode: string) => {
-        console.log('copyByteCode clicked')
         copy(byteCode)
     }
 
     const copyABI = (abi: AbiItem[]) => {
-        console.log('copyABI clicked')
         copy(JSON.stringify(abi))
     }
 

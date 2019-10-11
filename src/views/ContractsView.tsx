@@ -6,18 +6,20 @@ import { Layout } from 'antd'
 
 import { Contract, Connection } from '@solidstudio/solid.types'
 
-import { getContracts, maximizeContractView } from 'features/contracts'
+import { getContracts, maximizeContractView } from 'features/contracts/actions'
+import { ContractsTable, ContractDetails } from 'features/contracts/components'
+
 import { ApplicationState } from 'features/rootReducer'
-import { ContractsTable } from 'features/contracts/components/ContractsTable'
 import { emitter } from 'features/common/event-emitter'
+
 import client from '../utils/feathers'
 
-import { StyledDiv, StyledH1, CustomIcon, ContractDetails } from './components'
+import { StyledDiv, StyledH1, CustomIcon } from './components'
 
 const { Sider, Content } = Layout;
 
 interface OwnProps {
-    // connection: Connection
+
 }
 
 interface StateProps {
@@ -91,10 +93,6 @@ export class ContractsView extends React.Component<AllProps, State> {
         })
     }
 
-    closeDrawer = () => {
-        console.log("ON MOUSE LEAVE") // UNUSED METHOD, maybe remove
-    }
-
     render() {
         const { showContractDrawer, drawerWidth, selectedContractRowItem } = this.state
         const { contracts } = this.props
@@ -105,14 +103,13 @@ export class ContractsView extends React.Component<AllProps, State> {
                         <StyledH1>Contracts</StyledH1>
                         <ContractsTable onClick={this.showContractsDrawer}
                             onDoubleClick={this.onDoubleClick}
-                            contracts={contracts}
-                            onMouseLeave={this.closeDrawer} />
+                            contracts={contracts} />
                     </StyledDiv>
                 </Content>
                 <Sider style={{ background: "#272727" }} trigger={null} collapsed={!showContractDrawer} collapsible={true} collapsedWidth={0} width={drawerWidth}>
                     <div>
                         <CustomIcon src="https://res.cloudinary.com/key-solutions/image/upload/v1568672208/solid/maximize.png" alt="maximise" onClick={this.maximiseWindow} />
-                        {/* <img src="https://res.cloudinary.com/key-solutions/image/upload/v1568673196/solid/error.png" alt="close" onClick={this.closeDrawer} /> */}
+                        { /* TODO: add close icon <img src="https://res.cloudinary.com/key-solutions/image/upload/v1568673196/solid/error.png" alt="close" onClick={this.closeDrawer} /> */}
                         {selectedContractRowItem &&
                             <ContractDetails contract={selectedContractRowItem} />}
                     </div>
@@ -124,6 +121,7 @@ export class ContractsView extends React.Component<AllProps, State> {
 
 
 const mapStateToProps = ({ contractState, connectionState }: ApplicationState) => {
+    // TODO: Create selector
     const contractsByConnection = contractState.contracts.filter((item) => {
         if (connectionState.currentConnection) {
             return item.connectionId === connectionState.currentConnection.id

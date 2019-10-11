@@ -10,7 +10,6 @@ interface OwnProps {
     contracts?: Contract[]
     onClick: any // TODO type correctly
     onDoubleClick: any // TODO type correctly
-    // onMouseLeave: any // TODO: type correctly
 }
 
 type AllProps = OwnProps //& DispatchProps & StateProps

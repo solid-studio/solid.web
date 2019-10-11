@@ -1,9 +1,5 @@
 import styled from 'styled-components'
 
-import { Collapse } from 'antd'
-
-export { ContractDetails } from './ContractDetails'
-
 export const Wrapper = styled.div`
   height: 100%;
   display: grid;
@@ -36,35 +32,18 @@ export const Results = styled.div`
   grid-area: results;
 `
 
-export const TableDetails = styled.table`
-  th {
-    color: white;
-    font-size: 1.2em;
-    font-weight: 100;
-    font-family: 'Helvetica';
-  }
-  td {
-    line-height: 2em;
-  }
-`
-
-export const CollapseStyled = styled(Collapse)`
-  margin-top: 1em;
-`
-
-
 export const StyledDiv = styled.div`
-    padding-left: 1rem;
-    padding-right: 1rem;
-    padding-top: 1rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 1rem;
 `
 
 export const StyledH1 = styled.h1`
-    margin-bottom: 1rem;
+  margin-bottom: 1rem;
 `
 
 export const CustomIcon = styled.img`
-cursor: pointer;
-float: right;
-margin-top: 0.2rem;
+  cursor: pointer;
+  float: right;
+  margin-top: 0.2rem;
 `

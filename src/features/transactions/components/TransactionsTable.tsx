@@ -2,7 +2,8 @@ import React from 'react'
 
 import { ColumnProps } from 'antd/es/table';
 
-import { Transaction } from '../types';
+import { Transaction } from '@solidstudio/solid.types'
+
 import { TransactionsTableComponent } from './TransactionsTableComponent';
 import { Tag } from 'antd';
 
@@ -52,7 +53,7 @@ const tableColumns: ColumnProps<Transaction>[] = [
         key: 'to',
         title: 'To',
         dataIndex: 'to',
-        render: (text: string, record: Transaction) => record.to == null ? contractCreationTag(record.transactionHash) : record.to
+        render: (text: string, record: Transaction) => record.to == null ? contractCreationTag(record.hash) : record.to
     },
     {
         key: 'from',
@@ -67,8 +68,8 @@ const tableColumns: ColumnProps<Transaction>[] = [
     {
         key: 'status',
         title: 'Status',
-        dataIndex: 'status',
-        render: (text: string, record: Transaction) => record.status ? successfulTransactionTag(record.transactionHash) : failedTransactionTag(record.transactionHash)
+        dataIndex: 'status', // TODO: Change transaction for transaction receipts
+        render: (text: string, record: Transaction) => record.blockNumber ? successfulTransactionTag(record.hash) : failedTransactionTag(record.hash)
     }
     // {
     //     key: 'executionDate',
