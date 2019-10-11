@@ -2,6 +2,8 @@ import { Action } from 'redux'
 
 import { Contract } from '@solidstudio/solid.types'
 
+import { ContractItem } from './types'
+
 export enum ActionType {
   ERROR_WHEN_GETTING_DATA = 'ERROR_WHEN_GETTING_DATA', // TODO
   CONTRACTS_RECEIVED = 'CONTRACTS_RECEIVED',
@@ -25,13 +27,14 @@ export interface ContractsReceivedAction extends Action {
 
 export interface MaximizeContractViewAction extends Action {
   type: ActionType.ON_MAXIMIZE_CONTRACT_VIEW,
-  payload: Contract
+  payload: ContractItem
 }
 
 export type Actions = GetContractsAction
   | ContractsReceivedAction
   | MaximizeContractViewAction
 
+// TODO: Clean this part
 // compiler
 // export interface LoadCompilerWorkerAction extends Action {
 //   type: ActionType.LOAD_COMPILER

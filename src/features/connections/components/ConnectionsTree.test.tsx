@@ -2,17 +2,19 @@ import React from 'react'
 import { render, fireEvent, wait } from '@testing-library/react'
 import '@testing-library/jest-dom/extend-expect';
 
-import { getMouseEvent } from 'utils/getMouseEvent';
+import { buildFakeConnections } from '@solidstudio/solid.types'
 
-import { buildFakeConnections } from '../faker'
+import { getMouseEvent } from 'utils/getMouseEvent';
 
 import { ConnectionsTree } from './ConnectionsTree'
 
+// TODO: Refactor render into renderConnectionsTree method
 describe('ConnectionsTree', () => {
-    const onNewConnectionClickMockHandler = jest.fn()
+    const mockNewConnectionClickHandler = jest.fn()
+    const mockConnectionItemSelectedHandler = jest.fn()
 
     beforeEach(() => {
-        onNewConnectionClickMockHandler.mockClear()
+        mockNewConnectionClickHandler.mockClear()
     })
 
     test('that it renders all the ui elements', () => {
@@ -22,7 +24,8 @@ describe('ConnectionsTree', () => {
 
         const { getByTestId, getByText } = render(
             <ConnectionsTree connections={connections}
-                onNewConnectionClick={onNewConnectionClickMockHandler}
+                onNewConnectionClick={mockNewConnectionClickHandler}
+                onConnectionItemSelected={mockConnectionItemSelectedHandler}
             />)
 
         expect(getByTestId('connections-tree-header')).toBeInTheDocument()
@@ -42,7 +45,8 @@ describe('ConnectionsTree', () => {
 
         const { getByTestId, queryByText } = render(
             <ConnectionsTree connections={connections}
-                onNewConnectionClick={onNewConnectionClickMockHandler}
+                onNewConnectionClick={mockNewConnectionClickHandler}
+                onConnectionItemSelected={mockConnectionItemSelectedHandler}
             />)
 
         expect(getByTestId('connections-tree-header')).toBeInTheDocument()
@@ -60,7 +64,8 @@ describe('ConnectionsTree', () => {
 
         const { getByTestId, getByText } = render(
             <ConnectionsTree connections={connections}
-                onNewConnectionClick={onNewConnectionClickMockHandler}
+                onNewConnectionClick={mockNewConnectionClickHandler}
+                onConnectionItemSelected={mockConnectionItemSelectedHandler}
             />)
 
 
@@ -82,12 +87,34 @@ describe('ConnectionsTree', () => {
         })
     })
 
+    test('when connection item is selected', () => {
+        const connections = buildFakeConnections()
+
+        const { getByTestId } = render(
+            <ConnectionsTree connections={connections}
+                onNewConnectionClick={mockNewConnectionClickHandler}
+                onConnectionItemSelected={mockConnectionItemSelectedHandler}
+            />)
+
+        // TODO: Add selector to items,
+        // Then fire a click on one of those items
+        // then expect the mock is call..
+        // I need to add data-testid attribute to the elements
+        // const addConnectionIcon = getByTestId('connections-tree-plus')
+
+        // fireEvent.click(addConnectionIcon)
+
+        // expect(mockNewConnectionClickHandler).toHaveBeenCalledTimes(1)
+        // expect(mockConnectionItemSelectedHandler).toHaveBeenCalledTimes(0)
+    })
+
     test('when new connection icon is clicked', () => {
         const connections = buildFakeConnections()
 
         const { getByTestId } = render(
             <ConnectionsTree connections={connections}
-                onNewConnectionClick={onNewConnectionClickMockHandler}
+                onNewConnectionClick={mockNewConnectionClickHandler}
+                onConnectionItemSelected={mockConnectionItemSelectedHandler}
             />)
 
 
@@ -95,7 +122,8 @@ describe('ConnectionsTree', () => {
 
         fireEvent.click(addConnectionIcon)
 
-        expect(onNewConnectionClickMockHandler).toHaveBeenCalledTimes(1)
+        expect(mockNewConnectionClickHandler).toHaveBeenCalledTimes(1)
+        expect(mockConnectionItemSelectedHandler).toHaveBeenCalledTimes(0)
     })
 
     test('renders connections tree snapshop', async () => {
@@ -104,7 +132,8 @@ describe('ConnectionsTree', () => {
 
         const { getByTestId, getByText, container } = render(
             <ConnectionsTree connections={connections}
-                onNewConnectionClick={onNewConnectionClickMockHandler}
+                onNewConnectionClick={mockNewConnectionClickHandler}
+                onConnectionItemSelected={mockConnectionItemSelectedHandler}
             />)
 
 
