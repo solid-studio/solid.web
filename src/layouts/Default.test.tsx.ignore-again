@@ -1,25 +1,16 @@
-
+import 'jsdom-worker'
 import React from 'react';
 import { Formik, Field, FormikErrors } from 'formik';
 import { render, fireEvent, waitForElement, getByText } from '@testing-library/react';
 // import { axe } from 'jest-axe'
-
 import { Provider } from 'react-redux'
 import { createStore } from 'redux'
 import Default from './Default';
-import { loadCompilerWorker } from '../features/compiler/web-workers/compiler-worker/actions'
-import {
-  contractSelected,
-  createContractStarted,
-  getContractInstances
-} from '../features/contracts/actions'
 
-import {
-  createConnectionStarted,
-  getConnections
-} from '../features/connections/actions'
+import { getConnections } from '../features/connections/actions'
 
 import rootReducer, { ApplicationState } from '../features/rootReducer'
+import '@testing-library/jest-dom/extend-expect';
 
 const when = describe
 
@@ -65,35 +56,35 @@ describe('Dashboard/Default Page', async () => {
     // validate attribute or something hidden
   })
 
-  test('creating a new connection', () => {
-    const { getByTestId, debug } = render(
-      <Navbar onNewConnectionClick={onNewConnectionClickMock}
-        onNewContractInstanceClick={onNewContractInstanceClickMock}>
-      </Navbar>)
+  // test('creating a new connection', () => {
+  //   const { getByTestId, debug } = render(
+  //     <Navbar onNewConnectionClick={onNewConnectionClickMock}
+  //       onNewContractInstanceClick={onNewContractInstanceClickMock}>
+  //     </Navbar>)
 
-    const inputName = getByTestId('')
-    const inputUrl = getByTestId('')
-    const submitButton = getByTestId('')
+  //   const inputName = getByTestId('')
+  //   const inputUrl = getByTestId('')
+  //   const submitButton = getByTestId('')
 
-    const nameValue = 'new connection'
-    const urlValue = 'new url'
+  //   const nameValue = 'new connection'
+  //   const urlValue = 'new url'
 
-    fireEvent.change(inputName, {
-      target: {
-        value: nameValue
-      }
-    })
+  //   fireEvent.change(inputName, {
+  //     target: {
+  //       value: nameValue
+  //     }
+  //   })
 
-    fireEvent.change(inputUrl, {
-      target: {
-        value: urlValue
-      }
-    })
+  //   fireEvent.change(inputUrl, {
+  //     target: {
+  //       value: urlValue
+  //     }
+  //   })
 
-    debug()
+  //   debug()
 
-    fireEvent.submit(submitButton)
-  })
+  //   fireEvent.submit(submitButton)
+  // })
 
   // TEST CASES
 

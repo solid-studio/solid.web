@@ -1,9 +1,10 @@
 import { Action } from 'redux'
-import { Status } from '../../../common/types'
+import { Status } from '../../common/types'
 
 // Enumerate message types
 export enum MessageType {
   LOAD_COMPILER_VERSION = 'LOAD_COMPILER_VERSION',
+  COMPILER_WORKER_LOADED = 'COMPILER_WORKER_LOADED',
   LOAD_COMPILER_VERSION_RESULT = 'LOAD_COMPILER_VERSION_RESULT',
   COMPILE = 'COMPILE',
   COMPILE_RESULT = 'COMPILE_RESULT',
@@ -19,6 +20,10 @@ export interface ILoadCompilerVersionMessage extends Action {
     version: string
   }
   // Make it enum
+}
+
+export interface ICompilerWorkerLoaded extends Action {
+  type: MessageType.COMPILER_WORKER_LOADED
 }
 
 export interface ILoadCompilerVersionResultMessage extends Action {
@@ -69,6 +74,7 @@ interface IErrorMessage {
 }
 
 export type MyWorkerMessage =
+  ICompilerWorkerLoaded
   | ILoadCompilerVersionMessage
   | ILoadCompilerVersionResultMessage
   | IValidateSourceCodeMessage

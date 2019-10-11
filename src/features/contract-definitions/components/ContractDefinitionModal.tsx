@@ -17,7 +17,7 @@ import { ContractDefinitionModalComponent } from "./ContractDefinitionModalCompo
 import { RadioField } from './RadioField';
 
 // TODO: TO REMOVE
-import { simpleCompilerInput } from '../../compiler/web-workers/compiler-worker/compiler-input'
+import { simpleCompilerInput } from '../../compiler/worker/compiler-input'
 // import { solc } from '../../../utils/compiler'
 // console.log("SOLC", solc)
 const FORM_ID = 'CONTRACT_DEFINITION_FORM'

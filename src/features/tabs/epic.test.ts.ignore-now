@@ -1,0 +1,85 @@
+import 'jsdom-worker'
+import { ActionsObservable, StateObservable } from 'redux-observable'
+import { Action } from 'redux';
+import { Subject } from 'rxjs';
+
+import { openTabEpic, setActiveTabEpic, tabsEpic } from './epic';
+import { ActionType, TabAction } from './action-types';
+import { TabsManagerState } from './reducer';
+import { buildFakeTab, buildFakeTabs } from './faker'
+import { setTabActive, openTab } from './actions';
+
+import { ApplicationState } from '../rootReducer'
+import rootReducer from '../rootReducer';
+
+describe('TabsEpics Tests', () => {
+    it('should open tab', (done) => {
+        const tab = buildFakeTab()
+
+        const tabAction: TabAction = {
+            type: ActionType.OPEN_OR_SET_ACTIVE_TAB,
+            payload: tab
+        }
+
+        const actions$ = ActionsObservable.of(tabAction)
+
+        const tabsManagerState: TabsManagerState = {
+            tabs: [],
+            activeTab: undefined
+        }
+
+        const initialState = {
+            ...rootReducer,
+            tabsManagerState: tabsManagerState
+        } as ApplicationState
+
+
+        const applicationState$: StateObservable<ApplicationState> = new StateObservable(new Subject(), initialState);
+
+        const output$ = tabsEpic(actions$, applicationState$)
+
+        output$.subscribe((action) => {
+            console.log("ACTION", action)
+            expect(action).toEqual(openTab(tab))
+            done()
+        })
+    })
+
+    it('should set tab active', (done) => {
+        const tabs = buildFakeTabs()
+        const tab1 = tabs[0]
+        const tab2 = tabs[1]
+
+        const tabAction: TabAction = {
+            type: ActionType.OPEN_OR_SET_ACTIVE_TAB,
+            payload: tab1
+        }
+
+        const actions$ = ActionsObservable.of(tabAction)
+
+        // const tabsManagerState: TabsManagerState = {
+        //     tabs: [],
+        //     activeTab: undefined
+        // }
+
+        const tabsManagerState: TabsManagerState = {
+            tabs,
+            activeTab: tab2
+        }
+
+        const initialState = {
+            ...rootReducer,
+            tabsManagerState: tabsManagerState
+        } as ApplicationState
+
+        const applicationState$: StateObservable<ApplicationState> = new StateObservable(new Subject(), initialState);
+
+        const output$ = tabsEpic(actions$, applicationState$)
+
+        output$.subscribe((action: Action) => {
+            console.log("ACTION", action)
+            expect(action).toEqual(setTabActive(tab1))
+            done()
+        })
+    })
+})

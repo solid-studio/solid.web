@@ -2,27 +2,10 @@ import { Action, ActionCreator } from 'redux'
 import { ThunkAction } from 'redux-thunk'
 import { ApplicationState } from '../features/rootReducer'
 import { AbiItem } from 'web3-utils'
-import { ExtraArgument } from '../features/common/types'
+// import { ExtraArgument } from '../features/common/types'
 
 export enum Web3ActionType {
   Web3Action = '@@web3/WEB3_ACTION'
-}
-
-type OnSuccessType =
-  | string
-  | Action
-  | ActionCreator<Action>
-  | ActionCreator<ThunkAction<void, ApplicationState, ExtraArgument, Action>>
-
-type OnErrorType = string | Action | ActionCreator<Action>
-
-type OnProgressType = string | Action | ActionCreator<Action>
-
-interface Meta {
-  url: string
-  // onSuccess: OnSuccessType;
-  // onError: OnErrorType;
-  // onProgress?: OnProgressType
 }
 
 interface Web3FunctionPayload {
