@@ -8,8 +8,8 @@ import { ContractDefinition, Connection } from '@solidstudio/solid.types'
 import { openContractDefinitionsModal, contractDefinitionSelected, getContractDefinitions } from 'features/contract-definitions/actions'
 import { openConnectionModal, getConnections, connectionItemSelected } from 'features/connections/actions'
 import { ContractDefinitionsTree, ContractDefinitionsModal } from 'features/contract-definitions'
-import { ConnectionModal, ConnectionsTree } from 'features/connections'
-import { loadCompilerWorker } from 'features/compiler/web-workers/compiler-worker/actions' // TO BE MOVED
+import { ConnectionModal, ConnectionsTree } from 'features/connections/components'
+import { loadCompilerWorker } from 'features/compiler/actions' // TO BE MOVED
 import { ApplicationState } from 'features/rootReducer'
 import { emitter } from 'features/common/event-emitter'
 
