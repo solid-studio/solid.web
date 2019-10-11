@@ -1,27 +1,27 @@
-import { ActionCreator, Action } from 'redux'
+import { ActionCreator } from 'redux'
 
 import { Contract } from '@solidstudio/solid.types'
 
 import { ActionType, ContractsReceivedAction, GetContractsAction, MaximizeContractViewAction } from './action-types'
 
-export const contractsReceived: ActionCreator<Action> = (contracts: Contract[]): ContractsReceivedAction => {
+export const contractsReceived: ActionCreator<ContractsReceivedAction> = (contracts: Contract[]): ContractsReceivedAction => {
   return {
     type: ActionType.CONTRACTS_RECEIVED,
     payload: contracts
   }
 }
 
-export const getContracts: ActionCreator<Action> = (connectionId: string): GetContractsAction => {
+export const getContracts: ActionCreator<GetContractsAction> = (connectionId: string): GetContractsAction => {
   return {
     type: ActionType.GET_CONTRACTS,
     payload: connectionId
   }
 }
 
-export const maximizeContractView: ActionCreator<Action> = (contract: Contract): MaximizeContractViewAction => {
+export const maximizeContractView: ActionCreator<MaximizeContractViewAction> = (contract: Contract): MaximizeContractViewAction => {
   return {
     type: ActionType.ON_MAXIMIZE_CONTRACT_VIEW,
-    payload: contract
+    payload: { ...contract, type: 'contract' }
   }
 }
 

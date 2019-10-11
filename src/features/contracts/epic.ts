@@ -10,15 +10,11 @@ import { contractsReceived } from './actions';
 import { CONTRACTS_URL } from './constants';
 import { openOrSetTabActive } from 'features/tabs';
 import { ApplicationState } from 'features/rootReducer';
+import { GenericArrayResponse } from 'features/common/types';
 
-interface Response {
-    total: number;
-    limit: number;
-    skip: number;
-    data: Contract[];
-}
+type Response = GenericArrayResponse<Contract>
 
-const getContractsEpic = (action$: ActionsObservable<GetContractsAction>, state$: StateObservable<ApplicationState>, ajax: AjaxCreationMethod) => action$.pipe(
+export const getContractsEpic = (action$: ActionsObservable<GetContractsAction>, state$: StateObservable<ApplicationState>, ajax: AjaxCreationMethod) => action$.pipe(
     ofType(ActionType.GET_CONTRACTS),
     switchMap(({ payload }) => {
         return ajax.getJSON<Response>(`${CONTRACTS_URL}`) // ?connectionId=${payload} TODO: removed for demo, but I should lazy load
@@ -32,19 +28,19 @@ const getContractsEpic = (action$: ActionsObservable<GetContractsAction>, state$
     })
 );
 
-const onMaximizeContract = (action$: ActionsObservable<MaximizeContractViewAction>) => action$.pipe(
+export const onMaximizeContractEpic = (action$: ActionsObservable<MaximizeContractViewAction>) => action$.pipe(
     ofType<MaximizeContractViewAction>(ActionType.ON_MAXIMIZE_CONTRACT_VIEW),
-    map(({ payload }: any) => { // TODO CONVERT TO ContractItem, which is Contract type with type field
+    map(({ payload }: MaximizeContractViewAction) => {
         return openOrSetTabActive({
             type: payload.type,
             data: payload,
             title: payload.name,
-            id: payload._id
+            id: payload.id
         })
     })
 )
 
 export const contractsEpic = combineEpics(
     getContractsEpic,
-    onMaximizeContract
+    onMaximizeContractEpic
 )

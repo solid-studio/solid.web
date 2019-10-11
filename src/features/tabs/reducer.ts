@@ -9,7 +9,7 @@ export interface TabsManagerState {
     // activeTabData?: any // TODO
 }
 
-const initialState: TabsManagerState = {
+export const initialState: TabsManagerState = {
     tabs: [],
     activeTab: undefined
 }

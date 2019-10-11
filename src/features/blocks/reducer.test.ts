@@ -1,6 +1,7 @@
+import { buildFakeBlocks } from '@solidstudio/solid.types'
+
 import { appReducer, initialState } from './reducer'
 import { blocksReceived } from './actions'
-import { buildFakeBlocks } from '@solidstudio/solid.types'
 
 describe('Blocks reducer', () => {
 

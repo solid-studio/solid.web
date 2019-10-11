@@ -12,54 +12,20 @@ export interface ConnectionState {
     currentConnection?: Connection
     getConnectionsStatus: Status
     createConnectionStatus: Status
-    // currentContract?: Contract
-    // getConnections: GetConnections
-    // createContract: CreateContract
-    // contracts: Contract[]
-    // loadCompilerRequest: LoadCompilerRequest
-    // validateSourceCode: ValidateSourceCode
-    // compilerWorker: Worker | undefined
 }
 
-// const defaultConnection: Connection = {
-//     name: '',
-//     url: ''
-// }
 
-// const defaultCreateContract: CreateContract = {
-//     status: Status.NotStarted,
-//     result: undefined
-// }
-
-// const defaultValidateSourceCode: ValidateSourceCode = {
-//     status: Status.NotStarted,
-//     compilerVersion: '0.5.8',
-//     sourceCode: ''
-// }
-
-// const defaultLoadCompilerRequest: LoadCompilerRequest = {
-//     status: Status.NotStarted,
-//     version: '0.5.8'
-// }
-
-const initialState: ConnectionState = {
+export const initialState: ConnectionState = {
     connections: [],
-    // contracts: [],
     connectionModalOpen: false,
     createConnectionStatus: Status.NotStarted,
     getConnectionsStatus: Status.NotStarted,
-    // createContract: defaultCreateContract,
-    currentConnection: undefined,
-    // getConnections: defaultGetConnections
-    // currentContract: undefined,
-    // compilerWorker: new CompilerWorker(),
-    // loadCompilerRequest: defaultLoadCompilerRequest,
-    // validateSourceCode: defaultValidateSourceCode
+    currentConnection: undefined
 }
 
 export const appReducer: Reducer<ConnectionState, Actions> = (
     state: ConnectionState = initialState,
-    action: Actions //| MyWorkerMessage
+    action: Actions
 ): ConnectionState => {
     switch (action.type) {
         case ActionType.CLOSE_CONNECTION_MODAL:
@@ -85,17 +51,6 @@ export const appReducer: Reducer<ConnectionState, Actions> = (
                 currentConnection: action.payload,
                 createConnectionStatus: Status.Completed
             }
-        // case ActionType.CREATE_CONTRACT:
-        //     return { ...state, createContract: action.payload }
-        // case ActionType.CONTRACTS_RECEIVED:
-        //     return { ...state, contracts: action.payload, currentContract: action.payload[0] }
-        // case ActionType.CONTRACT_SELECTED:
-        //     return { ...state, currentContract: action.payload }
-        // compiler cases
-        // case MessageType.VALIDATE_SOURCE_CODE:
-        //     return { ...state, validateSourceCode: action.payload }
-        // case MessageType.LOAD_COMPILER_VERSION_RESULT:
-        //     return { ...state, loadCompilerRequest: action.payload }
         default:
             return state
     }

@@ -1,4 +1,5 @@
 import { GenericTree } from 'components';
-import { ContractDefinition } from '../types'
+
+import { ContractDefinition } from '@solidstudio/solid.types'
 
 export class ContractDefinitionsTreeComponent extends GenericTree<ContractDefinition> { }

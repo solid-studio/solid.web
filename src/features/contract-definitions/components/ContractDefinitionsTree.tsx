@@ -3,7 +3,8 @@ import React from 'react'
 import { ActionCreator, Action } from 'redux'
 import { Icon } from 'antd'
 
-import { ContractDefinition } from '../types'
+import { ContractDefinition } from '@solidstudio/solid.types'
+
 import { ContractDefinitionsTreeComponent } from './ContractDefinitionsTreeComponent'
 import { TreeNodeStyled } from 'components/GenericTreeStyledComponents'
 
@@ -26,15 +27,16 @@ export class ContractDefinitionsTree extends React.Component<Props> {
           <TreeNodeStyled
             icon={<Icon type="file" />}
             title={item.name}
-            key={item._id}
+            key={item.id}
             style={{ color: 'white' }}>
           </TreeNodeStyled>
         )}
         selectorPrefix="contract-definitions"
         onClickDataItem={(value: string | undefined | string[], props: any) => {
+          // TODO: I need to fix this..
           const contractToShow = this.props.contractDefinitions.find(item => {
-            const valueToCompare = value !== undefined ? value![0] : '1'
-            return item._id === valueToCompare
+            const valueToCompare = value !== undefined ? value![0] : 1
+            return item.id === valueToCompare
           })
           this.props.onContractDefinitionSelected({
             ...contractToShow,

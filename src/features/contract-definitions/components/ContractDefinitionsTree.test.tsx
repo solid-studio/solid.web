@@ -4,24 +4,32 @@ import '@testing-library/jest-dom/extend-expect';
 
 import { getMouseEvent } from 'utils/getMouseEvent';
 
-import { buildFakeContractDefinitions } from '../faker'
+import { buildFakeContractDefinitions, ContractDefinition } from '@solidstudio/solid.types'
 
 import { ContractDefinitionsTree } from './ContractDefinitionsTree'
 
 describe('ContractDefinitionsTree', () => {
     const onNewConnectionClickMockHandler = jest.fn()
+    const mockContractDefinitionSelectedHandler = jest.fn()
 
     beforeEach(() => {
         onNewConnectionClickMockHandler.mockClear()
+        mockContractDefinitionSelectedHandler.mockClear()
     })
+
+    const renderContractDefinitionsTree = (contractDefinitions: ContractDefinition[]) => {
+        return render(
+            <ContractDefinitionsTree contractDefinitions={contractDefinitions}
+                onContractDefinitionSelected={mockContractDefinitionSelectedHandler}
+            />)
+    }
 
     test('that it renders all the ui elements', () => {
         const contractDefinitions = buildFakeContractDefinitions()
         const text1 = contractDefinitions[0].name
         const text2 = contractDefinitions[1].name
 
-        const { getByTestId, getByText } = render(
-            <ContractDefinitionsTree contractDefinitions={contractDefinitions} />)
+        const { getByTestId, getByText } = renderContractDefinitionsTree(contractDefinitions)
 
         expect(getByTestId('contract-definitions-tree-header')).toBeInTheDocument()
         expect(getByTestId('contract-definitions-tree-header')).toHaveTextContent("Contract Definitions")
@@ -38,8 +46,7 @@ describe('ContractDefinitionsTree', () => {
         const text2 = contractDefinitions[1].name
         contractDefinitions = []
 
-        const { getByTestId, queryByText } = render(
-            <ContractDefinitionsTree contractDefinitions={contractDefinitions} />)
+        const { getByTestId, queryByText } = renderContractDefinitionsTree(contractDefinitions)
 
         expect(getByTestId('contract-definitions-tree-header')).toBeInTheDocument()
         expect(getByTestId('contract-definitions-tree-header')).toHaveTextContent("Contract Definitions")
@@ -50,12 +57,12 @@ describe('ContractDefinitionsTree', () => {
         expect(queryByText(text2)).not.toBeInTheDocument()
     })
 
-    test('when right click is press in contract defintion, then the context menu should NOT appear', async () => {
+    // TODO IMPROVE or REMOVE CAUSE I REMOVED RIGHT CLICK FOR NOW
+    test.skip('when right click is press in contract defintion, then the context menu should NOT appear', async () => {
         const contractDefinitions = buildFakeContractDefinitions()
         const text1 = contractDefinitions[0].name
 
-        const { getByTestId, getByText } = render(
-            <ContractDefinitionsTree contractDefinitions={contractDefinitions} />)
+        const { getByTestId, getByText } = renderContractDefinitionsTree(contractDefinitions)
 
         const contractDefinitionFirstElement = getByText(text1)
 
@@ -78,8 +85,7 @@ describe('ContractDefinitionsTree', () => {
     test('renders contract definitions tree snapshop', async () => {
         const contractDefinitions = buildFakeContractDefinitions()
 
-        const { container } = render(
-            <ContractDefinitionsTree contractDefinitions={contractDefinitions} />)
+        const { container } = renderContractDefinitionsTree(contractDefinitions)
 
         expect(container).toMatchSnapshot()
     })

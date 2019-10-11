@@ -5,12 +5,13 @@ import { connect } from 'react-redux'
 import { Form } from 'antd'
 import { FormikErrors, Field, FieldProps } from 'formik'
 
+import { Connection } from '@solidstudio/solid.types'
+
 import { ApplicationState } from '../../rootReducer';
 import { InputFormItem } from '../../../components'
 import { Status } from "../../common/types" // TODO: this shouldn't be the case with Sagas
 
 import { createOrUpdateConnection, closeConnectionModal } from '../actions'
-import { Connection } from '../types'
 
 import { ConnectionModalComponent } from "./ConnectionModalComponent";
 

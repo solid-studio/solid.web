@@ -2,7 +2,8 @@ import React from 'react'
 import { Action, ActionCreator } from 'redux'
 import { Icon } from 'antd'
 
-import { Connection } from '../types'
+import { Connection } from '@solidstudio/solid.types'
+
 import { ConnectionsTreeComponent } from './ConnectionsTreeComponent'
 import { TreeNodeStyled } from 'components/GenericTreeStyledComponents'
 
@@ -13,7 +14,7 @@ interface Props {
 }
 
 interface ExtraArguments {
-  connectionId: string,
+  connectionId: number,
   type: 'transactions' | 'blocks' | 'contracts'
 }
 
@@ -43,7 +44,7 @@ export class ConnectionsTree extends React.Component<Props> {
             style={{ color: 'white' }}>
 
             <TreeNodeStyled
-              extra={{ connectionId: item._id, type: 'contracts' }}
+              extra={{ connectionId: item.id, type: 'contracts' }}
               icon={({ selected }: any) => <Icon type={selected ? 'folder' : 'folder'} />}
               title={"Contracts"}
               key={`${item.name}-contracts`}
@@ -51,7 +52,7 @@ export class ConnectionsTree extends React.Component<Props> {
             </TreeNodeStyled>
 
             <TreeNodeStyled
-              extra={{ connectionId: item._id, type: 'transactions' }}
+              extra={{ connectionId: item.id, type: 'transactions' }}
               icon={({ selected }: any) => <Icon type={selected ? 'folder' : 'folder'} />}
               title={"Transactions"}
               key={`${item.name}-transactions`}
@@ -59,7 +60,7 @@ export class ConnectionsTree extends React.Component<Props> {
             </TreeNodeStyled>
 
             <TreeNodeStyled
-              extra={{ connectionId: item._id, type: 'blocks' }}
+              extra={{ connectionId: item.id, type: 'blocks' }}
               icon={({ selected }: any) => <Icon type={selected ? 'folder' : 'folder'} />}
               title={"Blocks"}
               key={`${item.name}-blocks`}
@@ -71,9 +72,10 @@ export class ConnectionsTree extends React.Component<Props> {
         selectorPrefix="connections"
         onClickDataItem={(value: string | undefined, node: any, extra: ExtraArguments) => {
           if (extra) {
+            // TODO: To fix
             const { connectionId, type } = extra
             const connectionToShow = this.props.connections.find(item => {
-              return item._id === connectionId
+              return item.id === connectionId
             })
             this.props.onConnectionItemSelected({
               ...connectionToShow,
