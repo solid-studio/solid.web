@@ -13,7 +13,7 @@ interface OwnProps {
     onDoubleClick?: any // should abstract differently, maybe in another generic table that already has all event handlers..
 }
 
-type AllProps = OwnProps //& DispatchProps & StateProps
+type AllProps = OwnProps // & DispatchProps & StateProps
 
 const failedTransactionTag = (key: string) => (
     <Tag color="volcano" key={key}>
@@ -39,7 +39,7 @@ const contractCallTag = (key: string) => (
     </Tag>
 )
 
-const tableColumns: ColumnProps<TransactionReceipt>[] = [
+const tableColumns: Array<ColumnProps<TransactionReceipt>> = [
     // {
     //     key: 'type',
     //     title: 'Type',

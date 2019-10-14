@@ -68,11 +68,11 @@ interface DispatchProps {
 type AllProps = OwnProps & DispatchProps & StateProps
 
 export class ContractDefinitionsModal extends React.Component<AllProps> {
-  compiler: any
 
   static defaultProps = {
     item: defaultContractDefinition
   }
+  compiler: any
 
   componentDidMount() {
     // this.compiler = solc.compile

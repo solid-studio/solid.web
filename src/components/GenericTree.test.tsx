@@ -40,12 +40,12 @@ describe('GenericTree', () => {
                 rightClickMenuItems={rightClickOptions}
                 selectorPrefix="connections"
                 DataRowComponentRender={(item: GenericType) => (
+                    
                     <TreeNodeStyled
                         icon={<Icon type="database" />}
                         title={item.name}
                         key={item.url}
-                        style={{ color: 'white' }}>
-                    </TreeNodeStyled>
+                        style={{ color: 'white' }}/>
                 )}
             />)
     }

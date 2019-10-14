@@ -48,7 +48,7 @@ describe('Connections Epic Tests', () => {
       initialState
     )
 
-    mockAjax.post.mockImplementation((url: string, body?: any, headers?: Object) => {
+    mockAjax.post.mockImplementation((url: string, body?: any, headers?: {}) => {
       return of<AjaxResponse>({
         response: connection,
         status: 200,
@@ -95,7 +95,7 @@ describe('Connections Epic Tests', () => {
       initialState
     )
 
-    mockAjax.getJSON.mockImplementation((url: string, headers?: Object | undefined) => {
+    mockAjax.getJSON.mockImplementation((url: string, headers?: {} | undefined) => {
       return of({ data: connections })
     })
 

@@ -10,11 +10,11 @@ export enum ActionType {
   SETUP_MESSAGE_DISPATCHER = 'SETUP_MESSAGE_DISPATCHER'
 }
 
-export interface LoadCompilerVersionAction extends ILoadCompilerVersionMessage {}
+export type LoadCompilerVersionAction = ILoadCompilerVersionMessage
 
-export interface LoadCompilerVersionResultAction extends ILoadCompilerVersionResultMessage {}
+export type LoadCompilerVersionResultAction = ILoadCompilerVersionResultMessage
 
-export interface ValidateSourceCodeAction extends IValidateSourceCodeMessage {}
+export type ValidateSourceCodeAction = IValidateSourceCodeMessage
 
 export interface SetupMessageDispatcherAction extends Action {
   type: ActionType.SETUP_MESSAGE_DISPATCHER

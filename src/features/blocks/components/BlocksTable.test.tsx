@@ -7,8 +7,8 @@ import { BlocksTable } from './BlocksTable'
 describe('Blocks table test', () => {
 
     let blocks: Block[]
-    let mockOnClickTable = jest.fn()
-    let mockOnDoubleClickTable = jest.fn()
+    const mockOnClickTable = jest.fn()
+    const mockOnDoubleClickTable = jest.fn()
 
     const renderBlocksTable = (blocks: Block[] | undefined) => {
         return render(

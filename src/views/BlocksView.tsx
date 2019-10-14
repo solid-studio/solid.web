@@ -11,9 +11,9 @@ import { getBlocks } from 'features/blocks/actions'
 
 import { StyledDiv, StyledH1 } from './components'
 
-interface OwnProps {
+// interface OwnProps {
 
-}
+// }
 
 interface StateProps {
     blocks: Block[]
@@ -24,7 +24,7 @@ interface DispatchProps {
     getBlocks: ActionCreator<Action>
 }
 
-type AllProps = OwnProps & DispatchProps & StateProps
+type AllProps = DispatchProps & StateProps // OwnProps & 
 
 export class BlocksView extends React.Component<AllProps> {
     static defaultProps = {

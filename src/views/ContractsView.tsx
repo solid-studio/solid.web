@@ -18,9 +18,9 @@ import { StyledDiv, StyledH1, CustomIcon } from './components'
 
 const { Sider, Content } = Layout;
 
-interface OwnProps {
+// interface OwnProps {
 
-}
+// }
 
 interface StateProps {
     contracts: Contract[]
@@ -32,7 +32,7 @@ interface DispatchProps {
     getContracts: ActionCreator<Action>
 }
 
-type AllProps = OwnProps & DispatchProps & StateProps
+type AllProps = DispatchProps & StateProps //  OwnProps & 
 
 interface State {
     showContractDrawer: boolean

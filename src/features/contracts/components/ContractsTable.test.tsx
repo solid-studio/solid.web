@@ -8,8 +8,8 @@ import { ContractsTable } from './ContractsTable'
 describe('Contracts table test', () => {
 
     let contracts: Contract[]
-    let mockOnClickTable = jest.fn()
-    let mockOnDoubleClickTable = jest.fn()
+    const mockOnClickTable = jest.fn()
+    const mockOnDoubleClickTable = jest.fn()
 
     const renderBlocksTable = (contracts: Contract[] | undefined) => {
         return render(

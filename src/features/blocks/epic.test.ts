@@ -32,7 +32,7 @@ describe('Blocks Epic Tests', () => {
       initialState
     )
 
-    mockAjax.getJSON.mockImplementation((url: string, headers?: Object | undefined) => {
+    mockAjax.getJSON.mockImplementation((url: string, headers?: {} | undefined) => {
       return of({ data: blocks })
     })
 

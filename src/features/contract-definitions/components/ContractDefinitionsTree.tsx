@@ -24,12 +24,12 @@ export class ContractDefinitionsTree extends React.Component<Props> {
         onPlusClick={undefined}
         onCollapseClick={undefined}
         DataRowComponentRender={(item: ContractDefinition) => (
+          
           <TreeNodeStyled
             icon={<Icon type="file" />}
             title={item.name}
             key={item.id}
-            style={{ color: 'white' }}>
-          </TreeNodeStyled>
+            style={{ color: 'white' }}/>
         )}
         selectorPrefix="contract-definitions"
         onClickDataItem={(value: string | undefined | string[], props: any) => {

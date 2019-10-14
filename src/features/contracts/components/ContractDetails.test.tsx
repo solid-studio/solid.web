@@ -7,44 +7,45 @@
 // MethodsPanel
 
 // // TableDetailsPanel/
-
+// TODO: Finish this
 describe('ContractDetails tests', () => {
 
+    // TODO
     // mock import copy from 'copy-to-clipboard'
     describe('TableDetailsPanel', () => {
         test('should match snapshot', () => {
-
+            expect(true).toBeTruthy()
         })
 
-        test('copyABI', () => {
+        // test('copyABI', () => {
 
-        })
+        // })
 
-        test('copyByteCode', () => {
+        // test('copyByteCode', () => {
 
-        })
+        // })
     })
 
-    describe('CollapsedDetailsPanels', () => {
-        test('should match snapshot', () => {
+    // describe('CollapsedDetailsPanels', () => {
+    //     test('should match snapshot', () => {
 
-        })
+    //     })
 
-        test('Methods', () => {
+    //     test('Methods', () => {
 
-        })
+    //     })
 
-        test('Storage', () => {
+    //     test('Storage', () => {
 
-        })
+    //     })
 
-        test('Inheritance', () => {
+    //     test('Inheritance', () => {
 
-        })
+    //     })
 
-        test('Dependencies', () => {
+    //     test('Dependencies', () => {
 
-        })
-    })
+    //     })
+    // })
 
 })

@@ -8,8 +8,8 @@ import { TransactionsTable } from './TransactionsTable'
 describe('Transactions table test', () => {
 
     let transactions: TransactionReceipt[]
-    let mockOnClickTable = jest.fn()
-    let mockOnDoubleClickTable = jest.fn()
+    const mockOnClickTable = jest.fn()
+    const mockOnDoubleClickTable = jest.fn()
 
     const renderTransactionsTable = (transactions: TransactionReceipt[] | undefined) => {
         return render(
