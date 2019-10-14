@@ -2,7 +2,3 @@
 import CompilerWorker from 'worker-loader!./worker'
 
 export default CompilerWorker
-
-
-
-

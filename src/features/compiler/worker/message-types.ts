@@ -11,7 +11,7 @@ export enum MessageType {
   ERROR = 'ERROR'
 }
 
-export type SolidityVersionType = "0.4.24" | "0.4.25" | "0.5.8"// TODO: add other versions
+export type SolidityVersionType = '0.4.24' | '0.4.25' | '0.5.8' // TODO: add other versions
 
 export interface ILoadCompilerVersionMessage extends Action {
   type: MessageType.LOAD_COMPILER_VERSION
@@ -23,7 +23,7 @@ export interface ILoadCompilerVersionMessage extends Action {
 export interface ILoadCompilerVersionResultMessage extends Action {
   type: MessageType.LOAD_COMPILER_VERSION_RESULT
   payload: {
-    version: SolidityVersionType,
+    version: SolidityVersionType
     status: Status
   }
 }
@@ -67,7 +67,8 @@ interface IErrorMessage {
   error: string
 }
 
-export type MyWorkerMessage = ILoadCompilerVersionMessage
+export type MyWorkerMessage =
+  | ILoadCompilerVersionMessage
   | ILoadCompilerVersionResultMessage
   | IValidateSourceCodeMessage
   | IValidateSourceCodeResultMessage

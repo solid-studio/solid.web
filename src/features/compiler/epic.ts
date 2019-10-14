@@ -1,13 +1,13 @@
 import { ofType, combineEpics, ActionsObservable, StateObservable } from 'redux-observable'
-import { map, filter, switchMap, tap } from 'rxjs/operators';
+import { map, filter, switchMap, tap } from 'rxjs/operators'
 
 import { loadCompilerVersion } from './actions'
 import { ActionType, Actions } from './action-types'
-import { ApplicationState } from '../rootReducer';
-import { ILoadCompilerVersionMessage, MessageType } from './worker/message-types';
+import { ApplicationState } from '../rootReducer'
+import { ILoadCompilerVersionMessage, MessageType } from './worker/message-types'
 
 import { initialiseMessageDispatcher } from './message-dispatcher'
-import { loadCompilerVersionMessage } from './worker/actions';
+import { loadCompilerVersionMessage } from './worker/actions'
 
 // import { MessageType } from './worker/message-types'
 
@@ -66,54 +66,62 @@ import { loadCompilerVersionMessage } from './worker/actions';
 //     }
 // }
 
-
 // TODO TYPE Actions
-export const setupMessageDispatcherEpic = (action$: ActionsObservable<any>, state$: StateObservable<ApplicationState>) => action$.pipe(
+export const setupMessageDispatcherEpic = (
+  action$: ActionsObservable<any>,
+  state$: StateObservable<ApplicationState>
+) =>
+  action$.pipe(
     ofType(ActionType.SETUP_MESSAGE_DISPATCHER),
     map(() => {
-        const workerInstance = state$.value.compilerState.compilerWorker;
-        if (workerInstance) {
-            const dispatch = undefined as any // TODO, where is Dispatch here?
-            initialiseMessageDispatcher(workerInstance, dispatch)
-            // Maybe I can dispatch an action to modify certain state..
-        }
+      const workerInstance = state$.value.compilerState.compilerWorker
+      if (workerInstance) {
+        const dispatch = undefined as any // TODO, where is Dispatch here?
+        initialiseMessageDispatcher(workerInstance, dispatch)
+        // Maybe I can dispatch an action to modify certain state..
+      }
     })
-)
+  )
 
-export const loadCompilerVersionEpic = (action$: ActionsObservable<any>, state$: StateObservable<ApplicationState>) => action$.pipe(
+export const loadCompilerVersionEpic = (action$: ActionsObservable<any>, state$: StateObservable<ApplicationState>) =>
+  action$.pipe(
     ofType(MessageType.LOAD_COMPILER_VERSION),
     tap(({ payload }) => {
-        console.log("PAYLOAD ", payload)
-        const workerInstance = state$.value.compilerState.compilerWorker;
-        console.log("WORKER INSTANCE", workerInstance)
+      console.log('PAYLOAD ', payload)
+      const workerInstance = state$.value.compilerState.compilerWorker
+      console.log('WORKER INSTANCE', workerInstance)
     }),
     map(({ payload }) => {
-        const workerInstance = state$.value.compilerState.compilerWorker;
-        console.log("WORKER INSTANCE", workerInstance)
-        if (workerInstance) {
-            const workerAction = loadCompilerVersionMessage(payload)
-            return workerInstance.postMessage(workerAction)
-        }
+      const workerInstance = state$.value.compilerState.compilerWorker
+      console.log('WORKER INSTANCE', workerInstance)
+      if (workerInstance) {
+        const workerAction = loadCompilerVersionMessage(payload)
+        return workerInstance.postMessage(workerAction)
+      }
     })
-)
+  )
 
-export const loadCompilerVersionResultEpic = (action$: ActionsObservable<any>, state$: StateObservable<ApplicationState>) => action$.pipe(
+export const loadCompilerVersionResultEpic = (
+  action$: ActionsObservable<any>,
+  state$: StateObservable<ApplicationState>
+) =>
+  action$.pipe(
     ofType(MessageType.LOAD_COMPILER_VERSION_RESULT),
     tap(({ payload }) => {
-        console.log("LOAD_COMPILER_VERSION_RESULT HAS BEEN RECEIVED")
-        console.log("PAYLOAD ", payload)
+      console.log('LOAD_COMPILER_VERSION_RESULT HAS BEEN RECEIVED')
+      console.log('PAYLOAD ', payload)
     }),
     map(({ payload }) => {
-        // TODO: if successful, then dispatch 1 action, 
-        // otherwise dispatch another action
-        // if payload.status = Status.Completed
-        // dispatch compilerVersionLoaded(version)
-        // otherwise dispatch compilerVersionFailedOnLoad(version)
+      // TODO: if successful, then dispatch 1 action,
+      // otherwise dispatch another action
+      // if payload.status = Status.Completed
+      // dispatch compilerVersionLoaded(version)
+      // otherwise dispatch compilerVersionFailedOnLoad(version)
     })
-)
+  )
 
 export const compilerEpic = combineEpics(
-    loadCompilerVersionEpic,
-    loadCompilerVersionResultEpic,
-    setupMessageDispatcherEpic
+  loadCompilerVersionEpic,
+  loadCompilerVersionResultEpic,
+  setupMessageDispatcherEpic
 )

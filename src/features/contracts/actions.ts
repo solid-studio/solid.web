@@ -4,7 +4,9 @@ import { Contract, AbiItem } from '@solidstudio/solid.types'
 
 import { ActionType, ContractsReceivedAction, GetContractsAction, MaximizeContractViewAction } from './action-types'
 
-export const contractsReceived: ActionCreator<ContractsReceivedAction> = (contracts: Contract[]): ContractsReceivedAction => {
+export const contractsReceived: ActionCreator<ContractsReceivedAction> = (
+  contracts: Contract[]
+): ContractsReceivedAction => {
   return {
     type: ActionType.CONTRACTS_RECEIVED,
     payload: contracts
@@ -18,7 +20,9 @@ export const getContracts: ActionCreator<GetContractsAction> = (connectionId: st
   }
 }
 
-export const maximizeContractView: ActionCreator<MaximizeContractViewAction> = (contract: Contract): MaximizeContractViewAction => {
+export const maximizeContractView: ActionCreator<MaximizeContractViewAction> = (
+  contract: Contract
+): MaximizeContractViewAction => {
   return {
     type: ActionType.ON_MAXIMIZE_CONTRACT_VIEW,
     payload: { ...contract, type: 'contract' }
@@ -57,7 +61,6 @@ export const executeContractFunction: ActionCreator<any> = (abi: AbiItem, parame
 //         }
 //     }
 // }
-
 
 // export const contractSelected: ActionCreator<Action> = (contract: Contract): ContractSelectedAction => {
 //   return {

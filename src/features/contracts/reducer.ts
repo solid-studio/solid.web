@@ -4,7 +4,7 @@ import { Contract } from '@solidstudio/solid.types'
 
 import { Status } from '../common/types'
 
-import { ActionType, Actions } from './action-types';
+import { ActionType, Actions } from './action-types'
 
 // import { MessageType, MyWorkerMessage } from '../workers/compiler-worker/types'
 // import CompilerWorker from './web-workers/compiler-worker'
@@ -12,12 +12,12 @@ import { ActionType, Actions } from './action-types';
 // Contracts
 // Compiler (done)
 export interface ContractState {
-    currentContract?: Contract
-    contracts: Contract[]
-    getContractsStatus: Status
-    // loadCompilerRequest: LoadCompilerRequest
-    // validateSourceCode: ValidateSourceCode
-    // compilerWorker: Worker | undefined
+  currentContract?: Contract
+  contracts: Contract[]
+  getContractsStatus: Status
+  // loadCompilerRequest: LoadCompilerRequest
+  // validateSourceCode: ValidateSourceCode
+  // compilerWorker: Worker | undefined
 }
 
 // const defaultValidateSourceCode: ValidateSourceCode = {
@@ -32,29 +32,29 @@ export interface ContractState {
 // }
 
 export const initialState: ContractState = {
-    contracts: [],
-    currentContract: undefined,
-    getContractsStatus: Status.NotStarted
-    // compilerWorker: new CompilerWorker(),
-    // loadCompilerRequest: defaultLoadCompilerRequest,
-    // validateSourceCode: defaultValidateSourceCode
+  contracts: [],
+  currentContract: undefined,
+  getContractsStatus: Status.NotStarted
+  // compilerWorker: new CompilerWorker(),
+  // loadCompilerRequest: defaultLoadCompilerRequest,
+  // validateSourceCode: defaultValidateSourceCode
 }
 
 export const appReducer: Reducer<ContractState, Actions> = (
-    state: ContractState = initialState,
-    action: Actions // | MyWorkerMessage
+  state: ContractState = initialState,
+  action: Actions // | MyWorkerMessage
 ): ContractState => {
-    switch (action.type) {
-        case ActionType.CONTRACTS_RECEIVED:
-            return { ...state, contracts: action.payload, currentContract: action.payload[0] }
-        // case ActionType.CONTRACT_SELECTED:
-        // return { ...state, currentContract: action.payload }
-        // compiler cases
-        // case MessageType.VALIDATE_SOURCE_CODE:
-        //     return { ...state, validateSourceCode: action.payload }
-        // case MessageType.LOAD_COMPILER_VERSION_RESULT:
-        //     return { ...state, loadCompilerRequest: action.payload }
-        default:
-            return state
-    }
+  switch (action.type) {
+    case ActionType.CONTRACTS_RECEIVED:
+      return { ...state, contracts: action.payload, currentContract: action.payload[0] }
+    // case ActionType.CONTRACT_SELECTED:
+    // return { ...state, currentContract: action.payload }
+    // compiler cases
+    // case MessageType.VALIDATE_SOURCE_CODE:
+    //     return { ...state, validateSourceCode: action.payload }
+    // case MessageType.LOAD_COMPILER_VERSION_RESULT:
+    //     return { ...state, loadCompilerRequest: action.payload }
+    default:
+      return state
+  }
 }

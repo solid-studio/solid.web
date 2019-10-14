@@ -1,11 +1,20 @@
 import { ActionCreator, Action } from 'redux'
 
 import { SolidityVersionType } from './worker/message-types'
-import { loadCompilerVersionMessage, compilerVersionLoadedMessage, loadCompilerVersionFailedMessage } from './worker/actions'
+import {
+  loadCompilerVersionMessage,
+  compilerVersionLoadedMessage,
+  loadCompilerVersionFailedMessage
+} from './worker/actions'
 
-import { ActionType, LoadCompilerVersionAction, ValidateSourceCodeAction, LoadCompilerVersionResultAction } from './action-types'
+import {
+  ActionType,
+  LoadCompilerVersionAction,
+  ValidateSourceCodeAction,
+  LoadCompilerVersionResultAction
+} from './action-types'
 
-const HARDCODED_SOLIDITY_VERSION = "0.4.24"
+const HARDCODED_SOLIDITY_VERSION = '0.4.24'
 
 export const setupMessageDispatcher: ActionCreator<Action> = () => {
   return {
@@ -17,11 +26,15 @@ export const loadCompilerVersion: ActionCreator<LoadCompilerVersionAction> = ():
   return loadCompilerVersionMessage(HARDCODED_SOLIDITY_VERSION) // TODO TO REMOVE
 }
 
-export const compilerVersionLoaded: ActionCreator<LoadCompilerVersionResultAction> = (version: SolidityVersionType): LoadCompilerVersionResultAction => {
+export const compilerVersionLoaded: ActionCreator<LoadCompilerVersionResultAction> = (
+  version: SolidityVersionType
+): LoadCompilerVersionResultAction => {
   return compilerVersionLoadedMessage(version)
 }
 
-export const loadCompilerVersionFailed: ActionCreator<LoadCompilerVersionResultAction> = (version: SolidityVersionType): LoadCompilerVersionResultAction => {
+export const loadCompilerVersionFailed: ActionCreator<LoadCompilerVersionResultAction> = (
+  version: SolidityVersionType
+): LoadCompilerVersionResultAction => {
   return loadCompilerVersionFailedMessage(version)
 }
 

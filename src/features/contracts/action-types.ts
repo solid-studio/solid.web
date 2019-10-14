@@ -14,7 +14,7 @@ export enum ActionType {
 }
 
 export interface GetContractsAction extends Action {
-  type: ActionType.GET_CONTRACTS,
+  type: ActionType.GET_CONTRACTS
   payload: string // connectionId
 }
 
@@ -24,10 +24,8 @@ export interface ContractsReceivedAction extends Action {
 }
 
 export interface MaximizeContractViewAction extends Action {
-  type: ActionType.ON_MAXIMIZE_CONTRACT_VIEW,
+  type: ActionType.ON_MAXIMIZE_CONTRACT_VIEW
   payload: ContractItem
 }
 
-export type Actions = GetContractsAction
-  | ContractsReceivedAction
-  | MaximizeContractViewAction
+export type Actions = GetContractsAction | ContractsReceivedAction | MaximizeContractViewAction

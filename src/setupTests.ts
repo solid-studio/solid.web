@@ -1,10 +1,10 @@
 // import '@testing-library/react/cleanup-after-each';
 // import 'jest-axe/extend-expect'
 import 'jsdom-worker-fix'
-import '@testing-library/jest-dom/extend-expect';
+import '@testing-library/jest-dom/extend-expect'
 
 // TODO: Remove this
-// class Worker { // OR I CAN EVEN USE THIS 
+// class Worker { // OR I CAN EVEN USE THIS
 //     url: string
 //     onmessage: any
 //     constructor(stringUrl: string) {
@@ -18,4 +18,3 @@ import '@testing-library/jest-dom/extend-expect';
 // }
 
 // (window as any).Worker = Worker;
-

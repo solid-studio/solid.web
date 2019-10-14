@@ -16,8 +16,8 @@ ctx.onmessage = (event: IMessageEvent) => {
     case MessageType.LOAD_COMPILER_VERSION:
       const version = solidityCompilerVersionsMap.get(msg.payload.version)
       console.log('Version', version, msg.payload.version)
-      const url = `${BASE_URL}${version}`;
-      (ctx as any).importScripts(url)
+      const url = `${BASE_URL}${version}`
+      ;(ctx as any).importScripts(url)
       const compiler = wrapper((ctx as any).Module)
       solidityCompilerInstanceMap.set(version, compiler)
       const compilerInstance = solidityCompilerInstanceMap.get(version)
@@ -63,4 +63,4 @@ ctx.onmessage = (event: IMessageEvent) => {
   }
 }
 
-export default null as any;
+export default null as any

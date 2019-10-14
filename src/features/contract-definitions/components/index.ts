@@ -1,4 +1,4 @@
-import ContractDefinitionsModal from "./ContractDefinitionModal"
+import ContractDefinitionsModal from './ContractDefinitionModal'
 export { ContractDefinitionsModal }
 
-export { ContractDefinitionsTree } from "./ContractDefinitionsTree"
+export { ContractDefinitionsTree } from './ContractDefinitionsTree'
