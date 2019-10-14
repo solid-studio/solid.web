@@ -4,7 +4,9 @@ WORKDIR /opt/app
 
 ARG NPM_TOKEN
 
-COPY .npmrc package.json package-lock.json ./
+COPY package.json package-lock.json ./
+
+RUN echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
 
 RUN npm install
 
