@@ -1,6 +1,6 @@
 import { Reducer } from 'redux'
 
-import { Transaction } from '@solidstudio/solid.types'
+import { TransactionReceipt } from '@solidstudio/solid.types'
 
 import { Status } from '../common/types'
 
@@ -8,8 +8,8 @@ import { ActionType, Actions } from './action-types';
 
 
 export interface TransactionsState {
-    currentTransaction?: Transaction
-    transactions: Transaction[]
+    currentTransaction?: TransactionReceipt
+    transactions: TransactionReceipt[]
     getTransactionsStatus: Status
 }
 
@@ -25,7 +25,11 @@ export const appReducer: Reducer<TransactionsState, Actions> = (
 ): TransactionsState => {
     switch (action.type) {
         case ActionType.TRANSACTIONS_RECEIVED:
-            return { ...state, transactions: action.payload, currentTransaction: action.payload[0] }
+            return {
+                ...state, transactions: action.payload,
+                currentTransaction: action.payload[0],
+                getTransactionsStatus: Status.Completed
+            }
         default:
             return state
     }

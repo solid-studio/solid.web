@@ -1,5 +1,7 @@
 import { Table } from 'antd';
 
-import { Transaction } from '@solidstudio/solid.types'
+import { TransactionReceipt } from '@solidstudio/solid.types'
 
-export class TransactionsTableComponent extends Table<Transaction> { }
+// TODO: Do I need only transaction receipts?
+
+export class TransactionsTableComponent extends Table<TransactionReceipt> { }
