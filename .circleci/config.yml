@@ -72,8 +72,9 @@ jobs:
           command: |
             TAG_VERSION=$(node -p -e "require('./package.json').version")
             echo '$TAG_VERSION' $TAG_VERSION     
+            echo $NPM_TOKEN
             IMAGE_NAME=solidstudio/web
-            docker build -t $IMAGE_NAME:$TAG_VERSION -t $IMAGE_NAME:latest --build-arg NPM_TOKEN=$NPM_TOKEN .
+            docker build --build-arg NPM_TOKEN=$NPM_TOKEN -t $IMAGE_NAME:$TAG_VERSION -t $IMAGE_NAME:latest .
             echo $DOCKER_HUB_PASSWORD | docker login -u $DOCKER_HUB_USER --password-stdin
             docker push $IMAGE_NAME:$TAG_VERSION
             docker push $IMAGE_NAME:latest
