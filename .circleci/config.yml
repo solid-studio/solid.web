@@ -90,6 +90,7 @@ workflows:
   build-deploy:
     jobs:
       - setup
+        context: SolidStudio
       - tslint:
           requires:
             - setup
