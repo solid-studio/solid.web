@@ -1,100 +1,39 @@
 import { ActionCreator, Action } from 'redux'
 
-import { Status } from '../common/types';
+import { SolidityVersionType } from './worker/message-types'
+import { loadCompilerVersionMessage, compilerVersionLoadedMessage, loadCompilerVersionFailedMessage } from './worker/actions'
 
-import { ActionType, LoadCompilerWorkerAction } from './action-types'
+import { ActionType, LoadCompilerVersionAction, ValidateSourceCodeAction, LoadCompilerVersionResultAction } from './action-types'
 
-import { MessageType, ILoadCompilerVersionMessage, IValidateSourceCodeMessage, ICompilerWorkerLoaded } from './worker/message-types'
-import { setupWorkerReducer } from './worker/worker-reducer'
-import CompilerWorker from './worker'
+const HARDCODED_SOLIDITY_VERSION = "0.4.24"
 
-// export const loadCompilerWorker: ActionCreator<Action> = (): LoadCompilerWorkerAction => {
-//     const compilerWorker = new CompilerWorker();
-//     setupWorkerReducer(compilerWorker);
-//     const loadCompilerVersionMessage: ILoadCompilerVersionMessage = {
-//         type: MESSAGE_TYPE.LOAD_COMPILER_VERSION,
-//         compilerVersion: "0.5.8" // TODO, just for for MVP
-//     }
-//     compilerWorker.postMessage(loadCompilerVersionMessage)
-//     return {
-//         type: ActionType.LOAD_COMPILER,
-//         data: undefined
-//     }
-// }
-
-export const loadCompilerWorker: ActionCreator<Action> = (): ILoadCompilerVersionMessage => {
-  console.log("LOAD COMPILER WORKER CALLED")
+export const setupMessageDispatcher: ActionCreator<Action> = () => {
   return {
-    type: MessageType.LOAD_COMPILER_VERSION,
-    payload: { version: '0.5.8' } // TODO, just for for MVP
+    type: ActionType.SETUP_MESSAGE_DISPATCHER
   }
 }
 
-export const compilerWorkerLoaded: ActionCreator<Action> = (): ICompilerWorkerLoaded => {
-  console.log("COMPILER WORKER LOADED!!!")
-  return {
-    type: MessageType.COMPILER_WORKER_LOADED
-  }
+export const loadCompilerVersion: ActionCreator<LoadCompilerVersionAction> = (): LoadCompilerVersionAction => {
+  return loadCompilerVersionMessage(HARDCODED_SOLIDITY_VERSION) // TODO TO REMOVE
 }
 
-// TODO: REVIEW...
-// export const loadCompilerWorker: ActionCreator<ThunkAction<void, ApplicationState, HttpRequest, Action>> = () => {
-//   return (dispatch, getState, _): void => {
-//     // TODO: To Fix
-//     const compilerWorker = getState().compilerState.compilerWorker as CompilerWorker
-//     setupWorkerReducer(compilerWorker, dispatch)
+export const compilerVersionLoaded: ActionCreator<LoadCompilerVersionResultAction> = (version: SolidityVersionType): LoadCompilerVersionResultAction => {
+  return compilerVersionLoadedMessage(version)
+}
 
-//     const loadCompilerVersionMessage: ILoadCompilerVersionMessage = {
-//       type: MessageType.LOAD_COMPILER_VERSION,
-//       payload: { version: '0.5.8' } // TODO, just for for MVP
-//     }
-//     // TODO FALLBACK
-//     // if worker is here, do postMessage, other wise, use redux
-//     compilerWorker.postMessage(loadCompilerVersionMessage)
-//   }
-// }
+export const loadCompilerVersionFailed: ActionCreator<LoadCompilerVersionResultAction> = (version: SolidityVersionType): LoadCompilerVersionResultAction => {
+  return loadCompilerVersionFailedMessage(version)
+}
 
-// TODO: REVIEW...
-// export const loadCompilerWorkerCompleted: ActionCreator<Action> = (
-//   worker: CompilerWorker
-// ): LoadCompilerWorkerAction => {
+// // TODO: how am I going to handler the multiple files?
+// export const validateSourceCode: ActionCreator<Action> = (sourceCode: string): ValidateSourceCodeAction => {
 //   console.log('loadCompilerWorkerCompleted FROM REACT')
 //   return {
-//     type: ActionType.LOAD_COMPILER,
-//     payload: worker
-//   }
-// }
-
-// TODO: REVIEW...
-// export const validateSourceCode: ActionCreator<Action> = (sourceCode: string): IValidateSourceCodeMessage => {
-//   console.log('loadCompilerWorkerCompleted FROM REACT')
-//   return {
-//     type: MessageType.VALIDATE_SOURCE_CODE,
+//     type: ActionType.VALIDATE_SOURCE_CODE,
 //     payload: {
-//       compilerVersion: '0.5.8', // TODO, just for for MVP
+//       compilerVersion: HARDCODED_SOLIDITY_VERSION,
 //       sourceCode,
 //       status: Status.Started
 //     }
 //   }
-// }
-
-// export const validateSourceCode: ActionCreator<ThunkAction<void, ApplicationState, HttpRequest, Action>> = (sourceCode: string) => {
-//     return (dispatch, getState, api) => {
-//         const loadCompilerVersionMessage: IValidateSourceCodeMessage = {
-//             type: MessageType.VALIDATE_SOURCE_CODE,
-//             payload: {
-//                 compilerVersion: "0.5.8", // TODO, just for for MVP
-//                 sourceCode
-//             }
-//         }
-//         // const compilerWorker = getState().appState.compilerWorker as CompilerWorker;
-//         // compilerWorker.postMessage(loadCompilerVersionMessage)
-//         return {
-//             type: MessageType.VALIDATE_SOURCE_CODE,
-//             data: {
-//                 status: Status.InProgress,
-//                 result: false
-//             }
-//         }
-//     }
 // }

@@ -1,10 +1,8 @@
 import { Action } from 'redux'
 import { Status } from '../../common/types'
 
-// Enumerate message types
 export enum MessageType {
   LOAD_COMPILER_VERSION = 'LOAD_COMPILER_VERSION',
-  COMPILER_WORKER_LOADED = 'COMPILER_WORKER_LOADED',
   LOAD_COMPILER_VERSION_RESULT = 'LOAD_COMPILER_VERSION_RESULT',
   COMPILE = 'COMPILE',
   COMPILE_RESULT = 'COMPILE_RESULT',
@@ -13,23 +11,19 @@ export enum MessageType {
   ERROR = 'ERROR'
 }
 
-// Define expected properties for each message type
+export type SolidityVersionType = "0.4.24" | "0.4.25" | "0.5.8"// TODO: add other versions
+
 export interface ILoadCompilerVersionMessage extends Action {
   type: MessageType.LOAD_COMPILER_VERSION
   payload: {
-    version: string
+    version: SolidityVersionType
   }
-  // Make it enum
-}
-
-export interface ICompilerWorkerLoaded extends Action {
-  type: MessageType.COMPILER_WORKER_LOADED
 }
 
 export interface ILoadCompilerVersionResultMessage extends Action {
   type: MessageType.LOAD_COMPILER_VERSION_RESULT
   payload: {
-    version: string
+    version: SolidityVersionType,
     status: Status
   }
 }
@@ -73,9 +67,7 @@ interface IErrorMessage {
   error: string
 }
 
-export type MyWorkerMessage =
-  ICompilerWorkerLoaded
-  | ILoadCompilerVersionMessage
+export type MyWorkerMessage = ILoadCompilerVersionMessage
   | ILoadCompilerVersionResultMessage
   | IValidateSourceCodeMessage
   | IValidateSourceCodeResultMessage
