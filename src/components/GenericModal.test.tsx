@@ -33,7 +33,7 @@ describe('GenericModal', () => {
       visible={true}
       loading={true}
       validator={(values: GenericType): FormikErrors<GenericType> => {
-        let errors: FormikErrors<GenericType> = {};
+        const errors: FormikErrors<GenericType> = {};
         if (!values.name) {
           errors.name = 'Required';
         }
@@ -54,8 +54,7 @@ describe('GenericModal', () => {
           />
         </Form>
       )}
-    >
-    </GenericModalComponent>)
+    />)
   }
 
   it('renders a modal with basic elements', () => {

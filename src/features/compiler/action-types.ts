@@ -1,14 +1,23 @@
 import { Action } from 'redux'
 
+import {
+  ILoadCompilerVersionMessage,
+  IValidateSourceCodeMessage,
+  ILoadCompilerVersionResultMessage
+} from './worker/message-types'
+
 export enum ActionType {
-    ERROR_WHEN_GETTING_DATA = 'ERROR_WHEN_GETTING_DATA',
-    ERROR_WHEN_EXECUTING_TRANSACTION = 'ERROR_WHEN_EXECUTING_TRANSACTION',
-    LOAD_COMPILER = 'LOAD_COMPILER',
+  SETUP_MESSAGE_DISPATCHER = 'SETUP_MESSAGE_DISPATCHER'
 }
 
-export interface LoadCompilerWorkerAction extends Action {
-    type: ActionType.LOAD_COMPILER
-    payload: Worker | undefined
+export type LoadCompilerVersionAction = ILoadCompilerVersionMessage
+
+export type LoadCompilerVersionResultAction = ILoadCompilerVersionResultMessage
+
+export type ValidateSourceCodeAction = IValidateSourceCodeMessage
+
+export interface SetupMessageDispatcherAction extends Action {
+  type: ActionType.SETUP_MESSAGE_DISPATCHER
 }
 
-export type Actions = LoadCompilerWorkerAction
+export type Actions = LoadCompilerVersionAction | SetupMessageDispatcherAction | ValidateSourceCodeAction

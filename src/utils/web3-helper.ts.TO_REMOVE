@@ -15,7 +15,6 @@ interface Web3FunctionPayload {
 
 export interface Web3Action {
   type: Web3ActionType.Web3Action
-  meta: Meta
   payload: Web3FunctionPayload
 }
 

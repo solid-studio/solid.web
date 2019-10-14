@@ -12,9 +12,9 @@ interface OwnProps {
     onDoubleClick: any // TODO type correctly
 }
 
-type AllProps = OwnProps //& DispatchProps & StateProps
+type AllProps = OwnProps // & DispatchProps & StateProps
 
-const tableColumns: ColumnProps<Contract>[] = [
+const tableColumns: Array<ColumnProps<Contract>> = [
     {
         key: 'name',
         title: 'Contract Name',
@@ -55,9 +55,9 @@ export class ContractsTable extends React.Component<AllProps> {
                     },
                     onDoubleClick: event => {
                         this.props.onDoubleClick(record)
-                    },
-                    onContextMenu: event => { }, // right button click row
-                    onMouseEnter: event => { }
+                    }
+                    // onContextMenu: event => { }, // right button click row
+                    // onMouseEnter: event => { }
                 };
             }}
 

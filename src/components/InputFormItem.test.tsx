@@ -8,7 +8,7 @@ describe('InputFormItem', () => {
 
     const onSubmitMockHandler = jest.fn()
 
-    type GenericType = {
+    interface GenericType {
         name: string,
         url: string
     }

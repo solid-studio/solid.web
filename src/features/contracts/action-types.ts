@@ -10,13 +10,11 @@ export enum ActionType {
   GET_CONTRACTS = 'GET_CONTRACTS',
   OPEN_CONTRACT_DEFINITION_MODAL = 'OPEN_CONTRACT_DEFINITION_MODAL',
   ON_MAXIMIZE_CONTRACT_VIEW = 'ON_MAXIMIZE_CONTRACT_VIEW'
-  // ERROR_WHEN_EXECUTING_TRANSACTION = 'ERROR_WHEN_EXECUTING_TRANSACTION',
   // CONTRACT_SELECTED = 'CONTRACT_SELECTED',
-  // LOAD_COMPILER = 'LOAD_COMPILER'
 }
 
 export interface GetContractsAction extends Action {
-  type: ActionType.GET_CONTRACTS,
+  type: ActionType.GET_CONTRACTS
   payload: string // connectionId
 }
 
@@ -26,25 +24,8 @@ export interface ContractsReceivedAction extends Action {
 }
 
 export interface MaximizeContractViewAction extends Action {
-  type: ActionType.ON_MAXIMIZE_CONTRACT_VIEW,
+  type: ActionType.ON_MAXIMIZE_CONTRACT_VIEW
   payload: ContractItem
 }
 
-export type Actions = GetContractsAction
-  | ContractsReceivedAction
-  | MaximizeContractViewAction
-
-// TODO: Clean this part
-// compiler
-// export interface LoadCompilerWorkerAction extends Action {
-//   type: ActionType.LOAD_COMPILER
-//   payload: Worker | undefined
-// }
-// export interface ContractSelectedAction extends Action {
-//   type: ActionType.CONTRACT_SELECTED
-//   payload: Contract
-// }
-
-
-  // | LoadCompilerWorkerAction
-  // | ContractSelectedAction
+export type Actions = GetContractsAction | ContractsReceivedAction | MaximizeContractViewAction

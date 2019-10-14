@@ -12,9 +12,9 @@ import { ApplicationState } from 'features/rootReducer'
 
 import { StyledDiv, StyledH1 } from './components'
 
-interface OwnProps {
+// interface OwnProps {
 
-}
+// }
 
 interface StateProps {
     transactions: Transaction[]
@@ -25,7 +25,7 @@ interface DispatchProps {
     getTransactions: ActionCreator<Action>
 }
 
-type AllProps = OwnProps & DispatchProps & StateProps
+type AllProps = DispatchProps & StateProps // OwnProps & 
 
 
 export class TransactionsView extends React.Component<AllProps> {

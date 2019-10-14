@@ -1,17 +1,19 @@
 import React from 'react'
 
+import { Tag } from 'antd';
 import { ColumnProps } from 'antd/es/table';
 
-import { Transaction } from '@solidstudio/solid.types'
+import { TransactionReceipt } from '@solidstudio/solid.types'
 
 import { TransactionsTableComponent } from './TransactionsTableComponent';
-import { Tag } from 'antd';
 
 interface OwnProps {
-    transactions?: Transaction[]
+    transactions?: TransactionReceipt[]
+    onClick?: any // TODO type correctly and think if I 
+    onDoubleClick?: any // should abstract differently, maybe in another generic table that already has all event handlers..
 }
 
-type AllProps = OwnProps //& DispatchProps & StateProps
+type AllProps = OwnProps // & DispatchProps & StateProps
 
 const failedTransactionTag = (key: string) => (
     <Tag color="volcano" key={key}>
@@ -37,7 +39,7 @@ const contractCallTag = (key: string) => (
     </Tag>
 )
 
-const tableColumns: ColumnProps<Transaction>[] = [
+const tableColumns: Array<ColumnProps<TransactionReceipt>> = [
     // {
     //     key: 'type',
     //     title: 'Type',
@@ -48,12 +50,13 @@ const tableColumns: ColumnProps<Transaction>[] = [
         key: 'transactionHash',
         title: 'Transaction Hash',
         dataIndex: 'transactionHash',
+        render: text => <p data-testid={`transactions-table-row-${text}`}>{text}</p>
     },
     {
         key: 'to',
         title: 'To',
         dataIndex: 'to',
-        render: (text: string, record: Transaction) => record.to == null ? contractCreationTag(record.hash) : record.to
+        render: (text: string, record: TransactionReceipt) => record.to == null ? contractCreationTag(record.transactionHash) : record.to
     },
     {
         key: 'from',
@@ -68,8 +71,8 @@ const tableColumns: ColumnProps<Transaction>[] = [
     {
         key: 'status',
         title: 'Status',
-        dataIndex: 'status', // TODO: Change transaction for transaction receipts
-        render: (text: string, record: Transaction) => record.blockNumber ? successfulTransactionTag(record.hash) : failedTransactionTag(record.hash)
+        dataIndex: 'status',
+        render: (text: string, record: TransactionReceipt) => record.status ? successfulTransactionTag(record.transactionHash) : failedTransactionTag(record.transactionHash)
     }
     // {
     //     key: 'executionDate',
@@ -82,6 +85,20 @@ const tableColumns: ColumnProps<Transaction>[] = [
 export class TransactionsTable extends React.Component<AllProps> {
     render() {
         const { transactions } = this.props
-        return <TransactionsTableComponent dataSource={transactions} columns={tableColumns} />
+        return <TransactionsTableComponent
+            rowKey="transactionHash"
+            dataSource={transactions}
+            columns={tableColumns}
+            onRow={(record, rowIndex) => {
+                return {
+                    onClick: event => {
+                        this.props.onClick(record)
+                    },
+                    onDoubleClick: event => {
+                        this.props.onDoubleClick(record)
+                    }
+                };
+            }}
+        />
     }
 }

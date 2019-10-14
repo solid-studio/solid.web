@@ -48,24 +48,21 @@ export class ConnectionsTree extends React.Component<Props> {
               icon={({ selected }: any) => <Icon type={selected ? 'folder' : 'folder'} />}
               title={"Contracts"}
               key={`${item.name}-contracts`}
-              style={{ color: 'white' }}>
-            </TreeNodeStyled>
+              style={{ color: 'white' }}/>
 
             <TreeNodeStyled
               extra={{ connectionId: item.id, type: 'transactions' }}
               icon={({ selected }: any) => <Icon type={selected ? 'folder' : 'folder'} />}
               title={"Transactions"}
               key={`${item.name}-transactions`}
-              style={{ color: 'white' }}>
-            </TreeNodeStyled>
+              style={{ color: 'white' }}/>
 
             <TreeNodeStyled
               extra={{ connectionId: item.id, type: 'blocks' }}
               icon={({ selected }: any) => <Icon type={selected ? 'folder' : 'folder'} />}
               title={"Blocks"}
               key={`${item.name}-blocks`}
-              style={{ color: 'white' }}>
-            </TreeNodeStyled>
+              style={{ color: 'white' }}/>
 
           </TreeNodeStyled>
         )}

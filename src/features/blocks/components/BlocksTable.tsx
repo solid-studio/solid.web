@@ -14,7 +14,7 @@ interface OwnProps {
 
 type AllProps = OwnProps
 
-const tableColumns: ColumnProps<Block>[] = [
+const tableColumns: Array<ColumnProps<Block>> = [
     {
         key: 'hash',
         title: 'Hash',
