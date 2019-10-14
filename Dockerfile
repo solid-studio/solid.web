@@ -2,9 +2,11 @@ FROM node:10.16.3-jessie as builder
 
 WORKDIR /opt/app
 
-COPY package.json package-lock.json ./
+ARG NPM_TOKEN
 
-RUN npm install --silent
+COPY .npmrc package.json package-lock.json ./
+
+RUN npm install
 
 COPY . .
 
