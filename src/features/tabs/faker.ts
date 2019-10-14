@@ -2,7 +2,7 @@ import { Tab } from './types'
 
 export const buildFakeTab = (): Tab => {
   const tab: Tab = {
-    id: "1",
+    id: '1',
     type: 'transactions',
     data: [],
     title: 'Transactions'
@@ -15,7 +15,7 @@ export const buildFakeTabs = (): Tab[] => {
   const tabs: Tab[] = [
     buildFakeTab(),
     {
-      id: "2",
+      id: '2',
       type: 'contracts',
       data: [],
       title: 'Contracts'
