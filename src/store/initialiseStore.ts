@@ -5,9 +5,9 @@ import { createEpicMiddleware } from 'redux-observable'
 import { ajax } from 'rxjs/ajax';
 import { mockAjax } from '../utils/fakeAPI'
 
-import web3 from '../utils/web3-helper'
-import workerMessengerMiddleware from './middlewares/worker-messenger'
-import web3Middleware from './middlewares/web3'
+// import web3 from '../utils/web3-helper'
+// import workerMessengerMiddleware from './middlewares/worker-messenger'
+// import web3Middleware from './middlewares/web3'
 
 import rootReducer, { ApplicationState } from '../features/rootReducer'
 import { rootEpic } from '../features/rootEpic';

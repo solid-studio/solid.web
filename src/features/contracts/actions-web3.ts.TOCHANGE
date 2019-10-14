@@ -41,27 +41,3 @@ export const executeContractFunction: ActionCreator<AsyncActionThunk> = (abi: Ab
 // create on error
 // create on progress
 
-// how to handle invidiual elements progress?
-
-// export const executeFunctionCallCompleted: ActionCreator<ActionThunk> = () => {
-//     return (dispatch): Web3Action => {// TODO: FIX TYPE
-//         return {
-//             type: Web3ActionType.Web3Action,
-//             payload: {
-
-//             }
-//         }
-//     }
-// }
-
-// export const executeFunctionCallInProgress: VoidActionCreator = () => {
-//     return (dispatch): Web3Action => { // TODO: FIX TYPE
-//         return {
-//             type: Web3ActionType.Web3Action,
-//             payload: {
-//                 result: undefined,
-//                 status: Status.InProgress
-//             }
-//         }
-//     }
-// }
