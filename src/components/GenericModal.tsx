@@ -1,5 +1,5 @@
 import React from 'react'
-import R from 'ramda'
+import * as R from 'ramda'
 
 import { Modal, Button } from 'antd'
 import { Formik, FormikErrors, FormikProps } from 'formik'
