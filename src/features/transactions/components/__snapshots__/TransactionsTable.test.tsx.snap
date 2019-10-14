@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Contracts table test snapshot 1`] = `
+exports[`Transactions table test snapshot 1`] = `
 <div>
   <div
     class="ant-table-wrapper"
@@ -44,7 +44,43 @@ exports[`Contracts table test snapshot 1`] = `
                           <span
                             class="ant-table-column-title"
                           >
-                            Contract Name
+                            Transaction Hash
+                          </span>
+                          <span
+                            class="ant-table-column-sorter"
+                          />
+                        </div>
+                      </span>
+                    </th>
+                    <th
+                      class=""
+                    >
+                      <span
+                        class="ant-table-header-column"
+                      >
+                        <div>
+                          <span
+                            class="ant-table-column-title"
+                          >
+                            To
+                          </span>
+                          <span
+                            class="ant-table-column-sorter"
+                          />
+                        </div>
+                      </span>
+                    </th>
+                    <th
+                      class=""
+                    >
+                      <span
+                        class="ant-table-header-column"
+                      >
+                        <div>
+                          <span
+                            class="ant-table-column-title"
+                          >
+                            From
                           </span>
                           <span
                             class="ant-table-column-sorter"
@@ -80,43 +116,7 @@ exports[`Contracts table test snapshot 1`] = `
                           <span
                             class="ant-table-column-title"
                           >
-                            Transaction Count
-                          </span>
-                          <span
-                            class="ant-table-column-sorter"
-                          />
-                        </div>
-                      </span>
-                    </th>
-                    <th
-                      class=""
-                    >
-                      <span
-                        class="ant-table-header-column"
-                      >
-                        <div>
-                          <span
-                            class="ant-table-column-title"
-                          >
-                            Creation Date
-                          </span>
-                          <span
-                            class="ant-table-column-sorter"
-                          />
-                        </div>
-                      </span>
-                    </th>
-                    <th
-                      class=""
-                    >
-                      <span
-                        class="ant-table-header-column"
-                      >
-                        <div>
-                          <span
-                            class="ant-table-column-title"
-                          >
-                            Last Execution Date
+                            Status
                           </span>
                           <span
                             class="ant-table-column-sorter"
@@ -131,70 +131,86 @@ exports[`Contracts table test snapshot 1`] = `
                 >
                   <tr
                     class="ant-table-row ant-table-row-level-0"
-                    data-row-key="0xAC716460A84B85d774bEa75666ddf0088b024741"
+                    data-row-key="0xdf7f4433c421ab496a15066c14188b3e1973591cf539a9bd55009f108fddb668"
                   >
                     <td
                       class=""
                     >
-                      ERC-20
-                    </td>
-                    <td
-                      class=""
-                    >
                       <p
-                        data-testid="contracts-table-row-0xAC716460A84B85d774bEa75666ddf0088b024741"
+                        data-testid="transactions-table-row-0xdf7f4433c421ab496a15066c14188b3e1973591cf539a9bd55009f108fddb668"
                       >
-                        0xAC716460A84B85d774bEa75666ddf0088b024741
+                        0xdf7f4433c421ab496a15066c14188b3e1973591cf539a9bd55009f108fddb668
                       </p>
                     </td>
                     <td
                       class=""
                     >
-                      1
+                      <span
+                        class="ant-tag ant-tag-geekblue"
+                      >
+                        Contract Creation
+                      </span>
                     </td>
                     <td
                       class=""
                     >
-                      10/14/2019
+                      0x97a4a7b888d9ffa3a4e4c5a407bb557a6a2b7be8
                     </td>
                     <td
                       class=""
                     >
-                      10/14/2019
+                      0xb5a04884b36984a4d27a796e7fa75561d6a5533a
+                    </td>
+                    <td
+                      class=""
+                    >
+                      <span
+                        class="ant-tag ant-tag-green"
+                      >
+                        Success
+                      </span>
                     </td>
                   </tr>
                   <tr
                     class="ant-table-row ant-table-row-level-0"
-                    data-row-key="0xAC716460A84B85d774bEa75666ddf0088b024742"
+                    data-row-key="0xdf7f4433c421ab496a15066c14188b3e1973591cf539a9bd55009f108fddb667"
                   >
                     <td
                       class=""
                     >
-                      ERC-721
-                    </td>
-                    <td
-                      class=""
-                    >
                       <p
-                        data-testid="contracts-table-row-0xAC716460A84B85d774bEa75666ddf0088b024742"
+                        data-testid="transactions-table-row-0xdf7f4433c421ab496a15066c14188b3e1973591cf539a9bd55009f108fddb667"
                       >
-                        0xAC716460A84B85d774bEa75666ddf0088b024742
+                        0xdf7f4433c421ab496a15066c14188b3e1973591cf539a9bd55009f108fddb667
                       </p>
                     </td>
                     <td
                       class=""
                     >
-                      1
+                      <span
+                        class="ant-tag ant-tag-geekblue"
+                      >
+                        Contract Creation
+                      </span>
                     </td>
                     <td
                       class=""
                     >
-                      10/14/2019
+                      0x97a4a7b888d9ffa3a4e4c5a407bb557a6a2b7be8
                     </td>
                     <td
                       class=""
                     >
-                      10/14/2019
+                      0xb5a04884b36984a4d27a796e7fa75561d6a5533a
+                    </td>
+                    <td
+                      class=""
+                    >
+                      <span
+                        class="ant-tag ant-tag-green"
+                      >
+                        Success
+                      </span>
                     </td>
                   </tr>
                 </tbody>

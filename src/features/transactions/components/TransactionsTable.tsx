@@ -85,6 +85,20 @@ const tableColumns: ColumnProps<TransactionReceipt>[] = [
 export class TransactionsTable extends React.Component<AllProps> {
     render() {
         const { transactions } = this.props
-        return <TransactionsTableComponent dataSource={transactions} columns={tableColumns} />
+        return <TransactionsTableComponent
+            rowKey="transactionHash"
+            dataSource={transactions}
+            columns={tableColumns}
+            onRow={(record, rowIndex) => {
+                return {
+                    onClick: event => {
+                        this.props.onClick(record)
+                    },
+                    onDoubleClick: event => {
+                        this.props.onDoubleClick(record)
+                    }
+                };
+            }}
+        />
     }
 }

@@ -1,4 +1,4 @@
-import { buildFakeBlocks, buildFakeConnections, buildFakeConnection } from '@solidstudio/solid.types'
+import { buildFakeConnections, buildFakeConnection } from '@solidstudio/solid.types'
 
 import { appReducer, initialState } from './reducer'
 import { connectionsReceived, closeConnectionModal, openConnectionModal, getConnections, createOrUpdateConnection, connectionCreated } from './actions'
@@ -23,19 +23,18 @@ describe('Connections reducer', () => {
         const newState = appReducer(initialState, action)
 
         expect(newState.connectionModalOpen).toEqual(true)
-        expect(newState.connections).toEqual([connection])
-        expect(newState.currentConnection).toEqual(initialState.currentConnection)
+        expect(newState.connections).toEqual(initialState.connections)
+        expect(newState.currentConnection).toEqual(connection)
         expect(newState.getConnectionsStatus).toEqual(initialState.getConnectionsStatus)
         expect(newState.createConnectionStatus).toEqual(initialState.createConnectionStatus)
     })
 
     test('ActionType.OPEN_CONNECTION_MODAL in CREATE mode', () => {
-        const connection = buildFakeConnection()
-        const action = openConnectionModal(connection)
+        const action = openConnectionModal()
         const newState = appReducer(initialState, action)
 
         expect(newState.connectionModalOpen).toEqual(true)
-        expect(newState.connections).toEqual([connection])
+        expect(newState.connections).toEqual(initialState.connections)
         expect(newState.currentConnection).toEqual(initialState.currentConnection)
         expect(newState.getConnectionsStatus).toEqual(initialState.getConnectionsStatus)
         expect(newState.createConnectionStatus).toEqual(initialState.createConnectionStatus)

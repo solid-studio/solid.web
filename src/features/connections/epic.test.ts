@@ -105,7 +105,7 @@ describe('Connections Epic Tests', () => {
                 type: connectionItemSelectedAction.payload.type,
                 data: connectionItemSelectedAction.payload,
                 title: connectionItemSelectedAction.payload.type,
-                id: `${connectionItemSelectedAction.type}-${connectionItemSelectedAction.id}` // TODO: this may be wrong `${payload.type}-${payload.id}`
+                id: `${connectionItemSelectedAction.payload.type}-${connectionItemSelectedAction.payload.id}`
             }))
             done()
         })
