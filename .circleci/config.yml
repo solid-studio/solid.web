@@ -89,8 +89,8 @@ workflows:
   version: 2
   build-deploy:
     jobs:
-      - setup
-        context: SolidStudio
+      - setup:
+          context: SolidStudio
       - tslint:
           requires:
             - setup
