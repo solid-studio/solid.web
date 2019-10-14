@@ -22,7 +22,7 @@ interface DispatchProps {
     setTabActiveById: ActionCreator<Action>
 }
 
-type AllProps = OwnProps & DispatchProps
+export type AllProps = OwnProps & DispatchProps
 
 const capitalize = (s: string) => {
     if (typeof s !== 'string') { return '' }

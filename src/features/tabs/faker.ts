@@ -1,9 +1,8 @@
 import { Tab } from './types'
-import { generateFakeObjectId } from 'utils/fakeObjectId'
 
 export const buildFakeTab = (): Tab => {
   const tab: Tab = {
-    id: generateFakeObjectId(),
+    id: "1",
     type: 'transactions',
     data: [],
     title: 'Transactions'
@@ -16,7 +15,7 @@ export const buildFakeTabs = (): Tab[] => {
   const tabs: Tab[] = [
     buildFakeTab(),
     {
-      id: generateFakeObjectId(),
+      id: "2",
       type: 'contracts',
       data: [],
       title: 'Contracts'

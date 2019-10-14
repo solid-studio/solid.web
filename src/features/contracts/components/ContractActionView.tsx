@@ -7,9 +7,9 @@ import { AbiItem, AbiInput, AbiOutput } from 'web3-utils'
 import styled from 'styled-components'
 import { Input, Button, Tag } from 'antd'
 
-import { ApplicationState } from '../rootReducer'
+import { ApplicationState } from '../../rootReducer'
 
-import { executeContractFunction } from './actions-web3'
+import { executeContractFunction } from '../actions'
 
 const InputGroup = Input.Group
 

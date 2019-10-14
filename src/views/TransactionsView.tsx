@@ -4,9 +4,9 @@ import React from 'react'
 import { Action, ActionCreator, bindActionCreators, Dispatch } from 'redux'
 import { connect } from 'react-redux'
 
-import { Connection, Transaction } from '@solidstudio/solid.types'
+import { Connection, TransactionReceipt } from '@solidstudio/solid.types'
 
-import { getTransactions } from 'features/transactions'
+import { getTransactions } from 'features/transactions/actions'
 import { TransactionsTable } from 'features/transactions/components/TransactionsTable'
 import { ApplicationState } from 'features/rootReducer'
 
@@ -17,7 +17,7 @@ import { StyledDiv, StyledH1 } from './components'
 // }
 
 interface StateProps {
-    transactions: Transaction[]
+    transactions: TransactionReceipt[]
     currentConnection: Connection | undefined
 }
 
@@ -74,7 +74,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
     )
 }
 
-export default connect(
+export default connect<StateProps, DispatchProps, {}, ApplicationState>(
     mapStateToProps,
     mapDispatchToProps
 )(TransactionsView)

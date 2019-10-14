@@ -1,5 +1,5 @@
 import React from 'react'
-import * as R from 'ramda'
+import R from 'ramda'
 
 import { Modal, Button } from 'antd'
 import { Formik, FormikErrors, FormikProps } from 'formik'
@@ -37,7 +37,7 @@ export class GenericModal<FormFields> extends React.Component<Props<FormFields>,
   }
 
   onChange: OnChangeHandler<FormFields> = (field, value) => {
-    const result = R.merge(this.state.fields, { [field]: value }) as any
+    const result = R.merge(this.state.fields as any, { [field]: value }) // TODO: FIX
     this.setState({
       fields: result
     })

@@ -8,8 +8,9 @@ import { Contract } from '@solidstudio/solid.types'
 
 import { ApplicationState } from 'features/rootReducer'
 import { SolidTerminal } from 'features/terminal/SolidTerminal'// TODO: fix import
+import { ContractDetails } from 'features/contracts/components'
 
-import { Wrapper, Editor, Results, ContractDetails, Details } from "./components";
+import { Wrapper, Editor, Results, Details } from "./components";
 
 interface Props {
     selectedContract: Contract | undefined

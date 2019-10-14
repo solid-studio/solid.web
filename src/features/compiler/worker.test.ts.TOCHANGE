@@ -1,3 +1,4 @@
+// TODO: Finish
 describe('Worker tests', () => {
   // TODO: I need to test what is being passed to
   // onmessage and post message

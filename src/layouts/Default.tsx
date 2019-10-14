@@ -15,28 +15,33 @@ import { emitter } from 'features/common/event-emitter'
 
 import { Sidebar, Content, Wrapper, Navbar } from "./components"
 
-interface Props {
+interface StateProps {
+  connections: Connection[]
+  contractDefinitions: ContractDefinition[]
+
+}
+interface DispatchProps {
   loadCompilerVersion: ActionCreator<Action>
   setupMessageDispatcher: ActionCreator<Action>
 
   openConnectionModal: ActionCreator<Action>
-  connections: Connection[]
   getConnections: ActionCreator<Action>
   connectionItemSelected: ActionCreator<Action>
 
   openContractDefinitionsModal: ActionCreator<Action>
-  contractDefinitions: ContractDefinition[]
   getContractDefinitions: ActionCreator<Action>
   contractDefinitionSelected: ActionCreator<Action>
 }
+
+type AllProps = DispatchProps & StateProps // OwnProps & 
 
 interface State {
   collapsed: boolean
 }
 
-export class DefaultLayout extends React.Component<Props, State> {
+export class DefaultLayout extends React.Component<AllProps, State> {
 
-  constructor(props: Props) {
+  constructor(props: AllProps) {
     super(props)
     this.state = {
       collapsed: false,
@@ -92,10 +97,10 @@ export class DefaultLayout extends React.Component<Props, State> {
                 onNewConnectionClick={this.props.openConnectionModal}
               />}
             {!this.state.collapsed &&
-              
+
               <ContractDefinitionsTree
                 onContractDefinitionSelected={this.props.contractDefinitionSelected}
-                contractDefinitions={contractDefinitions}/>}
+                contractDefinitions={contractDefinitions} />}
           </Sidebar>
         </Layout>
         <Content>{this.props.children}</Content>
@@ -106,10 +111,10 @@ export class DefaultLayout extends React.Component<Props, State> {
   }
 }
 
-const mapStateToProps = (state: ApplicationState) => {
+const mapStateToProps = ({ connectionState, contractDefinitionState }: ApplicationState) => {
   return {
-    connections: state.connectionState.connections,
-    contractDefinitions: state.contractDefinitionState.contractDefinitions
+    connections: connectionState.connections,
+    contractDefinitions: contractDefinitionState.contractDefinitions
   }
 }
 
@@ -129,7 +134,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
   )
 }
 
-export default connect(
+export default connect<StateProps, DispatchProps, {}, ApplicationState>(
   mapStateToProps,
   mapDispatchToProps
 )(DefaultLayout)
