@@ -2,7 +2,7 @@ version: 2.0
 
 aliases:
   - &nodejs-docker-image
-    - image: circleci/node:8.12.0
+    - image: circleci/node:10.16.3
   
   - &restore_cache
     restore_cache:
@@ -22,6 +22,7 @@ jobs:
           name: Install NPM
           command: |
             echo 'Installing dependencies'
+            echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
             npm install
       - save_cache: 
           key: node-v1-{{ .Branch }}-{{ checksum "package-lock.json" }}
@@ -71,7 +72,7 @@ jobs:
           command: |
             TAG_VERSION=$(node -p -e "require('./package.json').version")
             echo '$TAG_VERSION' $TAG_VERSION     
-            IMAGE_NAME=edsonalcala/solid-web
+            IMAGE_NAME=solidstudio/web
             docker build -t $IMAGE_NAME:$TAG_VERSION -t $IMAGE_NAME:latest .
             echo $DOCKER_HUB_PASSWORD | docker login -u $DOCKER_HUB_USER --password-stdin
             docker push $IMAGE_NAME:$TAG_VERSION
@@ -105,7 +106,10 @@ workflows:
           requires:
             - tslint
             - unit-tests
-            - e2e-tests 
+            - e2e-tests
+          filters:
+            branches:
+              only: master 
       - publish-to-GKE:
           requires:
             - build-and-push-docker-image
