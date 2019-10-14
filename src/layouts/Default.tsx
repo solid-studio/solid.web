@@ -7,18 +7,18 @@ import { ContractDefinition, Connection } from '@solidstudio/solid.types'
 
 import { openContractDefinitionsModal, contractDefinitionSelected, getContractDefinitions } from 'features/contract-definitions/actions'
 import { openConnectionModal, getConnections, connectionItemSelected } from 'features/connections/actions'
-import { ContractDefinitionsTree, ContractDefinitionsModal } from 'features/contract-definitions'
+import { ContractDefinitionsTree, ContractDefinitionsModal } from 'features/contract-definitions/components'
+import { loadCompilerVersion, setupMessageDispatcher } from 'features/compiler/actions'
 import { ConnectionModal, ConnectionsTree } from 'features/connections/components'
-import { loadCompilerWorker } from 'features/compiler/actions' // TO BE MOVED
 import { ApplicationState } from 'features/rootReducer'
 import { emitter } from 'features/common/event-emitter'
 
 import { Sidebar, Content, Wrapper, Navbar } from "./components"
 
-
 interface Props {
-  loadCompilerWorker: ActionCreator<any> // TO BE REMOVED
-  // NEW
+  loadCompilerVersion: ActionCreator<Action>
+  setupMessageDispatcher: ActionCreator<Action>
+
   openConnectionModal: ActionCreator<Action>
   connections: Connection[]
   getConnections: ActionCreator<Action>
@@ -42,11 +42,15 @@ export class DefaultLayout extends React.Component<Props, State> {
       collapsed: false,
     };
   }
+
   componentDidMount() {
+
     this.props.getConnections();
     this.props.getContractDefinitions();
-    // start worker for compiler and load default version for MVP
-    // this.props.loadCompilerWorker()
+    // TODO: Which version by default?
+    this.props.loadCompilerVersion()
+    this.props.setupMessageDispatcher()
+
     emitter.on("COLLAPSE_RIGHT_SIDEBAR_MENU", () => { // TODO: Fix this.. 
       // this.collapseRightSider()
     })
@@ -111,7 +115,8 @@ const mapStateToProps = (state: ApplicationState) => {
 const mapDispatchToProps = (dispatch: Dispatch) => {
   return bindActionCreators(
     {
-      loadCompilerWorker,
+      loadCompilerVersion,
+      setupMessageDispatcher,
       openConnectionModal,
       getConnections,
       getContractDefinitions,

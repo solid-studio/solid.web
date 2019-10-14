@@ -1,6 +1,6 @@
 import { ActionCreator } from 'redux'
 
-import { Contract } from '@solidstudio/solid.types'
+import { Contract, AbiItem } from '@solidstudio/solid.types'
 
 import { ActionType, ContractsReceivedAction, GetContractsAction, MaximizeContractViewAction } from './action-types'
 
@@ -24,6 +24,40 @@ export const maximizeContractView: ActionCreator<MaximizeContractViewAction> = (
     payload: { ...contract, type: 'contract' }
   }
 }
+
+// executeContractFunction
+export const executeContractFunction: ActionCreator<any> = (abi: AbiItem, parameters: []) => {
+  // TODO: CREATE An ActionType that a certain EPIC will recognize as a web3 action
+  // Define the payload
+}
+
+// 1 Contract -> N Functions -> Each function has state...
+
+// how to handle invidiual elements progress?
+
+// export const executeFunctionCallCompleted: ActionCreator<ActionThunk> = () => {
+//     return (dispatch): Web3Action => {// TODO: FIX TYPE
+//         return {
+//             type: Web3ActionType.Web3Action,
+//             payload: {
+
+//             }
+//         }
+//     }
+// }
+
+// export const executeFunctionCallInProgress: VoidActionCreator = () => {
+//     return (dispatch): Web3Action => { // TODO: FIX TYPE
+//         return {
+//             type: Web3ActionType.Web3Action,
+//             payload: {
+//                 result: undefined,
+//                 status: Status.InProgress
+//             }
+//         }
+//     }
+// }
+
 
 // export const contractSelected: ActionCreator<Action> = (contract: Contract): ContractSelectedAction => {
 //   return {
