@@ -79,13 +79,13 @@ jobs:
             docker push $IMAGE_NAME:$TAG_VERSION
             docker push $IMAGE_NAME:latest
 
-  publish-to-GKE:
+  publish:
     docker: *nodejs-docker-image
     steps:
       - checkout
       - run:
           name: Publishing new version
-          command: echo "publishing to GKE"
+          command: echo "Publishing"
 
 workflows:
   version: 2
@@ -111,7 +111,8 @@ workflows:
           filters:
             branches:
               only: master 
-      - publish-to-GKE:
+      - publish:
+          context: SolidStudio
           requires:
             - build-and-push-docker-image
           filters:
