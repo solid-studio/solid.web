@@ -16,17 +16,17 @@ export interface CompilerState {
 
 const defaultValidateSourceCode: ValidateSourceCode = {
   status: Status.NotStarted,
-  compilerVersion: '0.5.8',
+  compilerVersion: '0.4.24',
   sourceCode: ''
 }
 
 const defaultLoadCompilerRequest: LoadCompilerRequest = {
   status: Status.NotStarted,
-  version: '0.5.8'
+  version: '0.4.24'
 }
 
 export const initialState: CompilerState = {
-  compilerWorker: new CompilerWorker(),
+  compilerWorker: undefined,//new CompilerWorker(),
   loadCompilerRequest: defaultLoadCompilerRequest,
   validateSourceCode: defaultValidateSourceCode
 }

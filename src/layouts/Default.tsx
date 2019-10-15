@@ -53,8 +53,8 @@ export class DefaultLayout extends React.Component<AllProps, State> {
     this.props.getConnections();
     this.props.getContractDefinitions();
     // TODO: Which version by default?
-    this.props.loadCompilerVersion()
-    this.props.setupMessageDispatcher()
+    // this.props.loadCompilerVersion()
+    // this.props.setupMessageDispatcher()
 
     emitter.on("COLLAPSE_RIGHT_SIDEBAR_MENU", () => { // TODO: Fix this.. 
       // this.collapseRightSider()
