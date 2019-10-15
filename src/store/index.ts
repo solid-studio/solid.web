@@ -1,7 +1,7 @@
 import * as createHistory from 'history'
 
-import initialiseStore from './initialiseStore'
+import configureStore from './configureStore'
 
 export const history = createHistory.createBrowserHistory()
 
-export const { store } = initialiseStore(history)
+export const { store } = configureStore()
