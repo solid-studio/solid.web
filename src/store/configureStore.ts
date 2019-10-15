@@ -16,9 +16,7 @@ const initialiseStore = () => {
     dependencies: { getJSON: getJSONInstance, post: ajax.post }
   })
 
-  const middlewares = applyMiddleware(
-    epicMiddleware
-  )
+  const middlewares = applyMiddleware(epicMiddleware)
 
   const store: Store<ApplicationState> = createStore(rootReducer, undefined, composeWithDevTools(middlewares))
 

@@ -6,4 +6,3 @@ solidityCompilerVersionsMap.set('0.4.24', 'soljson-v0.4.24+commit.e67f0147.js')
 const solidityCompilerInstanceMap = new Map()
 
 export { solidityCompilerVersionsMap, solidityCompilerInstanceMap }
-
