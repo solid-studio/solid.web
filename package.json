@@ -76,6 +76,7 @@
     "@types/socket.io-client": "^1.4.32",
     "@types/styled-components": "^4.1.16",
     "coveralls": "^3.0.4",
+    "express": "^4.17.1",
     "jest-junit": "^6.4.0",
     "pad": "^3.2.0",
     "prettier": "^1.17.1",
@@ -84,6 +85,7 @@
     "tslint": "^5.17.0",
     "tslint-config-prettier": "^1.18.0",
     "tslint-react": "^4.0.0",
+    "webpack-dev-middleware": "^3.7.2",
     "worker-loader": "^2.0.0"
   },
   "jest": {
