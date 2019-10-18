@@ -65,6 +65,7 @@ jobs:
 
   build-and-push-docker-image:
     machine: true
+      docker_layer_caching: true
     steps:
       - checkout
       - run:
