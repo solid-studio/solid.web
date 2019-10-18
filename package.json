@@ -47,7 +47,8 @@
     "tslint:fix": "tslint --fix -c tslint.json -p tsconfig.json",
     "prettier": "prettier --write 'src/**/*.{ts,js,json}'",
     "check-formatting": "prettier --list-different 'src/**/*.{ts,ts,js,json}'",
-    "coverage": "npm test -- --coverage"
+    "coverage": "npm test -- --coverage",
+    "postinstall": "patch-package"
   },
   "eslintConfig": {
     "extends": "react-app"
