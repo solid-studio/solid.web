@@ -17,6 +17,7 @@
     "jsdom-worker-fix": "^0.1.8",
     "less": "^3.9.0",
     "less-loader": "^5.0.0",
+    "patch-package": "^6.2.0",
     "ramda": "^0.26.1",
     "react": "^16.9.0",
     "react-console-emulator": "^2.0.0",
