@@ -98,9 +98,6 @@
         "functions": 100,
         "lines": 100
       }
-    },
-    "moduleNameMapper": {
-      "\\worker-loader": "<rootDir>/src/__worker_mocks__/CompilerWorker.ts"
     }
   }
 }
