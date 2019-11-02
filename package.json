@@ -17,6 +17,7 @@
     "jsdom-worker-fix": "^0.1.8",
     "less": "^3.9.0",
     "less-loader": "^5.0.0",
+    "patch-package": "^6.2.0",
     "ramda": "^0.26.1",
     "react": "^16.9.0",
     "react-console-emulator": "^2.0.0",
@@ -46,7 +47,8 @@
     "tslint:fix": "tslint --fix -c tslint.json -p tsconfig.json",
     "prettier": "prettier --write 'src/**/*.{ts,js,json}'",
     "check-formatting": "prettier --list-different 'src/**/*.{ts,ts,js,json}'",
-    "coverage": "npm test -- --coverage"
+    "coverage": "npm test -- --coverage",
+    "postinstall": "patch-package"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -76,6 +78,7 @@
     "@types/socket.io-client": "^1.4.32",
     "@types/styled-components": "^4.1.16",
     "coveralls": "^3.0.4",
+    "express": "^4.17.1",
     "jest-junit": "^6.4.0",
     "pad": "^3.2.0",
     "prettier": "^1.17.1",
@@ -84,6 +87,7 @@
     "tslint": "^5.17.0",
     "tslint-config-prettier": "^1.18.0",
     "tslint-react": "^4.0.0",
+    "webpack-dev-middleware": "^3.7.2",
     "worker-loader": "^2.0.0"
   },
   "jest": {
@@ -94,9 +98,6 @@
         "functions": 100,
         "lines": 100
       }
-    },
-    "moduleNameMapper": {
-      "\\worker-loader": "<rootDir>/src/__worker_mocks__/CompilerWorker.ts"
     }
   }
 }

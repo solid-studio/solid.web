@@ -11,24 +11,16 @@ const addWorkerLoaderModule = () => config => {
     return config;
 }
 
-module.exports = override(
-    addWorkerLoaderModule(),
-    fixBabelImports('import', {
-        libraryName: 'antd',
-        libraryDirectory: 'es',
-        style: 'true',
-    }),
-    addLessLoader({
-        javascriptEnabled: true
-    })
-)
-
-// module.exports = {
-//     webpack: rewireWebpackConfig,
-//     jest: (config) => {
-//         config.moduleNameMapper = {
-//             "\\.worker.js": "<rootDir>/__mocks__/workerMock.js"
-//         };
-//         return config;
-//     }
-// };
+module.exports = {
+    webpack: override(
+        addWorkerLoaderModule(),
+        fixBabelImports('import', {
+            libraryName: 'antd',
+            libraryDirectory: 'es',
+            style: 'true',
+        }),
+        addLessLoader({
+            javascriptEnabled: true
+        })
+    )
+};
