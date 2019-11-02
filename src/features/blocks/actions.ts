@@ -1,6 +1,6 @@
 import { ActionCreator, Action } from 'redux'
 
-import { Block } from '@solidstudio/solid.types'
+import { Block } from '@solidstudio/types'
 
 import { ActionType, BlocksReceivedAction, GetBlocksAction } from './action-types'
 

@@ -1,6 +1,6 @@
 import { Action } from 'redux'
 
-import { TransactionReceipt } from '@solidstudio/solid.types'
+import { TransactionReceipt } from '@solidstudio/types'
 
 export enum ActionType {
   ERROR_WHEN_GETTING_DATA = 'ERROR_WHEN_GETTING_DATA', // TODO: MOVE

@@ -3,7 +3,7 @@ import React from 'react'
 import { Action, ActionCreator, bindActionCreators, Dispatch } from 'redux'
 import { connect } from 'react-redux'
 
-import { Block, Connection } from '@solidstudio/solid.types'
+import { Block, Connection } from '@solidstudio/types'
 
 import { ApplicationState } from 'features/rootReducer'
 import { BlocksTable } from 'features/blocks/components'

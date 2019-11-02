@@ -1,6 +1,6 @@
 import { Reducer } from 'redux'
 
-import { Connection } from '@solidstudio/solid.types'
+import { Connection } from '@solidstudio/types'
 
 import { Status } from '../common/types'
 

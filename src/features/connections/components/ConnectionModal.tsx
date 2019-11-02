@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { Form } from 'antd'
 import { FormikErrors, Field, FieldProps } from 'formik'
 
-import { Connection } from '@solidstudio/solid.types'
+import { Connection } from '@solidstudio/types'
 
 import { ApplicationState } from '../../rootReducer';
 import { InputFormItem } from '../../../components'

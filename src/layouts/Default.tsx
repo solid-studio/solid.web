@@ -3,7 +3,7 @@ import { Action, ActionCreator, bindActionCreators, Dispatch } from 'redux'
 import { connect } from 'react-redux'
 import { Layout } from 'antd'
 
-import { ContractDefinition, Connection } from '@solidstudio/solid.types'
+import { ContractDefinition, Connection } from '@solidstudio/types'
 
 import { openContractDefinitionsModal, contractDefinitionSelected, getContractDefinitions } from 'features/contract-definitions/actions'
 import { openConnectionModal, getConnections, connectionItemSelected } from 'features/connections/actions'

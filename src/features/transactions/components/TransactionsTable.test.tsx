@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react'
 
-import { TransactionReceipt, buildFakeTransactionReceipts } from '@solidstudio/solid.types'
+import { TransactionReceipt, buildFakeTransactionReceipts } from '@solidstudio/types'
 
 import { TransactionsTable } from './TransactionsTable'
 

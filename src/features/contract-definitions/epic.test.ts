@@ -2,7 +2,7 @@ import { ActionsObservable, StateObservable } from 'redux-observable'
 import { Subject, of } from 'rxjs'
 import { AjaxCreationMethod } from 'rxjs/internal/observable/dom/AjaxObservable'
 
-import { buildFakeContractDefinitions, buildFakeContractDefinition } from '@solidstudio/solid.types'
+import { buildFakeContractDefinitions, buildFakeContractDefinition } from '@solidstudio/types'
 
 import { ApplicationState, initialState } from '../rootReducer'
 import { openOrSetTabActive } from 'features/tabs/actions'

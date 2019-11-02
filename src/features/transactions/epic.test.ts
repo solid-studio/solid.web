@@ -2,7 +2,7 @@ import { ActionsObservable, StateObservable } from 'redux-observable'
 import { Subject, of } from 'rxjs'
 import { AjaxCreationMethod } from 'rxjs/internal/observable/dom/AjaxObservable'
 
-import { buildFakeTransactionReceipts } from '@solidstudio/solid.types'
+import { buildFakeTransactionReceipts } from '@solidstudio/types'
 
 import { ApplicationState, initialState } from '../rootReducer'
 

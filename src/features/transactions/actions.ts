@@ -1,6 +1,6 @@
 import { ActionCreator, Action } from 'redux'
 
-import { TransactionReceipt } from '@solidstudio/solid.types'
+import { TransactionReceipt } from '@solidstudio/types'
 
 import { ActionType, TransactionsReceivedAction, GetTransactionsAction } from './action-types'
 

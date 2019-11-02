@@ -1,6 +1,6 @@
 import { ActionCreator } from 'redux'
 
-import { Connection } from '@solidstudio/solid.types'
+import { Connection } from '@solidstudio/types'
 
 import {
   ActionType,

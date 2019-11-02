@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { Form } from 'antd'
 import { FormikErrors, Field, FieldProps } from 'formik'
 
-import { ContractDefinition } from '@solidstudio/solid.types'
+import { ContractDefinition } from '@solidstudio/types'
 
 import { InputFormItem, TextAreaFormItem } from 'components'
 

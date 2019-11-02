@@ -4,7 +4,7 @@ import { Action, ActionCreator, bindActionCreators, Dispatch } from 'redux'
 import { connect } from 'react-redux'
 import { Layout } from 'antd'
 
-import { Contract, Connection } from '@solidstudio/solid.types'
+import { Contract, Connection } from '@solidstudio/types'
 
 import { getContracts, maximizeContractView } from 'features/contracts/actions'
 import { ContractsTable, ContractDetails } from 'features/contracts/components'

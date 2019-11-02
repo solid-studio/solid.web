@@ -1,4 +1,4 @@
-import { buildFakeContractDefinition, buildFakeContractDefinitions } from '@solidstudio/solid.types'
+import { buildFakeContractDefinition, buildFakeContractDefinitions } from '@solidstudio/types'
 
 import {
   closeContractDefinitionsModal,

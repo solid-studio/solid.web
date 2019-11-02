@@ -2,7 +2,7 @@ import React from 'react'
 import { Action, ActionCreator } from 'redux'
 import { Icon } from 'antd'
 
-import { Connection } from '@solidstudio/solid.types'
+import { Connection } from '@solidstudio/types'
 
 import { ConnectionsTreeComponent } from './ConnectionsTreeComponent'
 import { TreeNodeStyled } from 'components/GenericTreeStyledComponents'

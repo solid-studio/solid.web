@@ -1,4 +1,4 @@
-import { ContractDefinition } from '@solidstudio/solid.types'
+import { ContractDefinition } from '@solidstudio/types'
 
 export interface ContractDefinitionItem extends ContractDefinition {
   type: 'contract-definition'

@@ -2,7 +2,7 @@ import React from 'react'
 import { render, fireEvent, wait } from '@testing-library/react'
 import '@testing-library/jest-dom/extend-expect';
 
-import { buildFakeConnections } from '@solidstudio/solid.types'
+import { buildFakeConnections } from '@solidstudio/types'
 
 import { getMouseEvent } from 'utils/getMouseEvent';
 

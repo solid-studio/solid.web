@@ -3,7 +3,7 @@ import React from 'react'
 import { ActionCreator, Action } from 'redux'
 import { Icon } from 'antd'
 
-import { ContractDefinition } from '@solidstudio/solid.types'
+import { ContractDefinition } from '@solidstudio/types'
 
 import { ContractDefinitionsTreeComponent } from './ContractDefinitionsTreeComponent'
 import { TreeNodeStyled } from 'components/GenericTreeStyledComponents'
@@ -24,12 +24,12 @@ export class ContractDefinitionsTree extends React.Component<Props> {
         onPlusClick={undefined}
         onCollapseClick={undefined}
         DataRowComponentRender={(item: ContractDefinition) => (
-          
+
           <TreeNodeStyled
             icon={<Icon type="file" />}
             title={item.name}
             key={item.id}
-            style={{ color: 'white' }}/>
+            style={{ color: 'white' }} />
         )}
         selectorPrefix="contract-definitions"
         onClickDataItem={(value: string | undefined | string[], props: any) => {

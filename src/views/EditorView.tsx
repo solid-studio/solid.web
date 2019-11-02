@@ -4,7 +4,7 @@ import React from 'react'
 import MonacoEditor from 'react-monaco-editor'
 import { connect } from 'react-redux'
 
-import { Contract } from '@solidstudio/solid.types'
+import { Contract } from '@solidstudio/types'
 
 import { ApplicationState } from 'features/rootReducer'
 import { SolidTerminal } from 'features/terminal/SolidTerminal'// TODO: fix import

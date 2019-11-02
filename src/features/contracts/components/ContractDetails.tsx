@@ -4,7 +4,7 @@ import copy from 'copy-to-clipboard'
 import { AbiItem } from 'web3-utils'
 import { Icon, Collapse } from 'antd'
 
-import { Contract } from '@solidstudio/solid.types'
+import { Contract } from '@solidstudio/types'
 
 import ContractActionView from './ContractActionView'
 

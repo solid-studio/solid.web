@@ -1,6 +1,6 @@
 import { Action } from 'redux'
 
-import { Connection } from '@solidstudio/solid.types'
+import { Connection } from '@solidstudio/types'
 
 import { ConnectionItem } from './types'
 

@@ -1,4 +1,4 @@
-import { buildFakeTransactionReceipts, TransactionReceipt } from '@solidstudio/solid.types'
+import { buildFakeTransactionReceipts, TransactionReceipt } from '@solidstudio/types'
 
 import { appReducer, initialState } from './reducer'
 import { transactionsReceived } from './actions'

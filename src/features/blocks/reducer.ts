@@ -1,6 +1,6 @@
 import { Reducer } from 'redux'
 
-import { Block } from '@solidstudio/solid.types'
+import { Block } from '@solidstudio/types'
 
 import { Status } from '../common/types'
 import { ActionType, Actions } from './action-types'

@@ -1,6 +1,6 @@
 import { Action } from 'redux'
 
-import { ContractDefinition } from '@solidstudio/solid.types'
+import { ContractDefinition } from '@solidstudio/types'
 
 import { ContractDefinitionItem } from './types'
 

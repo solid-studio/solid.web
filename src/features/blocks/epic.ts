@@ -3,7 +3,7 @@ import { of } from 'rxjs'
 import { switchMap, map, catchError } from 'rxjs/operators'
 import { AjaxCreationMethod } from 'rxjs/internal/observable/dom/AjaxObservable'
 
-import { Block } from '@solidstudio/solid.types'
+import { Block } from '@solidstudio/types'
 
 import { ApplicationState } from 'features/rootReducer'
 import { GenericArrayResponse } from 'features/common/types'

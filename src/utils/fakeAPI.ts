@@ -7,7 +7,7 @@ import {
   buildFakeConnections,
   buildFakeContracts,
   buildFakeBlocks
-} from '@solidstudio/solid.types'
+} from '@solidstudio/types'
 
 import { TRANSACTIONS_URL } from 'features/transactions/constants'
 

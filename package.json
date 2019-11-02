@@ -7,7 +7,7 @@
     "@feathersjs/feathers": "^4.3.2",
     "@feathersjs/socketio": "^4.3.2",
     "@feathersjs/socketio-client": "^4.3.2",
-    "@solidstudio/solid.types": "^1.1.12",
+    "@solidstudio/types": "^1.1.0",
     "@testing-library/jest-dom": "^4.1.0",
     "antd": "^3.19.2",
     "babel-plugin-import": "^1.12.0",

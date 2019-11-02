@@ -1,4 +1,4 @@
-import { buildFakeContracts } from '@solidstudio/solid.types'
+import { buildFakeContracts } from '@solidstudio/types'
 
 import { appReducer, initialState } from './reducer'
 import { contractsReceived } from './actions'
