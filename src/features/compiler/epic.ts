@@ -71,7 +71,7 @@ import { Status } from 'features/common/types'
 export const loadCompilerVersionEpic = (action$: ActionsObservable<any>, state$: StateObservable<ApplicationState>) =>
   action$.pipe(
     ofType(MessageType.LOAD_COMPILER_VERSION),
-    map((message) => {
+    map(message => {
       const workerInstance = state$.value.compilerState.compilerWorker
       console.log('WORKER INSTANCE', workerInstance)
       if (workerInstance) {
@@ -101,9 +101,7 @@ export const loadCompilerVersionEpic = (action$: ActionsObservable<any>, state$:
 //     })
 //   )
 
-export const loadCompilerVersionResultSuccessEpic = (
-  action$: ActionsObservable<any>
-) =>
+export const loadCompilerVersionResultSuccessEpic = (action$: ActionsObservable<any>) =>
   action$.pipe(
     ofType(MessageType.LOAD_COMPILER_VERSION_RESULT),
     tap(({ payload }) => {
@@ -111,9 +109,7 @@ export const loadCompilerVersionResultSuccessEpic = (
       console.log('PAYLOAD ', payload)
     }),
     filter(({ payload }) => {
-      return (
-        payload.status == Status.Completed
-      )
+      return payload.status === Status.Completed
     }),
     map(({ payload }) => {
       // TODO: UPDATE VERSIONS DROPDOWN...

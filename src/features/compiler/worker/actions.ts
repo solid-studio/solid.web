@@ -19,7 +19,7 @@ export const loadCompilerVersionMessage = (version: SolidityVersionType): ILoadC
 
 export const compilerVersionLoadedMessage = (version: SolidityVersionType): ILoadCompilerVersionResultMessage => {
   return {
-    type: MessageType.LOAD_COMPILER_VERSION_RESULT,//.COMPILER_VERSION_LOADED,
+    type: MessageType.LOAD_COMPILER_VERSION_RESULT, // .COMPILER_VERSION_LOADED,
     payload: {
       version,
       status: Status.Completed
@@ -37,7 +37,9 @@ export const loadCompilerVersionFailedMessage = (version: SolidityVersionType): 
   }
 }
 
-export const loadCompilerVersionInProgressMessage = (version: SolidityVersionType): ILoadCompilerVersionInProgressMessage => {
+export const loadCompilerVersionInProgressMessage = (
+  version: SolidityVersionType
+): ILoadCompilerVersionInProgressMessage => {
   return {
     type: MessageType.LOAD_COMPILER_VERSION_IN_PROGRESS,
     payload: {

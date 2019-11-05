@@ -46,7 +46,7 @@ export interface OpenFileSystemDialogAction extends Action {
 }
 
 export interface FilesReceivedAction extends Action {
-  type: ActionType.FILES_RECEIVED,
+  type: ActionType.FILES_RECEIVED
   payload: FileItem[]
 }
 

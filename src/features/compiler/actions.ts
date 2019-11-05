@@ -17,13 +17,12 @@ import {
 
 const HARDCODED_SOLIDITY_VERSION = '0.4.24'
 
-
 export const compilerVersionLoading: ActionCreator<Action> = (version: SolidityVersionType) => {
   return loadCompilerVersionInProgressMessage(version) // MOVER ACA.. esto no es del worker..
 }
 
 export const loadCompilerVersion: ActionCreator<LoadCompilerVersionAction> = (): LoadCompilerVersionAction => {
-  console.log("loadCompilerVersion called")
+  console.log('loadCompilerVersion called')
   return loadCompilerVersionMessage(HARDCODED_SOLIDITY_VERSION) // TODO TO REMOVE
 }
 

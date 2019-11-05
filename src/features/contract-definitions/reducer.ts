@@ -16,7 +16,7 @@ export interface ContractDefinitionState {
 }
 
 export const initialState: ContractDefinitionState = {
-  contractDefinitions: buildFakeContractDefinitions(),//[],
+  contractDefinitions: buildFakeContractDefinitions(), // [],
   currentContractDefinition: undefined,
   getContractDefinitionsStatus: Status.NotStarted,
   contractDefinitionModalOpen: false,

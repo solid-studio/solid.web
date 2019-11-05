@@ -9,7 +9,12 @@ import { ApplicationState } from 'features/rootReducer'
 import { openOrSetTabActive } from 'features/tabs/actions'
 import { GenericArrayResponse } from 'features/common/types'
 
-import { ActionType, GetContractDefinitionsAction, ContractDefinitionSelectedAction, OpenFileSystemDialogAction } from './action-types'
+import {
+  ActionType,
+  GetContractDefinitionsAction,
+  ContractDefinitionSelectedAction,
+  OpenFileSystemDialogAction
+} from './action-types'
 import { contractDefinitionsReceived, filesReceived } from './actions'
 import { CONTRACT_DEFINITIONS_URL } from './constants'
 
@@ -49,14 +54,17 @@ export const onContractDefinitionSelectedEpic = (action$: ActionsObservable<Cont
     })
   )
 
-export const onOpenFileSystemDialog = (action$: ActionsObservable<OpenFileSystemDialogAction>,
+export const onOpenFileSystemDialog = (
+  action$: ActionsObservable<OpenFileSystemDialogAction>,
   state$: StateObservable<ApplicationState>,
-  ajax: any) =>
+  ajax: any
+) =>
   action$.pipe(
     ofType(ActionType.OPEN_FILESYSTEM_DIALOG),
     switchMap(() => {
       return from(ajax.openDialog()).pipe(
-        map((response: any) => { // TODO: IMPROVE TYPE
+        map((response: any) => {
+          // TODO: IMPROVE TYPE
           return filesReceived(response.allFileStructure)
         }),
         catchError(error =>
@@ -70,4 +78,8 @@ export const onOpenFileSystemDialog = (action$: ActionsObservable<OpenFileSystem
     })
   )
 
-export const contractDefinitionsEpic = combineEpics(getContractDefinitionsEpic, onContractDefinitionSelectedEpic, onOpenFileSystemDialog)
+export const contractDefinitionsEpic = combineEpics(
+  getContractDefinitionsEpic,
+  onContractDefinitionSelectedEpic,
+  onOpenFileSystemDialog
+)
