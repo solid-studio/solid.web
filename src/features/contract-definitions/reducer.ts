@@ -1,6 +1,6 @@
 import { Reducer } from 'redux'
 
-import { ContractDefinition, buildFakeContractDefinitions, FileItem, buildFakeFileItems } from '@solidstudio/types'
+import { ContractDefinition, FileItem } from '@solidstudio/types'
 
 import { Status } from '../common/types'
 
@@ -16,12 +16,12 @@ export interface ContractDefinitionState {
 }
 
 export const initialState: ContractDefinitionState = {
-  contractDefinitions: buildFakeContractDefinitions(), // [],
+  contractDefinitions: [],
   currentContractDefinition: undefined,
   getContractDefinitionsStatus: Status.NotStarted,
   contractDefinitionModalOpen: false,
   createContractDefinitionStatus: Status.NotStarted,
-  fileItems: buildFakeFileItems()
+  fileItems: []
 }
 
 export const appReducer: Reducer<ContractDefinitionState, Actions> = (
