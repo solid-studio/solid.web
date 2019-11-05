@@ -1,7 +1,7 @@
 import { buildFakeTransactionReceipts, TransactionReceipt } from '@solidstudio/types'
 
 import { appReducer, initialState } from './reducer'
-import { loadCompilerVersion, loadCompilerVersionFailed } from './actions'
+import { loadCompilerVersion } from './actions'
 import { Status } from '../common/types'
 
 // TODO: to complete
