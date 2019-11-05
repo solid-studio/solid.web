@@ -21,7 +21,9 @@ export const SidebarTitle = styled.h3`
   font-size: 1em;
 `
 
-export const SidebarHeaderButtons = styled.div``
+export const SidebarHeaderButtons = styled.div`
+  display: flex;
+`
 
 export const TreeNodeStyled = styled(TreeNode)`
   span {

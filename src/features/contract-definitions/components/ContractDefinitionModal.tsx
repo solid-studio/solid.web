@@ -47,7 +47,9 @@ const defaultContractDefinition: ContractDefinition = {
   sourceCode: '',
   abi: [],
   bytecode: '',
-  runtimeBycode: ''
+  runtimeBycode: '',
+  sourceMap: '',
+  deployedSourceMap: ''
 }
 
 interface OwnProps {

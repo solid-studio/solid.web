@@ -2,6 +2,7 @@ import { Action } from 'redux'
 import { Status } from '../../common/types'
 
 export enum MessageType {
+  LOAD_COMPILER_VERSION_IN_PROGRESS = 'LOAD_COMPILER_VERSION_IN_PROGRESS',
   LOAD_COMPILER_VERSION = 'LOAD_COMPILER_VERSION',
   LOAD_COMPILER_VERSION_RESULT = 'LOAD_COMPILER_VERSION_RESULT',
   COMPILE = 'COMPILE',
@@ -15,6 +16,13 @@ export type SolidityVersionType = '0.4.24' | '0.4.25' | '0.5.8' // TODO: add oth
 
 export interface ILoadCompilerVersionMessage extends Action {
   type: MessageType.LOAD_COMPILER_VERSION
+  payload: {
+    version: SolidityVersionType
+  }
+}
+
+export interface ILoadCompilerVersionInProgressMessage extends Action {
+  type: MessageType.LOAD_COMPILER_VERSION_IN_PROGRESS
   payload: {
     version: SolidityVersionType
   }
@@ -75,6 +83,7 @@ export type MyWorkerMessage =
   | ICompileMessage
   | ICompileResultMessage
   | IErrorMessage
+  | ILoadCompilerVersionInProgressMessage
 
 export interface IMessageEvent extends MessageEvent {
   data: MyWorkerMessage

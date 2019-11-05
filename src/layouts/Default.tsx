@@ -3,12 +3,12 @@ import { Action, ActionCreator, bindActionCreators, Dispatch } from 'redux'
 import { connect } from 'react-redux'
 import { Layout } from 'antd'
 
-import { ContractDefinition, Connection } from '@solidstudio/types'
+import { Connection, FileItem } from '@solidstudio/types'
 
-import { openContractDefinitionsModal, contractDefinitionSelected, getContractDefinitions } from 'features/contract-definitions/actions'
+import { openContractDefinitionsModal, contractDefinitionSelected, getContractDefinitions, openFileSystemDialog } from 'features/contract-definitions/actions'
 import { openConnectionModal, getConnections, connectionItemSelected } from 'features/connections/actions'
 import { ContractDefinitionsTree, ContractDefinitionsModal } from 'features/contract-definitions/components'
-import { loadCompilerVersion, setupMessageDispatcher } from 'features/compiler/actions'
+import { loadCompilerVersion } from 'features/compiler/actions'
 import { ConnectionModal, ConnectionsTree } from 'features/connections/components'
 import { ApplicationState } from 'features/rootReducer'
 import { emitter } from 'features/common/event-emitter'
@@ -17,12 +17,11 @@ import { Sidebar, Content, Wrapper, Navbar } from "./components"
 
 interface StateProps {
   connections: Connection[]
-  contractDefinitions: ContractDefinition[]
+  fileItems: FileItem[]
 
 }
 interface DispatchProps {
   loadCompilerVersion: ActionCreator<Action>
-  setupMessageDispatcher: ActionCreator<Action>
 
   openConnectionModal: ActionCreator<Action>
   getConnections: ActionCreator<Action>
@@ -31,6 +30,8 @@ interface DispatchProps {
   openContractDefinitionsModal: ActionCreator<Action>
   getContractDefinitions: ActionCreator<Action>
   contractDefinitionSelected: ActionCreator<Action>
+
+  openFileSystemDialog: ActionCreator<Action>
 }
 
 type AllProps = DispatchProps & StateProps // OwnProps & 
@@ -52,14 +53,11 @@ export class DefaultLayout extends React.Component<AllProps, State> {
 
     this.props.getConnections();
     this.props.getContractDefinitions();
-    // TODO: Which version by default?
-    // this.props.loadCompilerVersion()
-    // this.props.setupMessageDispatcher()
-
+    // TODO: 0.4.24 by default
+    this.props.loadCompilerVersion()
     emitter.on("COLLAPSE_RIGHT_SIDEBAR_MENU", () => { // TODO: Fix this.. 
       // this.collapseRightSider()
     })
-
   }
 
   collapseRightSider = () => {
@@ -81,7 +79,7 @@ export class DefaultLayout extends React.Component<AllProps, State> {
   };
 
   render() {
-    const { connections, contractDefinitions } = this.props
+    const { connections, fileItems } = this.props
     return (
       <Wrapper {...this.props} onClick={this.onIDEClick}>
         <Navbar
@@ -99,8 +97,9 @@ export class DefaultLayout extends React.Component<AllProps, State> {
             {!this.state.collapsed &&
 
               <ContractDefinitionsTree
+                onFolderUploadClick={this.props.openFileSystemDialog}
                 onContractDefinitionSelected={this.props.contractDefinitionSelected}
-                contractDefinitions={contractDefinitions} />}
+                fileItems={fileItems} />}
           </Sidebar>
         </Layout>
         <Content>{this.props.children}</Content>
@@ -114,7 +113,7 @@ export class DefaultLayout extends React.Component<AllProps, State> {
 const mapStateToProps = ({ connectionState, contractDefinitionState }: ApplicationState) => {
   return {
     connections: connectionState.connections,
-    contractDefinitions: contractDefinitionState.contractDefinitions
+    fileItems: contractDefinitionState.fileItems
   }
 }
 
@@ -122,13 +121,13 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
   return bindActionCreators(
     {
       loadCompilerVersion,
-      setupMessageDispatcher,
       openConnectionModal,
       getConnections,
       getContractDefinitions,
       openContractDefinitionsModal,
       contractDefinitionSelected,
-      connectionItemSelected
+      connectionItemSelected,
+      openFileSystemDialog
     },
     dispatch
   )

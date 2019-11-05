@@ -1,6 +1,6 @@
 import { Action } from 'redux'
 
-import { ContractDefinition } from '@solidstudio/types'
+import { ContractDefinition, FileItem } from '@solidstudio/types'
 
 import { ContractDefinitionItem } from './types'
 
@@ -12,7 +12,9 @@ export enum ActionType {
   CLOSE_CONTRACT_DEFINITION_MODAL = 'CLOSE_CONTRACT_DEFINITION_MODAL',
   OPEN_CONTRACT_DEFINITION_MODAL = 'OPEN_CONTRACT_DEFINITION_MODAL',
   CREATE_CONTRACT_DEFINITION = 'CREATE_CONTRACT_DEFINITION',
-  CONTRACT_DEFINITION_CREATED = 'CONTRACT_DEFINITION_CREATED'
+  CONTRACT_DEFINITION_CREATED = 'CONTRACT_DEFINITION_CREATED',
+  OPEN_FILESYSTEM_DIALOG = 'OPEN_FILESYSTEM_DIALOG',
+  FILES_RECEIVED = 'FILES_RECEIVED'
 }
 
 export interface ContractDefinitionModalAction extends Action {
@@ -39,9 +41,20 @@ export interface CreateContractDefinitionAction extends Action {
   payload: ContractDefinition
 }
 
+export interface OpenFileSystemDialogAction extends Action {
+  type: ActionType.OPEN_FILESYSTEM_DIALOG
+}
+
+export interface FilesReceivedAction extends Action {
+  type: ActionType.FILES_RECEIVED,
+  payload: FileItem[]
+}
+
 export type Actions =
   | ContractDefinitionModalAction
   | GetContractDefinitionsAction
   | ContractDefinitionsReceivedAction
   | ContractDefinitionSelectedAction
   | CreateContractDefinitionAction
+  | OpenFileSystemDialogAction
+  | FilesReceivedAction

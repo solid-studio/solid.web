@@ -4,11 +4,11 @@ import {
   ILoadCompilerVersionMessage,
   MessageType,
   SolidityVersionType,
-  ILoadCompilerVersionResultMessage
+  ILoadCompilerVersionResultMessage,
+  ILoadCompilerVersionInProgressMessage
 } from './message-types'
 
 export const loadCompilerVersionMessage = (version: SolidityVersionType): ILoadCompilerVersionMessage => {
-  console.log('LOAD COMPILER WORKER CALLED')
   return {
     type: MessageType.LOAD_COMPILER_VERSION,
     payload: {
@@ -19,7 +19,7 @@ export const loadCompilerVersionMessage = (version: SolidityVersionType): ILoadC
 
 export const compilerVersionLoadedMessage = (version: SolidityVersionType): ILoadCompilerVersionResultMessage => {
   return {
-    type: MessageType.LOAD_COMPILER_VERSION_RESULT,
+    type: MessageType.LOAD_COMPILER_VERSION_RESULT,//.COMPILER_VERSION_LOADED,
     payload: {
       version,
       status: Status.Completed
@@ -33,6 +33,15 @@ export const loadCompilerVersionFailedMessage = (version: SolidityVersionType): 
     payload: {
       version,
       status: Status.Failed
+    }
+  }
+}
+
+export const loadCompilerVersionInProgressMessage = (version: SolidityVersionType): ILoadCompilerVersionInProgressMessage => {
+  return {
+    type: MessageType.LOAD_COMPILER_VERSION_IN_PROGRESS,
+    payload: {
+      version
     }
   }
 }

@@ -18,16 +18,20 @@ interface Props<T> {
     dataItems: T[]
     onClickDataItem?: ActionCreator<Action> | any// TODO FIX
     headerTitle: string
+    showFolderUpload?: boolean
+    onFolderUploadClick?: ActionCreator<Action>
     onPlusClick?: ActionCreator<Action>
     onCollapseClick?: ActionCreator<Action>
     rightClickMenuItems?: MenuItemOption[]
     selectorPrefix: string
+    onExpand?: any // TODO
     DataRowComponentRender: (t: T) => React.ReactNode | React.ComponentClass<DataRowProps<T>> | React.StatelessComponent<DataRowProps<T>>
 }
 
 interface State {
     rightClickNodeTreeItem: any
-    selectedKeys: string[] | undefined
+    selectedKeys: string[] | undefined,
+    expandedKeys: string[] | undefined
 }
 
 export class GenericTree<T> extends React.Component<Props<T>, State> {
@@ -39,7 +43,8 @@ export class GenericTree<T> extends React.Component<Props<T>, State> {
         super(props)
         this.state = {
             rightClickNodeTreeItem: {},
-            selectedKeys: []
+            selectedKeys: [],
+            expandedKeys: []
         }
 
     }
@@ -61,9 +66,19 @@ export class GenericTree<T> extends React.Component<Props<T>, State> {
         }, () => callback())
     }
 
+    onExpand = (expandedKeys: string[] | undefined, info: any) => {
+        // { expanded: bool, node }
+        this.setState({
+            expandedKeys
+        }, () => {
+            if (this.props.onExpand) {
+                this.props.onExpand(expandedKeys, info)
+            }
+        })
+    }
+
     onSelect = (selectedKeys: string[] | undefined, info: any) => {
         emitter.emit("UNSELECT_OTHER_TREES", () => {
-
             this.setState({
                 selectedKeys
             }, () => {
@@ -118,21 +133,26 @@ export class GenericTree<T> extends React.Component<Props<T>, State> {
     }
 
     render() {
-        const { dataItems, DataRowComponentRender, headerTitle, onPlusClick, selectorPrefix, onCollapseClick } = this.props
+        const { dataItems, DataRowComponentRender, onFolderUploadClick, showFolderUpload, headerTitle, onPlusClick, selectorPrefix } = this.props
         return (
             <div style={{ overflow: 'scroll', height: '100%' }}>
                 {this.getNodeTreeRightClickMenu()}
                 <SidebarHeader>
                     <SidebarTitle data-testid={`${selectorPrefix}-tree-header`}>{headerTitle}</SidebarTitle>
-                    <SidebarHeaderButtons>
-                        <Icon type="plus" data-testid={`${selectorPrefix}-tree-plus`} style={{ color: 'white', paddingRight: '0.5em' }} onClick={onPlusClick} />
-                        <Icon type="down" data-testid={`${selectorPrefix}-tree-down`} style={{ color: 'white' }} onClick={onCollapseClick} />
+                    <SidebarHeaderButtons className="sidebar-header">
+                        {/* <Icon type="down" data-testid={`${selectorPrefix}-tree-down`} style={{ color: 'white' }} onClick={onCollapseClick} /> */}
+                        <Icon type="plus" data-testid={`${selectorPrefix}-tree-plus`} style={{ color: 'white', paddingRight: '0.5em', marginTop: "0.1em" }} onClick={onPlusClick} />
+                        {showFolderUpload && onFolderUploadClick &&
+                            <Icon type="folder-add" data-testid={`${selectorPrefix}-tree-plus`} style={{ color: 'white', paddingRight: '0.5em', fontSize: "1.2em", cursor: "pointer" }} onClick={onFolderUploadClick} />
+                        }
                     </SidebarHeaderButtons>
                 </SidebarHeader>
                 {dataItems.length > 0 && (
                     <DirectoryTreeStyled
                         onSelect={this.onSelect}
                         multiple={true}
+                        onExpand={this.onExpand}
+                        expandedKeys={this.state.expandedKeys}
                         onRightClick={this.rightClickOnTree}
                         selectedKeys={this.state.selectedKeys}
                         defaultExpandAll={true}

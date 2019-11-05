@@ -26,7 +26,7 @@ const defaultLoadCompilerRequest: LoadCompilerRequest = {
 }
 
 export const initialState: CompilerState = {
-  compilerWorker: undefined, // new CompilerWorker(),
+  compilerWorker: new CompilerWorker(),
   loadCompilerRequest: defaultLoadCompilerRequest,
   validateSourceCode: defaultValidateSourceCode
 }

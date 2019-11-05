@@ -1,6 +1,6 @@
-import { ActionCreator, Action } from 'redux'
+import { ActionCreator } from 'redux'
 
-import { ContractDefinition } from '@solidstudio/types'
+import { ContractDefinition, FileItem } from '@solidstudio/types'
 
 import {
   ActionType,
@@ -8,7 +8,9 @@ import {
   ContractDefinitionsReceivedAction,
   ContractDefinitionModalAction,
   CreateContractDefinitionAction,
-  ContractDefinitionSelectedAction
+  ContractDefinitionSelectedAction,
+  OpenFileSystemDialogAction,
+  FilesReceivedAction
 } from './action-types'
 import { ContractDefinitionItem } from './types'
 
@@ -68,5 +70,18 @@ export const contractDefinitionSelected: ActionCreator<ContractDefinitionSelecte
   return {
     type: ActionType.CONTRACT_DEFINITION_SELECTED,
     payload: values
+  }
+}
+
+export const openFileSystemDialog: ActionCreator<OpenFileSystemDialogAction> = (): OpenFileSystemDialogAction => {
+  return {
+    type: ActionType.OPEN_FILESYSTEM_DIALOG
+  }
+}
+
+export const filesReceived: ActionCreator<FilesReceivedAction> = (fileItems: FileItem[]): FilesReceivedAction => {
+  return {
+    type: ActionType.FILES_RECEIVED,
+    payload: fileItems
   }
 }

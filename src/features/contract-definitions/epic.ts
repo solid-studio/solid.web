@@ -1,5 +1,5 @@
 import { ofType, combineEpics, ActionsObservable, StateObservable } from 'redux-observable'
-import { of } from 'rxjs'
+import { of, from } from 'rxjs'
 import { switchMap, map, catchError, tap } from 'rxjs/operators'
 import { AjaxCreationMethod } from 'rxjs/internal/observable/dom/AjaxObservable'
 
@@ -9,8 +9,8 @@ import { ApplicationState } from 'features/rootReducer'
 import { openOrSetTabActive } from 'features/tabs/actions'
 import { GenericArrayResponse } from 'features/common/types'
 
-import { ActionType, GetContractDefinitionsAction, ContractDefinitionSelectedAction } from './action-types'
-import { contractDefinitionsReceived } from './actions'
+import { ActionType, GetContractDefinitionsAction, ContractDefinitionSelectedAction, OpenFileSystemDialogAction } from './action-types'
+import { contractDefinitionsReceived, filesReceived } from './actions'
 import { CONTRACT_DEFINITIONS_URL } from './constants'
 
 type Response = GenericArrayResponse<ContractDefinition>
@@ -49,4 +49,25 @@ export const onContractDefinitionSelectedEpic = (action$: ActionsObservable<Cont
     })
   )
 
-export const contractDefinitionsEpic = combineEpics(getContractDefinitionsEpic, onContractDefinitionSelectedEpic)
+export const onOpenFileSystemDialog = (action$: ActionsObservable<OpenFileSystemDialogAction>,
+  state$: StateObservable<ApplicationState>,
+  ajax: any) =>
+  action$.pipe(
+    ofType(ActionType.OPEN_FILESYSTEM_DIALOG),
+    switchMap(() => {
+      return from(ajax.openDialog()).pipe(
+        map((response: any) => { // TODO: IMPROVE TYPE
+          return filesReceived(response.allFileStructure)
+        }),
+        catchError(error =>
+          of({
+            type: ActionType.ERROR_WHEN_GETTING_DATA,
+            payload: error.xhr.response,
+            error: true
+          })
+        )
+      )
+    })
+  )
+
+export const contractDefinitionsEpic = combineEpics(getContractDefinitionsEpic, onContractDefinitionSelectedEpic, onOpenFileSystemDialog)

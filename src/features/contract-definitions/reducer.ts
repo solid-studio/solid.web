@@ -1,6 +1,6 @@
 import { Reducer } from 'redux'
 
-import { ContractDefinition } from '@solidstudio/types'
+import { ContractDefinition, buildFakeContractDefinitions, FileItem, buildFakeFileItems } from '@solidstudio/types'
 
 import { Status } from '../common/types'
 
@@ -12,14 +12,16 @@ export interface ContractDefinitionState {
   getContractDefinitionsStatus: Status
   contractDefinitionModalOpen: boolean
   createContractDefinitionStatus: Status
+  fileItems: FileItem[]
 }
 
 export const initialState: ContractDefinitionState = {
-  contractDefinitions: [],
+  contractDefinitions: buildFakeContractDefinitions(),//[],
   currentContractDefinition: undefined,
   getContractDefinitionsStatus: Status.NotStarted,
   contractDefinitionModalOpen: false,
-  createContractDefinitionStatus: Status.NotStarted
+  createContractDefinitionStatus: Status.NotStarted,
+  fileItems: buildFakeFileItems()
 }
 
 export const appReducer: Reducer<ContractDefinitionState, Actions> = (
@@ -27,6 +29,8 @@ export const appReducer: Reducer<ContractDefinitionState, Actions> = (
   action: Actions
 ): ContractDefinitionState => {
   switch (action.type) {
+    case ActionType.FILES_RECEIVED:
+      return { ...state, fileItems: action.payload }
     case ActionType.CLOSE_CONTRACT_DEFINITION_MODAL:
       return { ...state, contractDefinitionModalOpen: false, currentContractDefinition: undefined }
     case ActionType.OPEN_CONTRACT_DEFINITION_MODAL:
