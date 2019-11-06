@@ -102,7 +102,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-push": "npm run tslint && npm run check-formatting && npm test"
+      "pre-push": "npm run tslint && npm run check-formatting && npm run test:ci"
     }
   }
 }
