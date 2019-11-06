@@ -30,9 +30,11 @@ const initialiseStore = () => {
 }
 
 const initialiseMessageDispatcher = (worker: Worker, dispatch: Dispatch) => {
-  worker.onmessage = event => {
-    const msg = event.data // { type, payload }
-    dispatch(msg)
+  if (worker) {
+    worker.onmessage = event => {
+      const msg = event.data // { type, payload }
+      dispatch(msg)
+    }
   }
 }
 
