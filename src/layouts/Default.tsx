@@ -1,7 +1,7 @@
 import React from 'react'
 import { Action, ActionCreator, bindActionCreators, Dispatch } from 'redux'
 import { connect } from 'react-redux'
-import { Layout } from 'antd'
+import { Layout, Spin } from 'antd'
 
 import { Connection, FileItem } from '@solidstudio/types'
 
@@ -13,7 +13,9 @@ import { ConnectionModal, ConnectionsTree } from 'features/connections/component
 import { ApplicationState } from 'features/rootReducer'
 import { emitter } from 'features/common/event-emitter'
 
-import { Sidebar, Content, Wrapper, Navbar } from "./components"
+import { socket } from '../utils/feathers'
+
+import { Sidebar, Content, Wrapper, Navbar, CenteredDiv } from "./components"
 
 interface StateProps {
   connections: Connection[]
@@ -38,6 +40,7 @@ type AllProps = DispatchProps & StateProps // OwnProps &
 
 interface State {
   collapsed: boolean
+  loading: boolean
 }
 
 export class DefaultLayout extends React.Component<AllProps, State> {
@@ -46,17 +49,25 @@ export class DefaultLayout extends React.Component<AllProps, State> {
     super(props)
     this.state = {
       collapsed: false,
+      loading: true
     };
   }
 
   componentDidMount() {
-
-    this.props.getConnections();
-    this.props.getContractDefinitions();
-    // TODO: 0.4.24 by default
-    this.props.loadCompilerVersion()
-    emitter.on("COLLAPSE_RIGHT_SIDEBAR_MENU", () => { // TODO: Fix this.. 
-      // this.collapseRightSider()
+    socket.on('connect', () => {
+      console.log("CONNECTED!!")
+      setTimeout(() => {
+        this.setState({
+          loading: false
+        })
+        this.props.getConnections();
+        this.props.getContractDefinitions();
+        // TODO: 0.4.24 by default
+        this.props.loadCompilerVersion()
+        emitter.on("COLLAPSE_RIGHT_SIDEBAR_MENU", () => { // TODO: Fix this.. 
+          // this.collapseRightSider()
+        })
+      }, 1500); // TODO just a random number to show loader a little more time
     })
   }
 
@@ -80,37 +91,42 @@ export class DefaultLayout extends React.Component<AllProps, State> {
 
   render() {
     const { connections, fileItems } = this.props
+    const { loading } = this.state
     return (
-      <Wrapper {...this.props} onClick={this.onIDEClick}>
-        <Navbar
-          onNewConnectionClick={this.props.openConnectionModal}
-          onNewContractInstanceClick={this.props.openContractDefinitionsModal}
-        />
-        <Layout>
-          <Sidebar id={"default-side"} trigger={null} collapsible={true} collapsed={this.state.collapsed} onCollapse={this.onCollapse} collapsedWidth={40} theme='dark' width={280}>
-            {!this.state.collapsed &&
-              <ConnectionsTree
-                connections={connections}
-                onConnectionItemSelected={this.props.connectionItemSelected}
-                onNewConnectionClick={this.props.openConnectionModal}
-              />}
-            {!this.state.collapsed &&
+      loading
+        ? <CenteredDiv><Spin tip="Loading" style={{ width: "100%" }} size="large" /></CenteredDiv>
+        :
+        <Wrapper {...this.props} onClick={this.onIDEClick}>
+          <Navbar
+            onNewConnectionClick={this.props.openConnectionModal}
+            onNewContractInstanceClick={this.props.openContractDefinitionsModal}
+          />
+          <Layout>
+            <Sidebar id={"default-side"} trigger={null} collapsible={true} collapsed={this.state.collapsed} onCollapse={this.onCollapse} collapsedWidth={40} theme='dark' width={280}>
+              {!this.state.collapsed &&
+                <ConnectionsTree
+                  connections={connections}
+                  onConnectionItemSelected={this.props.connectionItemSelected}
+                  onNewConnectionClick={this.props.openConnectionModal}
+                />}
+              {!this.state.collapsed &&
+                <ContractDefinitionsTree
+                  onFolderUploadClick={this.props.openFileSystemDialog}
+                  onContractDefinitionSelected={this.props.contractDefinitionSelected}
+                  fileItems={fileItems} />}
+            </Sidebar>
+          </Layout>
+          <Content>{this.props.children}</Content>
+          <ConnectionModal />
+          <ContractDefinitionsModal />
+        </Wrapper>
 
-              <ContractDefinitionsTree
-                onFolderUploadClick={this.props.openFileSystemDialog}
-                onContractDefinitionSelected={this.props.contractDefinitionSelected}
-                fileItems={fileItems} />}
-          </Sidebar>
-        </Layout>
-        <Content>{this.props.children}</Content>
-        <ConnectionModal />
-        <ContractDefinitionsModal />
-      </Wrapper>
     )
   }
 }
 
 const mapStateToProps = ({ connectionState, contractDefinitionState }: ApplicationState) => {
+  console.log("connections", connectionState)
   return {
     connections: connectionState.connections,
     fileItems: contractDefinitionState.fileItems

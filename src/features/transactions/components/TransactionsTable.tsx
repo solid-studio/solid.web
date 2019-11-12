@@ -50,18 +50,23 @@ const tableColumns: Array<ColumnProps<TransactionReceipt>> = [
         key: 'transactionHash',
         title: 'Transaction Hash',
         dataIndex: 'transactionHash',
+        width: 5,
+        // align: 'center',
         render: text => <p data-testid={`transactions-table-row-${text}`}>{text}</p>
     },
     {
         key: 'to',
         title: 'To',
         dataIndex: 'to',
+        // align: 'center',
         render: (text: string, record: TransactionReceipt) => record.to == null ? contractCreationTag(record.transactionHash) : record.to
     },
     {
         key: 'from',
         title: 'From',
         dataIndex: 'from',
+        // align: 'center',
+
     },
     {
         key: 'contractAddress',

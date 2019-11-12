@@ -17,18 +17,22 @@ type AllProps = OwnProps
 const tableColumns: Array<ColumnProps<Block>> = [
     {
         key: 'hash',
-        title: 'Hash',
+        title: 'Block hash',
         dataIndex: 'hash',
+        width: 5,
+        // align: 'center',
         render: text => <p data-testid={`blocks-table-row-${text}`}>{text}</p>
     },
     {
         key: 'blockNumber',
         title: 'Number',
+        align: 'center',
         dataIndex: 'blockNumber',
     },
     {
         key: 'transactions',
         title: 'Transactions',
+        align: 'center',
         dataIndex: 'transactions',
         render: (text: string, record: Block) => {
             return record.transactions.length
@@ -37,11 +41,13 @@ const tableColumns: Array<ColumnProps<Block>> = [
     {
         key: 'gasUsed',
         title: 'Gas Used',
+        align: 'center',
         dataIndex: 'gasUsed',
     },
     {
         key: 'timestamp',
         title: 'Timestamp',
+        align: 'center',
         dataIndex: 'timestamp',
     }
 

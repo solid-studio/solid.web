@@ -34,3 +34,9 @@ export const Content = styled.section`
   background-color: #ffffff;
 `
 
+export const CenteredDiv = styled.div`
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+`

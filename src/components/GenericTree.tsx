@@ -25,6 +25,7 @@ interface Props<T> {
     rightClickMenuItems?: MenuItemOption[]
     selectorPrefix: string
     onExpand?: any // TODO
+    onLoad?: any //TODO creo que no necesito esto
     DataRowComponentRender: (t: T) => React.ReactNode | React.ComponentClass<DataRowProps<T>> | React.StatelessComponent<DataRowProps<T>>
 }
 
@@ -133,7 +134,7 @@ export class GenericTree<T> extends React.Component<Props<T>, State> {
     }
 
     render() {
-        const { dataItems, DataRowComponentRender, onFolderUploadClick, showFolderUpload, headerTitle, onPlusClick, selectorPrefix } = this.props
+        const { dataItems, DataRowComponentRender, onFolderUploadClick, showFolderUpload, headerTitle, onPlusClick, selectorPrefix, onLoad } = this.props
         return (
             <div style={{ overflow: 'scroll', height: '100%' }}>
                 {this.getNodeTreeRightClickMenu()}
@@ -151,6 +152,7 @@ export class GenericTree<T> extends React.Component<Props<T>, State> {
                     <DirectoryTreeStyled
                         onSelect={this.onSelect}
                         multiple={true}
+                        onLoad={onLoad}
                         onExpand={this.onExpand}
                         expandedKeys={this.state.expandedKeys}
                         onRightClick={this.rightClickOnTree}

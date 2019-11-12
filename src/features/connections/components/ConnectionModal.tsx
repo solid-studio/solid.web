@@ -65,7 +65,7 @@ export class ConnectionModal extends React.Component<AllProps> {
           <Form id={FORM_ID} onSubmit={onSubmit}>
             <Field
               name="name"
-              render={(innerProps: FieldProps) => <InputFormItem {...innerProps} label="Name" placeHolder="http://" />}
+              render={(innerProps: FieldProps) => <InputFormItem {...innerProps} label="Name" placeHolder="name" />}
             />
             <Field
               name="url"

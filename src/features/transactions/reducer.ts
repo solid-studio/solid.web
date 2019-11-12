@@ -24,12 +24,13 @@ export const appReducer: Reducer<TransactionsState, Actions> = (
 ): TransactionsState => {
   switch (action.type) {
     case ActionType.TRANSACTIONS_RECEIVED:
-      return {
+      const result = {
         ...state,
         transactions: action.payload,
         currentTransaction: action.payload[0],
         getTransactionsStatus: Status.Completed
       }
+      return result
     default:
       return state
   }

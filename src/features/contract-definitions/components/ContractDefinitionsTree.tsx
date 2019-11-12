@@ -34,6 +34,11 @@ export class ContractDefinitionsTree extends React.Component<Props, State> {
     })
   }
 
+  // onLoad = (onLoad)
+  onLoad = (loadedKeys: string[], { event, node }: any) => {
+    console.log("ON LOAD", node, event, loadedKeys)
+  }
+
   getIconWithStatus = (itemName: string) => {
     if (this.state.expandedKeys) {
       return this.state.expandedKeys.includes(itemName) ? "folder-open" : "folder"
@@ -51,6 +56,7 @@ export class ContractDefinitionsTree extends React.Component<Props, State> {
         onFolderUploadClick={onFolderUploadClick}
         onCollapseClick={undefined}
         onExpand={this.onExpand}
+        onLoad={this.onLoad}
         DataRowComponentRender={(item: FileItem) => {
           return <TreeNodeStyled
             icon={<Icon type={item.isDirectory ? this.getIconWithStatus(item.name) : "file"} />}
@@ -70,17 +76,44 @@ export class ContractDefinitionsTree extends React.Component<Props, State> {
         onClickDataItem={(value: string | undefined | string[], props: any) => {
           console.log("ON CLICK DATA ITEM", value, props)
           // TODO: I need to fix this..
-          // const contractToShow = this.props.contractDefinitions.find(item => {
-          //   const valueToCompare = value !== undefined ? value![0] : 1
-          //   return item.id === valueToCompare
+          // the files need to be flat...
+          const valueToCompare = value !== undefined ? value![0] : ''
+          const contractToShow = findContractToShow(this.props.fileItems, valueToCompare)
+          // this.props.fileItems.find(item => {
+          //   const valueToCompare = value !== undefined ? value![0] : ''
+          //   return item.name === valueToCompare
           // })
-          // this.props.onContractDefinitionSelected({
-          //   ...contractToShow,
-          //   type: 'editor'
-          // })
+          // I need to search deeper
+          console.log("CONTRACT TO SHOW", contractToShow)
+          if (contractToShow && !contractToShow.isDirectory) {
+            this.props.onContractDefinitionSelected({
+              ...contractToShow,
+              type: 'editor'
+            })
+          }
         }}
         rightClickMenuItems={rightClickOptions}
       />
     )
   }
+}
+
+// TODO: IMPROVE and Rethink
+const findContractToShow = (fileItems: FileItem[], value: string): FileItem | undefined => {
+  let result: FileItem | undefined = undefined
+
+  for (let i = 0; i < fileItems.length; i++) {
+    const currentItem = fileItems[i]
+    if (currentItem.isDirectory && currentItem.fileItems) {
+      result = findContractToShow(currentItem.fileItems as FileItem[], value);
+    }
+    if (result && result.name === value) {
+      break;
+    }
+    if (currentItem.name === value) {
+      result = currentItem
+      break;
+    }
+  }
+  return result;
 }

@@ -9,6 +9,8 @@ import { ApplicationState } from 'features/rootReducer'
 import { BlocksTable } from 'features/blocks/components'
 import { getBlocks } from 'features/blocks/actions'
 
+import client from '../utils/feathers'
+
 import { StyledDiv, StyledH1 } from './components'
 
 // interface OwnProps {
@@ -35,6 +37,14 @@ export class BlocksView extends React.Component<AllProps> {
         if (this.props.currentConnection) {
             this.props.getBlocks(this.props.currentConnection.id)
         }
+
+        // TODO IMPROVE
+        client.service('blocks')
+            .on('created', (message: string) => {
+                if (this.props.currentConnection) {
+                    this.props.getBlocks(this.props.currentConnection.id)
+                }
+            });
     }
 
     render() {

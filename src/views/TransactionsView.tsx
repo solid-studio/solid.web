@@ -10,6 +10,8 @@ import { getTransactions } from 'features/transactions/actions'
 import { TransactionsTable } from 'features/transactions/components/TransactionsTable'
 import { ApplicationState } from 'features/rootReducer'
 
+import client from '../utils/feathers'
+
 import { StyledDiv, StyledH1 } from './components'
 
 // interface OwnProps {
@@ -37,6 +39,14 @@ export class TransactionsView extends React.Component<AllProps> {
         if (this.props.currentConnection) {
             this.props.getTransactions(this.props.currentConnection.id)
         }
+
+        // TODO IMPROVE
+        client.service('transaction-receipts')
+            .on('created', (message: string) => {
+                if (this.props.currentConnection) {
+                    this.props.getTransactions(this.props.currentConnection.id)
+                }
+            });
     }
 
 
