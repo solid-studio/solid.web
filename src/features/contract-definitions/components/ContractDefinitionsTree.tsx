@@ -100,10 +100,9 @@ export class ContractDefinitionsTree extends React.Component<Props, State> {
 
 // TODO: IMPROVE and Rethink
 const findContractToShow = (fileItems: FileItem[], value: string): FileItem | undefined => {
-  let result: FileItem | undefined = undefined
+  let result: FileItem | undefined
 
-  for (let i = 0; i < fileItems.length; i++) {
-    const currentItem = fileItems[i]
+  for (const currentItem of fileItems) {
     if (currentItem.isDirectory && currentItem.fileItems) {
       result = findContractToShow(currentItem.fileItems as FileItem[], value);
     }

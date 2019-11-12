@@ -25,7 +25,7 @@ interface Props<T> {
     rightClickMenuItems?: MenuItemOption[]
     selectorPrefix: string
     onExpand?: any // TODO
-    onLoad?: any //TODO creo que no necesito esto
+    onLoad?: any // TODO creo que no necesito esto
     DataRowComponentRender: (t: T) => React.ReactNode | React.ComponentClass<DataRowProps<T>> | React.StatelessComponent<DataRowProps<T>>
 }
 
