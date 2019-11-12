@@ -44,7 +44,7 @@ export const getContractDefinitionsEpic = (
 export const onContractDefinitionSelectedEpic = (action$: ActionsObservable<ContractDefinitionSelectedAction>) =>
   action$.pipe(
     ofType<ContractDefinitionSelectedAction>(ActionType.CONTRACT_DEFINITION_SELECTED),
-    tap(({ payload }) => console.log("PAYLOAD onContractDefinitionSelectedEpic", payload)), // TODO Remove
+    tap(({ payload }) => console.log('PAYLOAD onContractDefinitionSelectedEpic', payload)), // TODO Remove
     map(({ payload }) => {
       return openOrSetTabActive({
         type: payload.type,
