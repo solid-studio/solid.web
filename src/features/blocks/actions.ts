@@ -11,8 +11,9 @@ export const blocksReceived: ActionCreator<BlocksReceivedAction> = (blocks: Bloc
   }
 }
 
-export const getBlocks: ActionCreator<GetBlocksAction> = (): GetBlocksAction => {
+export const getBlocks: ActionCreator<GetBlocksAction> = (connectionId: number): GetBlocksAction => {
   return {
-    type: ActionType.GET_BLOCKS
+    type: ActionType.GET_BLOCKS,
+    payload: connectionId
   }
 }

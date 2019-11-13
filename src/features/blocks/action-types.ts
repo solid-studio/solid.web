@@ -14,7 +14,8 @@ export interface BlocksReceivedAction extends Action {
 }
 
 export interface GetBlocksAction extends Action {
-  type: ActionType.GET_BLOCKS
+  type: ActionType.GET_BLOCKS,
+  payload: number
 }
 
 export type Actions = BlocksReceivedAction | GetBlocksAction

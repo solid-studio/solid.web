@@ -59,8 +59,15 @@ export class BlocksView extends React.Component<AllProps> {
 }
 
 const mapStateToProps = ({ blocksState, connectionState }: ApplicationState) => {
+    const blocksByConnection = blocksState.blocks.filter((item) => {
+        if (connectionState.currentConnection && connectionState.currentConnection.id) {
+            return item.connectionId === connectionState.currentConnection.id
+        }
+        return item;
+    })
+    // provisional, limited to 10, I need to normalise the state...
     return {
-        blocks: blocksState.blocks,
+        blocks: blocksByConnection,
         currentConnection: connectionState.currentConnection
     }
 }
