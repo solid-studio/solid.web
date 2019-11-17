@@ -4,7 +4,7 @@ import React from 'react'
 import { Action, ActionCreator, bindActionCreators, Dispatch } from 'redux'
 import { connect } from 'react-redux'
 
-import { Connection, TransactionReceipt } from '@solidstudio/types'
+import { Connection, TransactionReceipt } from '@solid-explorer/types'
 
 import { getTransactions } from 'features/transactions/actions'
 import { TransactionsTable } from 'features/transactions/components/TransactionsTable'

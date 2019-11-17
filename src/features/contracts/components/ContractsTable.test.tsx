@@ -2,7 +2,7 @@ import React from 'react';
 import { render, fireEvent } from '@testing-library/react'
 import '@testing-library/jest-dom/extend-expect'; // TO REMOVE
 
-import { Contract, buildFakeContracts } from '@solidstudio/types'
+import { Contract, buildFakeContracts } from '@solid-explorer/types'
 import { ContractsTable } from './ContractsTable'
 
 describe('Contracts table test', () => {

@@ -4,7 +4,7 @@ import { ThunkAction } from 'redux-thunk'
 
 import { ApplicationState } from '../rootReducer'
 import { AbiItem } from 'web3-utils'
-import { Connection } from '@solidstudio/types'
+import { Connection } from '@solid-explorer/types'
 import { Web3Action, IWeb3ReduxWrapper, Web3ActionType } from '../../utils/web3-helper'
 import { ActionType } from './action-types'
 import { ApiAction, HttpRequest } from '../../utils/http'

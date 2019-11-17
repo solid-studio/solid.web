@@ -1,6 +1,6 @@
 import { Reducer } from 'redux'
 
-import { Contract } from '@solidstudio/types'
+import { Contract } from '@solid-explorer/types'
 
 import { Status } from '../common/types'
 

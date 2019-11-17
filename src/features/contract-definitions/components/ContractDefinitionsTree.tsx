@@ -2,7 +2,7 @@ import React from 'react'
 import { ActionCreator, Action } from 'redux'
 import { Icon } from 'antd'
 
-import { FileItem } from '@solidstudio/types'
+import { FileItem } from '@solid-explorer/types'
 
 import { ContractDefinitionsTreeComponent } from './ContractDefinitionsTreeComponent'
 import { TreeNodeStyled } from 'components/GenericTreeStyledComponents'

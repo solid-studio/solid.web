@@ -1,6 +1,6 @@
 import { Reducer } from 'redux'
 
-import { TransactionReceipt } from '@solidstudio/types'
+import { TransactionReceipt } from '@solid-explorer/types'
 
 import { Status } from '../common/types'
 

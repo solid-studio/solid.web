@@ -1,6 +1,6 @@
 import { Table } from 'antd';
 
-import { TransactionReceipt } from '@solidstudio/types'
+import { TransactionReceipt } from '@solid-explorer/types'
 
 // TODO: Do I need only transaction receipts?
 

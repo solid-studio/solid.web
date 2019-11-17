@@ -1,4 +1,4 @@
-import { buildFakeBlocks } from '@solidstudio/types'
+import { buildFakeBlocks } from '@solid-explorer/types'
 
 import { appReducer, initialState } from './reducer'
 import { blocksReceived } from './actions'

@@ -4,7 +4,7 @@ import '@testing-library/jest-dom/extend-expect';
 
 import { getMouseEvent } from 'utils/getMouseEvent';
 
-import { buildFakeContractDefinitions, ContractDefinition } from '@solidstudio/types'
+import { buildFakeContractDefinitions, ContractDefinition } from '@solid-explorer/types'
 
 import { ContractDefinitionsTree } from './ContractDefinitionsTree'
 

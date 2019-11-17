@@ -3,7 +3,7 @@ import { mapTo, switchMap, map, catchError } from 'rxjs/operators'
 import { AjaxCreationMethod } from 'rxjs/internal/observable/dom/AjaxObservable'
 import { of } from 'rxjs'
 
-import { Connection } from '@solidstudio/types'
+import { Connection } from '@solid-explorer/types'
 
 import { openOrSetTabActive } from 'features/tabs/actions'
 import { ApplicationState } from 'features/rootReducer'

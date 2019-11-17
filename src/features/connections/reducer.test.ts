@@ -1,4 +1,4 @@
-import { buildFakeConnections, buildFakeConnection } from '@solidstudio/types'
+import { buildFakeConnections, buildFakeConnection } from '@solid-explorer/types'
 
 import { appReducer, initialState } from './reducer'
 import {

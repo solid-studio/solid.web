@@ -2,7 +2,7 @@ import React from 'react'
 
 import { ColumnProps } from 'antd/es/table';
 
-import { Block } from '@solidstudio/types'
+import { Block } from '@solid-explorer/types'
 
 import { BlocksTableComponent } from './BlocksTableComponent';
 

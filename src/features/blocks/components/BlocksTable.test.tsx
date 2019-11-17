@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react'
 
-import { Block, buildFakeBlocks } from '@solidstudio/types'
+import { Block, buildFakeBlocks } from '@solid-explorer/types'
 import { BlocksTable } from './BlocksTable'
 
 describe('Blocks table test', () => {

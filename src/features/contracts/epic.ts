@@ -3,7 +3,7 @@ import { of } from 'rxjs'
 import { switchMap, map, catchError } from 'rxjs/operators'
 import { AjaxCreationMethod } from 'rxjs/internal/observable/dom/AjaxObservable'
 
-import { Contract } from '@solidstudio/types'
+import { Contract } from '@solid-explorer/types'
 
 import { ActionType, GetContractsAction, MaximizeContractViewAction } from './action-types'
 import { contractsReceived } from './actions'

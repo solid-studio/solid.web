@@ -3,7 +3,7 @@ import React from 'react'
 import { Tag } from 'antd';
 import { ColumnProps } from 'antd/es/table';
 
-import { TransactionReceipt } from '@solidstudio/types'
+import { TransactionReceipt } from '@solid-explorer/types'
 
 import { TransactionsTableComponent } from './TransactionsTableComponent';
 

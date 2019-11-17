@@ -1,6 +1,6 @@
 import { ActionCreator } from 'redux'
 
-import { ContractDefinition, FileItem } from '@solidstudio/types'
+import { ContractDefinition, FileItem } from '@solid-explorer/types'
 
 import {
   ActionType,

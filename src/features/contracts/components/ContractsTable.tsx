@@ -2,7 +2,7 @@ import React from 'react'
 
 import { ColumnProps } from 'antd/es/table';
 
-import { Contract } from '@solidstudio/types';
+import { Contract } from '@solid-explorer/types';
 
 import { ContractTableComponent } from './ContractsTableComponent';
 

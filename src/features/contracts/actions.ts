@@ -1,6 +1,6 @@
 import { ActionCreator } from 'redux'
 
-import { Contract, AbiItem } from '@solidstudio/types'
+import { Contract, AbiItem } from '@solid-explorer/types'
 
 import { ActionType, ContractsReceivedAction, GetContractsAction, MaximizeContractViewAction } from './action-types'
 
