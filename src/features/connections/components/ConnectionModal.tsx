@@ -4,7 +4,7 @@ import { bindActionCreators, Dispatch, ActionCreator, Action } from 'redux'
 import { connect } from 'react-redux'
 import { Form } from 'antd'
 import { FormikErrors, Field, FieldProps } from 'formik'
-
+import axios from 'axios'
 import { Connection } from '@solid-explorer/types'
 
 import { ApplicationState } from '../../rootReducer';
@@ -46,8 +46,15 @@ export class ConnectionModal extends React.Component<AllProps> {
     item: defaultConnection
   }
 
-  saveConnection = (item: Connection) => {
-    this.props.createOrUpdateConnection(item)
+  saveConnection = async (item: Connection, actions: any) => {
+    console.log("ACTIONS", actions)
+    const isValid = await isValidConnection(item.url)
+    if (!isValid) {
+      actions.setSubmitting(true)
+      actions.setFieldError('url', 'Invalid JSON RPC URL')
+    } else {
+      this.props.createOrUpdateConnection(item)
+    }
   }
 
   render() {
@@ -80,7 +87,17 @@ export class ConnectionModal extends React.Component<AllProps> {
   }
 }
 
-const validator = (items: Connection) => {
+// TODO TO MOVE
+const isValidConnection = async (url: string) => {
+  try {
+    const result = await axios.post(url, '{"jsonrpc":"2.0","method":"web3_clientVersion","params":[],"id":67}')
+    return result.data;
+  } catch (error) {
+    return undefined;
+  }
+}
+
+const validator = (items: Connection): FormikErrors<Connection> => {
   const errors: FormikErrors<Connection> = {}
   if (!items.name) {
     errors.name = 'Required'
@@ -88,6 +105,7 @@ const validator = (items: Connection) => {
   if (!items.url) {
     errors.url = 'Required'
   }
+
   return errors
 }
 

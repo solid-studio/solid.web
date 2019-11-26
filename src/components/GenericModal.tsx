@@ -4,14 +4,18 @@ import * as R from 'ramda'
 import { Modal, Button } from 'antd'
 import { Formik, FormikErrors, FormikProps } from 'formik'
 
+type AsyncFormikValidator<T> = (item: T) => Promise<FormikErrors<T>>
+type FormikValidator<T> = (item: T) => FormikErrors<T>
+type OnSubmitHandler<T> = (item: T) => void
+
 interface Props<FormFields> {
   FormComponent: React.ComponentType<FormComponentProps<FormFields>>
   initialValues: FormFields
   visible: boolean
   onCancel: () => void
   loading: boolean
-  validator?: (item: FormFields) => FormikErrors<FormFields>
-  onSubmit: (item: FormFields) => void
+  validator?: FormikValidator<FormFields> | AsyncFormikValidator<FormFields>
+  onSubmit: OnSubmitHandler<FormFields> | any
   title: string
   disableSubmitButton?: boolean
   buttonText?: string

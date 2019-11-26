@@ -1,6 +1,6 @@
 import { ofType, combineEpics, ActionsObservable, StateObservable } from 'redux-observable'
 import { of } from 'rxjs'
-import { switchMap, map, catchError } from 'rxjs/operators'
+import { switchMap, map, catchError, tap } from 'rxjs/operators'
 import { AjaxCreationMethod } from 'rxjs/internal/observable/dom/AjaxObservable'
 
 import { Contract } from '@solid-explorer/types'
@@ -40,12 +40,13 @@ export const getContractsEpic = (
 export const onMaximizeContractEpic = (action$: ActionsObservable<MaximizeContractViewAction>) =>
   action$.pipe(
     ofType<MaximizeContractViewAction>(ActionType.ON_MAXIMIZE_CONTRACT_VIEW),
+    tap((data) => console.log("PAYLOAD onMaximizeContractEpic", data)),
     map(({ payload }: MaximizeContractViewAction) => {
       return openOrSetTabActive({
         type: payload.type,
         data: payload,
         title: payload.name,
-        id: payload.id
+        id: `${payload.id}`
       })
     })
   )

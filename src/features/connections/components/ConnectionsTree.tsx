@@ -40,7 +40,7 @@ export class ConnectionsTree extends React.Component<Props> {
             blockNode={true}
             icon={<Icon type="database" />}
             title={item.name}
-            key={item.url}
+            key={item.id}
             style={{ color: 'white' }}>
 
             <TreeNodeStyled
@@ -48,21 +48,21 @@ export class ConnectionsTree extends React.Component<Props> {
               icon={({ selected }: any) => <Icon type={selected ? 'folder' : 'folder'} />}
               title={"Contracts"}
               key={`${item.name}-contracts`}
-              style={{ color: 'white' }}/>
+              style={{ color: 'white' }} />
 
             <TreeNodeStyled
               extra={{ connectionId: item.id, type: 'transactions' }}
               icon={({ selected }: any) => <Icon type={selected ? 'folder' : 'folder'} />}
               title={"Transactions"}
               key={`${item.name}-transactions`}
-              style={{ color: 'white' }}/>
+              style={{ color: 'white' }} />
 
             <TreeNodeStyled
               extra={{ connectionId: item.id, type: 'blocks' }}
               icon={({ selected }: any) => <Icon type={selected ? 'folder' : 'folder'} />}
               title={"Blocks"}
               key={`${item.name}-blocks`}
-              style={{ color: 'white' }}/>
+              style={{ color: 'white' }} />
 
           </TreeNodeStyled>
         )}

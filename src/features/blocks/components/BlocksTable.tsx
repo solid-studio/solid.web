@@ -61,10 +61,10 @@ export class BlocksTable extends React.Component<AllProps> {
             onRow={(record, rowIndex) => {
                 return {
                     onClick: event => {
-                        this.props.onClick(record)
+                        // TODO this.props.onClick(record)
                     },
                     onDoubleClick: event => {
-                        this.props.onDoubleClick(record)
+                        // TODO this.props.onDoubleClick(record)
                     }
                 };
             }}
