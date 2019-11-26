@@ -40,7 +40,7 @@ export const getContractsEpic = (
 export const onMaximizeContractEpic = (action$: ActionsObservable<MaximizeContractViewAction>) =>
   action$.pipe(
     ofType<MaximizeContractViewAction>(ActionType.ON_MAXIMIZE_CONTRACT_VIEW),
-    tap((data) => console.log("PAYLOAD onMaximizeContractEpic", data)),
+    tap(data => console.log('PAYLOAD onMaximizeContractEpic', data)),
     map(({ payload }: MaximizeContractViewAction) => {
       return openOrSetTabActive({
         type: payload.type,

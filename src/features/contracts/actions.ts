@@ -23,7 +23,7 @@ export const getContracts: ActionCreator<GetContractsAction> = (connectionId: st
 export const maximizeContractView: ActionCreator<MaximizeContractViewAction> = (
   contract: Contract
 ): MaximizeContractViewAction => {
-  console.log("PAYLOAD maximizeContractView", contract)
+  console.log('PAYLOAD maximizeContractView', contract)
   return {
     type: ActionType.ON_MAXIMIZE_CONTRACT_VIEW,
     payload: { ...contract, type: 'editor' }
