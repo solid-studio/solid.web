@@ -46,7 +46,8 @@ describe('Transactions table test', () => {
         expect(container).toMatchSnapshot()
     })
 
-    test('clicks', () => {
+    // TODO this was deactivated, restore when need it
+    test.skip('clicks', () => {
         const { getByTestId } = renderTransactionsTable(transactions)
 
         transactions.forEach((item) => {
@@ -61,7 +62,8 @@ describe('Transactions table test', () => {
         })
     })
 
-    test('double clicks', () => {
+    // TODO this was deactivated, restore when need it
+    test.skip('double clicks', () => {
         const { getByTestId } = renderTransactionsTable(transactions)
 
         transactions.forEach((item) => {

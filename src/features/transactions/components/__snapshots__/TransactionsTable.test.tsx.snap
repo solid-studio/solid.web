@@ -24,7 +24,9 @@ exports[`Transactions table test snapshot 1`] = `
                 class=""
               >
                 <colgroup>
-                  <col />
+                  <col
+                    style="width: 5px; min-width: 5px;"
+                  />
                   <col />
                   <col />
                   <col />

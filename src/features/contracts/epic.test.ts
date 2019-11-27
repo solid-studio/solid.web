@@ -7,7 +7,7 @@ import { buildFakeContracts, buildFakeContract } from '@solid-explorer/types'
 
 import { ApplicationState, initialState } from '../rootReducer'
 
-import { openOrSetTabActive } from 'features/tabs'
+import { openOrSetTabActive } from '../tabs'
 
 import { GetContractsAction, MaximizeContractViewAction } from './action-types'
 import { getContracts, maximizeContractView, contractsReceived } from './actions'
@@ -62,7 +62,7 @@ describe('Contracts Epic Tests', () => {
           type: maximizeContractAction.payload.type,
           data: maximizeContractAction.payload,
           title: maximizeContractAction.payload.name,
-          id: maximizeContractAction.payload.id
+          id: `${maximizeContractAction.payload.id}`
         })
       )
       done()

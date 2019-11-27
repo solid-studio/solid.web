@@ -20,3 +20,8 @@ export interface GenericArrayResponse<T> {
   skip: number
   data: T[]
 }
+
+export interface NormalizedObject<T> {
+  byId: { [id: string]: T };
+  allIds: string[];
+}

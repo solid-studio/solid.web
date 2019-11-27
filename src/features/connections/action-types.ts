@@ -3,6 +3,7 @@ import { Action } from 'redux'
 import { Connection } from '@solid-explorer/types'
 
 import { ConnectionItem } from './types'
+import { BlocksReceivedAction } from '../blocks/action-types'
 
 export enum ActionType {
   OPEN_CONNECTION_MODAL = 'OPEN_CONNECTION_MODAL',
@@ -45,3 +46,4 @@ export type Actions =
   | ConnectionsReceivedAction
   | CreateConnectionAction
   | ConnectionItemSelectedAction
+  | BlocksReceivedAction

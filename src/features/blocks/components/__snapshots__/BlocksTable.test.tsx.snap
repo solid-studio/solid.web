@@ -24,7 +24,9 @@ exports[`Blocks table test snapshot 1`] = `
                 class=""
               >
                 <colgroup>
-                  <col />
+                  <col
+                    style="width: 5px; min-width: 5px;"
+                  />
                   <col />
                   <col />
                   <col />
@@ -44,7 +46,7 @@ exports[`Blocks table test snapshot 1`] = `
                           <span
                             class="ant-table-column-title"
                           >
-                            Hash
+                            Block hash
                           </span>
                           <span
                             class="ant-table-column-sorter"
@@ -53,7 +55,8 @@ exports[`Blocks table test snapshot 1`] = `
                       </span>
                     </th>
                     <th
-                      class=""
+                      class="ant-table-align-center"
+                      style="text-align: center;"
                     >
                       <span
                         class="ant-table-header-column"
@@ -71,7 +74,8 @@ exports[`Blocks table test snapshot 1`] = `
                       </span>
                     </th>
                     <th
-                      class=""
+                      class="ant-table-align-center"
+                      style="text-align: center;"
                     >
                       <span
                         class="ant-table-header-column"
@@ -89,7 +93,8 @@ exports[`Blocks table test snapshot 1`] = `
                       </span>
                     </th>
                     <th
-                      class=""
+                      class="ant-table-align-center"
+                      style="text-align: center;"
                     >
                       <span
                         class="ant-table-header-column"
@@ -107,7 +112,8 @@ exports[`Blocks table test snapshot 1`] = `
                       </span>
                     </th>
                     <th
-                      class=""
+                      class="ant-table-align-center"
+                      style="text-align: center;"
                     >
                       <span
                         class="ant-table-header-column"
@@ -144,21 +150,25 @@ exports[`Blocks table test snapshot 1`] = `
                     </td>
                     <td
                       class=""
+                      style="text-align: center;"
                     >
                       1757201
                     </td>
                     <td
                       class=""
+                      style="text-align: center;"
                     >
                       22
                     </td>
                     <td
                       class=""
+                      style="text-align: center;"
                     >
                       3059685
                     </td>
                     <td
                       class=""
+                      style="text-align: center;"
                     >
                       1466691328
                     </td>
@@ -178,21 +188,25 @@ exports[`Blocks table test snapshot 1`] = `
                     </td>
                     <td
                       class=""
+                      style="text-align: center;"
                     >
                       1757201
                     </td>
                     <td
                       class=""
+                      style="text-align: center;"
                     >
                       22
                     </td>
                     <td
                       class=""
+                      style="text-align: center;"
                     >
                       646893
                     </td>
                     <td
                       class=""
+                      style="text-align: center;"
                     >
                       1466691328
                     </td>

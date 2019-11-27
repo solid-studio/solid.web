@@ -45,7 +45,8 @@ describe('Blocks table test', () => {
         expect(container).toMatchSnapshot()
     })
 
-    test('clicks', () => {
+    // TODO this was deactivated, restore when need it
+    test.skip('clicks', () => {
         const { getByTestId } = renderBlocksTable(blocks)
 
         blocks.forEach((item) => {
@@ -60,7 +61,8 @@ describe('Blocks table test', () => {
         })
     })
 
-    test('double clicks', () => {
+    // TODO this was deactivated, restore when need it
+    test.skip('double clicks', () => {
         const { getByTestId } = renderBlocksTable(blocks)
 
         blocks.forEach((item) => {

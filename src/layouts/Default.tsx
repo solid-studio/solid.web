@@ -126,9 +126,11 @@ export class DefaultLayout extends React.Component<AllProps, State> {
 }
 
 const mapStateToProps = ({ connectionState, contractDefinitionState }: ApplicationState) => {
-  console.log("connections", connectionState)
+  const allConnections = connectionState.connections.allIds.map((id: string) => {
+    return connectionState.connections.byId[id];
+  })
   return {
-    connections: connectionState.connections,
+    connections: allConnections,
     fileItems: contractDefinitionState.fileItems
   }
 }

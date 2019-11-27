@@ -67,7 +67,7 @@ describe('Contract Definitions Epic Tests', () => {
           type: contractDefinitionSelectedAction.payload.type,
           data: contractDefinitionSelectedAction.payload,
           title: contractDefinitionSelectedAction.payload.name,
-          id: contractDefinitionSelectedAction.payload.id
+          id: `${contractDefinitionSelectedAction.payload.id}`
         })
       )
       done()

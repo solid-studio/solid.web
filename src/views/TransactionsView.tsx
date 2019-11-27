@@ -44,7 +44,6 @@ export class TransactionsView extends React.Component<AllProps> {
         // TODO IMPROVE
         client.service('transaction-receipts')
             .on('created', (message: string) => {
-                console.log("NEW TRANSACTION")
                 if (this.props.currentConnection) {
                     this.props.getTransactions(this.props.currentConnection.id)
                 }

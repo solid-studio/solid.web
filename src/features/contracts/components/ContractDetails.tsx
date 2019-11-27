@@ -28,8 +28,16 @@ export const processABIData = (abi: AbiItem[]) => {
     return onlyFunctions
 }
 
+export const isValidABI = (abi: AbiItem[]) => {
+    try {
+        processABIData(abi)
+    } catch (error) {
+        return false
+    }
+}
+
 export const ContractActionsViewWrapper: React.FC<ContractActionsProps> = (props: ContractActionsProps) => {
-    const onlyFunctions = processABIData(props.abi)
+    const onlyFunctions = isValidABI(props.abi) ? processABIData(props.abi) : []
     return (
         <div>
             {onlyFunctions &&

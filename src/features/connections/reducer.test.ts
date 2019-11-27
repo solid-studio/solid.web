@@ -1,6 +1,6 @@
 import { buildFakeConnections, buildFakeConnection } from '@solid-explorer/types'
 
-import { appReducer, initialState } from './reducer'
+import { appReducer, initialState, normalizeConnections } from './reducer'
 import {
   connectionsReceived,
   closeConnectionModal,
@@ -9,7 +9,7 @@ import {
   createOrUpdateConnection,
   connectionCreated
 } from './actions'
-import { Status } from 'features/common/types'
+import { Status } from '../common/types'
 
 describe('Connections reducer', () => {
   test('ActionType.CLOSE_CONNECTION_MODAL', () => {
@@ -68,16 +68,68 @@ describe('Connections reducer', () => {
   //     expect(newState.getBlocksStatus).toEqual(initialState.getBlocksStatus)
   // })
 
-  test('ActionType.CONNECTIONS_RECEIVED', () => {
-    const connections = buildFakeConnections()
-    const action = connectionsReceived(connections)
-    const newState = appReducer(initialState, action)
+  describe('ActionType.CONNECTIONS_RECEIVED', () => {
+    test('ActionType.CONNECTIONS_RECEIVED: that connections are added to the state correctly', () => {
+      const connections = buildFakeConnections()
+      const normalizedConnections = normalizeConnections(connections)
+      const action = connectionsReceived(connections)
+      const newState = appReducer(initialState, action)
 
-    expect(newState.connectionModalOpen).toEqual(initialState.connectionModalOpen)
-    expect(newState.connections).toEqual(connections)
-    expect(newState.currentConnection).toEqual(connections[0])
-    expect(newState.getConnectionsStatus).toEqual(Status.Completed)
-    expect(newState.createConnectionStatus).toEqual(initialState.createConnectionStatus)
+      expect(newState.connectionModalOpen).toEqual(initialState.connectionModalOpen)
+      expect(newState.connections).toEqual(normalizedConnections)
+      expect(newState.currentConnection).toEqual(connections[0])
+      expect(newState.getConnectionsStatus).toEqual(Status.Completed)
+      expect(newState.createConnectionStatus).toEqual(initialState.createConnectionStatus)
+    })
+
+    test('ActionType.CONNECTIONS_RECEIVED: adding new items', () => {
+      const connections = buildFakeConnections()
+      const normalizedConnections = normalizeConnections(connections)
+      const action = connectionsReceived(connections)
+      const newState = appReducer(initialState, action)
+
+      expect(newState.connectionModalOpen).toEqual(initialState.connectionModalOpen)
+      expect(newState.connections).toEqual(normalizedConnections)
+      expect(newState.currentConnection).toEqual(connections[0])
+      expect(newState.getConnectionsStatus).toEqual(Status.Completed)
+      expect(newState.createConnectionStatus).toEqual(initialState.createConnectionStatus)
+
+      // add new items
+      const newConnection = buildFakeConnection({ id: 3 })
+      const newConnectionsNormalized = normalizeConnections([newConnection])
+      const newConnectionsReceivedAction = connectionsReceived([newConnection])
+      const newStateWithNewConnection = appReducer(newState, newConnectionsReceivedAction)
+
+      expect(newStateWithNewConnection.connections.byId[1]).toEqual(normalizedConnections.byId[1])
+      expect(newStateWithNewConnection.connections.byId[2]).toEqual(normalizedConnections.byId[2])
+      expect(newStateWithNewConnection.connections.byId[3]).toEqual(newConnectionsNormalized.byId[3])
+
+    })
+
+    test('ActionType.CONNECTIONS_RECEIVED: Adding new existing items', () => {
+      const connections = buildFakeConnections()
+      const normalizedConnections = normalizeConnections(connections)
+      const action = connectionsReceived(connections)
+      const newState = appReducer(initialState, action)
+
+      expect(newState.connectionModalOpen).toEqual(initialState.connectionModalOpen)
+      expect(newState.connections).toEqual(normalizedConnections)
+      expect(newState.currentConnection).toEqual(connections[0])
+      expect(newState.getConnectionsStatus).toEqual(Status.Completed)
+      expect(newState.createConnectionStatus).toEqual(initialState.createConnectionStatus)
+
+      // add new existing items
+      const newName = 'other name'
+      const newConnection = buildFakeConnection({ id: 2, name: newName })
+      const newConnectionsNormalized = normalizeConnections([newConnection])
+      const newConnectionsReceivedAction = connectionsReceived([newConnection])
+      const newStateWithNewConnection = appReducer(newState, newConnectionsReceivedAction)
+
+      expect(newStateWithNewConnection.connections.byId[1]).toEqual(normalizedConnections.byId[1])
+      expect(newStateWithNewConnection.connections.byId[2]).toEqual(newConnectionsNormalized.byId[2])
+      expect(newStateWithNewConnection.connections.byId[2].name).toEqual(newName)
+    })
+
   })
 
   test('ActionType.CREATE_CONNECTION', () => {
@@ -93,11 +145,12 @@ describe('Connections reducer', () => {
 
   test('ActionType.CONNECTION_CREATED', () => {
     const connection = buildFakeConnection()
+    const normalizedConnection = normalizeConnections([connection])
     const action = connectionCreated(connection)
     const newState = appReducer(initialState, action)
 
     expect(newState.connectionModalOpen).toEqual(initialState.connectionModalOpen)
-    expect(newState.connections).toEqual([connection])
+    expect(newState.connections).toEqual(normalizedConnection)
     expect(newState.currentConnection).toEqual(connection)
     expect(newState.getConnectionsStatus).toEqual(initialState.getConnectionsStatus)
     expect(newState.createConnectionStatus).toEqual(Status.Completed)
