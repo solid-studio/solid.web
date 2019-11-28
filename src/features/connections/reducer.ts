@@ -30,6 +30,7 @@ export const initialState: ConnectionState = {
   currentConnection: undefined
 }
 
+/* tslint:disable */
 export const appReducer: Reducer<ConnectionState, Actions> = (
   state: ConnectionState = initialState,
   action: Actions
@@ -132,6 +133,7 @@ export const appReducer: Reducer<ConnectionState, Actions> = (
       return state
   }
 }
+/* tslint:enable */
 
 export const normalizeConnections = (connections: Connection[]): NormalizedObject<Connection> => {
   const blockSchema = new schema.Entity('connections');
