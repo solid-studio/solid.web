@@ -15,6 +15,7 @@ import { emitter } from 'features/common/event-emitter'
 import client from '../utils/feathers'
 
 import { StyledDiv, StyledH1, CustomIcon } from './components'
+import { ConnectionNormalized } from 'features/connections/types'
 
 const { Sider, Content } = Layout;
 
@@ -61,9 +62,11 @@ export class ContractsView extends React.Component<AllProps, State> {
             // TODO IMPROVE
             client.service('contracts')
                 .on('created', (message: string) => {
-                    if (this.props.currentConnection) {
-                        this.props.getContracts(this.props.currentConnection.id)
-                    }
+                    setTimeout(() => {
+                        if (this.props.currentConnection) {
+                            this.props.getContracts(this.props.currentConnection.id)
+                        }
+                    }, 500);
                 });
         }
     }
@@ -121,25 +124,16 @@ export class ContractsView extends React.Component<AllProps, State> {
 
 
 const mapStateToProps = ({ contractState, connectionState }: ApplicationState) => {
-    // TODO: Create selector
-    const contractsByConnection = contractState.contracts.filter((item) => {
-        if (connectionState.currentConnection) {
-            return item.connectionId === connectionState.currentConnection.id
-        }
-        return item;
+    const currentConnectionId = connectionState.currentConnection ? connectionState.currentConnection.id as number : 0
+    const connection = connectionState.connections.byId[currentConnectionId] as ConnectionNormalized || {}
+    const allContractIdsByConnection = connection.contracts as string[]
+
+    const contractsByConnection = allContractIdsByConnection && allContractIdsByConnection.map((id: string) => {
+        return contractState.contracts.byId[id];
     })
 
-    const uniqueContracts = contractsByConnection.reduce((acc: Contract[], current) => {
-        const x = acc.find((item: Contract) => item.address === current.address);
-        if (!x) {
-            return acc.concat([current]);
-        } else {
-            return acc;
-        }
-    }, []);
-
     return {
-        contracts: uniqueContracts,
+        contracts: contractsByConnection,
         currentConnection: connectionState.currentConnection
     }
 }

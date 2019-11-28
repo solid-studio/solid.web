@@ -50,7 +50,6 @@ describe('Blocks reducer', () => {
     const newBlocksNormalized = normalizeBlocks([newBlock])
     const newBlocksReceivedAction = blocksReceived([newBlock])
     const newStateWithNewBlock = appReducer(newState, newBlocksReceivedAction)
-    console.log("newStateWithNewBlock", newStateWithNewBlock)
 
     expect(newStateWithNewBlock.blocks.byId[1]).toEqual(blocksNormalized.byId[1])
     expect(newStateWithNewBlock.blocks.byId[2]).toEqual(newBlocksNormalized.byId[2])

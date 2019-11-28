@@ -13,7 +13,7 @@ export const contractsReceived: ActionCreator<ContractsReceivedAction> = (
   }
 }
 
-export const getContracts: ActionCreator<GetContractsAction> = (connectionId: string): GetContractsAction => {
+export const getContracts: ActionCreator<GetContractsAction> = (connectionId: number): GetContractsAction => {
   return {
     type: ActionType.GET_CONTRACTS,
     payload: connectionId

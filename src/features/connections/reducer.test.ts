@@ -1,4 +1,4 @@
-import { buildFakeConnections, buildFakeConnection } from '@solid-explorer/types'
+import { buildFakeConnections, buildFakeConnection, buildFakeTransactions, Connection, buildFakeBlocks, buildFakeContracts } from '@solid-explorer/types'
 
 import { appReducer, initialState, normalizeConnections } from './reducer'
 import {
@@ -9,7 +9,11 @@ import {
   createOrUpdateConnection,
   connectionCreated
 } from './actions'
-import { Status } from '../common/types'
+import { Status, NormalizedObject } from '../common/types'
+import { transactionsReceived } from '../transactions/actions'
+import { ConnectionNormalized } from './types'
+import { blocksReceived } from '../blocks/actions'
+import { contractsReceived } from '../contracts/actions'
 
 describe('Connections reducer', () => {
   test('ActionType.CLOSE_CONNECTION_MODAL', () => {
@@ -154,5 +158,112 @@ describe('Connections reducer', () => {
     expect(newState.currentConnection).toEqual(connection)
     expect(newState.getConnectionsStatus).toEqual(initialState.getConnectionsStatus)
     expect(newState.createConnectionStatus).toEqual(Status.Completed)
+  })
+
+  test('BlockActionType.TRANSACTIONS_RECEIVED', () => {
+    const connection = buildFakeConnection()
+    const connectionsNormalized = normalizeConnections([connection])
+    const connectionAction = connectionsReceived([connection])
+    const newConnectionState = appReducer(initialState, connectionAction)
+
+    expect(newConnectionState.connections).toEqual(connectionsNormalized)
+    expect(newConnectionState.currentConnection).toEqual(connection)
+
+    const transactions = buildFakeTransactions()
+    const expectedTransactions = transactions.map((item) => {
+      return `${item.id}`
+    });
+
+    const expectedNormalizedConnection: NormalizedObject<ConnectionNormalized> = {
+      ...connectionsNormalized,
+      byId: {
+        ...connectionsNormalized.byId,
+        [`${connection.id}`]: {
+          ...connectionsNormalized.byId[`${connection.id}`],
+          transactions: expectedTransactions
+        }
+      }
+    }
+
+    const action = transactionsReceived(transactions)
+    const newState = appReducer(newConnectionState, action)
+
+    expect(newState.connectionModalOpen).toEqual(newConnectionState.connectionModalOpen)
+    expect(newState.connections).toEqual(expectedNormalizedConnection)
+    expect(newState.currentConnection).toEqual(newConnectionState.currentConnection)
+    expect(newState.getConnectionsStatus).toEqual(newConnectionState.getConnectionsStatus)
+    expect(newState.createConnectionStatus).toEqual(newConnectionState.createConnectionStatus)
+  })
+
+  test('TransactionActionType.BLOCKS_RECEIVED', () => {
+    const connection = buildFakeConnection()
+    const connectionsNormalized = normalizeConnections([connection])
+    const connectionAction = connectionsReceived([connection])
+    const newConnectionState = appReducer(initialState, connectionAction)
+
+    expect(newConnectionState.connections).toEqual(connectionsNormalized)
+    expect(newConnectionState.currentConnection).toEqual(connection)
+
+    const blocks = buildFakeBlocks()
+    const expectedBlocks = blocks.map((item) => {
+      return `${item.id}`
+    });
+
+    const expectedNormalizedConnection: NormalizedObject<ConnectionNormalized> = {
+      ...connectionsNormalized,
+      byId: {
+        ...connectionsNormalized.byId,
+        [`${connection.id}`]: {
+          ...connectionsNormalized.byId[`${connection.id}`],
+          blocks: expectedBlocks
+        }
+      }
+    }
+
+    const action = blocksReceived(blocks)
+    const newState = appReducer(newConnectionState, action)
+
+    expect(newState.connectionModalOpen).toEqual(newConnectionState.connectionModalOpen)
+    expect(newState.connections).toEqual(expectedNormalizedConnection)
+    expect(newState.currentConnection).toEqual(newConnectionState.currentConnection)
+    expect(newState.getConnectionsStatus).toEqual(newConnectionState.getConnectionsStatus)
+    expect(newState.createConnectionStatus).toEqual(newConnectionState.createConnectionStatus)
+
+  })
+
+  test('ContractActionType.CONTRACTS_RECEIVED', () => {
+    const connection = buildFakeConnection()
+    const connectionsNormalized = normalizeConnections([connection])
+    const connectionAction = connectionsReceived([connection])
+    const newConnectionState = appReducer(initialState, connectionAction)
+
+    expect(newConnectionState.connections).toEqual(connectionsNormalized)
+    expect(newConnectionState.currentConnection).toEqual(connection)
+
+    const contracts = buildFakeContracts()
+    const expectedContracts = contracts.map((item) => {
+      return `${item.id}`
+    });
+
+    const expectedNormalizedConnection: NormalizedObject<ConnectionNormalized> = {
+      ...connectionsNormalized,
+      byId: {
+        ...connectionsNormalized.byId,
+        [`${connection.id}`]: {
+          ...connectionsNormalized.byId[`${connection.id}`],
+          contracts: expectedContracts
+        }
+      }
+    }
+
+    const action = contractsReceived(contracts)
+    const newState = appReducer(newConnectionState, action)
+
+    expect(newState.connectionModalOpen).toEqual(newConnectionState.connectionModalOpen)
+    expect(newState.connections).toEqual(expectedNormalizedConnection)
+    expect(newState.currentConnection).toEqual(newConnectionState.currentConnection)
+    expect(newState.getConnectionsStatus).toEqual(newConnectionState.getConnectionsStatus)
+    expect(newState.createConnectionStatus).toEqual(newConnectionState.createConnectionStatus)
+
   })
 })

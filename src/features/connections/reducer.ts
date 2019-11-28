@@ -1,12 +1,15 @@
 import { Reducer } from 'redux'
+import { normalize, schema } from 'normalizr';
 
 import { Connection } from '@solid-explorer/types'
+
+import { ActionType as BlockActionType } from '../blocks/action-types'
+import { ActionType as TransactionActionType } from '../transactions/action-types'
+import { ActionType as ContractActionType } from '../contracts/action-types'
 
 import { Status, NormalizedObject } from '../common/types'
 
 import { ActionType, Actions } from './action-types'
-import { normalize, schema } from 'normalizr';
-import { ActionType as BlockActionType } from '../blocks/action-types'
 
 export interface ConnectionState {
   connectionModalOpen: boolean
@@ -47,17 +50,58 @@ export const appReducer: Reducer<ConnectionState, Actions> = (
         currentConnection: action.payload[0],
         getConnectionsStatus: Status.Completed
       }
+    case ContractActionType.CONTRACTS_RECEIVED:
+      const contracts = action.payload.map((item) => {
+        return `${item.id}`
+      });
+      // A connection has to be selected in order to access this
+      const connectionIdFromContracts = state.currentConnection ? state.currentConnection.id : action.payload[0].connectionId // As all transactions should be of the same connection
+      const newConnectionsWithContracts = {
+        ...state.connections,
+        byId: {
+          ...state.connections.byId,
+          [`${connectionIdFromContracts}`]: {
+            ...state.connections.byId[`${connectionIdFromContracts}`],
+            contracts
+          }
+        }
+      }
+      return {
+        ...state,
+        connections: newConnectionsWithContracts
+      }
+    case TransactionActionType.TRANSACTIONS_RECEIVED:
+      const transactions = action.payload.map((item) => {
+        return `${item.id}`
+      });
+      // A connection has to be selected in order to access this
+      const connectionIdFromTransactions = state.currentConnection ? state.currentConnection.id : action.payload[0].connectionId // As all transactions should be of the same connection
+      const newConnectionsWithTransactions = {
+        ...state.connections,
+        byId: {
+          ...state.connections.byId,
+          [`${connectionIdFromTransactions}`]: {
+            ...state.connections.byId[`${connectionIdFromTransactions}`],
+            transactions
+          }
+        }
+      }
+      return {
+        ...state,
+        connections: newConnectionsWithTransactions
+      }
     case BlockActionType.BLOCKS_RECEIVED:
       const blocks = action.payload.map((item) => {
-        return item.id
+        return `${item.id}`
       });
-      const connectionId = action.payload[0].connectionId // as all will have same connectionId
+      // A connection has to be selected in order to access this
+      const connectionIdFromBlocks = state.currentConnection ? state.currentConnection.id : action.payload[0].connectionId // As all blocks should be of the same connection
       const newConnectionsWithBlock = {
         ...state.connections,
         byId: {
           ...state.connections.byId,
-          [`${connectionId}`]: {
-            ...state.connections.byId[`${connectionId}`],
+          [`${connectionIdFromBlocks}`]: {
+            ...state.connections.byId[`${connectionIdFromBlocks}`],
             blocks
           }
         }

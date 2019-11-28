@@ -13,6 +13,7 @@ import { ApplicationState } from 'features/rootReducer'
 import client from '../utils/feathers'
 
 import { StyledDiv, StyledH1 } from './components'
+import { ConnectionNormalized } from 'features/connections/types'
 
 // interface OwnProps {
 
@@ -44,9 +45,11 @@ export class TransactionsView extends React.Component<AllProps> {
         // TODO IMPROVE
         client.service('transaction-receipts')
             .on('created', (message: string) => {
-                if (this.props.currentConnection) {
-                    this.props.getTransactions(this.props.currentConnection.id)
-                }
+                setTimeout(() => {
+                    if (this.props.currentConnection) {
+                        this.props.getTransactions(this.props.currentConnection.id)
+                    }
+                }, 500);
             });
     }
 
@@ -63,11 +66,12 @@ export class TransactionsView extends React.Component<AllProps> {
 }
 
 const mapStateToProps = ({ transactionsState, connectionState }: ApplicationState) => {
-    const transactionsByConnection = transactionsState.transactions.filter((item) => {
-        if (connectionState.currentConnection && connectionState.currentConnection.id) {
-            return item.connectionId === connectionState.currentConnection.id
-        }
-        return item;
+    const currentConnectionId = connectionState.currentConnection ? connectionState.currentConnection.id as number : 0
+    const connection = connectionState.connections.byId[currentConnectionId] as ConnectionNormalized || {}
+    const allTransactionIdsByConnection = connection.transactions as string[]
+
+    const transactionsByConnection = allTransactionIdsByConnection && allTransactionIdsByConnection.map((id: string) => {
+        return transactionsState.transactions.byId[id];
     })
 
     return {

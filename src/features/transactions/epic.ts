@@ -21,8 +21,8 @@ export const getTransactionsEpic = (
 ) =>
   action$.pipe(
     ofType(ActionType.GET_TRANSACTIONS),
-    switchMap(() => {
-      return ajax.getJSON<Response>(`${TRANSACTIONS_URL}`).pipe(
+    switchMap(({ payload }) => {
+      return ajax.getJSON<Response>(`${TRANSACTIONS_URL}?connectionId=${payload}`).pipe(
         map(response => transactionsReceived(response.data)),
         catchError(error =>
           of({

@@ -23,7 +23,7 @@ export const getContractsEpic = (
     ofType(ActionType.GET_CONTRACTS),
     switchMap(({ payload }) => {
       return ajax
-        .getJSON<Response>(`${CONTRACTS_URL}`) // ?connectionId=${payload} TODO: removed for demo, but I should lazy load
+        .getJSON<Response>(`${CONTRACTS_URL}?connectionId=${payload}`)
         .pipe(
           map(response => contractsReceived(response.data)),
           catchError(error =>

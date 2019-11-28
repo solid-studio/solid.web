@@ -12,6 +12,7 @@ import { getBlocks } from 'features/blocks/actions'
 import client from '../utils/feathers'
 
 import { StyledDiv, StyledH1 } from './components'
+import { ConnectionNormalized } from 'features/connections/types'
 
 // interface OwnProps {
 
@@ -41,9 +42,11 @@ export class BlocksView extends React.Component<AllProps> {
         // TODO IMPROVE
         client.service('blocks')
             .on('created', (message: string) => {
-                if (this.props.currentConnection) {
-                    this.props.getBlocks(this.props.currentConnection.id)
-                }
+                setTimeout(() => {
+                    if (this.props.currentConnection) {
+                        this.props.getBlocks(this.props.currentConnection.id)
+                    }
+                }, 500);
             });
     }
 
@@ -60,10 +63,10 @@ export class BlocksView extends React.Component<AllProps> {
 
 const mapStateToProps = ({ blocksState, connectionState }: ApplicationState) => {
     const currentConnectionId = connectionState.currentConnection ? connectionState.currentConnection.id as number : 0
+    const connection = connectionState.connections.byId[currentConnectionId] as ConnectionNormalized || {}
+    const allBlockIdsByConnection = connection.blocks as string[]
 
-    const allBlockIdsByConnection = connectionState.connections.byId[currentConnectionId] || {}
-
-    const blocksByConnection = allBlockIdsByConnection.blocks && allBlockIdsByConnection.blocks.map((id: string) => {
+    const blocksByConnection = allBlockIdsByConnection && allBlockIdsByConnection.map((id: string) => {
         return blocksState.blocks.byId[id];
     })
 

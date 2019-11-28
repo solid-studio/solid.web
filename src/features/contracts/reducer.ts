@@ -1,8 +1,9 @@
 import { Reducer } from 'redux'
+import { normalize, schema } from 'normalizr';
 
 import { Contract } from '@solid-explorer/types'
 
-import { Status } from '../common/types'
+import { Status, NormalizedObject } from '../common/types'
 
 import { ActionType, Actions } from './action-types'
 
@@ -13,7 +14,7 @@ import { ActionType, Actions } from './action-types'
 // Compiler (done)
 export interface ContractState {
   currentContract?: Contract
-  contracts: Contract[]
+  contracts: NormalizedObject<Contract>
   getContractsStatus: Status
   // loadCompilerRequest: LoadCompilerRequest
   // validateSourceCode: ValidateSourceCode
@@ -32,7 +33,10 @@ export interface ContractState {
 // }
 
 export const initialState: ContractState = {
-  contracts: [],
+  contracts: {
+    byId: {},
+    allIds: []
+  },
   currentContract: undefined,
   getContractsStatus: Status.NotStarted
   // compilerWorker: new CompilerWorker(),
@@ -46,7 +50,11 @@ export const appReducer: Reducer<ContractState, Actions> = (
 ): ContractState => {
   switch (action.type) {
     case ActionType.CONTRACTS_RECEIVED:
-      return { ...state, contracts: action.payload, currentContract: action.payload[0] }
+      return {
+        ...state,
+        contracts: getNewContracts(action.payload, state),
+        currentContract: action.payload[0]
+      }
     // case ActionType.CONTRACT_SELECTED:
     // return { ...state, currentContract: action.payload }
     // compiler cases
@@ -57,4 +65,31 @@ export const appReducer: Reducer<ContractState, Actions> = (
     default:
       return state
   }
+}
+
+export const normalizeContracts = (contracts: Contract[]): NormalizedObject<Contract> => {
+  const contractschema = new schema.Entity('contracts');
+  const contractListSchema = new schema.Array(contractschema);
+  const normalizedData = normalize(contracts, contractListSchema);
+
+  return {
+    byId: normalizedData.entities.contracts,
+    allIds: normalizedData.result
+  }
+}
+
+export const getNewContracts = (contracts: Contract[], state: ContractState): NormalizedObject<Contract> => {
+  const newNormalizedcontracts = normalizeContracts(contracts)
+  const filteredNewIds = newNormalizedcontracts.allIds.filter((id: string) => {
+    return state.contracts.allIds.indexOf(id) === -1
+  })
+  const newcontracts = {
+    ...state.contracts,
+    byId: {
+      ...state.contracts.byId,
+      ...newNormalizedcontracts.byId
+    },
+    allIds: [...state.contracts.allIds, ...filteredNewIds]
+  }
+  return newcontracts
 }

@@ -4,6 +4,8 @@ import { Connection } from '@solid-explorer/types'
 
 import { ConnectionItem } from './types'
 import { BlocksReceivedAction } from '../blocks/action-types'
+import { TransactionsReceivedAction } from '../transactions/action-types'
+import { ContractsReceivedAction } from '../contracts/action-types'
 
 export enum ActionType {
   OPEN_CONNECTION_MODAL = 'OPEN_CONNECTION_MODAL',
@@ -47,3 +49,5 @@ export type Actions =
   | CreateConnectionAction
   | ConnectionItemSelectedAction
   | BlocksReceivedAction
+  | TransactionsReceivedAction
+  | ContractsReceivedAction

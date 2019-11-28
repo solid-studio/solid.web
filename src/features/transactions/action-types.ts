@@ -14,7 +14,8 @@ export interface TransactionsReceivedAction extends Action {
 }
 
 export interface GetTransactionsAction extends Action {
-  type: ActionType.GET_TRANSACTIONS
+  type: ActionType.GET_TRANSACTIONS,
+  payload: number
 }
 
 export type Actions = TransactionsReceivedAction | GetTransactionsAction

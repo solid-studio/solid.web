@@ -21,9 +21,8 @@ export const getBlocksEpic = (
 ) =>
   action$.pipe(
     ofType(ActionType.GET_BLOCKS),
-    switchMap(() => {
-      //       return ajax.getJSON<Response>(`${BLOCKS_URL}?connectionId=${payload}`).pipe(
-      return ajax.getJSON<Response>(`${BLOCKS_URL}`).pipe(
+    switchMap(({ payload }) => {
+      return ajax.getJSON<Response>(`${BLOCKS_URL}?connectionId=${payload}`).pipe(
         map(response => blocksReceived(response.data)),
         catchError(error =>
           of({
