@@ -22,18 +22,16 @@ export const getContractsEpic = (
   action$.pipe(
     ofType(ActionType.GET_CONTRACTS),
     switchMap(({ payload }) => {
-      return ajax
-        .getJSON<Response>(`${CONTRACTS_URL}?connectionId=${payload}`)
-        .pipe(
-          map(response => contractsReceived(response.data)),
-          catchError(error =>
-            of({
-              type: ActionType.ERROR_WHEN_GETTING_DATA,
-              payload: error.xhr.response,
-              error: true
-            })
-          )
+      return ajax.getJSON<Response>(`${CONTRACTS_URL}?connectionId=${payload}`).pipe(
+        map(response => contractsReceived(response.data)),
+        catchError(error =>
+          of({
+            type: ActionType.ERROR_WHEN_GETTING_DATA,
+            payload: error.xhr.response,
+            error: true
+          })
         )
+      )
     })
   )
 

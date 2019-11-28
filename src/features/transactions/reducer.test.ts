@@ -48,7 +48,7 @@ describe('Transactions reducer', () => {
     expect(newState.getTransactionsStatus).toEqual(Status.Completed)
 
     // add new existing items
-    const newTransactionHash = '0x0101';
+    const newTransactionHash = '0x0101'
     const newTransaction = buildFakeTransactionReceipt({ id: 2, transactionHash: newTransactionHash })
     const newTransactionsNormalized = normalizeTransactions([newTransaction])
     const newTransactionsReceivedAction = transactionsReceived([newTransaction])

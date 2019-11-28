@@ -3,16 +3,11 @@ import { Subject } from 'rxjs'
 
 import { ApplicationState, initialState } from '../rootReducer'
 
-import {
-  LoadCompilerVersionAction
-} from './action-types'
-import {
-  loadCompilerVersion
-} from './actions'
+import { LoadCompilerVersionAction } from './action-types'
+import { loadCompilerVersion } from './actions'
 import { loadCompilerVersionEpic } from './epic'
 
 describe('Compiler Epic Tests', () => {
-
   test('loadCompilerVersionEpic', done => {
     const action: LoadCompilerVersionAction = loadCompilerVersion()
 

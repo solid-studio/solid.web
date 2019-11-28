@@ -1,5 +1,5 @@
 import { Reducer } from 'redux'
-import { normalize, schema } from 'normalizr';
+import { normalize, schema } from 'normalizr'
 
 import { Contract } from '@solid-explorer/types'
 
@@ -68,9 +68,9 @@ export const appReducer: Reducer<ContractState, Actions> = (
 }
 
 export const normalizeContracts = (contracts: Contract[]): NormalizedObject<Contract> => {
-  const contractschema = new schema.Entity('contracts');
-  const contractListSchema = new schema.Array(contractschema);
-  const normalizedData = normalize(contracts, contractListSchema);
+  const contractschema = new schema.Entity('contracts')
+  const contractListSchema = new schema.Array(contractschema)
+  const normalizedData = normalize(contracts, contractListSchema)
 
   return {
     byId: normalizedData.entities.contracts,

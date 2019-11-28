@@ -47,7 +47,7 @@ describe('Contracts reducer', () => {
     expect(newState.getContractsStatus).toEqual(initialState.getContractsStatus)
 
     // add new existing item
-    const newContractName = 'new-name-test';
+    const newContractName = 'new-name-test'
     const newContract = buildFakeContract({ id: 2, name: newContractName })
     const newContractsNormalized = normalizeContracts([newContract])
     const newContractsReceivedAction = contractsReceived([newContract])

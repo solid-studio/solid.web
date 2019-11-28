@@ -1,5 +1,5 @@
 import { Reducer } from 'redux'
-import { normalize, schema } from 'normalizr';
+import { normalize, schema } from 'normalizr'
 
 import { Connection } from '@solid-explorer/types'
 
@@ -52,11 +52,13 @@ export const appReducer: Reducer<ConnectionState, Actions> = (
         getConnectionsStatus: Status.Completed
       }
     case ContractActionType.CONTRACTS_RECEIVED:
-      const contracts = action.payload.map((item) => {
+      const contracts = action.payload.map(item => {
         return `${item.id}`
-      });
+      })
       // A connection has to be selected in order to access this
-      const connectionIdFromContracts = state.currentConnection ? state.currentConnection.id : action.payload[0].connectionId // As all transactions should be of the same connection
+      const connectionIdFromContracts = state.currentConnection
+        ? state.currentConnection.id
+        : action.payload[0].connectionId // As all transactions should be of the same connection
       const newConnectionsWithContracts = {
         ...state.connections,
         byId: {
@@ -72,11 +74,13 @@ export const appReducer: Reducer<ConnectionState, Actions> = (
         connections: newConnectionsWithContracts
       }
     case TransactionActionType.TRANSACTIONS_RECEIVED:
-      const transactions = action.payload.map((item) => {
+      const transactions = action.payload.map(item => {
         return `${item.id}`
-      });
+      })
       // A connection has to be selected in order to access this
-      const connectionIdFromTransactions = state.currentConnection ? state.currentConnection.id : action.payload[0].connectionId // As all transactions should be of the same connection
+      const connectionIdFromTransactions = state.currentConnection
+        ? state.currentConnection.id
+        : action.payload[0].connectionId // As all transactions should be of the same connection
       const newConnectionsWithTransactions = {
         ...state.connections,
         byId: {
@@ -92,11 +96,13 @@ export const appReducer: Reducer<ConnectionState, Actions> = (
         connections: newConnectionsWithTransactions
       }
     case BlockActionType.BLOCKS_RECEIVED:
-      const blocks = action.payload.map((item) => {
+      const blocks = action.payload.map(item => {
         return `${item.id}`
-      });
+      })
       // A connection has to be selected in order to access this
-      const connectionIdFromBlocks = state.currentConnection ? state.currentConnection.id : action.payload[0].connectionId // As all blocks should be of the same connection
+      const connectionIdFromBlocks = state.currentConnection
+        ? state.currentConnection.id
+        : action.payload[0].connectionId // As all blocks should be of the same connection
       const newConnectionsWithBlock = {
         ...state.connections,
         byId: {
@@ -125,7 +131,7 @@ export const appReducer: Reducer<ConnectionState, Actions> = (
       }
       return {
         ...state,
-        connections: newConnections,// OR getNewConnections([action.payload], state),
+        connections: newConnections, // OR getNewConnections([action.payload], state),
         currentConnection: action.payload,
         createConnectionStatus: Status.Completed
       }
@@ -136,9 +142,9 @@ export const appReducer: Reducer<ConnectionState, Actions> = (
 /* tslint:enable */
 
 export const normalizeConnections = (connections: Connection[]): NormalizedObject<Connection> => {
-  const blockSchema = new schema.Entity('connections');
-  const blockListSchema = new schema.Array(blockSchema);
-  const normalizedData = normalize(connections, blockListSchema);
+  const blockSchema = new schema.Entity('connections')
+  const blockListSchema = new schema.Array(blockSchema)
+  const normalizedData = normalize(connections, blockListSchema)
 
   return {
     byId: normalizedData.entities.connections,

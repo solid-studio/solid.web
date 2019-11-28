@@ -22,6 +22,6 @@ export interface GenericArrayResponse<T> {
 }
 
 export interface NormalizedObject<T> {
-  byId: { [id: string]: T };
-  allIds: string[];
+  byId: { [id: string]: T }
+  allIds: string[]
 }

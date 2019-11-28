@@ -45,7 +45,7 @@ describe('Blocks reducer', () => {
     expect(newState.currentBlock).toEqual(blocks[0]) // TODO: Am I sure the current block has to be the first one?, check reducer too..
     expect(newState.getBlocksStatus).toEqual(initialState.getBlocksStatus)
 
-    const newBlockNumber = 123;
+    const newBlockNumber = 123
     const newBlock = buildFakeBlock({ id: 2, blockNumber: newBlockNumber })
     const newBlocksNormalized = normalizeBlocks([newBlock])
     const newBlocksReceivedAction = blocksReceived([newBlock])

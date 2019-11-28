@@ -4,7 +4,9 @@ import { TransactionReceipt } from '@solid-explorer/types'
 
 import { ActionType, TransactionsReceivedAction, GetTransactionsAction } from './action-types'
 
-export const transactionsReceived: ActionCreator<TransactionsReceivedAction> = (transactions: TransactionReceipt[]): TransactionsReceivedAction => {
+export const transactionsReceived: ActionCreator<TransactionsReceivedAction> = (
+  transactions: TransactionReceipt[]
+): TransactionsReceivedAction => {
   return {
     type: ActionType.TRANSACTIONS_RECEIVED,
     payload: transactions

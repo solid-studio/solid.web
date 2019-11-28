@@ -1,4 +1,11 @@
-import { buildFakeConnections, buildFakeConnection, buildFakeTransactions, Connection, buildFakeBlocks, buildFakeContracts } from '@solid-explorer/types'
+import {
+  buildFakeConnections,
+  buildFakeConnection,
+  buildFakeTransactions,
+  Connection,
+  buildFakeBlocks,
+  buildFakeContracts
+} from '@solid-explorer/types'
 
 import { appReducer, initialState, normalizeConnections } from './reducer'
 import {
@@ -107,7 +114,6 @@ describe('Connections reducer', () => {
       expect(newStateWithNewConnection.connections.byId[1]).toEqual(normalizedConnections.byId[1])
       expect(newStateWithNewConnection.connections.byId[2]).toEqual(normalizedConnections.byId[2])
       expect(newStateWithNewConnection.connections.byId[3]).toEqual(newConnectionsNormalized.byId[3])
-
     })
 
     test('ActionType.CONNECTIONS_RECEIVED: Adding new existing items', () => {
@@ -133,7 +139,6 @@ describe('Connections reducer', () => {
       expect(newStateWithNewConnection.connections.byId[2]).toEqual(newConnectionsNormalized.byId[2])
       expect(newStateWithNewConnection.connections.byId[2].name).toEqual(newName)
     })
-
   })
 
   test('ActionType.CREATE_CONNECTION', () => {
@@ -170,9 +175,9 @@ describe('Connections reducer', () => {
     expect(newConnectionState.currentConnection).toEqual(connection)
 
     const transactions = buildFakeTransactions()
-    const expectedTransactions = transactions.map((item) => {
+    const expectedTransactions = transactions.map(item => {
       return `${item.id}`
-    });
+    })
 
     const expectedNormalizedConnection: NormalizedObject<ConnectionNormalized> = {
       ...connectionsNormalized,
@@ -205,9 +210,9 @@ describe('Connections reducer', () => {
     expect(newConnectionState.currentConnection).toEqual(connection)
 
     const blocks = buildFakeBlocks()
-    const expectedBlocks = blocks.map((item) => {
+    const expectedBlocks = blocks.map(item => {
       return `${item.id}`
-    });
+    })
 
     const expectedNormalizedConnection: NormalizedObject<ConnectionNormalized> = {
       ...connectionsNormalized,
@@ -228,7 +233,6 @@ describe('Connections reducer', () => {
     expect(newState.currentConnection).toEqual(newConnectionState.currentConnection)
     expect(newState.getConnectionsStatus).toEqual(newConnectionState.getConnectionsStatus)
     expect(newState.createConnectionStatus).toEqual(newConnectionState.createConnectionStatus)
-
   })
 
   test('ContractActionType.CONTRACTS_RECEIVED', () => {
@@ -241,9 +245,9 @@ describe('Connections reducer', () => {
     expect(newConnectionState.currentConnection).toEqual(connection)
 
     const contracts = buildFakeContracts()
-    const expectedContracts = contracts.map((item) => {
+    const expectedContracts = contracts.map(item => {
       return `${item.id}`
-    });
+    })
 
     const expectedNormalizedConnection: NormalizedObject<ConnectionNormalized> = {
       ...connectionsNormalized,
@@ -264,6 +268,5 @@ describe('Connections reducer', () => {
     expect(newState.currentConnection).toEqual(newConnectionState.currentConnection)
     expect(newState.getConnectionsStatus).toEqual(newConnectionState.getConnectionsStatus)
     expect(newState.createConnectionStatus).toEqual(newConnectionState.createConnectionStatus)
-
   })
 })

@@ -4,7 +4,7 @@ import { Block } from '@solid-explorer/types'
 
 import { Status, NormalizedObject } from '../common/types'
 import { ActionType, Actions } from './action-types'
-import { normalize, schema } from 'normalizr';
+import { normalize, schema } from 'normalizr'
 
 export interface BlocksState {
   currentBlock?: Block
@@ -34,9 +34,9 @@ export const appReducer: Reducer<BlocksState, Actions> = (
 }
 
 export const normalizeBlocks = (blocks: Block[]): NormalizedObject<Block> => {
-  const blockSchema = new schema.Entity('blocks');
-  const blockListSchema = new schema.Array(blockSchema);
-  const normalizedData = normalize(blocks, blockListSchema);
+  const blockSchema = new schema.Entity('blocks')
+  const blockListSchema = new schema.Array(blockSchema)
+  const normalizedData = normalize(blocks, blockListSchema)
 
   return {
     byId: normalizedData.entities.blocks,

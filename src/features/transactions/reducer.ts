@@ -1,5 +1,5 @@
 import { Reducer } from 'redux'
-import { normalize, schema } from 'normalizr';
+import { normalize, schema } from 'normalizr'
 
 import { TransactionReceipt } from '@solid-explorer/types'
 
@@ -41,9 +41,9 @@ export const appReducer: Reducer<TransactionsState, Actions> = (
 }
 
 export const normalizeTransactions = (transactions: TransactionReceipt[]): NormalizedObject<TransactionReceipt> => {
-  const transactionSchema = new schema.Entity('transactions');
-  const transactionListSchema = new schema.Array(transactionSchema);
-  const normalizedData = normalize(transactions, transactionListSchema);
+  const transactionSchema = new schema.Entity('transactions')
+  const transactionListSchema = new schema.Array(transactionSchema)
+  const normalizedData = normalize(transactions, transactionListSchema)
 
   return {
     byId: normalizedData.entities.transactions,
@@ -51,7 +51,10 @@ export const normalizeTransactions = (transactions: TransactionReceipt[]): Norma
   }
 }
 
-export const getNewTransactions = (transactions: TransactionReceipt[], state: TransactionsState): NormalizedObject<TransactionReceipt> => {
+export const getNewTransactions = (
+  transactions: TransactionReceipt[],
+  state: TransactionsState
+): NormalizedObject<TransactionReceipt> => {
   const newNormalizedTransactions = normalizeTransactions(transactions)
   const filteredNewIds = newNormalizedTransactions.allIds.filter((id: string) => {
     return state.transactions.allIds.indexOf(id) === -1
