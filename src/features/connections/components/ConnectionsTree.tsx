@@ -15,7 +15,7 @@ interface Props {
 
 interface ExtraArguments {
   connectionId: number,
-  type: 'transactions' | 'blocks' | 'contracts'
+  nodeType: 'transactions' | 'blocks' | 'contracts'
 }
 
 const rightClickOptions = [{
@@ -44,21 +44,21 @@ export class ConnectionsTree extends React.Component<Props> {
             style={{ color: 'white' }}>
 
             <TreeNodeStyled
-              extra={{ connectionId: item.id, type: 'contracts' }}
+              extra={{ connectionId: item.id, nodeType: 'contracts' }}
               icon={({ selected }: any) => <Icon type={selected ? 'folder' : 'folder'} />}
               title={"Contracts"}
               key={`${item.name}-contracts`}
               style={{ color: 'white' }} />
 
             <TreeNodeStyled
-              extra={{ connectionId: item.id, type: 'transactions' }}
+              extra={{ connectionId: item.id, nodeType: 'transactions' }}
               icon={({ selected }: any) => <Icon type={selected ? 'folder' : 'folder'} />}
               title={"Transactions"}
               key={`${item.name}-transactions`}
               style={{ color: 'white' }} />
 
             <TreeNodeStyled
-              extra={{ connectionId: item.id, type: 'blocks' }}
+              extra={{ connectionId: item.id, nodeType: 'blocks' }}
               icon={({ selected }: any) => <Icon type={selected ? 'folder' : 'folder'} />}
               title={"Blocks"}
               key={`${item.name}-blocks`}
@@ -70,13 +70,13 @@ export class ConnectionsTree extends React.Component<Props> {
         onClickDataItem={(value: string | undefined, node: any, extra: ExtraArguments) => {
           if (extra) {
             // TODO: To fix
-            const { connectionId, type } = extra
+            const { connectionId, nodeType } = extra
             const connectionToShow = this.props.connections.find(item => {
               return item.id === connectionId
             })
             this.props.onConnectionItemSelected({
               ...connectionToShow,
-              type: `${type}`
+              nodeType: `${nodeType}`
             })
           }
         }}

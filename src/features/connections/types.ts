@@ -7,5 +7,5 @@ export interface ConnectionNormalized extends Connection {
 }
 
 export interface ConnectionItem extends Connection {
-  type: string
+  nodeType: string
 }

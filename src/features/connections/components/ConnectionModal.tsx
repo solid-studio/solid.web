@@ -14,14 +14,45 @@ import { Status } from "../../common/types" // TODO: this shouldn't be the case 
 import { createOrUpdateConnection, closeConnectionModal } from '../actions'
 
 import { ConnectionModalComponent } from "./ConnectionModalComponent";
+import { RadioField } from './RadioField'
+import { ConnectionType, PublicChainId } from '@solid-explorer/types/lib/connections/ConnectionType'
+import { SelectField } from './SelectField'
 
 const FORM_ID = 'CONNECTION_FORM'
 const FORM_TITLE = "Add Connection"
 
 const defaultConnection: Connection = {
   name: '',
-  url: ''
+  url: '',
+  type: ConnectionType.Private,
+  publicChainId: PublicChainId.Goerli
 }
+
+const defaultRadioFormOptions = [
+  {
+    key: ConnectionType.Private,
+    value: ConnectionType.Private
+  },
+  {
+    key: ConnectionType.Public,
+    value: ConnectionType.Public
+  }
+]
+
+const defaultPublicChainFormOptions = [
+  {
+    key: PublicChainId.Goerli,
+    value: PublicChainId.Goerli
+  },
+  {
+    key: PublicChainId.MainNet,
+    value: PublicChainId.MainNet
+  },
+  {
+    key: PublicChainId.XDai,
+    value: PublicChainId.XDai
+  }
+]
 
 interface OwnProps {
   item: Connection
@@ -47,13 +78,16 @@ export class ConnectionModal extends React.Component<AllProps> {
   }
 
   saveConnection = async (item: Connection, actions: any) => {
+    console.log("ITEM", item)
     console.log("ACTIONS", actions)
     const isValid = await isValidConnection(item.url)
     if (!isValid) {
       actions.setSubmitting(true)
       actions.setFieldError('url', 'Invalid JSON RPC URL')
     } else {
-      this.props.createOrUpdateConnection(item)
+      // TODO test.. to avoid store data that can confuse...
+      const itemCleaned: Connection = item.type === ConnectionType.Private ? { ...item, publicChainId: undefined } : { ...item, url: '' }
+      this.props.createOrUpdateConnection(itemCleaned)
     }
   }
 
@@ -75,10 +109,24 @@ export class ConnectionModal extends React.Component<AllProps> {
               render={(innerProps: FieldProps) => <InputFormItem {...innerProps} label="Name" placeHolder="name" />}
             />
             <Field
-              name="url"
+              name="type"
               render={(innerProps: FieldProps) => (
-                <InputFormItem {...innerProps} label="Blockchain URL" placeHolder="JSON RPC endpoint" />
+                <RadioField isButton={true} options={defaultRadioFormOptions} defaultValue={ConnectionType.Private} label="Type" {...innerProps} />
               )}
+            />
+            <Field
+              name="publicChainId"
+              as="select"
+              render={(innerProps: FieldProps) => (
+                <SelectField {...innerProps} options={defaultPublicChainFormOptions} label="Public network" />
+              )}
+            />
+            <Field
+              name="url"
+              render={(innerProps: FieldProps) => {
+                const isPrivate = innerProps.form.values.type === ConnectionType.Private
+                return isPrivate ? <InputFormItem {...innerProps} label="Blockchain URL" placeHolder="JSON RPC endpoint" /> : <div></div>
+              }}
             />
           </Form>
         )}
@@ -99,13 +147,16 @@ const isValidConnection = async (url: string) => {
 
 const validator = (items: Connection): FormikErrors<Connection> => {
   const errors: FormikErrors<Connection> = {}
+  console.log("ITEMS", items)
   if (!items.name) {
     errors.name = 'Required'
   }
   if (!items.url) {
     errors.url = 'Required'
   }
-
+  if (items.type === ConnectionType.Public && !items.publicChainId) {
+    errors.publicChainId = 'Required'
+  }
   return errors
 }
 

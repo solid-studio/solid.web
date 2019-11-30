@@ -71,10 +71,10 @@ export const onConnectionItemSelectedEpic = (action$: ActionsObservable<Connecti
     ofType<ConnectionItemSelectedAction>(ActionType.CONNECTION_ITEM_SELECTED),
     map(({ payload }) => {
       return openOrSetTabActive({
-        type: payload.type,
+        type: payload.nodeType,
         data: payload,
-        title: payload.type,
-        id: `${payload.type}-${payload.id}`
+        title: payload.nodeType,
+        id: `${payload.nodeType}-${payload.id}`
       })
     })
   )
