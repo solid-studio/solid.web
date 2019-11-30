@@ -5,13 +5,14 @@ import { Layout, Spin } from 'antd'
 
 import { Connection, FileItem } from '@solid-explorer/types'
 
-import { openContractDefinitionsModal, contractDefinitionSelected, getContractDefinitions, openFileSystemDialog } from 'features/contract-definitions/actions'
+import { createNewEmptyContractDefinition, contractDefinitionSelected, getContractDefinitions, openFileSystemDialog } from 'features/contract-definitions/actions'
 import { openConnectionModal, getConnections, connectionItemSelected } from 'features/connections/actions'
-import { ContractDefinitionsTree, ContractDefinitionsModal } from 'features/contract-definitions/components'
+import { ContractDefinitionsTree } from 'features/contract-definitions/components'
 import { loadCompilerVersion } from 'features/compiler/actions'
 import { ConnectionModal, ConnectionsTree } from 'features/connections/components'
 import { ApplicationState } from 'features/rootReducer'
 import { emitter } from 'features/common/event-emitter'
+import { DebuggerModal } from 'features/debugger/components'
 
 import { socket } from '../utils/feathers'
 
@@ -29,7 +30,7 @@ interface DispatchProps {
   getConnections: ActionCreator<Action>
   connectionItemSelected: ActionCreator<Action>
 
-  openContractDefinitionsModal: ActionCreator<Action>
+  createNewEmptyContractDefinition: ActionCreator<Action>
   getContractDefinitions: ActionCreator<Action>
   contractDefinitionSelected: ActionCreator<Action>
 
@@ -99,7 +100,7 @@ export class DefaultLayout extends React.Component<AllProps, State> {
         <Wrapper {...this.props} onClick={this.onIDEClick}>
           <Navbar
             onNewConnectionClick={this.props.openConnectionModal}
-            onNewContractInstanceClick={this.props.openContractDefinitionsModal}
+            onNewContractDefinitionClick={this.props.createNewEmptyContractDefinition}
           />
           <Layout>
             <Sidebar id={"default-side"} trigger={null} collapsible={true} collapsed={this.state.collapsed} onCollapse={this.onCollapse} collapsedWidth={40} theme='dark' width={280}>
@@ -118,7 +119,7 @@ export class DefaultLayout extends React.Component<AllProps, State> {
           </Layout>
           <Content>{this.props.children}</Content>
           <ConnectionModal />
-          <ContractDefinitionsModal />
+          <DebuggerModal />
         </Wrapper>
 
     )
@@ -142,7 +143,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
       openConnectionModal,
       getConnections,
       getContractDefinitions,
-      openContractDefinitionsModal,
+      createNewEmptyContractDefinition,
       contractDefinitionSelected,
       connectionItemSelected,
       openFileSystemDialog

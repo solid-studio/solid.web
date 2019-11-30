@@ -70,7 +70,7 @@ export const onOpenFileSystemDialog = (
         catchError(error =>
           of({
             type: ActionType.ERROR_WHEN_GETTING_DATA,
-            payload: error.xhr.response,
+            payload: error,
             error: true
           })
         )

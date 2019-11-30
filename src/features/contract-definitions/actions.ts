@@ -6,11 +6,10 @@ import {
   ActionType,
   GetContractDefinitionsAction,
   ContractDefinitionsReceivedAction,
-  ContractDefinitionModalAction,
-  CreateContractDefinitionAction,
   ContractDefinitionSelectedAction,
   OpenFileSystemDialogAction,
-  FilesReceivedAction
+  FilesReceivedAction,
+  CreateNewEmptyContractDefinitionAction
 } from './action-types'
 import { ContractDefinitionItem } from './types'
 
@@ -29,19 +28,9 @@ export const getContractDefinitions: ActionCreator<GetContractDefinitionsAction>
   }
 }
 
-export const closeContractDefinitionsModal: ActionCreator<
-  ContractDefinitionModalAction
-> = (): ContractDefinitionModalAction => {
+export const createNewEmptyContractDefinition: ActionCreator<CreateNewEmptyContractDefinitionAction> = (contractDefinition: ContractDefinition): CreateNewEmptyContractDefinitionAction => {
   return {
-    type: ActionType.CLOSE_CONTRACT_DEFINITION_MODAL
-  }
-}
-
-export const openContractDefinitionsModal: ActionCreator<ContractDefinitionModalAction> = (
-  contractDefinition?: ContractDefinition
-): ContractDefinitionModalAction => {
-  return {
-    type: ActionType.OPEN_CONTRACT_DEFINITION_MODAL,
+    type: ActionType.CREATE_NEW_EMPTY_CONTRACT_DEFINITION,
     payload: contractDefinition
   }
 }

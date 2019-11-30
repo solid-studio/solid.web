@@ -12,6 +12,7 @@ export enum ActionType {
   CLOSE_CONTRACT_DEFINITION_MODAL = 'CLOSE_CONTRACT_DEFINITION_MODAL',
   OPEN_CONTRACT_DEFINITION_MODAL = 'OPEN_CONTRACT_DEFINITION_MODAL',
   CREATE_CONTRACT_DEFINITION = 'CREATE_CONTRACT_DEFINITION',
+  CREATE_NEW_EMPTY_CONTRACT_DEFINITION = 'CREATE_NEW_EMPTY_CONTRACT_DEFINITION',
   CONTRACT_DEFINITION_CREATED = 'CONTRACT_DEFINITION_CREATED',
   OPEN_FILESYSTEM_DIALOG = 'OPEN_FILESYSTEM_DIALOG',
   FILES_RECEIVED = 'FILES_RECEIVED'
@@ -38,6 +39,11 @@ export interface ContractDefinitionSelectedAction extends Action {
 
 export interface CreateContractDefinitionAction extends Action {
   type: ActionType.CREATE_CONTRACT_DEFINITION | ActionType.CONTRACT_DEFINITION_CREATED
+  payload: ContractDefinition
+}
+
+export interface CreateNewEmptyContractDefinitionAction extends Action {
+  type: ActionType.CREATE_NEW_EMPTY_CONTRACT_DEFINITION,
   payload: ContractDefinition
 }
 

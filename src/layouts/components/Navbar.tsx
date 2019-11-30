@@ -56,13 +56,13 @@ const NavbarTitle = styled(({ children, reverse, palette, theme, ...props }) =>
 
 interface Props {
   onNewConnectionClick: ActionCreator<Action>
-  onNewContractInstanceClick: ActionCreator<Action>
+  onNewContractDefinitionClick: ActionCreator<Action>
 }
 
-export const Navbar: React.FC<Props> = ({ onNewConnectionClick, onNewContractInstanceClick }: Props) => {
+export const Navbar: React.FC<Props> = ({ onNewConnectionClick, onNewContractDefinitionClick }: Props) => {
   const onDropDownClickk = ({ key }: any) => {
     if (key === 'contract') {
-      onNewContractInstanceClick()
+      onNewContractDefinitionClick()
     } else if (key === 'connection') {
       onNewConnectionClick()
     }
@@ -71,9 +71,8 @@ export const Navbar: React.FC<Props> = ({ onNewConnectionClick, onNewContractIns
   const renderMenu = () => {
     return (
       <Menu onClick={onDropDownClickk}>
-        <Menu.Item data-testid="navbar-menu-contract" key="contract">Contract Instance</Menu.Item>
+        <Menu.Item data-testid="navbar-menu-contract" key="contract">Contract Definition</Menu.Item>
         <Menu.Item data-testid="navbar-menu-connection" key="connection">Connection</Menu.Item>
-        {/* <Menu.Item data-testid="navbar-menu-tag" key="tag">Tag</Menu.Item> */}
       </Menu>
     )
   }

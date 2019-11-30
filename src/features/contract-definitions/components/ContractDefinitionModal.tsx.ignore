@@ -36,10 +36,6 @@ const defaultRadioFormOptions = [
     key: 'bytecode',
     value: 'Bytecode'
   }
-  // {
-  //   key: 'contract',
-  //   value: 'Contract'
-  // }
 ]
 
 const defaultContractDefinition: ContractDefinition = {
