@@ -9,7 +9,8 @@ import {
   ContractDefinitionSelectedAction,
   OpenFileSystemDialogAction,
   FilesReceivedAction,
-  CreateNewEmptyContractDefinitionAction
+  CreateNewEmptyContractDefinitionAction,
+  CreateContractDefinitionAction
 } from './action-types'
 import { ContractDefinitionItem } from './types'
 
