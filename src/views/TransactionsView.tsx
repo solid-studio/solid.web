@@ -3,17 +3,22 @@ import React from 'react'
 
 import { Action, ActionCreator, bindActionCreators, Dispatch } from 'redux'
 import { connect } from 'react-redux'
+import { Layout } from 'antd'
 
-import { Connection, TransactionReceipt } from '@solid-explorer/types'
+import { Connection, TransactionReceipt, buildFakeBlocks, Block } from '@solid-explorer/types'
 
 import { getTransactions } from 'features/transactions/actions'
 import { TransactionsTable } from 'features/transactions/components/TransactionsTable'
 import { ApplicationState } from 'features/rootReducer'
+import { ConnectionNormalized } from 'features/connections/types'
+import { emitter } from 'features/common/event-emitter'
 
 import client from '../utils/feathers'
 
 import { StyledDiv, StyledH1 } from './components'
-import { ConnectionNormalized } from 'features/connections/types'
+import { BlocksTable } from 'features/blocks/components'
+
+const { Sider, Content } = Layout;
 
 // interface OwnProps {
 
@@ -28,16 +33,28 @@ interface DispatchProps {
     getTransactions: ActionCreator<Action>
 }
 
+interface State {
+    showTransactionDrawer: boolean
+    drawerWidth: number
+}
+
 type AllProps = DispatchProps & StateProps // OwnProps & 
 
 
-export class TransactionsView extends React.Component<AllProps> {
+export class TransactionsView extends React.Component<AllProps, State> {
     static defaultProps = {
         transactions: []
     }
 
+    constructor(props: AllProps) {
+        super(props)
+        this.state = {
+            showTransactionDrawer: false,
+            drawerWidth: 470
+        }
+    }
+
     componentDidMount() {
-        console.log("this.props.currentConnection", this.props.currentConnection)
         if (this.props.currentConnection) {
             this.props.getTransactions(this.props.currentConnection.id)
         }
@@ -53,14 +70,41 @@ export class TransactionsView extends React.Component<AllProps> {
             });
     }
 
+    onDoubleClick = (record: TransactionReceipt) => {
+        console.log("DOUBLE CLICK", record)
+    }
+
+    handleTransactionsDrawer = (record: TransactionReceipt) => {
+        this.setState({
+            showTransactionDrawer: true
+        }, () => {
+            emitter.emit("COLLAPSE_RIGHT_SIDEBAR_MENU")
+        })
+        console.log("CLICK", record)
+    }
 
     render() {
+        const { showTransactionDrawer, drawerWidth } = this.state
         const { transactions } = this.props
         return (
-            <StyledDiv>
-                <StyledH1>Transactions</StyledH1>
-                <TransactionsTable transactions={transactions} />
-            </StyledDiv>
+            <Layout style={{ height: "100%" }}>
+                <Content style={{ height: "100%" }}>
+                    <StyledDiv>
+                        <StyledH1>Transactions</StyledH1>
+                        <TransactionsTable transactions={transactions}
+                            onClick={this.handleTransactionsDrawer}
+                            onDoubleClick={this.onDoubleClick} />
+                    </StyledDiv>
+                </Content>
+                <Sider style={{ background: "#272727" }} trigger={null}
+                    collapsed={!showTransactionDrawer}
+                    collapsible={true}
+                    collapsedWidth={0} width={drawerWidth}>
+                    <div>
+                        <h5>Work in progress</h5>
+                    </div>
+                </Sider>
+            </Layout>
         )
     }
 }

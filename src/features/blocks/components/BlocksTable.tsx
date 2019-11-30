@@ -8,8 +8,8 @@ import { BlocksTableComponent } from './BlocksTableComponent';
 
 interface OwnProps {
     blocks?: Block[]
-    onClick?: any // TODO type correctly and think if I 
-    onDoubleClick?: any // should abstract differently, maybe in another generic table that already has all events..
+    onClick: (record: Block) => void
+    onDoubleClick: (record: Block) => void
 }
 
 type AllProps = OwnProps
@@ -19,7 +19,7 @@ const tableColumns: Array<ColumnProps<Block>> = [
         key: 'hash',
         title: 'Block hash',
         dataIndex: 'hash',
-        width: 5,
+        // width: 5,
         // align: 'center',
         render: text => <p data-testid={`blocks-table-row-${text}`}>{text}</p>
     },
@@ -56,15 +56,17 @@ const tableColumns: Array<ColumnProps<Block>> = [
 export class BlocksTable extends React.Component<AllProps> {
     render() {
         const { blocks } = this.props
-        return <BlocksTableComponent rowKey="hash" dataSource={blocks}
+        return <BlocksTableComponent
+            rowKey="hash"
+            dataSource={blocks}
             columns={tableColumns}
             onRow={(record, rowIndex) => {
                 return {
                     onClick: event => {
-                        // TODO this.props.onClick(record)
+                        this.props.onClick(record)
                     },
                     onDoubleClick: event => {
-                        // TODO this.props.onDoubleClick(record)
+                        this.props.onDoubleClick(record)
                     }
                 };
             }}

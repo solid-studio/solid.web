@@ -8,8 +8,8 @@ import { ContractTableComponent } from './ContractsTableComponent';
 
 interface OwnProps {
     contracts?: Contract[]
-    onClick: any // TODO type correctly
-    onDoubleClick: any // TODO type correctly
+    onClick: (record: Contract) => void
+    onDoubleClick: (record: Contract) => void
 }
 
 type AllProps = OwnProps // & DispatchProps & StateProps
@@ -56,8 +56,6 @@ export class ContractsTable extends React.Component<AllProps> {
                     onDoubleClick: event => {
                         this.props.onDoubleClick(record)
                     }
-                    // onContextMenu: event => { }, // right button click row
-                    // onMouseEnter: event => { }
                 };
             }}
 
