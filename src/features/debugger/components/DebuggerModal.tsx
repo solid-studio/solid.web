@@ -15,7 +15,7 @@ export class DebuggerModal extends React.Component {
     render() {
         const sampleTransaction = buildFakeTransaction()
         return (<Modal
-            visible={true}
+            visible={false}
             title={`Transaction hash: ${sampleTransaction.hash}`}
             centered={true}
             footer={[
