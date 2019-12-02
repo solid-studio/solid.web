@@ -43,7 +43,7 @@ export interface CreateContractDefinitionAction extends Action {
 }
 
 export interface CreateNewEmptyContractDefinitionAction extends Action {
-  type: ActionType.CREATE_NEW_EMPTY_CONTRACT_DEFINITION,
+  type: ActionType.CREATE_NEW_EMPTY_CONTRACT_DEFINITION
   payload: ContractDefinition
 }
 

@@ -123,7 +123,7 @@ export class ConnectionModal extends React.Component<AllProps> {
               name="url"
               render={(innerProps: FieldProps) => {
                 const isPrivate = innerProps.form.values.type === ConnectionType.Private
-                return isPrivate ? <InputFormItem {...innerProps} label="Blockchain URL" placeHolder="JSON RPC endpoint" /> : <div></div>
+                return isPrivate ? <InputFormItem {...innerProps} label="Blockchain URL" placeHolder="JSON RPC endpoint" /> :  <div/>
               }}
             />
           </Form>

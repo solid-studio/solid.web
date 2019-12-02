@@ -2,9 +2,9 @@ import React from 'react'
 import { Modal, Button } from 'antd'
 import { buildFakeTransaction } from '@solid-explorer/types'
 
-interface Props {
+// interface Props {
 
-}
+// }
 
 export class DebuggerModal extends React.Component {
 
@@ -29,8 +29,6 @@ export class DebuggerModal extends React.Component {
             destroyOnClose={true}
             okText={"Close"}
             bodyStyle={{ height: "80vh" }}
-            width={"96%"}>
-
-        </Modal>)
+            width={"96%"} />)
     }
 }

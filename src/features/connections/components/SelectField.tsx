@@ -41,6 +41,6 @@ export const SelectField: React.FC<InputOwnProps> = ({ label, field, form, optio
             })
           }
         </Select>
-      </FormItem> : <div></div>
+      </FormItem> :  <div/>
   )
 }

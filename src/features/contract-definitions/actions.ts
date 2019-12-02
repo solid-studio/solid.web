@@ -29,7 +29,9 @@ export const getContractDefinitions: ActionCreator<GetContractDefinitionsAction>
   }
 }
 
-export const createNewEmptyContractDefinition: ActionCreator<CreateNewEmptyContractDefinitionAction> = (contractDefinition: ContractDefinition): CreateNewEmptyContractDefinitionAction => {
+export const createNewEmptyContractDefinition: ActionCreator<CreateNewEmptyContractDefinitionAction> = (
+  contractDefinition: ContractDefinition
+): CreateNewEmptyContractDefinitionAction => {
   return {
     type: ActionType.CREATE_NEW_EMPTY_CONTRACT_DEFINITION,
     payload: contractDefinition
