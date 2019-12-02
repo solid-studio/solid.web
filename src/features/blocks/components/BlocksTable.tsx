@@ -19,8 +19,7 @@ const tableColumns: Array<ColumnProps<Block>> = [
         key: 'hash',
         title: 'Block hash',
         dataIndex: 'hash',
-        // width: 5,
-        // align: 'center',
+        width: 5,
         render: text => <p data-testid={`blocks-table-row-${text}`}>{text}</p>
     },
     {

@@ -1,8 +1,8 @@
 import React from 'react'
-
 import { Form, Select } from 'antd'
 import { FieldProps } from 'formik';
-import { PublicChainId, ConnectionType } from '@solid-explorer/types/lib/connections/ConnectionType';
+
+import { ConnectionType } from '@solid-explorer/types';
 
 const { Option } = Select;
 const FormItem = Form.Item
@@ -15,14 +15,11 @@ interface SelectOption {
 interface RadioProps {
   label: string
   options: SelectOption[]
-  // defaultValue: string
 }
 
 type InputOwnProps = FieldProps & RadioProps
 
 export const SelectField: React.FC<InputOwnProps> = ({ label, field, form, options }: InputOwnProps) => {
-  console.log("FIELD SELEC", field)
-  console.log("Forms", form)
   const isPublicType = form.values.type === ConnectionType.Public
   return (
     isPublicType ?

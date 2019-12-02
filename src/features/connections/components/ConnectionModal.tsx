@@ -5,7 +5,8 @@ import { connect } from 'react-redux'
 import { Form } from 'antd'
 import { FormikErrors, Field, FieldProps } from 'formik'
 import axios from 'axios'
-import { Connection } from '@solid-explorer/types'
+
+import { Connection, ConnectionType, PublicChainId } from '@solid-explorer/types'
 
 import { ApplicationState } from '../../rootReducer';
 import { InputFormItem } from '../../../components'
@@ -14,8 +15,8 @@ import { Status } from "../../common/types" // TODO: this shouldn't be the case 
 import { createOrUpdateConnection, closeConnectionModal } from '../actions'
 
 import { ConnectionModalComponent } from "./ConnectionModalComponent";
+
 import { RadioField } from './RadioField'
-import { ConnectionType, PublicChainId } from '@solid-explorer/types/lib/connections/ConnectionType'
 import { SelectField } from './SelectField'
 
 const FORM_ID = 'CONNECTION_FORM'
@@ -78,15 +79,12 @@ export class ConnectionModal extends React.Component<AllProps> {
   }
 
   saveConnection = async (item: Connection, actions: any) => {
-    console.log("ITEM", item)
-    console.log("ACTIONS", actions)
     const isValid = await isValidConnection(item.url)
     if (!isValid) {
       actions.setSubmitting(true)
       actions.setFieldError('url', 'Invalid JSON RPC URL')
     } else {
-      // TODO test.. to avoid store data that can confuse...
-      const itemCleaned: Connection = item.type === ConnectionType.Private ? { ...item, publicChainId: undefined } : { ...item, url: '' }
+      const itemCleaned: Connection = cleanDataBeforeSubmit(item)
       this.props.createOrUpdateConnection(itemCleaned)
     }
   }
@@ -135,14 +133,18 @@ export class ConnectionModal extends React.Component<AllProps> {
   }
 }
 
-// TODO TO MOVE
-const isValidConnection = async (url: string) => {
+export const isValidConnection = async (url: string) => {
   try {
     const result = await axios.post(url, '{"jsonrpc":"2.0","method":"web3_clientVersion","params":[],"id":67}')
     return result.data;
   } catch (error) {
     return undefined;
   }
+}
+
+export const cleanDataBeforeSubmit = (item: Connection): Connection => {
+  const result: Connection = item.type === ConnectionType.Private ? { ...item, publicChainId: undefined } : { ...item, url: '' }
+  return result;
 }
 
 const validator = (items: Connection): FormikErrors<Connection> => {

@@ -1,3 +1,5 @@
+import '@testing-library/jest-dom/extend-expect'
+
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react'
 
@@ -45,8 +47,7 @@ describe('Blocks table test', () => {
         expect(container).toMatchSnapshot()
     })
 
-    // TODO this was deactivated, restore when need it
-    test.skip('clicks', () => {
+    test('clicks', () => {
         const { getByTestId } = renderBlocksTable(blocks)
 
         blocks.forEach((item) => {
@@ -61,8 +62,7 @@ describe('Blocks table test', () => {
         })
     })
 
-    // TODO this was deactivated, restore when need it
-    test.skip('double clicks', () => {
+    test('double clicks', () => {
         const { getByTestId } = renderBlocksTable(blocks)
 
         blocks.forEach((item) => {

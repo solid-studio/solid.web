@@ -11,7 +11,7 @@ describe('Blocks reducer', () => {
     const newState = appReducer(initialState, blocksReceivedAction)
 
     expect(newState.blocks).toEqual(blocksNormalized)
-    expect(newState.currentBlock).toEqual(blocks[0]) // TODO: Am I sure the current block has to be the first one?, check reducer too..
+    expect(newState.currentBlock).toEqual(blocks[0])
     expect(newState.getBlocksStatus).toEqual(initialState.getBlocksStatus)
   })
 
@@ -22,7 +22,7 @@ describe('Blocks reducer', () => {
     const newState = appReducer(initialState, blocksReceivedAction)
 
     expect(newState.blocks).toEqual(blocksNormalized)
-    expect(newState.currentBlock).toEqual(blocks[0]) // TODO: Am I sure the current block has to be the first one?, check reducer too..
+    expect(newState.currentBlock).toEqual(blocks[0])
     expect(newState.getBlocksStatus).toEqual(initialState.getBlocksStatus)
 
     const newBlock = buildFakeBlock({ id: 3 })
@@ -42,7 +42,7 @@ describe('Blocks reducer', () => {
     const newState = appReducer(initialState, blocksReceivedAction)
 
     expect(newState.blocks).toEqual(blocksNormalized)
-    expect(newState.currentBlock).toEqual(blocks[0]) // TODO: Am I sure the current block has to be the first one?, check reducer too..
+    expect(newState.currentBlock).toEqual(blocks[0])
     expect(newState.getBlocksStatus).toEqual(initialState.getBlocksStatus)
 
     const newBlockNumber = 123

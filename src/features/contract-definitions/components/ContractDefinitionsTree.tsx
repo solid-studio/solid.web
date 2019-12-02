@@ -74,7 +74,7 @@ export class ContractDefinitionsTree extends React.Component<Props, State> {
         }}
         selectorPrefix={SELECTOR_PREFIX}
         onClickDataItem={(value: string | undefined | string[], props: any) => {
-          console.log("ON CLICK DATA ITEM", value, props)
+          // console.log("ON CLICK DATA ITEM", value, props)
           // TODO: I need to fix this..
           // the files need to be flat...
           const valueToCompare = value !== undefined ? value![0] : ''
@@ -84,7 +84,7 @@ export class ContractDefinitionsTree extends React.Component<Props, State> {
           //   return item.name === valueToCompare
           // })
           // I need to search deeper
-          console.log("CONTRACT TO SHOW", contractToShow)
+          // console.log("CONTRACT TO SHOW", contractToShow)
           if (contractToShow && !contractToShow.isDirectory) {
             this.props.onContractDefinitionSelected({
               ...contractToShow,

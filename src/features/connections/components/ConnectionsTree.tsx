@@ -69,7 +69,6 @@ export class ConnectionsTree extends React.Component<Props> {
         selectorPrefix="connections"
         onClickDataItem={(value: string | undefined, node: any, extra: ExtraArguments) => {
           if (extra) {
-            // TODO: To fix
             const { connectionId, nodeType } = extra
             const connectionToShow = this.props.connections.find(item => {
               return item.id === connectionId
