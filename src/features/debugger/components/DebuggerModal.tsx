@@ -26,7 +26,7 @@ export class DebuggerModal extends React.Component<Props, States> {
     }
 
     componentWillReceiveProps(nextProps: Readonly<Props>, nextContext: any): void {
-        if (nextProps && nextProps.hasOwnProperty('visible') && (nextProps.visible != null && nextProps.visible != undefined)) {
+        if (nextProps && nextProps.hasOwnProperty('visible') && (nextProps.visible !== null && nextProps.visible !== undefined)) {
             this.setState({ visible: nextProps.visible });
         }
     }

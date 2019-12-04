@@ -3,8 +3,7 @@ import React from 'react'
 
 import { Action, ActionCreator, bindActionCreators, Dispatch } from 'redux'
 import { connect } from 'react-redux'
-import { Layout } from 'antd'
-
+import { Layout, Drawer } from 'antd'
 import { Connection, TransactionReceipt, buildFakeBlocks, Block } from '@solid-explorer/types'
 
 import { getTransactions } from 'features/transactions/actions'
@@ -54,7 +53,6 @@ export class TransactionsView extends React.Component<AllProps, State> {
             showTransactionDrawer: false,
             drawerWidth: 470,
             visible: false
-
         }
     }
 
@@ -87,9 +85,13 @@ export class TransactionsView extends React.Component<AllProps, State> {
         })
         console.log("CLICK", record)
     }
-
+    onClose = () => {
+        this.setState({
+            visible: false,
+        });
+    };
     render() {
-        const { showTransactionDrawer, drawerWidth } = this.state
+        const { visible, showTransactionDrawer, drawerWidth } = this.state
         const { transactions } = this.props
         return (
             <Layout style={{ height: "100%" }}>
@@ -97,18 +99,33 @@ export class TransactionsView extends React.Component<AllProps, State> {
                     <StyledDiv>
                         <StyledH1>Transactions</StyledH1>
                         <TransactionsTable transactions={transactions}
-                            onClick={this.handleTransactionsDrawer}
-                            onDoubleClick={this.onDoubleClick} />
+                                           onClick={this.handleTransactionsDrawer}
+                                           onDoubleClick={this.onDoubleClick} />
                     </StyledDiv>
                 </Content>
-                <Sider style={{ background: "#272727" }} trigger={null}
-                    collapsed={!showTransactionDrawer}
-                    collapsible={true}
-                    collapsedWidth={0} width={drawerWidth}>
+                {/*<Sider style={{ background: "#272727" }} trigger={null}*/}
+                {/*collapsed={!showTransactionDrawer}*/}
+                {/*collapsible={true}*/}
+                {/*collapsedWidth={0} width={drawerWidth}>*/}
+                {/*<div>*/}
+                {/*<h5>Work in progress</h5>*/}
+                {/*</div>*/}
+                {/*</Sider>*/}
+                <Drawer
+                    title="Basic Drawer"
+                    placement="right"
+                    closable={false}
+                    onClose={this.onClose}
+                    visible={this.state.visible}
+                    // style={{ background: "#272727" }} trigger={null}
+                    // collapsed={!showTransactionDrawer}
+                    // collapsible={true}
+                    // collapsedWidth={0} width={drawerWidth}
+                >
                     <div>
                         <h5>Work in progress</h5>
                     </div>
-                </Sider>
+                </Drawer>
                 <DebuggerModal visible={this.state.visible} onClose={() => { this.setState({ visible: false }) }} />
             </Layout>
         )
