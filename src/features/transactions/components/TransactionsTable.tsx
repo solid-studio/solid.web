@@ -1,16 +1,16 @@
 import React from 'react'
 
-import { Tag, Button } from 'antd';
-import { ColumnProps } from 'antd/es/table';
+import {Tag, Button} from 'antd';
+import {ColumnProps} from 'antd/es/table';
 
-import { TransactionReceipt } from '@solid-explorer/types'
+import {TransactionReceipt} from '@solid-explorer/types'
 
-import { TransactionsTableComponent } from './TransactionsTableComponent';
+import {TransactionsTableComponent} from './TransactionsTableComponent';
 import styled from 'styled-components';
 
 interface OwnProps {
     transactions?: TransactionReceipt[]
-    onClick: (record: TransactionReceipt) => void
+    onClick: (record: any) => void
     onDoubleClick: (record: TransactionReceipt) => void
 }
 
@@ -90,8 +90,19 @@ const tableColumns: Array<ColumnProps<TransactionReceipt>> = [
         title: 'Actions',
         key: 'action',
         render: (text, record) => (
-            <DebugButton type="danger" size="small">Debug</DebugButton>
-        )
+            <DebugButton type="danger" size="small" onClick={(e: any) => {
+                console.log('debug', e);
+                e.preventDefault();
+            }}>Debug</DebugButton>
+        ),
+        onCell: (record) => {
+            return {
+                onClick: (e) => {
+                    e.preventDefault()
+                    console.log('e', e, 'record', record);
+                }
+            }
+        }
     }
     // {
     //     key: 'executionDate',
@@ -103,21 +114,25 @@ const tableColumns: Array<ColumnProps<TransactionReceipt>> = [
 
 export class TransactionsTable extends React.Component<AllProps> {
     render() {
-        const { transactions } = this.props
-        return <TransactionsTableComponent
-            rowKey="transactionHash"
-            dataSource={transactions}
-            columns={tableColumns}
-            onRow={(record, rowIndex) => {
-                return {
-                    onClick: event => {
-                        this.props.onClick(record)
-                    },
-                    onDoubleClick: event => {
-                        this.props.onDoubleClick(record)
-                    }
-                };
-            }}
-        />
+        const {transactions} = this.props
+        console.log('transactions', transactions)
+        return <div>
+
+            <TransactionsTableComponent
+                rowKey="transactionHash"
+                dataSource={transactions}
+                columns={tableColumns}
+                onRow={(record, rowIndex) => {
+                    return {
+                        onClick: event => {
+                            this.props.onClick(record)
+                        },
+                        onDoubleClick: event => {
+                            this.props.onDoubleClick(record)
+                        }
+                    };
+                }}
+            />
+        </div>
     }
 }

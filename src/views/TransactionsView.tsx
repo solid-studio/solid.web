@@ -17,6 +17,7 @@ import client from '../utils/feathers'
 
 import { StyledDiv, StyledH1 } from './components'
 import { BlocksTable } from 'features/blocks/components'
+import {DebuggerModal} from '../features/debugger/components';
 
 const { Sider, Content } = Layout;
 
@@ -36,9 +37,10 @@ interface DispatchProps {
 interface State {
     showTransactionDrawer: boolean
     drawerWidth: number
+    visible: boolean
 }
 
-type AllProps = DispatchProps & StateProps // OwnProps & 
+type AllProps = DispatchProps & StateProps // OwnProps &
 
 
 export class TransactionsView extends React.Component<AllProps, State> {
@@ -50,7 +52,9 @@ export class TransactionsView extends React.Component<AllProps, State> {
         super(props)
         this.state = {
             showTransactionDrawer: false,
-            drawerWidth: 470
+            drawerWidth: 470,
+            visible: false
+
         }
     }
 
@@ -76,7 +80,8 @@ export class TransactionsView extends React.Component<AllProps, State> {
 
     handleTransactionsDrawer = (record: TransactionReceipt) => {
         this.setState({
-            showTransactionDrawer: true
+            showTransactionDrawer: true,
+            visible: true
         }, () => {
             emitter.emit("COLLAPSE_RIGHT_SIDEBAR_MENU")
         })
@@ -104,6 +109,7 @@ export class TransactionsView extends React.Component<AllProps, State> {
                         <h5>Work in progress</h5>
                     </div>
                 </Sider>
+                <DebuggerModal visible={this.state.visible} onClose={() => { this.setState({ visible: false }) }} />
             </Layout>
         )
     }
