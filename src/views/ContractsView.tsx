@@ -1,64 +1,47 @@
-
 import React from 'react'
 import { Action, ActionCreator, bindActionCreators, Dispatch } from 'redux'
 import { connect } from 'react-redux'
-import { Layout } from 'antd'
-
+import { Layout, Drawer } from 'antd'
 import { Contract, Connection } from '@solid-explorer/types'
-
 import { getContracts, maximizeContractView } from 'features/contracts/actions'
 import { ContractsTable, ContractDetails } from 'features/contracts/components'
-
 import { ApplicationState } from 'features/rootReducer'
 import { emitter } from 'features/common/event-emitter'
-
 import client from '../utils/feathers'
-
 import { StyledDiv, StyledH1, CustomIcon } from './components'
 import { ConnectionNormalized } from 'features/connections/types'
-
-const { Sider, Content } = Layout;
-
+const { Content } = Layout;
 // interface OwnProps {
-
 // }
-
 interface StateProps {
     contracts: Contract[]
     currentConnection: Connection | undefined
 }
-
 interface DispatchProps {
     maximizeContractView: ActionCreator<Action>
     getContracts: ActionCreator<Action>
 }
-
-type AllProps = DispatchProps & StateProps //  OwnProps & 
-
+type AllProps = DispatchProps & StateProps //  OwnProps &
 interface State {
-    showContractDrawer: boolean
+    visible: boolean
     drawerWidth: number
     selectedContractRowItem?: Contract
 }
-
 export class ContractsView extends React.Component<AllProps, State> {
     static defaultProps = {
         contracts: []
     }
-
     constructor(props: AllProps) {
         super(props)
         this.state = {
-            showContractDrawer: false,
+            visible: false,
             drawerWidth: 470,
             selectedContractRowItem: undefined
         }
     }
-
     componentDidMount() {
         if (this.props.currentConnection) {
             this.props.getContracts(this.props.currentConnection.id)
-
             // TODO IMPROVE
             client.service('contracts')
                 .on('created', (message: string) => {
@@ -70,24 +53,21 @@ export class ContractsView extends React.Component<AllProps, State> {
                 });
         }
     }
-
     showContractsDrawer = (record: Contract) => {
         this.setState({
-            showContractDrawer: true,
+            visible : true,
             selectedContractRowItem: record
         }, () => {
             emitter.emit("COLLAPSE_RIGHT_SIDEBAR_MENU")
         })
     }
-
     onDoubleClick = (record: Contract) => {
         console.log("DOUBLE CLICK", record)
     }
-
     maximiseWindow = () => {
         const contractToShow = this.state.selectedContractRowItem
         this.setState({
-            showContractDrawer: false
+            visible: false
         }, () => {
             this.props.maximizeContractView({
                 ...contractToShow,
@@ -95,9 +75,13 @@ export class ContractsView extends React.Component<AllProps, State> {
             })
         })
     }
-
+    onClose = () => {
+        this.setState({
+            visible: false,
+        });
+    };
     render() {
-        const { showContractDrawer, drawerWidth, selectedContractRowItem } = this.state
+        const { visible, drawerWidth, selectedContractRowItem } = this.state
         const { contracts } = this.props
         return (
             <Layout style={{ height: "100%" }}>
@@ -105,39 +89,49 @@ export class ContractsView extends React.Component<AllProps, State> {
                     <StyledDiv>
                         <StyledH1>Contracts</StyledH1>
                         <ContractsTable onClick={this.showContractsDrawer}
-                            onDoubleClick={this.onDoubleClick}
-                            contracts={contracts} />
+                                        onDoubleClick={this.onDoubleClick}
+                                        contracts={contracts} />
                     </StyledDiv>
                 </Content>
-                <Sider style={{ background: "#272727" }} trigger={null} collapsed={!showContractDrawer} collapsible={true} collapsedWidth={0} width={drawerWidth}>
+                {/* <Sider style={{ background: "#272727" }} trigger={null} collapsed={!showContractDrawer} collapsible={true} collapsedWidth={0} width={drawerWidth}>
                     <div>
                         <CustomIcon src="https://res.cloudinary.com/key-solutions/image/upload/v1568672208/solid/maximize.png" alt="maximise" onClick={this.maximiseWindow} />
-                        { /* TODO: add close icon <img src="https://res.cloudinary.com/key-solutions/image/upload/v1568673196/solid/error.png" alt="close" onClick={this.closeDrawer} /> */}
+                        TODO: add close icon <img src="https://res.cloudinary.com/key-solutions/image/upload/v1568673196/solid/error.png" alt="close" onClick={this.closeDrawer} />
                         {selectedContractRowItem &&
                             <ContractDetails contract={selectedContractRowItem} />}
                     </div>
-                </Sider>
+                </Sider> */}
+                <Drawer
+                    title="Basic Drawer"
+                    placement="right"
+                    closable={false}
+                    onClose={this.onClose}
+                    visible={this.state.visible}
+                    // style={{ background: "#272727" }} trigger={null}
+                    // collapsed={!showTransactionDrawer}
+                    // collapsible={true}
+                    // collapsedWidth={0} width={drawerWidth}
+                >
+                    <div>
+                        <h5>Work in progress</h5>
+                    </div>
+                </Drawer>
             </Layout>
         )
     }
 }
-
-
 const mapStateToProps = ({ contractState, connectionState }: ApplicationState) => {
     const currentConnectionId = connectionState.currentConnection ? connectionState.currentConnection.id as number : 0
     const connection = connectionState.connections.byId[currentConnectionId] as ConnectionNormalized || {}
     const allContractIdsByConnection = connection.contracts as string[]
-
     const contractsByConnection = allContractIdsByConnection && allContractIdsByConnection.map((id: string) => {
         return contractState.contracts.byId[id];
     })
-
     return {
         contracts: contractsByConnection,
         currentConnection: connectionState.currentConnection
     }
 }
-
 const mapDispatchToProps = (dispatch: Dispatch) => {
     return bindActionCreators(
         {
@@ -147,7 +141,6 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
         dispatch
     )
 }
-
 export default connect<StateProps, DispatchProps, {}, ApplicationState>(
     mapStateToProps,
     mapDispatchToProps

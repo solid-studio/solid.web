@@ -37,7 +37,7 @@ interface DispatchProps {
   openFileSystemDialog: ActionCreator<Action>
 }
 
-type AllProps = DispatchProps & StateProps // OwnProps & 
+type AllProps = DispatchProps & StateProps // OwnProps &
 
 interface State {
   collapsed: boolean
@@ -65,7 +65,7 @@ export class DefaultLayout extends React.Component<AllProps, State> {
         this.props.getContractDefinitions();
         // TODO: 0.4.24 by default
         this.props.loadCompilerVersion()
-        emitter.on("COLLAPSE_RIGHT_SIDEBAR_MENU", () => { // TODO: Fix this.. 
+        emitter.on("COLLAPSE_RIGHT_SIDEBAR_MENU", () => { // TODO: Fix this..
           // this.collapseRightSider()
         })
       }, 1500); // TODO just a random number to show loader a little more time
@@ -119,7 +119,7 @@ export class DefaultLayout extends React.Component<AllProps, State> {
           </Layout>
           <Content>{this.props.children}</Content>
           <ConnectionModal />
-          <DebuggerModal />
+          {/*<DebuggerModal />*/}
         </Wrapper>
 
     )
