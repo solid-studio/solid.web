@@ -94,7 +94,7 @@ export class BlocksView extends React.Component<AllProps, State> {
                 </Content>
                 <Sider style={{ background: "#272727" }}
                     trigger={null}
-                    collapsed={true}//!showBlockDrawer}
+                    collapsed={true}// !showBlockDrawer}
                     collapsible={true}
                     collapsedWidth={0}
                     width={drawerWidth}>

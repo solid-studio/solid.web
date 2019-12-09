@@ -16,11 +16,7 @@ interface OwnProps {
     onDebugClick: any // TODO
 }
 
-interface StateProps {
-    // columns: Array<ColumnProps<TransactionReceipt>>
-}
-
-type AllProps = OwnProps & StateProps// & DispatchProps & StateProps
+type AllProps = OwnProps
 
 const failedTransactionTag = (key: string) => (
     <Tag color="volcano" key={key}>

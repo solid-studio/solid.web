@@ -126,7 +126,7 @@ export class TransactionsView extends React.Component<AllProps, State> {
                     placement="right"
                     closable={false}
                     onClose={this.handleOnCloseDrawer}
-                    visible={false} //showTransactionDrawer}
+                    visible={false} // showTransactionDrawer}
                     width={drawerWidth}
                 // mask={false}
                 >
@@ -152,7 +152,7 @@ export class TransactionsView extends React.Component<AllProps, State> {
 
                 <DebuggerModal visible={showDebugModal}
                     onClose={this.handleOnCloseDebbugerModal}
-                    transactionHash={selectedTransaction ? selectedTransaction.transactionHash : ""}></DebuggerModal>
+                    transactionHash={selectedTransaction ? selectedTransaction.transactionHash : ""}/>
             </Layout>
         )
     }
