@@ -12,9 +12,15 @@ interface OwnProps {
     transactions?: TransactionReceipt[]
     onClick: (record: TransactionReceipt) => void
     onDoubleClick: (record: TransactionReceipt) => void
+    collapsed: boolean
+    onDebugClick: any // TODO
 }
 
-type AllProps = OwnProps // & DispatchProps & StateProps
+interface StateProps {
+    // columns: Array<ColumnProps<TransactionReceipt>>
+}
+
+type AllProps = OwnProps & StateProps// & DispatchProps & StateProps
 
 const failedTransactionTag = (key: string) => (
     <Tag color="volcano" key={key}>
@@ -46,68 +52,69 @@ const DebugButton = styled(Button)`
     font-size: 12px;
 `
 
-const tableColumns: Array<ColumnProps<TransactionReceipt>> = [
-    // {
-    //     key: 'type',
-    //     title: 'Type',
-    //     dataIndex: 'type',
-    //     render: (text: string, record: Transaction) => record.to === null ? contractCreationTag(record.transactionHash) : contractCallTag(record.transactionHash)
-    // },
-    {
-        key: 'transactionHash',
-        title: 'Transaction Hash',
-        dataIndex: 'transactionHash',
-        // width: 5,
-        // align: 'center',
-        render: text => <p data-testid={`transactions-table-row-${text}`}>{text}</p>
-    },
-    {
-        key: 'to',
-        title: 'To',
-        dataIndex: 'to',
-        // align: 'center',
-        render: (text: string, record: TransactionReceipt) => record.to == null ? contractCreationTag(record.transactionHash) : record.to
-    },
-    {
-        key: 'from',
-        title: 'From',
-        dataIndex: 'from',
-        // align: 'center',
+interface State {
+    showDebugModal: boolean
+}
 
-    },
-    {
-        key: 'contractAddress',
-        title: 'Contract Address',
-        dataIndex: 'contractAddress',
-    },
-    // {
-    //     key: 'status',
-    //     title: 'Status',
-    //     dataIndex: 'status',
-    //     render: (text: string, record: TransactionReceipt) => record.status ? failedTransactionTag(record.transactionHash) : failedTransactionTag(record.transactionHash)
-    // },
-    {
-        title: 'Actions',
-        key: 'action',
-        render: (text, record) => (
-            <DebugButton type="danger" size="small">Debug</DebugButton>
-        )
+export class TransactionsTable extends React.Component<AllProps, State> {
+    columns: Array<ColumnProps<TransactionReceipt>>
+    constructor(props: AllProps) {
+        super(props);
+        this.state = {
+            showDebugModal: false
+        }
+        this.columns = [
+            {
+                key: 'transactionHash',
+                title: 'Transaction Hash',
+                dataIndex: 'transactionHash',
+                render: text => <p data-testid={`transactions-table-row-${text}`}>{text}</p>
+            },
+            {
+                key: 'to',
+                title: 'To',
+                dataIndex: 'to',
+                render: (text: string, record: TransactionReceipt) => record.to == null ? contractCreationTag(record.transactionHash) : record.to
+            },
+            {
+                key: 'from',
+                title: 'From',
+                dataIndex: 'from'
+
+            },
+            {
+                key: 'contractAddress',
+                title: 'Contract Address',
+                dataIndex: 'contractAddress',
+            },
+            // {
+            //     key: 'status',
+            //     title: 'Status',
+            //     dataIndex: 'status',
+            //     render: (text: string, record: TransactionReceipt) => record.status ? failedTransactionTag(record.transactionHash) : failedTransactionTag(record.transactionHash)
+            // },
+            {
+                title: 'Actions',
+                key: 'action',
+                render: (text, record: TransactionReceipt) => {
+                    return <DebugButton onClick={() => this.onDebugClick(record)} type="danger" size="small">Debug</DebugButton>
+                }
+            }
+
+        ];
     }
-    // {
-    //     key: 'executionDate',
-    //     title: 'Execution Date',
-    //     dataIndex: 'executionDate',
-    // }
+    onDebugClick(record: TransactionReceipt) {
+        console.log("onDebugClick inside table")
+        this.props.onDebugClick(record)
+    }
 
-];
-
-export class TransactionsTable extends React.Component<AllProps> {
     render() {
-        const { transactions } = this.props
+        const { transactions, collapsed } = this.props
         return <TransactionsTableComponent
+            // components={}
             rowKey="transactionHash"
-            dataSource={transactions}
-            columns={tableColumns}
+            dataSource={transactions && transactions.map(item => ({ ...item, drawerOpen: true }))}
+            columns={this.columns}
             onRow={(record, rowIndex) => {
                 return {
                     onClick: event => {

@@ -10,7 +10,7 @@ import { rootEpic } from '../features/rootEpic'
 
 const initialiseStore = () => {
   // @Dev This enable work in client mode only with fake data
-  const getJSONInstance = process.env.REACT_APP_MOCK_API === 'false' ? mockAjax.getJSON : ajax.getJSON
+  const getJSONInstance = process.env.REACT_APP_MOCK_API === 'true' ? mockAjax.getJSON : ajax.getJSON
 
   const epicMiddleware = createEpicMiddleware({
     dependencies: {

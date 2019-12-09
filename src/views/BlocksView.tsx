@@ -92,10 +92,12 @@ export class BlocksView extends React.Component<AllProps, State> {
                             onDoubleClick={this.onDoubleClick} />
                     </StyledDiv>
                 </Content>
-                <Sider style={{ background: "#272727" }} trigger={null}
-                    collapsed={!showBlockDrawer}
+                <Sider style={{ background: "#272727" }}
+                    trigger={null}
+                    collapsed={true}//!showBlockDrawer}
                     collapsible={true}
-                    collapsedWidth={0} width={drawerWidth}>
+                    collapsedWidth={0}
+                    width={drawerWidth}>
                     <div>
                         <h5>Work in progress</h5>
                     </div>

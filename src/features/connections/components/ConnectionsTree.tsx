@@ -2,7 +2,7 @@ import React from 'react'
 import { Action, ActionCreator } from 'redux'
 import { Icon } from 'antd'
 
-import { Connection } from '@solid-explorer/types'
+import { Connection, ConnectionType } from '@solid-explorer/types'
 
 import { ConnectionsTreeComponent } from './ConnectionsTreeComponent'
 import { TreeNodeStyled } from 'components/GenericTreeStyledComponents'
@@ -39,7 +39,7 @@ export class ConnectionsTree extends React.Component<Props> {
           <TreeNodeStyled
             blockNode={true}
             icon={<Icon type="database" />}
-            title={item.name}
+            title={item.type === ConnectionType.Public ? item.name : `${item.name} (${item.url})`}
             key={item.id}
             style={{ color: 'white' }}>
 

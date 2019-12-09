@@ -12,7 +12,7 @@ import { loadCompilerVersion } from 'features/compiler/actions'
 import { ConnectionModal, ConnectionsTree } from 'features/connections/components'
 import { ApplicationState } from 'features/rootReducer'
 import { emitter } from 'features/common/event-emitter'
-import { DebuggerModal } from 'features/debugger/components'
+// import { DebuggerModal } from 'features/debugger/components'
 
 import { socket } from '../utils/feathers'
 
@@ -119,7 +119,7 @@ export class DefaultLayout extends React.Component<AllProps, State> {
           </Layout>
           <Content>{this.props.children}</Content>
           <ConnectionModal />
-          <DebuggerModal />
+          {/* <DebuggerModal /> */}
         </Wrapper>
 
     )
