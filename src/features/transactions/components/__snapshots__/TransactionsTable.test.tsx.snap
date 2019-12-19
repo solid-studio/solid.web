@@ -24,9 +24,7 @@ exports[`Transactions table test snapshot 1`] = `
                 class=""
               >
                 <colgroup>
-                  <col
-                    style="width: 5px; min-width: 5px;"
-                  />
+                  <col />
                   <col />
                   <col />
                   <col />
@@ -118,7 +116,7 @@ exports[`Transactions table test snapshot 1`] = `
                           <span
                             class="ant-table-column-title"
                           >
-                            Status
+                            Actions
                           </span>
                           <span
                             class="ant-table-column-sorter"
@@ -166,11 +164,14 @@ exports[`Transactions table test snapshot 1`] = `
                     <td
                       class=""
                     >
-                      <span
-                        class="ant-tag ant-tag-green"
+                      <button
+                        class="ant-btn sc-bdVaJa kRknwN ant-btn-danger ant-btn-sm"
+                        type="button"
                       >
-                        Success
-                      </span>
+                        <span>
+                          Debug
+                        </span>
+                      </button>
                     </td>
                   </tr>
                   <tr
@@ -208,11 +209,14 @@ exports[`Transactions table test snapshot 1`] = `
                     <td
                       class=""
                     >
-                      <span
-                        class="ant-tag ant-tag-green"
+                      <button
+                        class="ant-btn sc-bdVaJa kRknwN ant-btn-danger ant-btn-sm"
+                        type="button"
                       >
-                        Success
-                      </span>
+                        <span>
+                          Debug
+                        </span>
+                      </button>
                     </td>
                   </tr>
                 </tbody>

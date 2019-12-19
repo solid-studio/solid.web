@@ -19,10 +19,6 @@ import { ConnectionNormalized } from 'features/connections/types'
 
 const { Sider, Content } = Layout;
 
-// interface OwnProps {
-
-// }
-
 interface StateProps {
     contracts: Contract[]
     currentConnection: Connection | undefined
@@ -71,7 +67,7 @@ export class ContractsView extends React.Component<AllProps, State> {
         }
     }
 
-    showContractsDrawer = (record: Contract) => {
+    onContractClick = (record: Contract) => {
         this.setState({
             showContractDrawer: true,
             selectedContractRowItem: record
@@ -104,7 +100,8 @@ export class ContractsView extends React.Component<AllProps, State> {
                 <Content style={{ height: "100%" }}>
                     <StyledDiv>
                         <StyledH1>Contracts</StyledH1>
-                        <ContractsTable onClick={this.showContractsDrawer}
+                        <ContractsTable
+                            onClick={this.onContractClick}
                             onDoubleClick={this.onDoubleClick}
                             contracts={contracts} />
                     </StyledDiv>
@@ -112,7 +109,6 @@ export class ContractsView extends React.Component<AllProps, State> {
                 <Sider style={{ background: "#272727" }} trigger={null} collapsed={!showContractDrawer} collapsible={true} collapsedWidth={0} width={drawerWidth}>
                     <div>
                         <CustomIcon src="https://res.cloudinary.com/key-solutions/image/upload/v1568672208/solid/maximize.png" alt="maximise" onClick={this.maximiseWindow} />
-                        { /* TODO: add close icon <img src="https://res.cloudinary.com/key-solutions/image/upload/v1568673196/solid/error.png" alt="close" onClick={this.closeDrawer} /> */}
                         {selectedContractRowItem &&
                             <ContractDetails contract={selectedContractRowItem} />}
                     </div>

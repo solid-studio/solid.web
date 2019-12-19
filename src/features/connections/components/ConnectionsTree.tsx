@@ -39,7 +39,7 @@ export class ConnectionsTree extends React.Component<Props> {
           <TreeNodeStyled
             blockNode={true}
             icon={<Icon type="database" />}
-            title={item.type === ConnectionType.Public ? item.name : `${item.name} (${item.url})`}
+            title={item.name}
             key={item.id}
             style={{ color: 'white' }}>
 

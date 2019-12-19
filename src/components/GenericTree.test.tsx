@@ -40,12 +40,12 @@ describe('GenericTree', () => {
                 rightClickMenuItems={rightClickOptions}
                 selectorPrefix="connections"
                 DataRowComponentRender={(item: GenericType) => (
-                    
+
                     <TreeNodeStyled
                         icon={<Icon type="database" />}
                         title={item.name}
                         key={item.url}
-                        style={{ color: 'white' }}/>
+                        style={{ color: 'white' }} />
                 )}
             />)
     }
@@ -60,7 +60,6 @@ describe('GenericTree', () => {
         expect(getByTestId('connections-tree-header')).toBeInTheDocument()
         expect(getByTestId('connections-tree-header')).toHaveTextContent("Connections")
         expect(getByTestId('connections-tree-plus')).toBeInTheDocument()
-        expect(getByTestId('connections-tree-down')).toBeInTheDocument()
 
         expect(getByText(text1)).toBeInTheDocument()
         expect(getByText(text2)).toBeInTheDocument()
@@ -77,7 +76,6 @@ describe('GenericTree', () => {
         expect(getByTestId('connections-tree-header')).toBeInTheDocument()
         expect(getByTestId('connections-tree-header')).toHaveTextContent("Connections")
         expect(getByTestId('connections-tree-plus')).toBeInTheDocument()
-        expect(getByTestId('connections-tree-down')).toBeInTheDocument()
 
         expect(queryByText(text1)).not.toBeInTheDocument()
         expect(queryByText(text2)).not.toBeInTheDocument()
@@ -117,18 +115,6 @@ describe('GenericTree', () => {
         fireEvent.click(addConnectionIcon)
 
         expect(onPlusClickMockHandler).toHaveBeenCalledTimes(1)
-    })
-
-    test('when on collapse icon is clicked', () => {
-        const dataItems = buildFakeGenericType()
-
-        const { getByTestId } = renderGenericTree(dataItems)
-
-        const addConnectionIcon = getByTestId('connections-tree-down')
-
-        fireEvent.click(addConnectionIcon)
-
-        expect(onCollapseClickMockHandler).toHaveBeenCalledTimes(1)
     })
 
     test('renders connections tree snapshop', async () => {

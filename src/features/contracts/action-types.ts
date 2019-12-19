@@ -4,6 +4,8 @@ import { Contract } from '@solid-explorer/types'
 
 import { ContractItem } from './types'
 
+import { TracesReceivedAction } from '../traces/action-types'
+
 export enum ActionType {
   ERROR_WHEN_GETTING_DATA = 'ERROR_WHEN_GETTING_DATA', // TODO
   CONTRACTS_RECEIVED = 'CONTRACTS_RECEIVED',
@@ -28,4 +30,4 @@ export interface MaximizeContractViewAction extends Action {
   payload: ContractItem
 }
 
-export type Actions = GetContractsAction | ContractsReceivedAction | MaximizeContractViewAction
+export type Actions = GetContractsAction | ContractsReceivedAction | MaximizeContractViewAction | TracesReceivedAction

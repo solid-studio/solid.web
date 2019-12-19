@@ -111,7 +111,7 @@ describe('Connections Epic Tests', () => {
     const connection = buildFakeConnection()
     const connectionItem: ConnectionItem = {
       ...connection,
-      type: 'connection'
+      nodeType: 'connection'
     }
     const connectionItemSelectedAction: ConnectionItemSelectedAction = connectionItemSelected(connectionItem)
 
@@ -122,10 +122,10 @@ describe('Connections Epic Tests', () => {
     output$.subscribe(action => {
       expect(action).toEqual(
         openOrSetTabActive({
-          type: connectionItemSelectedAction.payload.type,
+          type: connectionItemSelectedAction.payload.nodeType,
           data: connectionItemSelectedAction.payload,
-          title: connectionItemSelectedAction.payload.type,
-          id: `${connectionItemSelectedAction.payload.type}-${connectionItemSelectedAction.payload.id}`
+          title: connectionItemSelectedAction.payload.nodeType,
+          id: `${connectionItemSelectedAction.payload.nodeType}-${connectionItemSelectedAction.payload.id}`
         })
       )
       done()
