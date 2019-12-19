@@ -1,6 +1,5 @@
 import React from 'react'
 
-import copy from 'copy-to-clipboard'
 import { AbiItem } from 'web3-utils'
 import { Icon, Collapse } from 'antd'
 
@@ -8,12 +7,45 @@ import { Contract } from '@solid-explorer/types'
 
 import ContractActionView from './ContractActionView'
 
-import { TableDetails, CollapseStyled } from './ContractDetailsComponents'
+import { CollapseStyled } from './ContractDetailsComponents'
+import { TableDetailsPanel } from './TableDetailsPanel'
+import ContractStorage from './ContractStorage'
 
 const Panel = Collapse.Panel
 
 interface ContractDetailsProps {
     contract: Contract
+}
+
+export class ContractDetails extends React.Component<ContractDetailsProps>{
+    constructor(props: ContractDetailsProps) {
+        super(props)
+    }
+    render() {
+        const { contract } = this.props
+        const { abi, connectionId, ast, address, id } = contract as any
+        return (
+            <div style={{ color: "white", padding: "1em 1em" }}>
+                <TableDetailsPanel contract={contract} />
+                <CollapseStyled defaultActiveKey={['0']} bordered={false}>
+                    <Panel header="Methods" key="1">
+                        <ContractActionsViewWrapper abi={abi} />
+                    </Panel>
+                    <Panel header="Storage" key="2">
+                        <ContractStorage
+                            // contract={contract}
+                            connectionId={connectionId}
+                            ast={(contract as any).ast}
+                            contractAddress={address}
+                            contractId={id as number}
+                        />
+                    </Panel>
+                </CollapseStyled>
+                {/* <CollapsedDetailsPanels contract={contract} /> */}
+            </div >
+        )
+    }
+
 }
 
 interface ContractActionsProps {
@@ -31,6 +63,7 @@ export const processABIData = (abi: AbiItem[]) => {
 export const isValidABI = (abi: AbiItem[]) => {
     try {
         processABIData(abi)
+        return true
     } catch (error) {
         return false
     }
@@ -47,76 +80,22 @@ export const ContractActionsViewWrapper: React.FC<ContractActionsProps> = (props
     )
 }
 
-export const ContractDetails: React.FC<ContractDetailsProps> = (props: ContractDetailsProps) => {
-    return (
-        <div style={{ color: "white", padding: "1em 1em" }}>
-            <TableDetailsPanel {...props} />
-            <CollapsedDetailsPanels {...props} />
-        </div >
-    )
-}
-
 export const CollapsedDetailsPanels: React.FC<ContractDetailsProps> = ({ contract }: ContractDetailsProps) => {
-    const { abi } = contract;
+    const { abi, address, connectionId, id } = contract;
     return (
         <CollapseStyled defaultActiveKey={['0']} bordered={false}>
             <Panel header="Methods" key="1">
                 <ContractActionsViewWrapper abi={abi} />
             </Panel>
             <Panel header="Storage" key="2">
-                <p style={{ color: "white" }}>Work in progress</p>
-            </Panel>
-            <Panel header="Inheritance" key="3">
-                <p style={{ color: "white" }}>Work in progress</p>
-            </Panel>
-            <Panel header="Dependencies" key="4">
-                <p style={{ color: "white" }}>Work in progress</p>
+                <ContractStorage
+                    // contract={contract}
+                    connectionId={connectionId}
+                    ast={(contract as any).ast}
+                    contractAddress={address}
+                    contractId={id as number}
+                />
             </Panel>
         </CollapseStyled>
     )
-}
-
-export const TableDetailsPanel: React.FC<ContractDetailsProps> = ({ contract }: ContractDetailsProps) => {
-    const { name, address, abi, bytecode } = contract;
-    const copyByteCode = (byteCode: string) => {
-        copy(byteCode)
-    }
-
-    const copyABI = (abi: AbiItem[]) => {
-        copy(JSON.stringify(abi))
-    }
-
-    return <TableDetails>
-        <thead>
-            <tr>
-                <th>Details</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Name</td>
-                <td>{name}</td>
-            </tr>
-            <tr>
-                <td>Address</td>
-                <td>{address}</td>
-            </tr>
-            <tr>
-                <td>ABI</td>
-                <td>
-                    <Icon onClick={() => copyABI(abi)} type="copy" />
-                </td>
-            </tr>
-            <tr>
-                <td>Bytecode</td>
-                <td>
-                    <Icon onClick={() => copyByteCode(bytecode)} type="copy" />
-                </td>
-            </tr>
-            <tr>
-                <td>Size </td>
-                <td>12 KB</td>
-            </tr>
-        </tbody>
-    </TableDetails>
 }

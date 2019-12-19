@@ -79,14 +79,20 @@ export class ConnectionModal extends React.Component<AllProps> {
   }
 
   saveConnection = async (item: Connection, actions: any) => {
-    const isValid = await isValidConnection(item.url)
-    if (!isValid) {
-      actions.setSubmitting(true)
-      actions.setFieldError('url', 'Invalid JSON RPC URL')
+    if (item.type === ConnectionType.Private) {
+      const isValid = await isValidConnection(item.url as string)
+      if (!isValid) {
+        actions.setSubmitting(true)
+        actions.setFieldError('url', 'Invalid JSON RPC URL')
+      } else {
+        const itemCleaned: Connection = cleanDataBeforeSubmit(item)
+        this.props.createOrUpdateConnection(itemCleaned)
+      }
     } else {
       const itemCleaned: Connection = cleanDataBeforeSubmit(item)
       this.props.createOrUpdateConnection(itemCleaned)
     }
+
   }
 
   render() {
@@ -123,7 +129,7 @@ export class ConnectionModal extends React.Component<AllProps> {
               name="url"
               render={(innerProps: FieldProps) => {
                 const isPrivate = innerProps.form.values.type === ConnectionType.Private
-                return isPrivate ? <InputFormItem {...innerProps} label="Blockchain URL" placeHolder="JSON RPC endpoint" /> :  <div/>
+                return isPrivate ? <InputFormItem {...innerProps} label="Blockchain URL" placeHolder="JSON RPC endpoint" /> : <div />
               }}
             />
           </Form>
@@ -153,8 +159,10 @@ const validator = (items: Connection): FormikErrors<Connection> => {
   if (!items.name) {
     errors.name = 'Required'
   }
-  if (!items.url) {
-    errors.url = 'Required'
+  if (items.type === ConnectionType.Private) {
+    if (!items.url) {
+      errors.url = 'Required'
+    }
   }
   if (items.type === ConnectionType.Public && !items.publicChainId) {
     errors.publicChainId = 'Required'

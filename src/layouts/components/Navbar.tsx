@@ -98,7 +98,7 @@ export const Navbar: React.FC<Props> = ({ onNewConnectionClick, onNewContractDef
           </SmallButton>
         </ButtonGroupItem> */}
       </ButtonRightArea>
-      <NavbarTitle>xChain</NavbarTitle>
+      <NavbarTitle>Solid Studio</NavbarTitle>
     </Wrapper>
   )
 }

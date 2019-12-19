@@ -6,31 +6,13 @@ import { Contract } from '@solid-explorer/types'
 import { Status, NormalizedObject } from '../common/types'
 
 import { ActionType, Actions } from './action-types'
+import { ActionType as TracesActionType } from '../traces/action-types'
 
-// import { MessageType, MyWorkerMessage } from '../workers/compiler-worker/types'
-// import CompilerWorker from './web-workers/compiler-worker'
-
-// Contracts
-// Compiler (done)
 export interface ContractState {
   currentContract?: Contract
   contracts: NormalizedObject<Contract>
   getContractsStatus: Status
-  // loadCompilerRequest: LoadCompilerRequest
-  // validateSourceCode: ValidateSourceCode
-  // compilerWorker: Worker | undefined
 }
-
-// const defaultValidateSourceCode: ValidateSourceCode = {
-//     status: Status.NotStarted,
-//     compilerVersion: '0.5.8',
-//     sourceCode: ''
-// }
-
-// const defaultLoadCompilerRequest: LoadCompilerRequest = {
-//     status: Status.NotStarted,
-//     version: '0.5.8'
-// }
 
 export const initialState: ContractState = {
   contracts: {
@@ -39,14 +21,11 @@ export const initialState: ContractState = {
   },
   currentContract: undefined,
   getContractsStatus: Status.NotStarted
-  // compilerWorker: new CompilerWorker(),
-  // loadCompilerRequest: defaultLoadCompilerRequest,
-  // validateSourceCode: defaultValidateSourceCode
 }
 
 export const appReducer: Reducer<ContractState, Actions> = (
   state: ContractState = initialState,
-  action: Actions // | MyWorkerMessage
+  action: Actions
 ): ContractState => {
   switch (action.type) {
     case ActionType.CONTRACTS_RECEIVED:
@@ -55,13 +34,22 @@ export const appReducer: Reducer<ContractState, Actions> = (
         contracts: getNewContracts(action.payload, state),
         currentContract: action.payload[0]
       }
-    // case ActionType.CONTRACT_SELECTED:
-    // return { ...state, currentContract: action.payload }
-    // compiler cases
-    // case MessageType.VALIDATE_SOURCE_CODE:
-    //     return { ...state, validateSourceCode: action.payload }
-    // case MessageType.LOAD_COMPILER_VERSION_RESULT:
-    //     return { ...state, loadCompilerRequest: action.payload }
+    case TracesActionType.TRACES_RECEIVED:
+      const traces = action.payload.data.map(item => {
+        return `${item.id}`
+      })
+      const contractId = action.payload.contractId
+      const newContractsWithTraces = {
+        ...state.contracts,
+        byId: {
+          ...state.contracts.byId,
+          [`${contractId}`]: {
+            ...state.contracts.byId[`${contractId}`],
+            traces
+          }
+        }
+      }
+      return { ...state, contracts: newContractsWithTraces }
     default:
       return state
   }

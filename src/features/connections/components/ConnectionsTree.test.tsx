@@ -31,7 +31,6 @@ describe('ConnectionsTree', () => {
         expect(getByTestId('connections-tree-header')).toBeInTheDocument()
         expect(getByTestId('connections-tree-header')).toHaveTextContent("Connections")
         expect(getByTestId('connections-tree-plus')).toBeInTheDocument()
-        expect(getByTestId('connections-tree-down')).toBeInTheDocument()
 
         expect(getByText(text1)).toBeInTheDocument()
         expect(getByText(text2)).toBeInTheDocument()
@@ -52,7 +51,6 @@ describe('ConnectionsTree', () => {
         expect(getByTestId('connections-tree-header')).toBeInTheDocument()
         expect(getByTestId('connections-tree-header')).toHaveTextContent("Connections")
         expect(getByTestId('connections-tree-plus')).toBeInTheDocument()
-        expect(getByTestId('connections-tree-down')).toBeInTheDocument()
 
         expect(queryByText(text1)).not.toBeInTheDocument()
         expect(queryByText(text2)).not.toBeInTheDocument()

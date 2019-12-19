@@ -34,7 +34,6 @@ describe('ContractDefinitionsTree', () => {
         expect(getByTestId('contract-definitions-tree-header')).toBeInTheDocument()
         expect(getByTestId('contract-definitions-tree-header')).toHaveTextContent("Contract Definitions")
         expect(getByTestId('contract-definitions-tree-plus')).toBeInTheDocument()
-        expect(getByTestId('contract-definitions-tree-down')).toBeInTheDocument()
 
         expect(getByText(text1)).toBeInTheDocument()
         expect(getByText(text2)).toBeInTheDocument()
@@ -51,7 +50,6 @@ describe('ContractDefinitionsTree', () => {
         expect(getByTestId('contract-definitions-tree-header')).toBeInTheDocument()
         expect(getByTestId('contract-definitions-tree-header')).toHaveTextContent("Contract Definitions")
         expect(getByTestId('contract-definitions-tree-plus')).toBeInTheDocument()
-        expect(getByTestId('contract-definitions-tree-down')).toBeInTheDocument()
 
         expect(queryByText(text1)).not.toBeInTheDocument()
         expect(queryByText(text2)).not.toBeInTheDocument()
