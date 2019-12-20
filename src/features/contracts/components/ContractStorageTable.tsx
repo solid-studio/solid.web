@@ -5,7 +5,6 @@ import { ColumnProps } from 'antd/es/table';
 import { Storage } from '../types'
 
 import { ContractStorageTableComponent } from './ContractStorageTableComponent';
-// import BN from 'bn.js';
 const Web3Utils = require('web3-utils');
 
 interface OwnProps {
@@ -13,14 +12,14 @@ interface OwnProps {
 }
 
 type AllProps = OwnProps
-// var bn = new BN(bytes32str, 16).fromTwos(256);
-// return bn.toString();
+
 const tableColumns: Array<ColumnProps<Storage>> = [
     {
         key: 'name',
         title: 'Name',
         dataIndex: 'name',
         align: 'center',
+        width: '50%',
         render: text => <p data-testid={`contract-storage-table-row-${text}`}>{text}</p>
     },
     // {
@@ -33,6 +32,7 @@ const tableColumns: Array<ColumnProps<Storage>> = [
         title: 'Value',
         dataIndex: 'value',
         align: 'center',
+        width: '50%',
         render: text => <p data-testid={`contract-storage-value-table-row-${text}`}>{Web3Utils.hexToNumberString(`0x${text}`)}</p>
     }
 ];
@@ -42,7 +42,8 @@ export class ContractStorageTable extends React.Component<AllProps> {
         const { storageItems } = this.props
         return <ContractStorageTableComponent
             scroll={{ y: 240 }}
-            pagination={false} size="small"
+            pagination={false}
+            size="small"
             className="white" rowKey="slot"
             dataSource={storageItems}
             columns={tableColumns}
