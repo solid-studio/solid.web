@@ -144,7 +144,7 @@ export class GenericTree<T> extends React.Component<Props<T>, State> {
                         {/* <Icon type="down" data-testid={`${selectorPrefix}-tree-down`} style={{ color: 'white' }} onClick={onCollapseClick} /> */}
                         <Icon type="plus" data-testid={`${selectorPrefix}-tree-plus`} style={{ color: 'white', paddingRight: '0.5em', marginTop: "0.1em" }} onClick={onPlusClick} />
                         {showFolderUpload && onFolderUploadClick &&
-                            <Icon type="folder-add" data-testid={`${selectorPrefix}-tree-plus`} style={{ color: 'white', paddingRight: '0.5em', fontSize: "1.2em", cursor: "pointer" }} onClick={onFolderUploadClick} />
+                            <Icon type="folder-add" data-testid={`${selectorPrefix}-tree-folder-add`} style={{ color: 'white', paddingRight: '0.5em', fontSize: "1.2em", cursor: "pointer" }} onClick={onFolderUploadClick} />
                         }
                     </SidebarHeaderButtons>
                 </SidebarHeader>

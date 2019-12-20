@@ -4,32 +4,36 @@ import '@testing-library/jest-dom/extend-expect';
 
 import { getMouseEvent } from 'utils/getMouseEvent';
 
-import { buildFakeContractDefinitions, ContractDefinition } from '@solid-explorer/types'
+import { FileItem, buildFakeFileItem } from '@solid-explorer/types'
 
 import { ContractDefinitionsTree } from './ContractDefinitionsTree'
 
 describe('ContractDefinitionsTree', () => {
     const onNewConnectionClickMockHandler = jest.fn()
     const mockContractDefinitionSelectedHandler = jest.fn()
+    const onFolderUploadClickMockHandler = jest.fn()
 
     beforeEach(() => {
         onNewConnectionClickMockHandler.mockClear()
         mockContractDefinitionSelectedHandler.mockClear()
     })
 
-    const renderContractDefinitionsTree = (contractDefinitions: ContractDefinition[]) => {
+    const renderContractDefinitionsTree = (fileItems: FileItem[]) => {
         return render(
-            <ContractDefinitionsTree contractDefinitions={contractDefinitions}
+            <ContractDefinitionsTree fileItems={fileItems}
+                onFolderUploadClick={onFolderUploadClickMockHandler}
                 onContractDefinitionSelected={mockContractDefinitionSelectedHandler}
             />)
     }
 
-    test('that it renders all the ui elements', () => {
-        const contractDefinitions = buildFakeContractDefinitions()
-        const text1 = contractDefinitions[0].name
-        const text2 = contractDefinitions[1].name
+    test.only('that it renders all the ui elements', () => {
+        const fileItems = [buildFakeFileItem(), buildFakeFileItem({ name: "ERC-721.sol" })]
+        const text1 = fileItems[0].name
+        const text2 = fileItems[1].name
 
-        const { getByTestId, getByText } = renderContractDefinitionsTree(contractDefinitions)
+        const { getByTestId, getByText, debug } = renderContractDefinitionsTree(fileItems)
+
+        debug()
 
         expect(getByTestId('contract-definitions-tree-header')).toBeInTheDocument()
         expect(getByTestId('contract-definitions-tree-header')).toHaveTextContent("Contract Definitions")
@@ -40,12 +44,12 @@ describe('ContractDefinitionsTree', () => {
     })
 
     test('that no contract definitions are shown', () => {
-        let contractDefinitions = buildFakeContractDefinitions()
-        const text1 = contractDefinitions[0].name
-        const text2 = contractDefinitions[1].name
-        contractDefinitions = []
+        let fileItems = [buildFakeFileItem(), buildFakeFileItem({ name: "ERC-721.sol" })]
+        const text1 = fileItems[0].name
+        const text2 = fileItems[1].name
+        fileItems = []
 
-        const { getByTestId, queryByText } = renderContractDefinitionsTree(contractDefinitions)
+        const { getByTestId, queryByText } = renderContractDefinitionsTree(fileItems)
 
         expect(getByTestId('contract-definitions-tree-header')).toBeInTheDocument()
         expect(getByTestId('contract-definitions-tree-header')).toHaveTextContent("Contract Definitions")
@@ -57,10 +61,10 @@ describe('ContractDefinitionsTree', () => {
 
     // TODO IMPROVE or REMOVE CAUSE I REMOVED RIGHT CLICK FOR NOW
     test.skip('when right click is press in contract defintion, then the context menu should NOT appear', async () => {
-        const contractDefinitions = buildFakeContractDefinitions()
-        const text1 = contractDefinitions[0].name
+        const fileItems = [buildFakeFileItem(), buildFakeFileItem({ name: "ERC-721.sol" })]
+        const text1 = fileItems[0].name
 
-        const { getByTestId, getByText } = renderContractDefinitionsTree(contractDefinitions)
+        const { getByTestId, getByText } = renderContractDefinitionsTree(fileItems)
 
         const contractDefinitionFirstElement = getByText(text1)
 
@@ -81,9 +85,9 @@ describe('ContractDefinitionsTree', () => {
     })
 
     test('renders contract definitions tree snapshop', async () => {
-        const contractDefinitions = buildFakeContractDefinitions()
+        const fileItems = [buildFakeFileItem(), buildFakeFileItem({ name: "ERC-721.sol" })]
 
-        const { container } = renderContractDefinitionsTree(contractDefinitions)
+        const { container } = renderContractDefinitionsTree(fileItems)
 
         expect(container).toMatchSnapshot()
     })
