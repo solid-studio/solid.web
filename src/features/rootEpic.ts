@@ -8,6 +8,7 @@ import { transactionsEpic } from './transactions/epic'
 import { blocksEpic } from './blocks/epic'
 import { compilerEpic } from './compiler/epic'
 import { tracesEpic } from './traces/epic'
+import { fileItemsEpic } from './file-items/epic'
 
 export const rootEpic = combineEpics(
   connectionsEpic,
@@ -17,5 +18,6 @@ export const rootEpic = combineEpics(
   transactionsEpic,
   blocksEpic,
   compilerEpic,
-  tracesEpic
+  tracesEpic,
+  fileItemsEpic
 )

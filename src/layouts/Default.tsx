@@ -6,13 +6,13 @@ import { Layout, Spin } from 'antd'
 import { Connection, FileItem } from '@solid-explorer/types'
 
 import { createNewEmptyContractDefinition, contractDefinitionSelected, getContractDefinitions, openFileSystemDialog } from 'features/contract-definitions/actions'
+import { getFileItems } from 'features/file-items/actions'
 import { openConnectionModal, getConnections, connectionItemSelected } from 'features/connections/actions'
 import { ContractDefinitionsTree } from 'features/contract-definitions/components'
 import { loadCompilerVersion } from 'features/compiler/actions'
 import { ConnectionModal, ConnectionsTree } from 'features/connections/components'
 import { ApplicationState } from 'features/rootReducer'
 import { emitter } from 'features/common/event-emitter'
-// import { DebuggerModal } from 'features/debugger/components'
 
 import { socket } from '../utils/feathers'
 
@@ -32,6 +32,7 @@ interface DispatchProps {
 
   createNewEmptyContractDefinition: ActionCreator<Action>
   getContractDefinitions: ActionCreator<Action>
+  getFileItems: ActionCreator<Action>
   contractDefinitionSelected: ActionCreator<Action>
 
   openFileSystemDialog: ActionCreator<Action>
@@ -63,8 +64,9 @@ export class DefaultLayout extends React.Component<AllProps, State> {
         })
         this.props.getConnections();
         this.props.getContractDefinitions();
+        this.props.getFileItems()
         // TODO: 0.4.24 by default
-        this.props.loadCompilerVersion()
+        this.props.loadCompilerVersion() // TODO REMOVE
         emitter.on("COLLAPSE_RIGHT_SIDEBAR_MENU", () => { // TODO: Fix this.. 
           // this.collapseRightSider()
         })
@@ -146,7 +148,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
       createNewEmptyContractDefinition,
       contractDefinitionSelected,
       connectionItemSelected,
-      openFileSystemDialog
+      openFileSystemDialog,
+      getFileItems
     },
     dispatch
   )

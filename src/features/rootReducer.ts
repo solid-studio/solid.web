@@ -25,6 +25,7 @@ import {
 } from './transactions/reducer'
 
 import { TracesState, appReducer as tracesReducer, initialState as tracesInitialState } from './traces/reducer'
+import { FileItemsState, appReducer as fileItemsReducer, initialState as fileItemsInitialState } from './file-items/reducer'
 
 export interface ApplicationState {
   contractState: ContractState
@@ -34,7 +35,8 @@ export interface ApplicationState {
   tabsManagerState: TabsManagerState
   blocksState: BlocksState
   transactionsState: TransactionsState,
-  tracesState: TracesState
+  tracesState: TracesState,
+  fileItemsState: FileItemsState
 }
 
 export const initialState: ApplicationState = {
@@ -45,7 +47,8 @@ export const initialState: ApplicationState = {
   tabsManagerState: tabsManagerInitialState,
   blocksState: blocksInitialState,
   transactionsState: transactionsInitialState,
-  tracesState: tracesInitialState
+  tracesState: tracesInitialState,
+  fileItemsState: fileItemsInitialState
 }
 
 const rootReducer = combineReducers<ApplicationState>({
@@ -56,7 +59,8 @@ const rootReducer = combineReducers<ApplicationState>({
   tabsManagerState: tabsReducer,
   blocksState: blocksReducer,
   transactionsState: transactionsReducer,
-  tracesState: tracesReducer
+  tracesState: tracesReducer,
+  fileItemsState: fileItemsReducer
 })
 
 export default rootReducer
