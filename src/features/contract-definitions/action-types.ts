@@ -2,6 +2,8 @@ import { Action } from 'redux'
 
 import { ContractDefinition, FileItem } from '@solid-explorer/types'
 
+import { FileItemsReceivedAction } from '../file-items/action-types'
+
 import { ContractDefinitionItem } from './types'
 
 export enum ActionType {
@@ -64,3 +66,4 @@ export type Actions =
   | CreateContractDefinitionAction
   | OpenFileSystemDialogAction
   | FilesReceivedAction
+  | FileItemsReceivedAction

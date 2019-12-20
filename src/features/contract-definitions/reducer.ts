@@ -5,6 +5,7 @@ import { ContractDefinition, FileItem } from '@solid-explorer/types'
 import { Status } from '../common/types'
 
 import { ActionType, Actions } from './action-types'
+import { ActionType as FileItemActionType } from '../file-items/action-types'
 
 export interface ContractDefinitionState {
   contractDefinitions: ContractDefinition[]
@@ -29,6 +30,8 @@ export const appReducer: Reducer<ContractDefinitionState, Actions> = (
   action: Actions
 ): ContractDefinitionState => {
   switch (action.type) {
+    case FileItemActionType.FILE_ITEMS_RECEIVED:
+      return { ...state, fileItems: action.payload }
     case ActionType.FILES_RECEIVED:
       return { ...state, fileItems: action.payload }
     case ActionType.CLOSE_CONTRACT_DEFINITION_MODAL:
