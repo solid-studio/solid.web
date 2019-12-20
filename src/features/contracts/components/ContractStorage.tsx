@@ -11,10 +11,11 @@ import { getTraces } from 'features/traces/actions'
 import { ApplicationState } from '../../rootReducer'
 import { ContractNormalized, Storage } from '../types'
 
+import client from '../../../utils/feathers'
+
 import { ContractStorageTable } from './ContractStorageTable'
 
 interface OwnProps {
-    // contract: Contract
     contractAddress: string
     connectionId: number
     contractId: number
@@ -42,13 +43,23 @@ export class ContractStorage extends React.Component<AllProps> {
 
     componentDidMount() {
         const { contractAddress, ast, connectionId, contractId } = this.props
-        console.log("Contract address")
-        console.log("AST", JSON.parse(ast))
         this.props.getTraces({
             connectionId,
             contractAddress,
             contractId
         })
+
+        // TODO IMPROVE
+        client.service('traces')
+            .on('created', (message: string) => {
+                setTimeout(() => {
+                    this.props.getTraces({
+                        connectionId,
+                        contractAddress,
+                        contractId
+                    })
+                }, 500);
+            });
     }
 
     componentDidUpdate(prevProps: AllProps) {
@@ -64,7 +75,6 @@ export class ContractStorage extends React.Component<AllProps> {
 
     render() {
         const { traces, ast } = this.props
-        // const {ast } =  
         const storageItems = getComputedStorage(traces)
         const storageItemsWithName = getStorageItemsWithName(storageItems, ast)
         return (
@@ -110,7 +120,7 @@ export const getComputedStorage: StorageComputerComponent = (traces: Transaction
     return finalResult
 }
 
-export const getStorageItemsWithName: StorageCalculatorWithName = (items: Storage[], astAsString: any) => {
+export const getStorageItemsWithName: StorageCalculatorWithName = (items: Storage[], astAsString: string) => {
     const ast = JSON.parse(astAsString)
     const keys = Object.keys(ast.nodes)
     const keyWithContractDefinitionNode = keys.find((key: string) => {
