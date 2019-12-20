@@ -9,7 +9,6 @@ import { createNewEmptyContractDefinition, contractDefinitionSelected, getContra
 import { getFileItems } from 'features/file-items/actions'
 import { openConnectionModal, getConnections, connectionItemSelected } from 'features/connections/actions'
 import { ContractDefinitionsTree } from 'features/contract-definitions/components'
-import { loadCompilerVersion } from 'features/compiler/actions'
 import { ConnectionModal, ConnectionsTree } from 'features/connections/components'
 import { ApplicationState } from 'features/rootReducer'
 import { emitter } from 'features/common/event-emitter'
@@ -21,11 +20,9 @@ import { Sidebar, Content, Wrapper, Navbar, CenteredDiv } from "./components"
 interface StateProps {
   connections: Connection[]
   fileItems: FileItem[]
-
 }
-interface DispatchProps {
-  loadCompilerVersion: ActionCreator<Action>
 
+interface DispatchProps {
   openConnectionModal: ActionCreator<Action>
   getConnections: ActionCreator<Action>
   connectionItemSelected: ActionCreator<Action>
@@ -38,7 +35,7 @@ interface DispatchProps {
   openFileSystemDialog: ActionCreator<Action>
 }
 
-type AllProps = DispatchProps & StateProps // OwnProps & 
+type AllProps = DispatchProps & StateProps
 
 interface State {
   collapsed: boolean
@@ -65,12 +62,10 @@ export class DefaultLayout extends React.Component<AllProps, State> {
         this.props.getConnections();
         this.props.getContractDefinitions();
         this.props.getFileItems()
-        // TODO: 0.4.24 by default
-        this.props.loadCompilerVersion() // TODO REMOVE
         emitter.on("COLLAPSE_RIGHT_SIDEBAR_MENU", () => { // TODO: Fix this.. 
           // this.collapseRightSider()
         })
-      }, 1500); // TODO just a random number to show loader a little more time
+      }, 1500); // @DEV just a random number to show loader a little more time
     })
   }
 
@@ -121,7 +116,6 @@ export class DefaultLayout extends React.Component<AllProps, State> {
           </Layout>
           <Content>{this.props.children}</Content>
           <ConnectionModal />
-          {/* <DebuggerModal /> */}
         </Wrapper>
 
     )
@@ -141,7 +135,6 @@ const mapStateToProps = ({ connectionState, contractDefinitionState }: Applicati
 const mapDispatchToProps = (dispatch: Dispatch) => {
   return bindActionCreators(
     {
-      loadCompilerVersion,
       openConnectionModal,
       getConnections,
       getContractDefinitions,
