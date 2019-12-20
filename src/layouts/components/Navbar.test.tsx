@@ -3,22 +3,23 @@ import React from 'react';
 import { render, fireEvent, wait } from '@testing-library/react';
 
 import { Navbar } from './Navbar'
+import '@testing-library/jest-dom/extend-expect'
 
 describe('Navbar', () => {
 
   const onNewConnectionClickMock = jest.fn()
-  const onNewContractInstanceClickMock = jest.fn()
+  const onNewContractDefinitionClickMock = jest.fn()
 
   beforeEach(() => {
     onNewConnectionClickMock.mockClear()
-    onNewContractInstanceClickMock.mockClear()
+    onNewContractDefinitionClickMock.mockClear()
   })
 
   test('navbar ui items are rendered', () => {
     const { getByTestId, getByText } = render(
-      
+
       <Navbar onNewConnectionClick={onNewConnectionClickMock}
-        onNewContractInstanceClick={onNewContractInstanceClickMock}/>)
+        onNewContractDefinitionClick={onNewContractDefinitionClickMock} />)
 
     const newButton = getByTestId('button-navbar-new')
     const title = getByText(/solid/i)
@@ -30,9 +31,9 @@ describe('Navbar', () => {
 
   test('when new connection button is clicked, onNewConnectionClick is called', () => {
     const { getByTestId } = render(
-      
+
       <Navbar onNewConnectionClick={onNewConnectionClickMock}
-        onNewContractInstanceClick={onNewContractInstanceClickMock}/>)
+        onNewContractDefinitionClick={onNewContractDefinitionClickMock} />)
 
     const newButton = getByTestId('button-navbar-new')
     fireEvent.click(newButton)
@@ -44,9 +45,9 @@ describe('Navbar', () => {
 
   test('when new connection from dropdown is clicked, onNewConnectionClick is called', async () => {
     const { getByTestId } = render(
-      
+
       <Navbar onNewConnectionClick={onNewConnectionClickMock}
-        onNewContractInstanceClick={onNewContractInstanceClickMock}/>)
+        onNewContractDefinitionClick={onNewContractDefinitionClickMock} />)
 
     const dropdownButton = getByTestId('navbar-menu')
     fireEvent.mouseOver(dropdownButton)
@@ -64,11 +65,11 @@ describe('Navbar', () => {
   })
 
 
-  test('when new contract instance button is clicked, onNewContractInstanceClick is called', async () => {
+  test('when new contract instance button is clicked, onNewContractDefinitionClick is called', async () => {
     const { getByTestId } = render(
-      
+
       <Navbar onNewConnectionClick={onNewConnectionClickMock}
-        onNewContractInstanceClick={onNewContractInstanceClickMock}/>)
+        onNewContractDefinitionClick={onNewContractDefinitionClickMock} />)
 
     const dropdownButton = getByTestId('navbar-menu')
     fireEvent.mouseOver(dropdownButton)
@@ -81,16 +82,16 @@ describe('Navbar', () => {
     const contractOptionInDropdown = getByTestId('navbar-menu-contract')
     fireEvent.click(contractOptionInDropdown)
 
-    expect(onNewContractInstanceClickMock).toHaveBeenCalled()
-    expect(onNewContractInstanceClickMock).toHaveBeenCalledTimes(1)
+    expect(onNewContractDefinitionClickMock).toHaveBeenCalled()
+    expect(onNewContractDefinitionClickMock).toHaveBeenCalledTimes(1)
   })
 
   test('renders navbar snapshot', async () => {
 
     const { getByTestId, baseElement } = render(
-      
+
       <Navbar onNewConnectionClick={onNewConnectionClickMock}
-        onNewContractInstanceClick={onNewContractInstanceClickMock}/>)
+        onNewContractDefinitionClick={onNewContractDefinitionClickMock} />)
 
     const dropdownButton = getByTestId('navbar-menu')
     fireEvent.mouseOver(dropdownButton)

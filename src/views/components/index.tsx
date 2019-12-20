@@ -8,7 +8,7 @@ export const Wrapper = styled.div`
   grid-row-gap: 0.4px;
   grid-template-areas:
     'editor details'
-    'results details';
+    'editor details';
 `
 
 export const Editor = styled.div`

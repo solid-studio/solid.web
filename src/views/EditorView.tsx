@@ -13,7 +13,8 @@ import { ContractDetails } from 'features/contracts/components'
 import { Wrapper, Editor, Results, Details } from "./components";
 
 interface Props {
-    selectedContract: Contract | undefined
+    selectedContract?: Contract
+    readOnly?: boolean
 }
 
 interface State {
@@ -81,7 +82,7 @@ export class EditorView extends React.Component<Props, State> {
     }
 
     render() {
-        const { selectedContract } = this.props
+        const { selectedContract, readOnly } = this.props
         return (<Wrapper data-testid="editor-view" >
             <Editor>
                 <MonacoEditor
@@ -93,12 +94,12 @@ export class EditorView extends React.Component<Props, State> {
                     editorDidMount={this.editorDidMount}
                 />
             </Editor>
-            <Results>
+            {/* <Results>
                 <SolidTerminal />
-            </Results>
+            </Results> */}
             <Details>
                 {selectedContract && (
-                    <ContractDetails contract={selectedContract} />
+                    <ContractDetails contract={selectedContract} readOnly={readOnly} />
                 )}
             </Details>
         </Wrapper >)

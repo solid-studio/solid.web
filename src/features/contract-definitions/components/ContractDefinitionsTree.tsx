@@ -88,7 +88,7 @@ export class ContractDefinitionsTree extends React.Component<Props, State> {
           if (contractToShow && !contractToShow.isDirectory) {
             this.props.onContractDefinitionSelected({
               ...contractToShow,
-              type: 'editor'
+              type: 'editor-read-only'
             })
           }
         }}

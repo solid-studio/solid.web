@@ -48,6 +48,7 @@ export class MainContentView extends React.Component<AllProps> {
                                 {currentTab.type === 'contracts' && <ContractsView />}
                                 {currentTab.type === 'blocks' && <BlocksView />}
                                 {currentTab.type === 'editor' && <EditorView selectedContract={currentTab.data} />}
+                                {currentTab.type === 'editor-read-only' && <EditorView selectedContract={currentTab.data} readOnly={true} />}
                             </TabPane>
                         })}
                     </Tabs>}
