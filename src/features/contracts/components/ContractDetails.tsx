@@ -15,6 +15,7 @@ const Panel = Collapse.Panel
 
 interface ContractDetailsProps {
     contract: Contract
+    readOnly?: boolean
 }
 
 export class ContractDetails extends React.Component<ContractDetailsProps>{
@@ -22,26 +23,26 @@ export class ContractDetails extends React.Component<ContractDetailsProps>{
         super(props)
     }
     render() {
-        const { contract } = this.props
+        const { contract, readOnly } = this.props
         const { abi, connectionId, ast, address, id } = contract as any
         return (
             <div style={{ color: "white", padding: "1em 1em" }}>
                 <TableDetailsPanel contract={contract} />
-                <CollapseStyled defaultActiveKey={['0']} bordered={false}>
-                    <Panel header="Methods" key="1">
-                        <ContractActionsViewWrapper abi={abi} />
-                    </Panel>
-                    <Panel header="Storage" key="2">
-                        <ContractStorage
-                            // contract={contract}
-                            connectionId={connectionId}
-                            ast={(contract as any).ast}
-                            contractAddress={address}
-                            contractId={id as number}
-                        />
-                    </Panel>
-                </CollapseStyled>
-                {/* <CollapsedDetailsPanels contract={contract} /> */}
+                {readOnly ? undefined :
+                    <CollapseStyled defaultActiveKey={['0']} bordered={false}>
+                        <Panel header="Methods" key="1">
+                            <ContractActionsViewWrapper abi={abi} />
+                        </Panel>
+                        <Panel header="Storage" key="2">
+                            <ContractStorage
+                                // contract={contract}
+                                connectionId={connectionId}
+                                ast={(contract as any).ast}
+                                contractAddress={address}
+                                contractId={id as number}
+                            />
+                        </Panel>
+                    </CollapseStyled>}
             </div >
         )
     }
@@ -89,7 +90,6 @@ export const CollapsedDetailsPanels: React.FC<ContractDetailsProps> = ({ contrac
             </Panel>
             <Panel header="Storage" key="2">
                 <ContractStorage
-                    // contract={contract}
                     connectionId={connectionId}
                     ast={(contract as any).ast}
                     contractAddress={address}
