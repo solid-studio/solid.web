@@ -87,10 +87,12 @@ export class ConnectionModal extends React.Component<AllProps> {
       } else {
         const itemCleaned: Connection = cleanDataBeforeSubmit(item)
         this.props.createOrUpdateConnection(itemCleaned)
+        actions.resetForm(defaultConnection)
       }
     } else {
       const itemCleaned: Connection = cleanDataBeforeSubmit(item)
       this.props.createOrUpdateConnection(itemCleaned)
+      actions.resetForm(defaultConnection)
     }
 
   }
