@@ -45,7 +45,7 @@ describe('GenericModal', () => {
         expect(getByTestId(`cancel-button-${FORM_ID}`)).toBeInTheDocument()
     })
 
-    it.skip('renders a modal', () => {
+    it('renders a modal', () => {
         const { baseElement } = renderConnectionModal()
 
         expect(baseElement).toMatchSnapshot()

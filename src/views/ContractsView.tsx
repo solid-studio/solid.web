@@ -94,7 +94,7 @@ export class ContractsView extends React.Component<AllProps, State> {
 
     render() {
         const { showContractDrawer, drawerWidth, selectedContractRowItem } = this.state
-        const { contracts } = this.props
+        const { contracts, currentConnection } = this.props
         return (
             <Layout style={{ height: "100%" }}>
                 <Content style={{ height: "100%" }}>
@@ -109,8 +109,8 @@ export class ContractsView extends React.Component<AllProps, State> {
                 <Sider style={{ background: "#272727" }} trigger={null} collapsed={!showContractDrawer} collapsible={true} collapsedWidth={0} width={drawerWidth}>
                     <div>
                         <CustomIcon src="https://res.cloudinary.com/key-solutions/image/upload/v1568672208/solid/maximize.png" alt="maximise" onClick={this.maximiseWindow} />
-                        {selectedContractRowItem &&
-                            <ContractDetails contract={selectedContractRowItem} />}
+                        {selectedContractRowItem && currentConnection &&
+                            <ContractDetails currentConnection={currentConnection} contract={selectedContractRowItem} />}
                     </div>
                 </Sider>
             </Layout>

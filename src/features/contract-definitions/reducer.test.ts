@@ -1,8 +1,6 @@
 import { buildFakeContractDefinition, buildFakeContractDefinitions } from '@solid-explorer/types'
 
 import {
-  closeContractDefinitionsModal,
-  openContractDefinitionsModal,
   getContractDefinitions,
   contractDefinitionsReceived,
   contractDefinitionSelected,
@@ -13,43 +11,43 @@ import { appReducer, initialState } from './reducer'
 import { Status } from '../common/types'
 
 describe('Contract definitions reducer', () => {
-  test('ActionType.CLOSE_CONTRACT_DEFINITION_MODAL', () => {
-    const closeContractDefinitionAction = closeContractDefinitionsModal()
+  // test('ActionType.CLOSE_CONTRACT_DEFINITION_MODAL', () => {
+  //   const closeContractDefinitionAction = closeContractDefinitionsModal()
 
-    const newState = appReducer(initialState, closeContractDefinitionAction)
+  //   const newState = appReducer(initialState, closeContractDefinitionAction)
 
-    expect(newState.contractDefinitions).toEqual(initialState.contractDefinitions)
-    expect(newState.currentContractDefinition).toEqual(initialState.currentContractDefinition)
-    expect(newState.contractDefinitionModalOpen).toEqual(false)
-    expect(newState.getContractDefinitionsStatus).toEqual(initialState.getContractDefinitionsStatus)
-    expect(newState.createContractDefinitionStatus).toEqual(initialState.createContractDefinitionStatus)
-  })
+  //   expect(newState.contractDefinitions).toEqual(initialState.contractDefinitions)
+  //   expect(newState.currentContractDefinition).toEqual(initialState.currentContractDefinition)
+  //   expect(newState.contractDefinitionModalOpen).toEqual(false)
+  //   expect(newState.getContractDefinitionsStatus).toEqual(initialState.getContractDefinitionsStatus)
+  //   expect(newState.createContractDefinitionStatus).toEqual(initialState.createContractDefinitionStatus)
+  // })
 
-  test('ActionType.OPEN_CONTRACT_DEFINITION_MODAL with DEFINED contract definition', () => {
-    const contractDefinition = buildFakeContractDefinition()
-    const openContractDefinitionAction = openContractDefinitionsModal(contractDefinition)
+  // test('ActionType.OPEN_CONTRACT_DEFINITION_MODAL with DEFINED contract definition', () => {
+  //   const contractDefinition = buildFakeContractDefinition()
+  //   const openContractDefinitionAction = openContractDefinitionsModal(contractDefinition)
 
-    const newState = appReducer(initialState, openContractDefinitionAction)
+  //   const newState = appReducer(initialState, openContractDefinitionAction)
 
-    expect(newState.contractDefinitions).toEqual(initialState.contractDefinitions)
-    expect(newState.currentContractDefinition).toEqual(contractDefinition)
-    expect(newState.contractDefinitionModalOpen).toEqual(true)
-    expect(newState.getContractDefinitionsStatus).toEqual(initialState.getContractDefinitionsStatus)
-    expect(newState.createContractDefinitionStatus).toEqual(initialState.createContractDefinitionStatus)
-  })
+  //   expect(newState.contractDefinitions).toEqual(initialState.contractDefinitions)
+  //   expect(newState.currentContractDefinition).toEqual(contractDefinition)
+  //   expect(newState.contractDefinitionModalOpen).toEqual(true)
+  //   expect(newState.getContractDefinitionsStatus).toEqual(initialState.getContractDefinitionsStatus)
+  //   expect(newState.createContractDefinitionStatus).toEqual(initialState.createContractDefinitionStatus)
+  // })
 
-  test('ActionType.OPEN_CONTRACT_DEFINITION_MODAL with UNDEFINED contract definition', () => {
-    const contractDefinition = undefined
-    const openContractDefinitionAction = openContractDefinitionsModal(contractDefinition)
+  // test('ActionType.OPEN_CONTRACT_DEFINITION_MODAL with UNDEFINED contract definition', () => {
+  //   const contractDefinition = undefined
+  //   const openContractDefinitionAction = openContractDefinitionsModal(contractDefinition)
 
-    const newState = appReducer(initialState, openContractDefinitionAction)
+  //   const newState = appReducer(initialState, openContractDefinitionAction)
 
-    expect(newState.contractDefinitions).toEqual(initialState.contractDefinitions)
-    expect(newState.currentContractDefinition).toEqual(contractDefinition)
-    expect(newState.contractDefinitionModalOpen).toEqual(true)
-    expect(newState.getContractDefinitionsStatus).toEqual(initialState.getContractDefinitionsStatus)
-    expect(newState.createContractDefinitionStatus).toEqual(initialState.createContractDefinitionStatus)
-  })
+  //   expect(newState.contractDefinitions).toEqual(initialState.contractDefinitions)
+  //   expect(newState.currentContractDefinition).toEqual(contractDefinition)
+  //   expect(newState.contractDefinitionModalOpen).toEqual(true)
+  //   expect(newState.getContractDefinitionsStatus).toEqual(initialState.getContractDefinitionsStatus)
+  //   expect(newState.createContractDefinitionStatus).toEqual(initialState.createContractDefinitionStatus)
+  // })
 
   test('ActionType.GET_CONTRACT_DEFINITIONS', () => {
     const getContractDefinitionAction = getContractDefinitions()

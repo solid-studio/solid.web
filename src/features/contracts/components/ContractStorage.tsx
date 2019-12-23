@@ -19,7 +19,7 @@ interface OwnProps {
     contractAddress: string
     connectionId: number
     contractId: number
-    ast: any // TODO Type AST
+    ast: string
 }
 
 interface DispatchProps {

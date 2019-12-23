@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import { bindActionCreators, Dispatch, ActionCreator, Action } from 'redux'
 import { connect } from 'react-redux'
@@ -10,12 +10,16 @@ import { Input, Button, Tag } from 'antd'
 import { ApplicationState } from '../../rootReducer'
 
 import { executeContractFunction } from '../actions'
+import { Connection, ConnectionType } from '@solid-explorer/types'
 
 const InputGroup = Input.Group
 
 interface ContractViewProps {
-  abi: AbiItem
+  abi: AbiItem[]
+  abiItem: AbiItem
+  contractAddress: string
   executeContractFunction: ActionCreator<Action>
+  currentConnection: Connection
 }
 
 const StyledInput = styled(Input)`
@@ -82,18 +86,93 @@ interface HashMapOfValues {
 }
 
 const initialValues: HashMapOfValues = {}
+const ethers = (window as any).ethers
 
 const ContractView: React.FC<ContractViewProps> = (props: ContractViewProps) => {
-  const { abi } = props
-  const { name, inputs, outputs } = abi
+  const { abiItem, abi, contractAddress, currentConnection } = props
+  const { url } = currentConnection
+  const { name, inputs, outputs } = abiItem
+  // console.log("INPUTs", inputs)
+  const functionName = name
   const inputStrings = MapInputs(inputs)
   const outputStrings = MapOutputs(outputs)
   const [fields, setField] = useState(initialValues)
+  const [isCalling, setIsCalling] = useState(false);
+  // const [calledName, setClickedItem] = useState('')
+  const [response, setResponse] = React.useState(null);
+  const [error, setError] = React.useState(null);
 
-  const sendAction = () => {
-    console.log('About to send data')
-    props.executeContractFunction(abi, fields)
-  }
+  useEffect(() => {
+    if (currentConnection.type === ConnectionType.Public) {
+      throw new Error('Public chain interactions not supported yet')
+    }
+
+    let provider = new ethers.providers.JsonRpcProvider(url);
+    // console.log("PROVIDER", provider)
+    // console.log("contractAddress", contractAddress)
+    // console.log("abi", abi)
+
+    if (!contractAddress && !abi && !provider) {
+      return
+    }
+
+    const getOrSendTransaction = async () => {
+      try {
+        console.log("Function name", functionName)
+
+        const accounts = await provider.listAccounts()
+        // console.log("accounts", accounts)
+
+        // TODO: Fix and sort out key management
+        const signer = await provider.getSigner(accounts[0])
+        // console.log("signer", signer)
+
+        // let contract = new ethers.Contract(contractAddress, abi, provider);
+        // console.log("contract", contract)
+
+        let interfaceFromABI = new ethers.utils.Interface(abi)
+        // if (!calledName) {
+        //   throw new Error('Invalid value selected')
+        // }
+        // const value = fields[calledName as any]
+        // console.log("Value", value)
+        // console.log("fields", fields)
+
+        // console.log("interfaceFromABI.functions[name as string].encode", interfaceFromABI.functions[name as string].encode)
+        // at this point all should be valid
+        const dataToEncode = inputs && inputs.map((item, index) => {
+          return fields[index]
+        })
+        console.log("Data to encode", dataToEncode)
+        // const result = [{
+        //   type,
+        //   name
+        // }]
+
+        let calldata = interfaceFromABI.functions[functionName as string].encode(dataToEncode);
+        // console.log("Encoded data", calldata)
+
+        const transactionRequest = {
+          to: contractAddress,
+          data: calldata
+        }
+
+        const result = await signer.sendTransaction(transactionRequest);
+        console.log("RESULT", result)
+        setResponse(result);
+        setIsCalling(false)
+      } catch (error) {
+        console.log("ERROR", error)
+        setError(error);
+        setIsCalling(false)
+      }
+    };
+
+    if (isCalling) {
+      getOrSendTransaction()
+      console.log("IS CALLING")
+    }
+  })
 
   return (
     <Wrapper>
@@ -128,8 +207,8 @@ const ContractView: React.FC<ContractViewProps> = (props: ContractViewProps) => 
         </StyledInputGroup>
       </Container>
       <Container>
-        <StyledButton onClick={sendAction} type="primary">
-          {isReadOnlyFunction(abi) ? 'Call' : 'Send'}
+        <StyledButton onClick={() => setIsCalling(true)} type="primary">
+          {isReadOnlyFunction(abiItem) ? 'Call' : 'Send'}
         </StyledButton>
       </Container>
     </Wrapper>
