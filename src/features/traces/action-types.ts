@@ -11,8 +11,8 @@ export enum ActionType {
 export interface GetTracesAction extends Action {
   type: ActionType.GET_TRACES
   payload: {
-    connectionId: number,
-    contractAddress: string,
+    connectionId: number
+    contractAddress: string
     contractId: number
   }
 }
@@ -20,11 +20,9 @@ export interface GetTracesAction extends Action {
 export interface TracesReceivedAction extends Action {
   type: ActionType.TRACES_RECEIVED
   payload: {
-    data: TransactionTrace[],
+    data: TransactionTrace[]
     contractId: number
   }
 }
 
-
-export type Actions = GetTracesAction
-  | TracesReceivedAction
+export type Actions = GetTracesAction | TracesReceivedAction

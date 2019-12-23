@@ -14,21 +14,25 @@ import { GenericArrayResponse } from 'features/common/types'
 
 type Response = GenericArrayResponse<FileItem>
 
-export const getFileItemsEpic = (action$: ActionsObservable<GetFileItemsAction>, state$: StateObservable<ApplicationState>, ajax: AjaxCreationMethod) =>
-    action$.pipe(
-        ofType(ActionType.GET_FILE_ITEMS),
-        switchMap(() => {
-            return ajax.getJSON<Response>(`${FILE_ITEMS_URL}`).pipe(
-                map(response => fileItemsReceived(response.data)),
-                catchError(error =>
-                    of({
-                        type: ActionType.ERROR_WHEN_GETTING_DATA,
-                        payload: error.xhr.response,
-                        error: true
-                    })
-                )
-            )
-        })
-    )
+export const getFileItemsEpic = (
+  action$: ActionsObservable<GetFileItemsAction>,
+  state$: StateObservable<ApplicationState>,
+  ajax: AjaxCreationMethod
+) =>
+  action$.pipe(
+    ofType(ActionType.GET_FILE_ITEMS),
+    switchMap(() => {
+      return ajax.getJSON<Response>(`${FILE_ITEMS_URL}`).pipe(
+        map(response => fileItemsReceived(response.data)),
+        catchError(error =>
+          of({
+            type: ActionType.ERROR_WHEN_GETTING_DATA,
+            payload: error.xhr.response,
+            error: true
+          })
+        )
+      )
+    })
+  )
 
 export const fileItemsEpic = combineEpics(getFileItemsEpic)

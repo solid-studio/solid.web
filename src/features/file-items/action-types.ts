@@ -17,6 +17,4 @@ export interface FileItemsReceivedAction extends Action {
   payload: FileItem[]
 }
 
-
-export type Actions = GetFileItemsAction
-  | FileItemsReceivedAction
+export type Actions = GetFileItemsAction | FileItemsReceivedAction

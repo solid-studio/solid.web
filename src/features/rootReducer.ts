@@ -25,7 +25,11 @@ import {
 } from './transactions/reducer'
 
 import { TracesState, appReducer as tracesReducer, initialState as tracesInitialState } from './traces/reducer'
-import { FileItemsState, appReducer as fileItemsReducer, initialState as fileItemsInitialState } from './file-items/reducer'
+import {
+  FileItemsState,
+  appReducer as fileItemsReducer,
+  initialState as fileItemsInitialState
+} from './file-items/reducer'
 
 export interface ApplicationState {
   contractState: ContractState
@@ -34,8 +38,8 @@ export interface ApplicationState {
   contractDefinitionState: ContractDefinitionState
   tabsManagerState: TabsManagerState
   blocksState: BlocksState
-  transactionsState: TransactionsState,
-  tracesState: TracesState,
+  transactionsState: TransactionsState
+  tracesState: TracesState
   fileItemsState: FileItemsState
 }
 

@@ -12,43 +12,45 @@ import { getTraces, tracesReceived } from './actions'
 import { getTracesEpic } from './epic'
 
 describe('Traces Epic Tests', () => {
-    const mockAjax: jest.Mocked<AjaxCreationMethod> = {
-        get: jest.fn(),
-        post: jest.fn(),
-        put: jest.fn(),
-        patch: jest.fn(),
-        delete: jest.fn(),
-        getJSON: jest.fn()
-    } as any // TODO FIX
+  const mockAjax: jest.Mocked<AjaxCreationMethod> = {
+    get: jest.fn(),
+    post: jest.fn(),
+    put: jest.fn(),
+    patch: jest.fn(),
+    delete: jest.fn(),
+    getJSON: jest.fn()
+  } as any // TODO FIX
 
-    test('getTracesEpic', done => {
-        const traces = buildFakeTraces()
+  test('getTracesEpic', done => {
+    const traces = buildFakeTraces()
 
-        const getTracesAction: GetTracesAction = getTraces({
-            connectionId: 1,
-            contractAddress: "00",
-            contractId: 1
-        })
-
-        const actions$ = ActionsObservable.of(getTracesAction)
-
-        const applicationState$: StateObservable<ApplicationState> = new StateObservable<ApplicationState>(
-            new Subject(),
-            initialState
-        )
-
-        mockAjax.getJSON.mockImplementation((url: string, headers?: {} | undefined) => {
-            return of({ data: traces })
-        })
-
-        const output$ = getTracesEpic(actions$, applicationState$, mockAjax)
-
-        output$.subscribe(action => {
-            expect(action).toEqual(tracesReceived({
-                data: traces,
-                contractId: 1
-            }))
-            done()
-        })
+    const getTracesAction: GetTracesAction = getTraces({
+      connectionId: 1,
+      contractAddress: '00',
+      contractId: 1
     })
+
+    const actions$ = ActionsObservable.of(getTracesAction)
+
+    const applicationState$: StateObservable<ApplicationState> = new StateObservable<ApplicationState>(
+      new Subject(),
+      initialState
+    )
+
+    mockAjax.getJSON.mockImplementation((url: string, headers?: {} | undefined) => {
+      return of({ data: traces })
+    })
+
+    const output$ = getTracesEpic(actions$, applicationState$, mockAjax)
+
+    output$.subscribe(action => {
+      expect(action).toEqual(
+        tracesReceived({
+          data: traces,
+          contractId: 1
+        })
+      )
+      done()
+    })
+  })
 })
