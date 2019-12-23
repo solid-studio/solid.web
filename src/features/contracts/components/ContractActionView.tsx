@@ -107,7 +107,7 @@ const ContractView: React.FC<ContractViewProps> = (props: ContractViewProps) => 
       throw new Error('Public chain interactions not supported yet')
     }
 
-    let provider = new ethers.providers.JsonRpcProvider(url);
+    const provider = new ethers.providers.JsonRpcProvider(url);
     // console.log("PROVIDER", provider)
     // console.log("contractAddress", contractAddress)
     // console.log("abi", abi)
@@ -130,7 +130,7 @@ const ContractView: React.FC<ContractViewProps> = (props: ContractViewProps) => 
         // let contract = new ethers.Contract(contractAddress, abi, provider);
         // console.log("contract", contract)
 
-        let interfaceFromABI = new ethers.utils.Interface(abi)
+        const interfaceFromABI = new ethers.utils.Interface(abi)
         // if (!calledName) {
         //   throw new Error('Invalid value selected')
         // }
@@ -149,7 +149,7 @@ const ContractView: React.FC<ContractViewProps> = (props: ContractViewProps) => 
         //   name
         // }]
 
-        let calldata = interfaceFromABI.functions[functionName as string].encode(dataToEncode);
+        const calldata = interfaceFromABI.functions[functionName as string].encode(dataToEncode);
         // console.log("Encoded data", calldata)
 
         const transactionRequest = {
