@@ -5,6 +5,8 @@ import { ColumnProps } from 'antd/es/table';
 import { Storage } from '../types'
 
 import { ContractStorageTableComponent } from './ContractStorageTableComponent';
+
+// tslint:disable-next-line
 const Web3Utils = require('web3-utils');
 
 interface OwnProps {

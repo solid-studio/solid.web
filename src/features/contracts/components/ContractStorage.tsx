@@ -87,12 +87,12 @@ export class ContractStorage extends React.Component<AllProps> {
 
 type StorageComputerComponent = (traces: TransactionTrace[]) => Storage[]
 
-type StorageItem = { [location: string]: string }
+interface StorageItem { [location: string]: string }
 
 type StorageCalculatorWithName = (items: Storage[], ast: any) => Storage[]
 
 export const getComputedStorage: StorageComputerComponent = (traces: TransactionTrace[]) => {
-    let storage: StorageItem = {}
+    const storage: StorageItem = {}
 
     const onlyStructLogsWithLastElement = traces.map((item: TransactionTrace) => {
         const lastStructLog = item.structLogs[item.structLogs.length - 1]
