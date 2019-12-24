@@ -3,6 +3,8 @@
   "version": "1.1.0",
   "private": true,
   "dependencies": {
+    "@ethereum-react-components/cfg": "^1.1.0",
+    "@ethereum-react-components/ui": "^1.2.0",
     "@feathersjs/client": "^4.3.2",
     "@feathersjs/feathers": "^4.3.2",
     "@feathersjs/socketio": "^4.3.2",
