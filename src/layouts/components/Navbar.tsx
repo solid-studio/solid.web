@@ -98,7 +98,7 @@ export const Navbar: React.FC<Props> = ({ onNewConnectionClick, onNewContractDef
           </SmallButton>
         </ButtonGroupItem> */}
       </ButtonRightArea>
-      <NavbarTitle>Solid Studio</NavbarTitle>
+      <NavbarTitle>Solid Studio 1.0</NavbarTitle>
     </Wrapper>
   )
 }
