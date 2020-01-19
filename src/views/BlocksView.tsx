@@ -32,7 +32,7 @@ interface DispatchProps {
 }
 
 interface State {
-    showBlockDrawer: boolean
+    showBlockSider: boolean
     drawerWidth: number
 }
 
@@ -46,7 +46,7 @@ export class BlocksView extends React.Component<AllProps, State> {
     constructor(props: AllProps) {
         super(props)
         this.state = {
-            showBlockDrawer: false,
+            showBlockSider: false,
             drawerWidth: 470
         }
     }
@@ -73,14 +73,14 @@ export class BlocksView extends React.Component<AllProps, State> {
 
     handleBlocksDrawer = (record: Block) => {
         this.setState({
-            showBlockDrawer: true
+            showBlockSider: true
         }, () => {
             emitter.emit("COLLAPSE_RIGHT_SIDEBAR_MENU")
         })
     }
 
     render() {
-        const { showBlockDrawer, drawerWidth } = this.state
+        const { showBlockSider, drawerWidth } = this.state
         const { blocks } = this.props
         return (
             <Layout style={{ height: "100%" }}>
@@ -88,13 +88,14 @@ export class BlocksView extends React.Component<AllProps, State> {
                     <StyledDiv>
                         <StyledH1>Blocks</StyledH1>
                         <BlocksTable blocks={blocks}
+                            collapsed={showBlockSider}
                             onClick={this.handleBlocksDrawer}
                             onDoubleClick={this.onDoubleClick} />
                     </StyledDiv>
                 </Content>
                 <Sider style={{ background: "#272727" }}
                     trigger={null}
-                    collapsed={true}// !showBlockDrawer}
+                    collapsed={!showBlockSider}
                     collapsible={true}
                     collapsedWidth={0}
                     width={drawerWidth}>

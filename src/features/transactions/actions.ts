@@ -1,4 +1,4 @@
-import { ActionCreator, Action } from 'redux'
+import { ActionCreator } from 'redux'
 
 import { TransactionReceipt } from '@solid-explorer/types'
 

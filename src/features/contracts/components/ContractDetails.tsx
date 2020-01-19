@@ -20,9 +20,6 @@ interface ContractDetailsProps {
 }
 
 export class ContractDetails extends React.Component<ContractDetailsProps>{
-    constructor(props: ContractDetailsProps) {
-        super(props)
-    }
 
     render() {
         const { contract, readOnly, currentConnection } = this.props

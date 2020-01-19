@@ -1,6 +1,6 @@
 import { ofType, combineEpics, ActionsObservable, StateObservable } from 'redux-observable'
 import { of } from 'rxjs'
-import { switchMap, map, catchError, tap } from 'rxjs/operators'
+import { switchMap, map, catchError } from 'rxjs/operators'
 import { AjaxCreationMethod } from 'rxjs/internal/observable/dom/AjaxObservable'
 
 import { Contract } from '@solid-explorer/types'

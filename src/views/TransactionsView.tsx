@@ -3,9 +3,9 @@ import React from 'react'
 
 import { Action, ActionCreator, bindActionCreators, Dispatch } from 'redux'
 import { connect } from 'react-redux'
-import { Layout, Drawer } from 'antd'
+import { Layout } from 'antd'
 
-import { Connection, TransactionReceipt, buildFakeBlocks, Block } from '@solid-explorer/types'
+import { Connection, TransactionReceipt } from '@solid-explorer/types'
 
 import { getTransactions } from 'features/transactions/actions'
 import { TransactionsTable } from 'features/transactions/components/TransactionsTable'
@@ -16,14 +16,9 @@ import { emitter } from 'features/common/event-emitter'
 import client from '../utils/feathers'
 
 import { StyledDiv, StyledH1 } from './components'
-import { BlocksTable } from 'features/blocks/components'
 import { DebuggerModal } from 'features/debugger/components'
 
 const { Sider, Content } = Layout;
-
-// interface OwnProps {
-
-// }
 
 interface StateProps {
     transactions: TransactionReceipt[]
@@ -35,7 +30,7 @@ interface DispatchProps {
 }
 
 interface State {
-    showTransactionDrawer: boolean
+    showTransactionSider: boolean
     drawerWidth: number,
     selectedTransaction?: TransactionReceipt
     showDebugModal: boolean
@@ -52,7 +47,7 @@ export class TransactionsView extends React.Component<AllProps, State> {
     constructor(props: AllProps) {
         super(props)
         this.state = {
-            showTransactionDrawer: false,
+            showTransactionSider: false,
             drawerWidth: 500,
             selectedTransaction: undefined,
             showDebugModal: false
@@ -81,7 +76,7 @@ export class TransactionsView extends React.Component<AllProps, State> {
 
     handleTransactionsDrawer = (record: TransactionReceipt) => {
         this.setState({
-            showTransactionDrawer: true,
+            showTransactionSider: true,
             selectedTransaction: record
         }, () => {
             emitter.emit("COLLAPSE_RIGHT_SIDEBAR_MENU")
@@ -90,7 +85,7 @@ export class TransactionsView extends React.Component<AllProps, State> {
 
     handleOnCloseDrawer = () => {
         this.setState({
-            showTransactionDrawer: false,
+            showTransactionSider: false,
         });
     }
 
@@ -107,7 +102,7 @@ export class TransactionsView extends React.Component<AllProps, State> {
     }
 
     render() {
-        const { showTransactionDrawer, drawerWidth, selectedTransaction, showDebugModal } = this.state
+        const { showTransactionSider, drawerWidth, selectedTransaction, showDebugModal } = this.state
         const { transactions } = this.props
         return (
             <Layout style={{ height: "100%" }}>
@@ -116,43 +111,25 @@ export class TransactionsView extends React.Component<AllProps, State> {
                         <StyledH1>Transactions</StyledH1>
                         <TransactionsTable transactions={transactions}
                             onDebugClick={this.handleOnDebugClick}
-                            collapsed={showTransactionDrawer}
+                            collapsed={showTransactionSider}
                             onClick={this.handleTransactionsDrawer}
                             onDoubleClick={this.onDoubleClick} />
                     </StyledDiv>
                 </Content>
-                <Drawer
-                    title="Transaction Details"
-                    placement="right"
-                    closable={false}
-                    onClose={this.handleOnCloseDrawer}
-                    visible={false} // showTransactionDrawer}
-                    width={drawerWidth}
-                // mask={false}
-                >
-
-                    {selectedTransaction &&
-                        <div>
-                            <h3>Transaction Hash</h3>
-                            <h5>{selectedTransaction.transactionHash}</h5>
-                        </div>
-                    }
-
-                </Drawer>
-                {/* <Sider
+                <Sider
                     style={{ background: "#272727" }} trigger={null}
-                    collapsed={!showTransactionDrawer}
+                    collapsed={!showTransactionSider}
                     collapsible={true}
                     collapsedWidth={0} width={drawerWidth}
                 >
                     <div>
                         <h5>Work in progress</h5>
                     </div>
-                </Sider> */}
+                </Sider>
 
                 <DebuggerModal visible={showDebugModal}
                     onClose={this.handleOnCloseDebbugerModal}
-                    transactionHash={selectedTransaction ? selectedTransaction.transactionHash : ""}/>
+                    transactionHash={selectedTransaction ? selectedTransaction.transactionHash : ""} />
             </Layout>
         )
     }

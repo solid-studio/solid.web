@@ -1389,9 +1389,9 @@ const traces = [
 ]
 
 export class DebuggerModal extends React.Component<Props> {
-    constructor(props: Props) {
-        super(props)
-    }
+    // constructor(props: Props) {
+    //     super(props)
+    // }
 
     handleClose() {
         console.log("Handle close clicked")

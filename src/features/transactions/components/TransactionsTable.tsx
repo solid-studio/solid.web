@@ -1,7 +1,6 @@
 import React from 'react'
 
 import { Tag, Button } from 'antd';
-import { ColumnProps } from 'antd/es/table';
 
 import { TransactionReceipt } from '@solid-explorer/types'
 
@@ -36,11 +35,11 @@ const contractCreationTag = (key: string) => (
     </Tag>
 )
 
-const contractCallTag = (key: string) => (
-    <Tag color="geekblue" key={key}>
-        Contract Call
-    </Tag>
-)
+// const contractCallTag = (key: string) => (
+//     <Tag color="geekblue" key={key}>
+//         Contract Call
+//     </Tag>
+// )
 
 // TODO Move this to another place
 const DebugButton = styled(Button)`
@@ -52,25 +51,40 @@ interface State {
     showDebugModal: boolean
 }
 
+const shortText = (text: string) => {
+    const firstPart = text.slice(0, 10)
+    const secondPart = text.slice(text.length - 5, text.length)
+    return `${firstPart}...${secondPart}`
+}
+
 export class TransactionsTable extends React.Component<AllProps, State> {
-    columns: Array<ColumnProps<TransactionReceipt>>
     constructor(props: AllProps) {
         super(props);
         this.state = {
             showDebugModal: false
         }
-        this.columns = [
+    }
+
+    getTableColumns(collapsed: boolean) { // Array<ColumnProps<TransactionReceipt>>
+        return [
             {
                 key: 'transactionHash',
                 title: 'Transaction Hash',
                 dataIndex: 'transactionHash',
-                render: text => <p data-testid={`transactions-table-row-${text}`}>{text}</p>
+                render: (text: string) => {
+                    const textToRender = collapsed ? shortText(text) : text
+                    return <p data-testid={`transactions-table-row-${text}`}>{textToRender}</p>
+                }
             },
             {
                 key: 'to',
                 title: 'To',
                 dataIndex: 'to',
-                render: (text: string, record: TransactionReceipt) => record.to == null ? contractCreationTag(record.transactionHash) : record.to
+                render: (text: string, record: TransactionReceipt) => {
+                    const isContractCreation = record.to === null
+                    const valueToRender = isContractCreation ? contractCreationTag(record.transactionHash) : collapsed ? shortText(record.to as string) : record.to
+                    return valueToRender
+                }
             },
             {
                 key: 'from',
@@ -83,22 +97,26 @@ export class TransactionsTable extends React.Component<AllProps, State> {
                 title: 'Contract Address',
                 dataIndex: 'contractAddress',
             },
-            // {
-            //     key: 'status',
-            //     title: 'Status',
-            //     dataIndex: 'status',
-            //     render: (text: string, record: TransactionReceipt) => record.status ? failedTransactionTag(record.transactionHash) : failedTransactionTag(record.transactionHash)
-            // },
+            {
+                key: 'status',
+                title: 'Status',
+                dataIndex: 'status',
+                render: (text: string, record: TransactionReceipt) => {
+                    console.log("recor status", record.status)
+                    return (record.status === true || (record as any).status === '0x1') ? successfulTransactionTag(record.transactionHash) : failedTransactionTag(record.transactionHash)
+                }
+            },
             {
                 title: 'Actions',
                 key: 'action',
-                render: (text, record: TransactionReceipt) => {
+                render: (text: string, record: TransactionReceipt) => {
                     return <DebugButton onClick={() => this.onDebugClick(record)} type="danger" size="small">Debug</DebugButton>
                 }
             }
 
-        ];
+        ]
     }
+
     onDebugClick(record: TransactionReceipt) {
         console.log("onDebugClick inside table")
         this.props.onDebugClick(record)
@@ -107,10 +125,9 @@ export class TransactionsTable extends React.Component<AllProps, State> {
     render() {
         const { transactions, collapsed } = this.props
         return <TransactionsTableComponent
-            // components={}
             rowKey="transactionHash"
-            dataSource={transactions && transactions.map(item => ({ ...item, drawerOpen: true }))}
-            columns={this.columns}
+            dataSource={transactions && transactions.map(item => ({ ...item, collapsed: collapsed }))}
+            columns={this.getTableColumns(collapsed)}
             onRow={(record, rowIndex) => {
                 return {
                     onClick: event => {

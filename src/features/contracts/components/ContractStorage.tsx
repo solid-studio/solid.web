@@ -37,12 +37,8 @@ export class ContractStorage extends React.Component<AllProps> {
         traces: []
     }
 
-    constructor(props: AllProps) {
-        super(props)
-    }
-
     componentDidMount() {
-        const { contractAddress, ast, connectionId, contractId } = this.props
+        const { contractAddress, connectionId, contractId } = this.props
         this.props.getTraces({
             connectionId,
             contractAddress,

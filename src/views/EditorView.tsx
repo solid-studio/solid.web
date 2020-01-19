@@ -1,16 +1,14 @@
 import React from 'react'
 
-// import { Collapse } from 'antd'
 import MonacoEditor from 'react-monaco-editor'
 import { connect } from 'react-redux'
 
 import { Contract } from '@solid-explorer/types'
 
 import { ApplicationState } from 'features/rootReducer'
-import { SolidTerminal } from 'features/terminal/SolidTerminal'// TODO: fix import
 import { ContractDetails } from 'features/contracts/components'
 
-import { Wrapper, Editor, Results, Details } from "./components";
+import { Wrapper, Editor, Details } from "./components";
 
 interface Props {
     selectedContract?: Contract
