@@ -1,16 +1,16 @@
 // import "jsdom-worker" // TODO Maybe my workers should extend from worker, then I will nneed this
 import { ActionsObservable, StateObservable } from 'redux-observable'
-import { Subject, of } from 'rxjs'
 import { AjaxCreationMethod } from 'rxjs/internal/observable/dom/AjaxObservable'
+import { Subject, of } from 'rxjs'
 
 import { buildFakeContracts, buildFakeContract } from '@solid-explorer/types'
 
+import { openOrSetTabActive } from 'features/tabs/actions'
+
 import { ApplicationState, initialState } from '../rootReducer'
 
-import { openOrSetTabActive } from '../tabs'
-
-import { GetContractsAction, MaximizeContractViewAction } from './action-types'
 import { getContracts, maximizeContractView, contractsReceived } from './actions'
+import { GetContractsAction, MaximizeContractViewAction } from './action-types'
 import { getContractsEpic, onMaximizeContractEpic } from './epic'
 
 describe('Contracts Epic Tests', () => {

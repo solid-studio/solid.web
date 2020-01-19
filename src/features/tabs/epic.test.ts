@@ -1,18 +1,27 @@
-import 'jsdom-worker'
 import { ActionsObservable, StateObservable } from 'redux-observable'
 import { Action } from 'redux';
 import { Subject } from 'rxjs';
-
-import { openTabEpic, setActiveTabEpic, tabsEpic } from './epic';
-import { ActionType, TabAction } from './action-types';
-import { TabsManagerState } from './reducer';
-import { buildFakeTab, buildFakeTabs } from './faker'
-import { setTabActive, openTab } from './actions';
+import { AjaxCreationMethod } from 'rxjs/internal/observable/dom/AjaxObservable'
 
 import { ApplicationState } from '../rootReducer'
 import rootReducer from '../rootReducer';
 
+import { buildFakeTab, buildFakeTabs } from './faker'
+import { ActionType, TabAction } from './action-types';
+import { setTabActive, openTab } from './actions';
+import { TabsManagerState } from './reducer';
+import { tabsEpic } from './epic';
+
 describe('TabsEpics Tests', () => {
+    const mockAjax: jest.Mocked<AjaxCreationMethod> = {
+        get: jest.fn(),
+        post: jest.fn(),
+        put: jest.fn(),
+        patch: jest.fn(),
+        delete: jest.fn(),
+        getJSON: jest.fn()
+    } as any // TODO FIX
+
     it('should open tab', (done) => {
         const tab = buildFakeTab()
 
@@ -36,10 +45,9 @@ describe('TabsEpics Tests', () => {
 
         const applicationState$: StateObservable<ApplicationState> = new StateObservable(new Subject(), initialState);
 
-        const output$ = tabsEpic(actions$, applicationState$)
+        const output$ = tabsEpic(actions$, applicationState$, mockAjax)
 
         output$.subscribe((action) => {
-            console.log("ACTION", action)
             expect(action).toEqual(openTab(tab))
             done()
         })
@@ -57,11 +65,6 @@ describe('TabsEpics Tests', () => {
 
         const actions$ = ActionsObservable.of(tabAction)
 
-        // const tabsManagerState: TabsManagerState = {
-        //     tabs: [],
-        //     activeTab: undefined
-        // }
-
         const tabsManagerState: TabsManagerState = {
             tabs,
             activeTab: tab2
@@ -74,10 +77,9 @@ describe('TabsEpics Tests', () => {
 
         const applicationState$: StateObservable<ApplicationState> = new StateObservable(new Subject(), initialState);
 
-        const output$ = tabsEpic(actions$, applicationState$)
+        const output$ = tabsEpic(actions$, applicationState$, mockAjax)
 
         output$.subscribe((action: Action) => {
-            console.log("ACTION", action)
             expect(action).toEqual(setTabActive(tab1))
             done()
         })

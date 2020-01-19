@@ -1,26 +1,28 @@
-import { Tab } from './types'
+import { Tab, TabType } from './types'
 
-export const buildFakeTab = (): Tab => {
-  const tab: Tab = {
-    id: '1',
-    type: 'transactions',
-    data: [],
-    title: 'Transactions'
+type FakeTabsType = (values?: Tab | Partial<Tab>) => Tab
+
+const defaultTab: Tab = {
+  id: '1',
+  type: TabType.Editor,
+  data: 'nothing',
+  title: 'SimpleStorage.sol'
+}
+
+export const buildFakeTab: FakeTabsType = (values = defaultTab) => {
+  return {
+    ...defaultTab,
+    ...values
   }
-
-  return tab
 }
 
 export const buildFakeTabs = (): Tab[] => {
-  const tabs: Tab[] = [
+  return [
     buildFakeTab(),
-    {
+    buildFakeTab({
       id: '2',
-      type: 'contracts',
-      data: [],
-      title: 'Contracts'
-    }
+      type: TabType.Blocks,
+      title: 'Blocks'
+    }),
   ]
-
-  return tabs
 }

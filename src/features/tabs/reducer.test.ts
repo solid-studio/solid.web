@@ -1,4 +1,4 @@
-import { buildFakeTab, buildFakeTabs } from './types'
+import { buildFakeTab } from './faker'
 import { appReducer, initialState } from './reducer'
 import { setTabActive, openTab, setTabActiveById, closeTab } from './actions'
 

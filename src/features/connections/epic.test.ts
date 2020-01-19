@@ -22,7 +22,7 @@ import {
   createConnectionEpic
 } from './epic'
 import { ConnectionItem } from './types'
-import { openOrSetTabActive } from 'features/tabs'
+import { openOrSetTabActive } from 'features/tabs/actions'
 import { AjaxRequest } from 'rxjs/ajax'
 
 describe('Connections Epic Tests', () => {
