@@ -13,4 +13,3 @@ export interface Tab {
   data: any // TODO
   title: string
 }
-

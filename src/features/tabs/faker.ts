@@ -23,6 +23,6 @@ export const buildFakeTabs = (): Tab[] => {
       id: '2',
       type: TabType.Blocks,
       title: 'Blocks'
-    }),
+    })
   ]
 }

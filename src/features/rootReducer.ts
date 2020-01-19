@@ -2,7 +2,11 @@ import { combineReducers } from 'redux'
 
 import { ContractState, contractsReducer, contractsInitialState } from './contracts/reducer'
 import { ConnectionState, connectionsReducer, connectionsInitialState } from './connections/reducer'
-import { ContractDefinitionState, contractDefinitionReducer, contractDefinitionsInitialState } from './contract-definitions/reducer'
+import {
+  ContractDefinitionState,
+  contractDefinitionReducer,
+  contractDefinitionsInitialState
+} from './contract-definitions/reducer'
 import { TabsManagerState, tabsReducer, tabsManagerInitialState } from './tabs/reducer'
 import { BlocksState, blocksReducer, blocksInitialState } from './blocks/reducer'
 import { TransactionsState, transactionsReducer, transactionsInitialState } from './transactions/reducer'

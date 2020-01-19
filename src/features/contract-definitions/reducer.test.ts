@@ -58,7 +58,9 @@ describe('Contract definitions reducer', () => {
     expect(newState.currentContractDefinition).toEqual(contractDefinitionsInitialState.currentContractDefinition)
     expect(newState.contractDefinitionModalOpen).toEqual(contractDefinitionsInitialState.contractDefinitionModalOpen)
     expect(newState.getContractDefinitionsStatus).toEqual(Status.InProgress)
-    expect(newState.createContractDefinitionStatus).toEqual(contractDefinitionsInitialState.createContractDefinitionStatus)
+    expect(newState.createContractDefinitionStatus).toEqual(
+      contractDefinitionsInitialState.createContractDefinitionStatus
+    )
   })
 
   test('ActionType.CONTRACTS_DEFINITIONS_RECEIVED', () => {
@@ -71,7 +73,9 @@ describe('Contract definitions reducer', () => {
     expect(newState.currentContractDefinition).toEqual(contractDefinitions[0])
     expect(newState.contractDefinitionModalOpen).toEqual(contractDefinitionsInitialState.contractDefinitionModalOpen)
     expect(newState.getContractDefinitionsStatus).toEqual(Status.Completed)
-    expect(newState.createContractDefinitionStatus).toEqual(contractDefinitionsInitialState.createContractDefinitionStatus)
+    expect(newState.createContractDefinitionStatus).toEqual(
+      contractDefinitionsInitialState.createContractDefinitionStatus
+    )
   })
 
   test('ActionType.CONTRACT_DEFINITION_SELECTED', () => {
@@ -84,7 +88,9 @@ describe('Contract definitions reducer', () => {
     expect(newState.currentContractDefinition).toEqual(contractDefinition)
     expect(newState.contractDefinitionModalOpen).toEqual(contractDefinitionsInitialState.contractDefinitionModalOpen)
     expect(newState.getContractDefinitionsStatus).toEqual(contractDefinitionsInitialState.getContractDefinitionsStatus)
-    expect(newState.createContractDefinitionStatus).toEqual(contractDefinitionsInitialState.createContractDefinitionStatus)
+    expect(newState.createContractDefinitionStatus).toEqual(
+      contractDefinitionsInitialState.createContractDefinitionStatus
+    )
   })
 
   test('ActionType.CREATE_CONTRACT_DEFINITION', () => {

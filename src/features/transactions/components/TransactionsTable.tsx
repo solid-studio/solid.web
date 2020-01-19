@@ -126,7 +126,7 @@ export class TransactionsTable extends React.Component<AllProps, State> {
         const { transactions, collapsed } = this.props
         return <TransactionsTableComponent
             rowKey="transactionHash"
-            dataSource={transactions && transactions.map(item => ({ ...item, collapsed: collapsed }))}
+            dataSource={transactions && transactions.map(item => ({ ...item, collapsed }))}
             columns={this.getTableColumns(collapsed)}
             onRow={(record, rowIndex) => {
                 return {

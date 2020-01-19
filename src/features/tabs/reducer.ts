@@ -30,17 +30,22 @@ export const tabsReducer: Reducer<TabsManagerState, Actions> = (
       })
       return { ...state, activeTab: newTabActive }
     case ActionType.CLOSE_TAB:
-      const tabToBeClosed = state.tabs.find((item) => {
+      const tabToBeClosed = state.tabs.find(item => {
         return item.id === action.payload
       }) as Tab
       const isTabToBeClosedActive = tabToBeClosed === state.activeTab
       const indexOfTabToBeClosed = state.tabs.indexOf(tabToBeClosed)
-      const newTabsFiltered = state.tabs.filter((item) => {
+      const newTabsFiltered = state.tabs.filter(item => {
         return item.id !== action.payload
       })
       const areThereMoreTabs = newTabsFiltered.length > 0
-      const newActiveTabIfActiveTabIsTheOneIMClosing = areThereMoreTabs && newTabsFiltered[indexOfTabToBeClosed] || newTabsFiltered[indexOfTabToBeClosed - 1]
-      return { ...state, tabs: newTabsFiltered, activeTab: isTabToBeClosedActive ? newActiveTabIfActiveTabIsTheOneIMClosing : state.activeTab }
+      const newActiveTabIfActiveTabIsTheOneIMClosing =
+        (areThereMoreTabs && newTabsFiltered[indexOfTabToBeClosed]) || newTabsFiltered[indexOfTabToBeClosed - 1]
+      return {
+        ...state,
+        tabs: newTabsFiltered,
+        activeTab: isTabToBeClosedActive ? newActiveTabIfActiveTabIsTheOneIMClosing : state.activeTab
+      }
     default:
       return state
   }
