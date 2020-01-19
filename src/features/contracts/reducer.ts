@@ -14,7 +14,7 @@ export interface ContractState {
   getContractsStatus: Status
 }
 
-export const initialState: ContractState = {
+export const contractsInitialState: ContractState = {
   contracts: {
     byId: {},
     allIds: []
@@ -23,8 +23,8 @@ export const initialState: ContractState = {
   getContractsStatus: Status.NotStarted
 }
 
-export const appReducer: Reducer<ContractState, Actions> = (
-  state: ContractState = initialState,
+export const contractsReducer: Reducer<ContractState, Actions> = (
+  state: ContractState = contractsInitialState,
   action: Actions
 ): ContractState => {
   switch (action.type) {

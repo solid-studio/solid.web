@@ -1,16 +1,7 @@
 import { combineReducers } from 'redux'
 
-import {
-  ContractState,
-  appReducer as contractReducer,
-  initialState as contractsInitialState
-} from './contracts/reducer'
-import {
-  ConnectionState,
-  appReducer as connectionReducer,
-  initialState as connectionsInitialState
-} from './connections/reducer'
-import { CompilerState, appReducer as compilerReducer, initialState as compilerInitialState } from './compiler/reducer'
+import { ContractState, contractsReducer, contractsInitialState } from './contracts/reducer'
+import { ConnectionState, connectionsReducer, connectionsInitialState } from './connections/reducer'
 import {
   ContractDefinitionState,
   appReducer as contractDefinitionReducer,
@@ -34,7 +25,6 @@ import {
 export interface ApplicationState {
   contractState: ContractState
   connectionState: ConnectionState
-  compilerState: CompilerState
   contractDefinitionState: ContractDefinitionState
   tabsManagerState: TabsManagerState
   blocksState: BlocksState
@@ -46,7 +36,6 @@ export interface ApplicationState {
 export const initialState: ApplicationState = {
   contractState: contractsInitialState,
   connectionState: connectionsInitialState,
-  compilerState: compilerInitialState,
   contractDefinitionState: contractDefinitionsInitialState,
   tabsManagerState: tabsManagerInitialState,
   blocksState: blocksInitialState,
@@ -56,9 +45,8 @@ export const initialState: ApplicationState = {
 }
 
 const rootReducer = combineReducers<ApplicationState>({
-  contractState: contractReducer,
-  connectionState: connectionReducer,
-  compilerState: compilerReducer,
+  contractState: contractsReducer,
+  connectionState: connectionsReducer,
   contractDefinitionState: contractDefinitionReducer,
   tabsManagerState: tabsReducer,
   blocksState: blocksReducer,

@@ -25,3 +25,4 @@ export interface NormalizedObject<T> {
   byId: { [id: string]: T }
   allIds: string[]
 }
+

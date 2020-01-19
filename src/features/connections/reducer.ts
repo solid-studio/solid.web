@@ -19,7 +19,7 @@ export interface ConnectionState {
   createConnectionStatus: Status
 }
 
-export const initialState: ConnectionState = {
+export const connectionsInitialState: ConnectionState = {
   connections: {
     byId: {},
     allIds: []
@@ -31,8 +31,8 @@ export const initialState: ConnectionState = {
 }
 
 /* tslint:disable */
-export const appReducer: Reducer<ConnectionState, Actions> = (
-  state: ConnectionState = initialState,
+export const connectionsReducer: Reducer<ConnectionState, Actions> = (
+  state: ConnectionState = connectionsInitialState,
   action: Actions
 ): ConnectionState => {
   switch (action.type) {
