@@ -30,26 +30,18 @@ export const appReducer: Reducer<TabsManagerState, Actions> = (
       })
       return { ...state, activeTab: newTabActive }
     case ActionType.CLOSE_TAB:
-      // TODO: encontrar la tab en el arreglo, y removerla..
-      return { ...state }
+      const tabToBeClosed = state.tabs.find((item) => {
+        return item.id === action.payload
+      }) as Tab
+      const isTabToBeClosedActive = tabToBeClosed === state.activeTab
+      const indexOfTabToBeClosed = state.tabs.indexOf(tabToBeClosed)
+      const newTabsFiltered = state.tabs.filter((item) => {
+        return item.id !== action.payload
+      })
+      const areThereMoreTabs = newTabsFiltered.length > 0
+      const newActiveTabIfActiveTabIsTheOneIMClosing = areThereMoreTabs && newTabsFiltered[indexOfTabToBeClosed] || newTabsFiltered[indexOfTabToBeClosed - 1]
+      return { ...state, tabs: newTabsFiltered, activeTab: isTabToBeClosedActive ? newActiveTabIfActiveTabIsTheOneIMClosing : state.activeTab }
     default:
       return state
   }
 }
-// const tab = state.tabs.find((element) => {
-//     return element.id == action.payload.id
-// })
-// const tabExists = tab !== undefined
-// // si existe, NO pusheo
-// // si NO existe, pusheo
-
-// // setActive flags, done...
-// // si hay una activa, desactivarla
-// //  //// con el otro approach, solo tendria que cambiar el activeTabId
-// // si la tab que mando esta en el arreglo, cambiar estado
-// // si la tab que mando NO esta en el arreglo, abrirla
-// // set active values.. done
-
-// finish reducer
-// do ui components
-// do epic..

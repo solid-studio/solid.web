@@ -3,7 +3,9 @@ import { connect } from 'react-redux'
 import { bindActionCreators, Dispatch, ActionCreator, Action } from 'redux'
 import { Tabs } from 'antd';
 
-import { Tab, setTabActiveById } from 'features/tabs'
+import { setTabActiveById, closeTab } from 'features/tabs/actions'
+import { Tab } from 'features/tabs/types'
+
 import { ApplicationState } from 'features/rootReducer'
 
 import TransactionsView from './TransactionsView'
@@ -20,6 +22,7 @@ interface OwnProps {
 
 interface DispatchProps {
     setTabActiveById: ActionCreator<Action>
+    closeTab: ActionCreator<Action>
 }
 
 export type AllProps = OwnProps & DispatchProps
@@ -37,13 +40,19 @@ export class MainContentView extends React.Component<AllProps> {
         return (
             <div style={{ height: "100%", width: "100%" }} data-testid="main-content-view" id="main-content-view">
                 {tabs && tabs.length > 0 &&
-                    <Tabs type="card" style={{ paddingLeft: '1em', paddingRight: '1em', height: '100%' }}
+                    <Tabs type="editable-card" style={{ paddingLeft: '1em', paddingRight: '1em', height: '100%' }}
                         activeKey={activeTab && activeTab.id}
+                        hideAdd={true}
                         onTabClick={(e: Tab) => {
                             this.props.setTabActiveById(e)
+                        }}
+                        onEdit={(targetKey, action) => {
+                            if (action === 'remove') {
+                                this.props.closeTab(targetKey)
+                            }
                         }}>
                         {tabs.map((currentTab: Tab) => {
-                            return <TabPane tab={`${capitalize(currentTab.title)}`} key={currentTab.id} className={'full-tab'}>
+                            return <TabPane closable={true} tab={`${capitalize(currentTab.title)}`} key={currentTab.id} className={'full-tab'}>
                                 {currentTab.type === 'transactions' && <TransactionsView />}
                                 {currentTab.type === 'contracts' && <ContractsView />}
                                 {currentTab.type === 'blocks' && <BlocksView />}
@@ -67,7 +76,8 @@ const mapStateToProps = (state: ApplicationState) => {
 const mapDispatchToProps = (dispatch: Dispatch) => {
     return bindActionCreators(
         {
-            setTabActiveById
+            setTabActiveById,
+            closeTab
         },
         dispatch
     )

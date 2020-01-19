@@ -11,7 +11,7 @@ export enum ActionType {
 }
 
 export interface TabAction extends Action {
-  type: ActionType.CLOSE_TAB | ActionType.OPEN_OR_SET_ACTIVE_TAB | ActionType.OPEN_TAB | ActionType.SET_TAB_ACTIVE
+  type: ActionType.OPEN_TAB | ActionType.SET_TAB_ACTIVE | ActionType.OPEN_OR_SET_ACTIVE_TAB
   payload: Tab
 }
 
@@ -20,4 +20,9 @@ export interface SetTabByIdAction extends Action {
   payload: string
 }
 
-export type Actions = TabAction | SetTabByIdAction
+export interface CloseTabAction extends Action {
+  type: ActionType.CLOSE_TAB
+  payload: string
+}
+
+export type Actions = TabAction | SetTabByIdAction | CloseTabAction

@@ -8,7 +8,7 @@ import { Contract } from '@solid-explorer/types'
 import { ActionType, GetContractsAction, MaximizeContractViewAction } from './action-types'
 import { contractsReceived } from './actions'
 import { CONTRACTS_URL } from './constants'
-import { openOrSetTabActive } from 'features/tabs'
+import { openOrSetTabActive } from 'features/tabs/actions'
 import { ApplicationState } from 'features/rootReducer'
 import { GenericArrayResponse } from 'features/common/types'
 
