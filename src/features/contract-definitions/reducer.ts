@@ -16,7 +16,7 @@ export interface ContractDefinitionState {
   fileItems: FileItem[]
 }
 
-export const initialState: ContractDefinitionState = {
+export const contractDefinitionsInitialState: ContractDefinitionState = {
   contractDefinitions: [],
   currentContractDefinition: undefined,
   getContractDefinitionsStatus: Status.NotStarted,
@@ -25,8 +25,8 @@ export const initialState: ContractDefinitionState = {
   fileItems: []
 }
 
-export const appReducer: Reducer<ContractDefinitionState, Actions> = (
-  state: ContractDefinitionState = initialState,
+export const contractDefinitionReducer: Reducer<ContractDefinitionState, Actions> = (
+  state: ContractDefinitionState = contractDefinitionsInitialState,
   action: Actions
 ): ContractDefinitionState => {
   switch (action.type) {

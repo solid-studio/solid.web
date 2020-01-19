@@ -1,6 +1,6 @@
 import { buildFakeFileItem } from '@solid-explorer/types'
 
-import { appReducer, initialState, normalizeFileItems } from './reducer'
+import { fileItemsReducer, fileItemsInitialState, normalizeFileItems } from './reducer'
 import { fileItemsReceived } from './actions'
 
 describe('FileItems reducer', () => {
@@ -8,7 +8,7 @@ describe('FileItems reducer', () => {
     const fileItems = [buildFakeFileItem(), buildFakeFileItem()]
     const fileItemsNormalized = normalizeFileItems(fileItems)
     const tracesReceivedAction = fileItemsReceived(fileItems)
-    const newState = appReducer(initialState, tracesReceivedAction)
+    const newState = fileItemsReducer(fileItemsInitialState, tracesReceivedAction)
 
     expect(newState.fileItems).toEqual(fileItemsNormalized)
   })
@@ -17,7 +17,7 @@ describe('FileItems reducer', () => {
     const fileItems = [buildFakeFileItem(), buildFakeFileItem()]
     const fileItemsNormalized = normalizeFileItems(fileItems)
     const tracesReceivedAction = fileItemsReceived(fileItems)
-    const newState = appReducer(initialState, tracesReceivedAction)
+    const newState = fileItemsReducer(fileItemsInitialState, tracesReceivedAction)
 
     expect(newState.fileItems).toEqual(fileItemsNormalized)
 
@@ -25,7 +25,7 @@ describe('FileItems reducer', () => {
     const newFileItem = buildFakeFileItem({ id: 3 })
     const newFileItemsNormalized = normalizeFileItems([newFileItem])
     const newFileItemsReceivedAction = fileItemsReceived([newFileItem])
-    const newStateWithNewBlock = appReducer(newState, newFileItemsReceivedAction)
+    const newStateWithNewBlock = fileItemsReducer(newState, newFileItemsReceivedAction)
 
     expect(newStateWithNewBlock.fileItems.byId[1]).toEqual(fileItemsNormalized.byId[1])
     expect(newStateWithNewBlock.fileItems.byId[2]).toEqual(fileItemsNormalized.byId[2])
@@ -36,7 +36,7 @@ describe('FileItems reducer', () => {
     const fileItems = [buildFakeFileItem(), buildFakeFileItem()]
     const fileItemsNormalized = normalizeFileItems(fileItems)
     const tracesReceivedAction = fileItemsReceived(fileItems)
-    const newState = appReducer(initialState, tracesReceivedAction)
+    const newState = fileItemsReducer(fileItemsInitialState, tracesReceivedAction)
 
     expect(newState.fileItems).toEqual(fileItemsNormalized)
 
@@ -45,7 +45,7 @@ describe('FileItems reducer', () => {
     const newFileItem = buildFakeFileItem({ id: 2, name: newName })
     const newFileItemsNormalized = normalizeFileItems([newFileItem])
     const newFileItemsReceivedAction = fileItemsReceived([newFileItem])
-    const newStateWithNewBlock = appReducer(newState, newFileItemsReceivedAction)
+    const newStateWithNewBlock = fileItemsReducer(newState, newFileItemsReceivedAction)
 
     expect(newStateWithNewBlock.fileItems.byId[1]).toEqual(fileItemsNormalized.byId[1])
     expect(newStateWithNewBlock.fileItems.byId[2]).toEqual(newFileItemsNormalized.byId[2])

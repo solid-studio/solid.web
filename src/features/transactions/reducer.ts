@@ -13,7 +13,7 @@ export interface TransactionsState {
   getTransactionsStatus: Status
 }
 
-export const initialState: TransactionsState = {
+export const transactionsInitialState: TransactionsState = {
   transactions: {
     byId: {},
     allIds: []
@@ -22,8 +22,8 @@ export const initialState: TransactionsState = {
   getTransactionsStatus: Status.NotStarted
 }
 
-export const appReducer: Reducer<TransactionsState, Actions> = (
-  state: TransactionsState = initialState,
+export const transactionsReducer: Reducer<TransactionsState, Actions> = (
+  state: TransactionsState = transactionsInitialState,
   action: Actions
 ): TransactionsState => {
   switch (action.type) {

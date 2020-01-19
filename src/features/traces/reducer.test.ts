@@ -1,6 +1,6 @@
 import { buildFakeTraces, buildFakeTrace } from '@solid-explorer/types'
 
-import { appReducer, initialState, normalizeTraces } from './reducer'
+import { tracesReducer, tracesInitialState, normalizeTraces } from './reducer'
 import { tracesReceived } from './actions'
 
 describe('Traces reducer', () => {
@@ -8,7 +8,7 @@ describe('Traces reducer', () => {
     const traces = buildFakeTraces()
     const tracesNormalized = normalizeTraces(traces)
     const tracesReceivedAction = tracesReceived({ data: traces, contractId: 1 })
-    const newState = appReducer(initialState, tracesReceivedAction)
+    const newState = tracesReducer(tracesInitialState, tracesReceivedAction)
 
     expect(newState.traces).toEqual(tracesNormalized)
   })
@@ -17,7 +17,7 @@ describe('Traces reducer', () => {
     const traces = buildFakeTraces()
     const tracesNormalized = normalizeTraces(traces)
     const tracesReceivedAction = tracesReceived({ data: traces, contractId: 1 })
-    const newState = appReducer(initialState, tracesReceivedAction)
+    const newState = tracesReducer(tracesInitialState, tracesReceivedAction)
 
     expect(newState.traces).toEqual(tracesNormalized)
 
@@ -25,7 +25,7 @@ describe('Traces reducer', () => {
     const newTrace = buildFakeTrace({ id: 3 })
     const newTracesNormalized = normalizeTraces([newTrace])
     const newTracesReceivedAction = tracesReceived({ data: [newTrace], contractId: 1 })
-    const newStateWithNewBlock = appReducer(newState, newTracesReceivedAction)
+    const newStateWithNewBlock = tracesReducer(newState, newTracesReceivedAction)
 
     expect(newStateWithNewBlock.traces.byId[1]).toEqual(tracesNormalized.byId[1])
     expect(newStateWithNewBlock.traces.byId[2]).toEqual(tracesNormalized.byId[2])
@@ -36,7 +36,7 @@ describe('Traces reducer', () => {
     const traces = buildFakeTraces()
     const tracesNormalized = normalizeTraces(traces)
     const tracesReceivedAction = tracesReceived({ data: traces, contractId: 1 })
-    const newState = appReducer(initialState, tracesReceivedAction)
+    const newState = tracesReducer(tracesInitialState, tracesReceivedAction)
 
     expect(newState.traces).toEqual(tracesNormalized)
 
@@ -46,7 +46,7 @@ describe('Traces reducer', () => {
     const newContractsNormalized = normalizeTraces([newContract])
     const newContractsReceivedAction = tracesReceived({ data: [newContract], contractId: 1 })
 
-    const newStateWithNewBlock = appReducer(newState, newContractsReceivedAction)
+    const newStateWithNewBlock = tracesReducer(newState, newContractsReceivedAction)
 
     expect(newStateWithNewBlock.traces.byId[1]).toEqual(tracesNormalized.byId[1])
     expect(newStateWithNewBlock.traces.byId[2]).toEqual(newContractsNormalized.byId[2])

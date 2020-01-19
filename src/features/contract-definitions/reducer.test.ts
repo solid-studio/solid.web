@@ -7,7 +7,7 @@ import {
   contractDefinitionCreated,
   createOrUpdateContractDefinition
 } from './actions'
-import { appReducer, initialState } from './reducer'
+import { contractDefinitionReducer, contractDefinitionsInitialState } from './reducer'
 import { Status } from '../common/types'
 
 describe('Contract definitions reducer', () => {
@@ -52,51 +52,51 @@ describe('Contract definitions reducer', () => {
   test('ActionType.GET_CONTRACT_DEFINITIONS', () => {
     const getContractDefinitionAction = getContractDefinitions()
 
-    const newState = appReducer(initialState, getContractDefinitionAction)
+    const newState = contractDefinitionReducer(contractDefinitionsInitialState, getContractDefinitionAction)
 
-    expect(newState.contractDefinitions).toEqual(initialState.contractDefinitions)
-    expect(newState.currentContractDefinition).toEqual(initialState.currentContractDefinition)
-    expect(newState.contractDefinitionModalOpen).toEqual(initialState.contractDefinitionModalOpen)
+    expect(newState.contractDefinitions).toEqual(contractDefinitionsInitialState.contractDefinitions)
+    expect(newState.currentContractDefinition).toEqual(contractDefinitionsInitialState.currentContractDefinition)
+    expect(newState.contractDefinitionModalOpen).toEqual(contractDefinitionsInitialState.contractDefinitionModalOpen)
     expect(newState.getContractDefinitionsStatus).toEqual(Status.InProgress)
-    expect(newState.createContractDefinitionStatus).toEqual(initialState.createContractDefinitionStatus)
+    expect(newState.createContractDefinitionStatus).toEqual(contractDefinitionsInitialState.createContractDefinitionStatus)
   })
 
   test('ActionType.CONTRACTS_DEFINITIONS_RECEIVED', () => {
     const contractDefinitions = buildFakeContractDefinitions()
     const getContractDefinitionAction = contractDefinitionsReceived(contractDefinitions)
 
-    const newState = appReducer(initialState, getContractDefinitionAction)
+    const newState = contractDefinitionReducer(contractDefinitionsInitialState, getContractDefinitionAction)
 
     expect(newState.contractDefinitions).toEqual(contractDefinitions)
     expect(newState.currentContractDefinition).toEqual(contractDefinitions[0])
-    expect(newState.contractDefinitionModalOpen).toEqual(initialState.contractDefinitionModalOpen)
+    expect(newState.contractDefinitionModalOpen).toEqual(contractDefinitionsInitialState.contractDefinitionModalOpen)
     expect(newState.getContractDefinitionsStatus).toEqual(Status.Completed)
-    expect(newState.createContractDefinitionStatus).toEqual(initialState.createContractDefinitionStatus)
+    expect(newState.createContractDefinitionStatus).toEqual(contractDefinitionsInitialState.createContractDefinitionStatus)
   })
 
   test('ActionType.CONTRACT_DEFINITION_SELECTED', () => {
     const contractDefinition = buildFakeContractDefinition()
     const contractDefinitionSelectedAction = contractDefinitionSelected(contractDefinition)
 
-    const newState = appReducer(initialState, contractDefinitionSelectedAction)
+    const newState = contractDefinitionReducer(contractDefinitionsInitialState, contractDefinitionSelectedAction)
 
-    expect(newState.contractDefinitions).toEqual(initialState.contractDefinitions)
+    expect(newState.contractDefinitions).toEqual(contractDefinitionsInitialState.contractDefinitions)
     expect(newState.currentContractDefinition).toEqual(contractDefinition)
-    expect(newState.contractDefinitionModalOpen).toEqual(initialState.contractDefinitionModalOpen)
-    expect(newState.getContractDefinitionsStatus).toEqual(initialState.getContractDefinitionsStatus)
-    expect(newState.createContractDefinitionStatus).toEqual(initialState.createContractDefinitionStatus)
+    expect(newState.contractDefinitionModalOpen).toEqual(contractDefinitionsInitialState.contractDefinitionModalOpen)
+    expect(newState.getContractDefinitionsStatus).toEqual(contractDefinitionsInitialState.getContractDefinitionsStatus)
+    expect(newState.createContractDefinitionStatus).toEqual(contractDefinitionsInitialState.createContractDefinitionStatus)
   })
 
   test('ActionType.CREATE_CONTRACT_DEFINITION', () => {
     const contractDefinition = buildFakeContractDefinition()
     const createContractDefinitionAction = createOrUpdateContractDefinition(contractDefinition)
 
-    const newState = appReducer(initialState, createContractDefinitionAction)
+    const newState = contractDefinitionReducer(contractDefinitionsInitialState, createContractDefinitionAction)
 
-    expect(newState.contractDefinitions).toEqual(initialState.contractDefinitions)
-    expect(newState.currentContractDefinition).toEqual(initialState.currentContractDefinition)
-    expect(newState.contractDefinitionModalOpen).toEqual(initialState.contractDefinitionModalOpen)
-    expect(newState.getContractDefinitionsStatus).toEqual(initialState.getContractDefinitionsStatus)
+    expect(newState.contractDefinitions).toEqual(contractDefinitionsInitialState.contractDefinitions)
+    expect(newState.currentContractDefinition).toEqual(contractDefinitionsInitialState.currentContractDefinition)
+    expect(newState.contractDefinitionModalOpen).toEqual(contractDefinitionsInitialState.contractDefinitionModalOpen)
+    expect(newState.getContractDefinitionsStatus).toEqual(contractDefinitionsInitialState.getContractDefinitionsStatus)
     expect(newState.createContractDefinitionStatus).toEqual(Status.InProgress)
   })
 
@@ -104,12 +104,12 @@ describe('Contract definitions reducer', () => {
     const contractDefinition = buildFakeContractDefinition()
     const contractDefinitionCreatedAction = contractDefinitionCreated(contractDefinition)
 
-    const newState = appReducer(initialState, contractDefinitionCreatedAction)
+    const newState = contractDefinitionReducer(contractDefinitionsInitialState, contractDefinitionCreatedAction)
 
     expect(newState.contractDefinitions).toEqual([contractDefinition])
     expect(newState.currentContractDefinition).toEqual(contractDefinition)
-    expect(newState.contractDefinitionModalOpen).toEqual(initialState.contractDefinitionModalOpen)
-    expect(newState.getContractDefinitionsStatus).toEqual(initialState.getContractDefinitionsStatus)
+    expect(newState.contractDefinitionModalOpen).toEqual(contractDefinitionsInitialState.contractDefinitionModalOpen)
+    expect(newState.getContractDefinitionsStatus).toEqual(contractDefinitionsInitialState.getContractDefinitionsStatus)
     expect(newState.createContractDefinitionStatus).toEqual(Status.Completed) // TODO: To analyse
   })
 })

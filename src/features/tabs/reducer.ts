@@ -9,13 +9,13 @@ export interface TabsManagerState {
   // activeTabData?: any // TODO
 }
 
-export const initialState: TabsManagerState = {
+export const tabsManagerInitialState: TabsManagerState = {
   tabs: [],
   activeTab: undefined
 }
 
-export const appReducer: Reducer<TabsManagerState, Actions> = (
-  state: TabsManagerState = initialState,
+export const tabsReducer: Reducer<TabsManagerState, Actions> = (
+  state: TabsManagerState = tabsManagerInitialState,
   action: Actions
 ): TabsManagerState => {
   switch (action.type) {

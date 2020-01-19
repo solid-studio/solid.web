@@ -11,15 +11,15 @@ export interface TracesState {
   traces: NormalizedObject<TransactionTrace>
 }
 
-export const initialState: TracesState = {
+export const tracesInitialState: TracesState = {
   traces: {
     byId: {},
     allIds: []
   }
 }
 
-export const appReducer: Reducer<TracesState, Actions> = (
-  state: TracesState = initialState,
+export const tracesReducer: Reducer<TracesState, Actions> = (
+  state: TracesState = tracesInitialState,
   action: Actions
 ): TracesState => {
   switch (action.type) {

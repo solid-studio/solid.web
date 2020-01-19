@@ -1,6 +1,6 @@
 import { buildFakeBlocks, buildFakeBlock } from '@solid-explorer/types'
 
-import { appReducer, initialState, normalizeBlocks } from './reducer'
+import { blocksReducer, blocksInitialState, normalizeBlocks } from './reducer'
 import { blocksReceived } from './actions'
 
 describe('Blocks reducer', () => {
@@ -8,27 +8,27 @@ describe('Blocks reducer', () => {
     const blocks = buildFakeBlocks()
     const blocksNormalized = normalizeBlocks(blocks)
     const blocksReceivedAction = blocksReceived(blocks)
-    const newState = appReducer(initialState, blocksReceivedAction)
+    const newState = blocksReducer(blocksInitialState, blocksReceivedAction)
 
     expect(newState.blocks).toEqual(blocksNormalized)
     expect(newState.currentBlock).toEqual(blocks[0])
-    expect(newState.getBlocksStatus).toEqual(initialState.getBlocksStatus)
+    expect(newState.getBlocksStatus).toEqual(blocksInitialState.getBlocksStatus)
   })
 
   test('ActionType.BLOCKS_RECEIVED Adding new items', () => {
     const blocks = buildFakeBlocks()
     const blocksNormalized = normalizeBlocks(blocks)
     const blocksReceivedAction = blocksReceived(blocks)
-    const newState = appReducer(initialState, blocksReceivedAction)
+    const newState = blocksReducer(blocksInitialState, blocksReceivedAction)
 
     expect(newState.blocks).toEqual(blocksNormalized)
     expect(newState.currentBlock).toEqual(blocks[0])
-    expect(newState.getBlocksStatus).toEqual(initialState.getBlocksStatus)
+    expect(newState.getBlocksStatus).toEqual(blocksInitialState.getBlocksStatus)
 
     const newBlock = buildFakeBlock({ id: 3 })
     const newBlocksNormalized = normalizeBlocks([newBlock])
     const newBlocksReceivedAction = blocksReceived([newBlock])
-    const newStateWithNewBlock = appReducer(newState, newBlocksReceivedAction)
+    const newStateWithNewBlock = blocksReducer(newState, newBlocksReceivedAction)
 
     expect(newStateWithNewBlock.blocks.byId[1]).toEqual(blocksNormalized.byId[1])
     expect(newStateWithNewBlock.blocks.byId[2]).toEqual(blocksNormalized.byId[2])
@@ -39,17 +39,17 @@ describe('Blocks reducer', () => {
     const blocks = buildFakeBlocks()
     const blocksNormalized = normalizeBlocks(blocks)
     const blocksReceivedAction = blocksReceived(blocks)
-    const newState = appReducer(initialState, blocksReceivedAction)
+    const newState = blocksReducer(blocksInitialState, blocksReceivedAction)
 
     expect(newState.blocks).toEqual(blocksNormalized)
     expect(newState.currentBlock).toEqual(blocks[0])
-    expect(newState.getBlocksStatus).toEqual(initialState.getBlocksStatus)
+    expect(newState.getBlocksStatus).toEqual(blocksInitialState.getBlocksStatus)
 
     const newBlockNumber = 123
     const newBlock = buildFakeBlock({ id: 2, blockNumber: newBlockNumber })
     const newBlocksNormalized = normalizeBlocks([newBlock])
     const newBlocksReceivedAction = blocksReceived([newBlock])
-    const newStateWithNewBlock = appReducer(newState, newBlocksReceivedAction)
+    const newStateWithNewBlock = blocksReducer(newState, newBlocksReceivedAction)
 
     expect(newStateWithNewBlock.blocks.byId[1]).toEqual(blocksNormalized.byId[1])
     expect(newStateWithNewBlock.blocks.byId[2]).toEqual(newBlocksNormalized.byId[2])

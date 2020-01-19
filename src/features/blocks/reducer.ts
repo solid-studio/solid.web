@@ -12,7 +12,7 @@ export interface BlocksState {
   getBlocksStatus: Status
 }
 
-export const initialState: BlocksState = {
+export const blocksInitialState: BlocksState = {
   currentBlock: undefined,
   getBlocksStatus: Status.NotStarted,
   blocks: {
@@ -21,8 +21,8 @@ export const initialState: BlocksState = {
   }
 }
 
-export const appReducer: Reducer<BlocksState, Actions> = (
-  state: BlocksState = initialState,
+export const blocksReducer: Reducer<BlocksState, Actions> = (
+  state: BlocksState = blocksInitialState,
   action: Actions
 ): BlocksState => {
   switch (action.type) {

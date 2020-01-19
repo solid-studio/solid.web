@@ -1,6 +1,6 @@
 import { buildFakeTransactionReceipts, TransactionReceipt, buildFakeTransactionReceipt } from '@solid-explorer/types'
 
-import { appReducer, initialState, normalizeTransactions } from './reducer'
+import { transactionsReducer, transactionsInitialState, normalizeTransactions } from './reducer'
 import { transactionsReceived } from './actions'
 import { Status } from '../common/types'
 
@@ -9,7 +9,7 @@ describe('Transactions reducer', () => {
     const transactions: TransactionReceipt[] = buildFakeTransactionReceipts()
     const transactionsNormalized = normalizeTransactions(transactions)
     const transactionsReceivedAction = transactionsReceived(transactions)
-    const newState = appReducer(initialState, transactionsReceivedAction)
+    const newState = transactionsReducer(transactionsInitialState, transactionsReceivedAction)
 
     expect(newState.transactions).toEqual(transactionsNormalized)
     expect(newState.currentTransaction).toEqual(transactions[0])
@@ -20,7 +20,7 @@ describe('Transactions reducer', () => {
     const transactions: TransactionReceipt[] = buildFakeTransactionReceipts()
     const transactionsNormalized = normalizeTransactions(transactions)
     const transactionsReceivedAction = transactionsReceived(transactions)
-    const newState = appReducer(initialState, transactionsReceivedAction)
+    const newState = transactionsReducer(transactionsInitialState, transactionsReceivedAction)
 
     expect(newState.transactions).toEqual(transactionsNormalized)
     expect(newState.currentTransaction).toEqual(transactions[0])
@@ -30,7 +30,7 @@ describe('Transactions reducer', () => {
     const newTransaction = buildFakeTransactionReceipt({ id: 3 })
     const newTransactionsNormalized = normalizeTransactions([newTransaction])
     const newTransactionsReceivedAction = transactionsReceived([newTransaction])
-    const newStateWithNewBlock = appReducer(newState, newTransactionsReceivedAction)
+    const newStateWithNewBlock = transactionsReducer(newState, newTransactionsReceivedAction)
 
     expect(newStateWithNewBlock.transactions.byId[1]).toEqual(transactionsNormalized.byId[1])
     expect(newStateWithNewBlock.transactions.byId[2]).toEqual(transactionsNormalized.byId[2])
@@ -41,7 +41,7 @@ describe('Transactions reducer', () => {
     const transactions: TransactionReceipt[] = buildFakeTransactionReceipts()
     const transactionsNormalized = normalizeTransactions(transactions)
     const transactionsReceivedAction = transactionsReceived(transactions)
-    const newState = appReducer(initialState, transactionsReceivedAction)
+    const newState = transactionsReducer(transactionsInitialState, transactionsReceivedAction)
 
     expect(newState.transactions).toEqual(transactionsNormalized)
     expect(newState.currentTransaction).toEqual(transactions[0])
@@ -52,7 +52,7 @@ describe('Transactions reducer', () => {
     const newTransaction = buildFakeTransactionReceipt({ id: 2, transactionHash: newTransactionHash })
     const newTransactionsNormalized = normalizeTransactions([newTransaction])
     const newTransactionsReceivedAction = transactionsReceived([newTransaction])
-    const newStateWithNewBlock = appReducer(newState, newTransactionsReceivedAction)
+    const newStateWithNewBlock = transactionsReducer(newState, newTransactionsReceivedAction)
 
     expect(newStateWithNewBlock.transactions.byId[1]).toEqual(transactionsNormalized.byId[1])
     expect(newStateWithNewBlock.transactions.byId[2]).toEqual(newTransactionsNormalized.byId[2])

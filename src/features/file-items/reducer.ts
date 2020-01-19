@@ -11,15 +11,15 @@ export interface FileItemsState {
   fileItems: NormalizedObject<FileItem>
 }
 
-export const initialState: FileItemsState = {
+export const fileItemsInitialState: FileItemsState = {
   fileItems: {
     byId: {},
     allIds: []
   }
 }
 
-export const appReducer: Reducer<FileItemsState, Actions> = (
-  state: FileItemsState = initialState,
+export const fileItemsReducer: Reducer<FileItemsState, Actions> = (
+  state: FileItemsState = fileItemsInitialState,
   action: Actions
 ): FileItemsState => {
   switch (action.type) {

@@ -2,25 +2,12 @@ import { combineReducers } from 'redux'
 
 import { ContractState, contractsReducer, contractsInitialState } from './contracts/reducer'
 import { ConnectionState, connectionsReducer, connectionsInitialState } from './connections/reducer'
-import {
-  ContractDefinitionState,
-  appReducer as contractDefinitionReducer,
-  initialState as contractDefinitionsInitialState
-} from './contract-definitions/reducer'
-import { TabsManagerState, appReducer as tabsReducer, initialState as tabsManagerInitialState } from './tabs/reducer'
-import { BlocksState, appReducer as blocksReducer, initialState as blocksInitialState } from './blocks/reducer'
-import {
-  TransactionsState,
-  appReducer as transactionsReducer,
-  initialState as transactionsInitialState
-} from './transactions/reducer'
-
-import { TracesState, appReducer as tracesReducer, initialState as tracesInitialState } from './traces/reducer'
-import {
-  FileItemsState,
-  appReducer as fileItemsReducer,
-  initialState as fileItemsInitialState
-} from './file-items/reducer'
+import { ContractDefinitionState, contractDefinitionReducer, contractDefinitionsInitialState } from './contract-definitions/reducer'
+import { TabsManagerState, tabsReducer, tabsManagerInitialState } from './tabs/reducer'
+import { BlocksState, blocksReducer, blocksInitialState } from './blocks/reducer'
+import { TransactionsState, transactionsReducer, transactionsInitialState } from './transactions/reducer'
+import { TracesState, tracesReducer, tracesInitialState } from './traces/reducer'
+import { FileItemsState, fileItemsReducer, fileItemsInitialState } from './file-items/reducer'
 
 export interface ApplicationState {
   contractState: ContractState
