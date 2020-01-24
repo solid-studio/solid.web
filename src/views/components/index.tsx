@@ -42,8 +42,4 @@ export const StyledH1 = styled.h1`
   margin-bottom: 1rem;
 `
 
-export const CustomIcon = styled.img`
-  cursor: pointer;
-  float: right;
-  margin-top: 0.2rem;
-`
+export { SiderView } from './SiderView'

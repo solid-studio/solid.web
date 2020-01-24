@@ -7,13 +7,13 @@ import { Layout } from 'antd'
 import { Block, Connection } from '@solid-explorer/types'
 
 import { ApplicationState } from 'features/rootReducer'
-import { BlocksTable } from 'features/blocks/components'
+import { BlocksTable, BlockDetails } from 'features/blocks/components'
 import { getBlocks } from 'features/blocks/actions'
 import { emitter } from 'features/common/event-emitter'
 
 import client from '../utils/feathers'
 
-import { StyledDiv, StyledH1 } from './components'
+import { StyledDiv, StyledH1, SiderView } from './components'
 import { ConnectionNormalized } from 'features/connections/types'
 
 const { Sider, Content } = Layout;
@@ -34,6 +34,7 @@ interface DispatchProps {
 interface State {
     showBlockSider: boolean
     drawerWidth: number
+    selectedBlock?: Block
 }
 
 type AllProps = DispatchProps & StateProps // OwnProps & 
@@ -47,7 +48,8 @@ export class BlocksView extends React.Component<AllProps, State> {
         super(props)
         this.state = {
             showBlockSider: false,
-            drawerWidth: 470
+            drawerWidth: 470,
+            selectedBlock: undefined
         }
     }
 
@@ -73,15 +75,22 @@ export class BlocksView extends React.Component<AllProps, State> {
 
     handleBlocksDrawer = (record: Block) => {
         this.setState({
-            showBlockSider: true
+            showBlockSider: true,
+            selectedBlock: record
         }, () => {
             emitter.emit("COLLAPSE_RIGHT_SIDEBAR_MENU")
         })
     }
 
+    closeSider = () => {
+        this.setState({
+            showBlockSider: false
+        })
+    }
+
     render() {
-        const { showBlockSider, drawerWidth } = this.state
-        const { blocks } = this.props
+        const { showBlockSider, drawerWidth, selectedBlock } = this.state
+        const { blocks, currentConnection } = this.props
         return (
             <Layout style={{ height: "100%" }}>
                 <Content style={{ height: "100%" }}>
@@ -93,16 +102,10 @@ export class BlocksView extends React.Component<AllProps, State> {
                             onDoubleClick={this.onDoubleClick} />
                     </StyledDiv>
                 </Content>
-                <Sider style={{ background: "#272727" }}
-                    trigger={null}
-                    collapsed={!showBlockSider}
-                    collapsible={true}
-                    collapsedWidth={0}
-                    width={drawerWidth}>
-                    <div>
-                        <h5>Work in progress</h5>
-                    </div>
-                </Sider>
+                <SiderView collapsed={!showBlockSider} onClose={this.closeSider}>
+                    {selectedBlock && currentConnection &&
+                        <BlockDetails currentConnection={currentConnection} block={selectedBlock} />}
+                </SiderView>
             </Layout>
         )
     }

@@ -14,7 +14,7 @@ import { emitter } from 'features/common/event-emitter'
 
 import client from '../utils/feathers'
 
-import { StyledDiv, StyledH1, CustomIcon } from './components'
+import { StyledDiv, StyledH1, SiderView } from './components'
 import { ConnectionNormalized } from 'features/connections/types'
 
 const { Sider, Content } = Layout;
@@ -92,6 +92,11 @@ export class ContractsView extends React.Component<AllProps, State> {
         })
     }
 
+    closeSider = () => {
+        this.setState({
+            showContractDrawer: false
+        })
+    }
     render() {
         const { showContractDrawer, drawerWidth, selectedContractRowItem } = this.state
         const { contracts, currentConnection } = this.props
@@ -106,13 +111,10 @@ export class ContractsView extends React.Component<AllProps, State> {
                             contracts={contracts} />
                     </StyledDiv>
                 </Content>
-                <Sider style={{ background: "#272727" }} trigger={null} collapsed={!showContractDrawer} collapsible={true} collapsedWidth={0} width={drawerWidth}>
-                    <div>
-                        <CustomIcon src="https://res.cloudinary.com/key-solutions/image/upload/v1568672208/solid/maximize.png" alt="maximise" onClick={this.maximiseWindow} />
-                        {selectedContractRowItem && currentConnection &&
-                            <ContractDetails currentConnection={currentConnection} contract={selectedContractRowItem} />}
-                    </div>
-                </Sider>
+                <SiderView collapsed={!showContractDrawer} onClose={this.closeSider}>
+                    {selectedContractRowItem && currentConnection &&
+                        <ContractDetails currentConnection={currentConnection} contract={selectedContractRowItem} />}
+                </SiderView>
             </Layout>
         )
     }

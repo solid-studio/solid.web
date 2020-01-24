@@ -5,7 +5,7 @@ import copy from 'copy-to-clipboard'
 
 import { Contract } from '@solid-explorer/types'
 
-import { TableDetails } from './ContractDetailsComponents'
+import { TableDetails } from 'components'
 
 interface ContractDetailsProps {
     contract: Contract

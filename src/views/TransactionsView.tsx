@@ -15,8 +15,9 @@ import { emitter } from 'features/common/event-emitter'
 
 import client from '../utils/feathers'
 
-import { StyledDiv, StyledH1 } from './components'
+import { StyledDiv, StyledH1, SiderView } from './components'
 import { DebuggerModal } from 'features/debugger/components'
+import { TransactionDetails } from 'features/transactions/components'
 
 const { Sider, Content } = Layout;
 
@@ -101,9 +102,15 @@ export class TransactionsView extends React.Component<AllProps, State> {
         });
     }
 
+    closeSider = () => {
+        this.setState({
+            showTransactionSider: false
+        })
+    }
+
     render() {
         const { showTransactionSider, drawerWidth, selectedTransaction, showDebugModal } = this.state
-        const { transactions } = this.props
+        const { transactions, currentConnection } = this.props
         return (
             <Layout style={{ height: "100%" }}>
                 <Content style={{ height: "100%" }}>
@@ -116,17 +123,10 @@ export class TransactionsView extends React.Component<AllProps, State> {
                             onDoubleClick={this.onDoubleClick} />
                     </StyledDiv>
                 </Content>
-                <Sider
-                    style={{ background: "#272727" }} trigger={null}
-                    collapsed={!showTransactionSider}
-                    collapsible={true}
-                    collapsedWidth={0} width={drawerWidth}
-                >
-                    <div>
-                        <h5>Work in progress</h5>
-                    </div>
-                </Sider>
-
+                <SiderView collapsed={!showTransactionSider} onClose={this.closeSider}>
+                    {selectedTransaction && currentConnection &&
+                        <TransactionDetails currentConnection={currentConnection} transaction={selectedTransaction} />}
+                </SiderView>
                 <DebuggerModal visible={showDebugModal}
                     onClose={this.handleOnCloseDebbugerModal}
                     transactionHash={selectedTransaction ? selectedTransaction.transactionHash : ""} />
