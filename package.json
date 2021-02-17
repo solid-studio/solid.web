@@ -24,7 +24,7 @@
     "normalizr": "^3.4.1",
     "ramda": "^0.26.1",
     "react": "^16.9.0",
-    "react-console-emulator": "^2.0.0",
+    "react-console-emulator": "^3.0.2",
     "react-dom": "^16.9.0",
     "react-monaco-editor": "^0.26.2",
     "react-redux": "^7.0.3",
